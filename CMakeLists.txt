@@ -46,6 +46,7 @@ set(TIKZ_INPUTS
 	standalonetikz/configurationmodel.tex
 )
 
+
 ADD_LATEX_DOCUMENT(
     main.tex
     INPUTS ${INPUT_FILES} ${TIKZ_INPUTS}
@@ -53,3 +54,16 @@ ADD_LATEX_DOCUMENT(
     BIBFILES biblio.bib
     FILTER_OUTPUT
     )
+
+# Targets to generate the corresponding word file based on the expanded latex file
+# PANDOC is used to make the conversion
+# add_custom_command(
+#     OUTPUT generate_word
+#     COMMAND latexpand ${CMAKE_SOURCE_DIR}/main.tex > ${LATEX_OUTPUT_PATH}/mainexpand.tex
+#     COMMAND latex2rtf -b ${LATEX_OUTPUT_PATH}/main.bbl ${LATEX_OUTPUT_PATH}/mainexpand.tex 
+#     #COMMAND pandoc -s --mathjax ${LATEX_OUTPUT_PATH}/mainexpand.tex -o ${LATEX_OUTPUT_PATH}/mainexpand.docx
+#     #COMMAND open ${LATEX_OUTPUT_PATH}/mainexpand.docx
+#     )
+# add_custom_target(
+#     word ALL DEPENDS generate_word
+#     )
