@@ -11,4 +11,6 @@ To compile on OSX
     cmake ..
     make
 
+To clean untracked files
 
+    git clean -df .
