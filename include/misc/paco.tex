@@ -1,0 +1,31 @@
+%%%% PACO %%%%
+\begin{Algorithm}[htb!]
+\begin{codebox}
+\Procname{$\proc{Paco}(G)$}
+\li $S\gets 0$ \Comment \emph{Initialize Surprise to $0$}
+\li $C \gets (1,\ldots,|V|)$  \Comment \emph{Initialize membership vector}
+
+% \End
+\li $E' \gets \proc{Sort-Jaccard}(E)$ \Comment \emph{Sort edges in decreasing order by Jaccard index}
+
+\li \For each edge $(u,v)$ in $E'$
+\li \Do \li \If $C[u] \neq C[v]$ \Comment \emph{try to move nodes only if in different communities}
+\li \Then
+\li $C' \gets C$ \Comment \emph{Create a temporary membership vector}
+\li \If \proc{UnifRand(0,1)} $< 0.5$ 
+\li \Then 
+\li $C'[v] \gets C[u]$
+\li	\Else
+\li $C'[u] \gets C[v]$ \End
+\li $S' =$ \proc{ComputeSurprise($G$,$C'$)}
+\li \Do \If $S'>S$
+\li \Then
+\li $C \gets C'$ \Comment \emph{update membership}
+\li $S' \gets S$ \Comment \emph{update Surprise}
+\End
+\End \End \End
+\li \Return $C$
+\end{codebox}
+\caption{Pseudocode of the PACO algorithm. The function PACO takes as input a graph $G$ and returns the nodes community membership vector $C$. Line $1$ initializes the value of Surprise to $0$. Line $2$ assign to each node in the graph its community. Line $3$ creates a list of edges $E'$ sorted in decreasing order by their Jaccard coefficient. Line $4$ iterates on every edge $e=(u,v)$ and at line $6$ checks if the endpoints they share the same community. Line $8$ copies the membership vector to a temporary vector $C'$. Lines $9-13$ choose randomly at chance if to put node $u$ in the community of $v$ or viceversa. Line $14$ computes the new value of Surprise $S'$ from the just updated community membership $C$. The function \textsc{ComputeSurprise} returns the value of Surprise for graph $G$ and partition $C$. Lines $15$ to $18$ checks if the new value of Surprise $S'$ is greater than the previously stored value $S$ and update Surprise and the membership vector, otherwise continue to the next edge. Line $19$ returns the final community membership assignment.}
+\label{algo:paco}
+\end{Algorithm}

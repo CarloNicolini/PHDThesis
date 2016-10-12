@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+	\tikzset{LabelStyle/.style= {draw,font = \tiny}}
+	\tikzset{VertexStyle/.style= {font = \tiny}}
+	\GraphInit[vstyle=Normal]
+	\SetGraphUnit{1.}
+	\Vertices{circle}{a,b,c,d,e}
+	\Edge[label=1](a)(b)
+	\Edge[label=2](a)(c)
+	\Edge[label=0.5](a)(d)
+	\Edge[label=3](a)(e)
+	\Edge[label=1](c)(b)
+	\node[rounded corners=5mm,fit=(b.north) (a.south) (c.west) (a.east)](BORD) {}; %solo per allinearli al top entrambi
+\end{tikzpicture}

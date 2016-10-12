@@ -1,0 +1,10 @@
+	\begin{tikzpicture}
+	\tikzset{LabelStyle/.style= {draw,font = \tiny}}
+			\GraphInit[vstyle=Normal]
+			\SetGraphUnit{1.5}
+			\begin{scope}[rotate=18]
+			\Vertices{circle}{a,b,c,d,e}
+			\end{scope}
+			% \NOEA[unit=1.414](e){d}
+			\Edges(a,b,e,d,c,e,a,c,b)
+	\end{tikzpicture}

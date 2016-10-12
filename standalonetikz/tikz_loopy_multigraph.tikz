@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+	\tikzset{LabelStyle/.style= {draw,font = \tiny}}
+		\GraphInit[vstyle=Normal]
+		\SetGraphUnit{1.5}
+		\begin{scope}[rotate=18]
+		\Vertices{circle}{a,b,c,d,e}
+		\end{scope}
+		% \NOEA[unit=1.414](e){d}
+		\Edges(a,b,c,d,e)
+		\Loop[dist = 1.5cm, dir = NO](d.north east)
+		\tikzset{EdgeStyle/.append style = {bend right = 15}}
+		\Edge(c)(b)
+		\Edge(e)(a)
+		\tikzset{EdgeStyle/.append style = {bend left = 15}}
+		\Edge(a)(b)
+		\Edge(c)(b)
+		\tikzset{EdgeStyle/.append style = {bend left = 30}}
+		\Edge(c)(b)
+		\Edge(e)(a)
+		\tikzset{EdgeStyle/.append style = {bend right = 30}}
+		\Edge(c)(b)
+\end{tikzpicture}
