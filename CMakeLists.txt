@@ -5,6 +5,20 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(LATEX_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/build/")
 include("${CMAKE_MODULE_PATH}/UseLATEX.cmake")
 
+
+INCLUDE(GetGitRevisionDescription)
+GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
+MESSAGE(STATUS "GIT SHA1 ${GIT_SHA1}")
+
+MACRO (TODAY BUILD_TIME)
+    IF(UNIX)
+        EXECUTE_PROCESS(COMMAND "date" "+%b_%d_%G_%H_%M_%S" OUTPUT_VARIABLE ${BUILD_TIME})
+        # Remove new line
+        string(REGEX REPLACE "\n" "" ${BUILD_TIME} ${${BUILD_TIME}})
+    ENDIF (UNIX)
+ENDMACRO (TODAY)
+TODAY(BUILD_TIME)
+
 set(IMAGE_FILES
 	images/konigsberg.jpg
 	images/deg_dist_poisson_er.pdf
@@ -46,7 +60,6 @@ set(TIKZ_INPUTS
 	standalonetikz/configurationmodel.tex
 )
 
-
 ADD_LATEX_DOCUMENT(
     main.tex
     INPUTS ${INPUT_FILES} ${TIKZ_INPUTS}
@@ -55,15 +68,16 @@ ADD_LATEX_DOCUMENT(
     FILTER_OUTPUT
     )
 
+message(STATUS ${BUILD_TIME})
+message(STATUS ${GIT_SHA1})
+set(WORD_OUTPUT_FILE "${LATEX_OUTPUT_PATH}/thesis_${BUILD_TIME}.docx")
+
 # Targets to generate the corresponding word file based on the expanded latex file
-# PANDOC is used to make the conversion
-# add_custom_command(
-#     OUTPUT generate_word
-#     COMMAND latexpand ${CMAKE_SOURCE_DIR}/main.tex > ${LATEX_OUTPUT_PATH}/mainexpand.tex
-#     COMMAND latex2rtf -b ${LATEX_OUTPUT_PATH}/main.bbl ${LATEX_OUTPUT_PATH}/mainexpand.tex 
-#     #COMMAND pandoc -s --mathjax ${LATEX_OUTPUT_PATH}/mainexpand.tex -o ${LATEX_OUTPUT_PATH}/mainexpand.docx
-#     #COMMAND open ${LATEX_OUTPUT_PATH}/mainexpand.docx
-#     )
-# add_custom_target(
-#     word ALL DEPENDS generate_word
-#     )
+add_custom_command(
+    OUTPUT word
+    COMMAND latexpand ${LATEX_OUTPUT_PATH}/main.tex > ${WORD_OUTPUT_FILE}
+    )
+
+add_custom_target(
+    word ALL DEPENDS word
+    )
