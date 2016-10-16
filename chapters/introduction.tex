@@ -319,23 +319,23 @@ Both the ER and Gilbert models should not show any modular structure as every su
 %We will see, though, in the following chapters that still some algorithms find communities in ER graphs.
 As every graph obtained from the Erd\H{o}s-Rényi model is a sample from the the probability space $\mathcal{G}$, is better to talk in term of ensemble averages. In the ER model, the expected number of edges in such a graph is the average over $\binom{n}{2}$ independent coin tosses with probability $p_{ER}$:
 \begin{equation}
-\left< m  \right> = \binom{n}{2}\tilde{p}
+\left< m  \right> = \binom{n}{2}p_{ER}
 \end{equation}
 and the expected degree $\left< k \right>$ is the same for every node
 \begin{equation}
-\left< k \right> = \tilde{p}(n-1).
+\left< k \right> = p_{ER}(n-1).
 \end{equation}
-The probability that a node $i$ chosen at random has degree $k$ is called the \emph{degree distribution}. In general terms, such probability is expressed as:
+The probability that a node $i$, chosen at random, has degree $k$ is called the \emph{degree distribution}. In general terms, such probability is expressed as:
 \begin{equation}
 \Pr(k) = \frac{\left< |\{ i \| k_i=k \}| \right>}{n}.
 \end{equation}
 In the ER model, a given node is connected with probability $p_{ER}$ to each of the other $n-1$ nodes. Thus, the probability of being connected to a particular $k$ other vertices and not to any of the others is $p^k(1-p)^{n-1-k}$, but since there are $\binom{n-1}{k}$ ways to choose those $k$ other nodes, hence the total probability of being connected to exactly $k$ others is:
 \begin{equation}
-\Pr(k) = \binom{n-1}{k}\tilde{p}^k(1-\tilde{p})^{n-1-k}
+\Pr(k) = \binom{n-1}{k}p_{ER}^k(1-p_{ER})^{n-1-k}
 \end{equation}
 a binomial distribution that can be approximated to a Poisson distribution for large $n$:
 \begin{equation}
-\Pr(k) \approx \frac{(n \tilde{p})^k e^{-n \tilde{p}} }{k!}.
+\Pr(k) \approx \frac{(n p_{ER})^k e^{-n p_{ER}} }{k!}.
 \end{equation}
 \bigbreak
 In generalizing the concepts of random networks models, one can define every simple graph on $n$ nodes as the output of a random process where each edge $(i,j) $ is sampled with a probability $\Pr(i,j,{\boldsymbol \theta})$ with $\boldsymbol \theta$ is a vector of hyperparameters. In the simplest case of the ER graph, this generative model is an uniform probability distribution with $\boldsymbol \theta=p_{ER}$ as every pair of nodes is linked by an edge with constant probability:
@@ -389,12 +389,12 @@ Although very well studied, both models are still lacking a strong community str
 \section{Community detection in networks}
 \label{sec:communitydetectioninnetworks}
 
-The process of grouping nodes in a graph to establish their common behavioral properties, is a popular technique that goes under the name of \emph{community detection}. As previously introduced, the notion of community is ambiguous and every method of community detection defines its own criteria. It is therefore important to have a quantitative way to evaluate the goodness of a clustering.
+The process of grouping nodes in a graph to establish their common behavioral properties, is a popular technique that goes under the name of \emph{community detection}. As the definition of community is not well stated, it is therefore important to have a quantitative way to evaluate the goodness of a clustering.
 
 A \emph{quality function} is a function $\mathcal{Q}$ that given a clustering of a graph $\zeta$ returns a scalar number. Usually one identifies ``good'' clusterings with high scores of the quality function and ``bad'' clusterings with low scores. In this sense, is possible to rank partitions from bad to good, although is important to stress that the definition of ``good'' or ``bad'' is an \emph{ill-posed problem} as every quality function one designs puts the emphasis on some features of the community organization and perhaps not on others.
 Here and in the following sections, we strongly point out that the concept of quality function and community detection methods are separate as the first is a way to assess the goodness of a partition while the second relies on quality function to design efficient algorithms and heuristics to find such good partitions.
 
-One of the most important properties of a quality function is when it can be expressed as sum over communities. Such quality functions are dubbed \emph{additive}: for a generic function of a cluster $f(\zeta_i)$, an additive quality function specify the goodness of a clustering as sum over the distinct communities of $f$ as follows:
+One of the most important properties of a quality function is when it can be expressed as sum over communities. Such quality functions are dubbed \emph{additive}: for a generic function of a cluster $f(\zeta_i)$, an additive quality function specify the goodness of a clustering as sum of $f$ over the distinct communities as follows:
 \begin{equation}\label{eq:additive_quality}
 \mathcal{Q} = \sum \limits_{\zeta_c \in \zeta} f(\zeta_c).
 \end{equation}
@@ -402,45 +402,54 @@ The majority of quality functions are additive, even if this requirement is not 
 
 \subsection{Spin glass based quality functions}
 The simplest requirement of a quality function, is to put emphasis on intracluster edges and penalize intercluster edges. In this terms, local optima should correspond to partitions where the communities emerge as dense areas in the network loosely connected among them.
-Here we present a general framework for quality functions for community detection that meets these requirements using a physics inspired model.
+Here we present a general framework for the definition of suitable quality functions for community detection that meets these requirements.
 
 This framework, introduced by Reichardt and Bornholdt~\cite{reichardt2006} is grounded in statistical mechanics, a branch of physics that studies the macroscopic and microscopic properties of systems of many interacting elements. Within this model, the problem of community detection is cast in terms of finding the \emph{ground state} of a spin glass, a model describing the behavior of large sets of interacting magnets.
-The details and general properties of spin glass models are subject of extremely intensive research in the last decades as their applications range from matter and nuclear physics to neural networks. Spin glass models are covered in their details in~\cite{Mezard1990} and here we present only their salient application to community detection.
+Actually, the properties of spin glass models are subject of extremely intensive research in the last decades as their applications range from matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader to cover the details of the model in other specialized books~\cite{Mezard1990}.
 
-A spin glass model starts from the definition of an Hamiltonian, a multi-variable scalar function that describe the total energy of the physical system with the configuration of its internal components. In our case, the internal components of the system are the nodes. The configuration of the system is then expressed by the community affiliation vector $\boldsymbol\sigma$ where every node community affiliation is $\sigma_i$ and takes integer values (see~\ref{sec:clustering}).
-The Hamiltonian used by Reichardt and Bornholdt (RB) counts four different contributions. The first two contributions act at intracluster level, positively weighing intracluster edges and negatively weighing intracluster non-edges with coefficients $\alpha_{ij}$ and $\beta_{ij}$ respectively. The third and fourth contributions work on intercluster edges and non-edges  weighing them with factors $\gamma_{ij}$ and $\delta_{ij}$. The general form of the RB model is then expressed by the following Hamiltonian:
+A spin glass model starts from the definition of an Hamiltonian, a multi-variable scalar function that describe the total energy of the physical system with the configuration of its internal components. In our case, the internal components of the system are the nodes. The configuration of the system is then expressed by the community affiliation vector $\boldsymbol\sigma$, meaning that node $i$ stays in the community $\sigma_i$ (see~\ref{sec:clustering}).
+The Hamiltonian used by Reichardt and Bornholdt (RB) counts four different contributions. The first two contributions act at intracluster level, positively weighing intracluster edges and negatively weighing intracluster non-edges with coefficients $a_{ij}$ and $b_{ij}$ respectively. The third and fourth contributions work on intercluster edges and non-edges  weighing them with factors $c_{ij}$ and $d_{ij}$. The general form of the RB model is then expressed by the following Hamiltonian:
 
 \begin{align}\label{eq:hamiltonianspinglass}
-\mathcal{H}^{\textrm{RB}}(\sigma) = - \sum_{(i,j)\in V^2} & \left[ \alpha_{ij} a_{ij} - \beta_{ij}(1-a_{ij}) \right] \delta(\sigma_i,\sigma_j + \nonumber \\ &  \left[ (\gamma_{ij} a_{ij} - \delta_{ij}(1-a_{ij}) \right] (1-\delta(\sigma_i,\sigma_j)
+\mathcal{H}^{\textrm{RB}}(\boldsymbol \sigma) = - \sum_{(i,j)\in V^2} & \left[ a_{ij} A_{ij} - b_{ij}(1-A_{ij}) \right] \delta(\sigma_i,\sigma_j) + \nonumber \\ &  \left[ (c_{ij} A_{ij} - d_{ij}(1-A_{ij}) \right] (1-\delta(\sigma_i,\sigma_j)
 \end{align}
 with the convention that lowest energy states correspond to best community assignments.
-Rearranging Eq.\ref{eq:hamiltonianspinglass} and discarding the terms independent of the partition into a constant $H_0$, one then gets a simpler expression for $\mathcal{H}^{\textrm{RB}}(\sigma)$
+Rearranging Eq.\ref{eq:hamiltonianspinglass} and discarding the terms independent of the partition into a constant $H_0$, one then gets a simpler expression for $\mathcal{H}^{\textrm{RB}}(\sigma)$:
+
 \begin{equation}\label{eq:rbspinglass}
-\mathcal{H}^{\textrm{RB}}(\sigma) = -H_0 - \sum \limits_{(i,j)\in V^2} \left[ \tilde{\alpha}_{ij} a_{ij} - \tilde{\beta}_{ij} \right] \delta(\sigma_i,\sigma_j)
+\mathcal{H}^{\textrm{RB}}(\boldsymbol \sigma) = -H_0 - \sum \limits_{(i,j)\in V^2} \left[ \alpha_{ij} A_{ij} - \beta_{ij} \right] \delta(\sigma_i,\sigma_j)
 \end{equation}
-where the two parameters $\tilde{\alpha}_{ij}$ and $\tilde{\beta}_{ij}$ depend on the \emph{null model} one would like to compare against. A null model provides a mean to to compare a specific set of features of a graph on a randomized version of it that should therefore lack those features. In the context of community detection, null models are intended to provide a term of comparison of the graph that share its degree distribution but lack community structure.
+where the two parameters $\alpha_{ij}=a_{ij}+b_{ij}+c_{ij}+d_{ij}$ and $\beta_{ij}=b_{ij}+d_{ij}$ depend on the \emph{null model} one would like to compare with, i.e. the probability that an edge exists between $i$ and $j$ after some form of edges rewiring. Hence, a null model provides a mean to compare a specific set of features of a graph, with its randomized version that should specifically lack those features.
 
-Since the sum in Eq.~\ref{eq:rbspinglass} runs only over intracluster edges, thanks to the Kronecker delta and getting rid of the constant $H_0$, one can express any quality function of the kind of Eq.~\ref{eq:rbspinglass} as an additive quality function:
+If we get rid of the constant term $H_0$, set $\alpha_{ij}=1$ and note that the sums runs only over intracluster edges, we can express any quality function of the kind of Eq.~\ref{eq:rbspinglass} as an additive quality function, moving the summation indexes over the communities rather than over the pairs of nodes. The template Hamiltonian expressed as $\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma)$, reads:
 \begin{equation}\label{eq:rbspinglass2}
-\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma) = - \sum \limits_{c}^C \left[ m_c - \left< m_c \right> \right]
+\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma) = -\sum_{(i,j) \in V^2} \left[ A_{ij} - \beta_{ij} \right] \delta(\sigma_i,\sigma_j) = - \sum \limits_{c}^C \left[ m_c - \left< m_c \right> \right].
 \end{equation}
-where $\left <m_c \right >$ represent the null model and is the expected value of intra-module edges density under some specific choice of random graph ensemble. In general, one needs to make some assumption on the null model to get an analytical estimate of $\left <m_c \right >$. This what is done in the most important and popular additive quality function: \emph{Newman's Modularity}~\cite{newman2006}.
+where $m_c$ represents the number of links inside community labeled by $c$ and $\left <m_c \right >=\sum_{ij}\beta_{ij}\delta(\sigma_i,\sigma_j)$ is the expected number of links in community $c$ as prescribed by the null model $\beta_{ij}$. 
+Among the additive quality functions that show up in the form of~\ref{eq:rbspinglass2}, the most important and popular is the \emph{Newman-Girvan's Modularity}.
 
-Modularity, denoted here for the rest of the paper by $Q^N$, is based on the idea that a network obtained by a random reshuffle of the original edges should not display any community structure.
-In terms of a spin glass model, Modularity is the sum on every pair of nodes of the deviation from the observed probability to have an edge, represented by $a_{ij}$ and the probability to observe an edge $(i,j)$ in a random graph with the same vertex degree sequence $\{ k \}$ and is represented by $k_ik(j)/2m$, a term named \emph{configuration model}. Modularity has the following Hamiltonian:
+\subsection{Newman-Girvan Modularity}
+Newman-Girvan Modularity (or simply Modularity)~\cite{newman2006}, denoted here and for the rest of the work by $Q^N$, is based on the idea that a network obtained by randomly reshuffling the original graph edges while keeping the same degrees sequence, should not display any community structure. It turns out that this random reshuffling model can be computed analytically and takes the form:
+\begin{equation}\label{eq:configuration_model}
+\left< a_{ij} \right > = \frac{k_i k_j}{2m}
+\end{equation}
+where $k_i$ and $k_j$ are the degrees of node $i$ and $j$. This term of comparison (Eq.~\ref{eq:configuration}) is called ``configuration model'' and is of great importance in network science as it assigns higher probability of link to nodes with high degrees, a feature that is compatible with most real world networks.
+
+In terms of a spin glass model, Modularity thus measures the deviation from the observed intracluster density with respect to the expected intracluster density specified by the configuration model and is described by the following equation:
 \begin{equation}\label{eq:newmanmodularityspinglass}
-Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ a_{ij} - \frac{k_i k(j)}{2m} \right] \delta(\sigma_i,\sigma_j).
+Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ a_{ij} - \frac{k_i k_j}{2m} \right] \delta(\sigma_i,\sigma_j) = \sum_{c}^{C} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right].
 \end{equation}
-By reworking Eq.\ref{eq:newmanmodularityspinglass} one can show that Modularity is equivalent to the sum over communities of the deviation of observed intracluster density in the original graph and the expected intracluster density under the configuration model.
-In the spirit of Eq.~\ref{eq:rbspinglass2} then, the alternative and equivalent formulation of ~\ref{eq:newmanmodularityspinglass} is:
-\begin{equation}\label{eq:newmanmodularity}
-Q^N =  \frac{1}{m} \sum_c^C m_c - \left< m_c \right> = \sum_{c}^{C} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right ] 
-\end{equation}
-The normalization factor $1/m$ is needed to make $Q^N$ bounded in the range $[-1/2,1]$. Thus, a good partition with $Q^N$ closer to unity identifies groups with many more internal connections than expected at random; in contrast, a bad partition with $Q^N$ closer to zero identifies groups with no more internal connections than we expect at random. In the next sections we will see though that this observation will lead to false statements as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with null models.
+
+The normalization factor $1/m$ is needed to make $Q^N$ bounded in the range $[-0.5,1]$. Modularity is an additive quality function and is relatively easy compute. Under this framework, a good partition should have $Q^N$ values close to unity, identifying groups with many more internal connections than expected at random; in contrast, a bad partition with $Q^N$ closer to zero should identify groups with no more internal connections than we expect at random.
+
+In the next sections we will challenge this idea and show that this observation leads to false statements about modularity of networks, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with null models and specifically in the case of Newman's Modularity, hits particularly hard.
+
+\subsection{Resolution limit in community detection}
+As previously introduced, looking for 
 
 \subsubsection{Deeper analysis of the configuration model}
 In the configuration model used in Modularity the probability that a node $i$ with degree $k_i$ links any other node in the graph (including itself) is $k_i/\sum_{i}k_i$ and by means of the handshaking lemma in Eq.~\ref{eq:handshaking_lemma} is equivalent to $k_i/2m$.
-Hence, in absence of correlations, is easy to show that the probability that two nodes $i$ and $j$ with degrees $k_i$ and $k(j)$ are linked under this model is the product of individual probabilities:
+Hence, in absence of correlations, is easy to show that the probability that two nodes $i$ and $j$ with degrees $k_i$ and $k_j$ are linked under this model is the product of individual probabilities:
 \begin{equation}\label{eq:configuration_model_probability}
 \Pr \left ( a_{ij} | \{ k \} \right) = \Pr(k_i | \{ k \})\Pr(k_j | \{ k \})=\frac{k_i k_j}{(2m)^2}
 \end{equation}
@@ -448,7 +457,7 @@ Hence, in absence of correlations, is easy to show that the probability that two
 Although Modularity is most frequently applied to \emph{simple graphs}( see Fig.~\ref{fig:graphmodelsa}), the configuration model implies that the randomization is carried over the space of \emph{loopy multigraphs}.
 The rewiring probability considers indeed that the stubs of vertices can be reconnected both to the same source vertex (self-loops) or added to already existing edges (multi-edges).
 Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but three other distinct matchings, which produce non-simple networks (Fig.\ref{fig:reshuffle_loopy_multigraphs}). 
-In fact, the number of possible rewirings that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as
+In fact, the number of possible rewirings that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges, is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as:
 \begin{equation}\label{eq:cm_possible_rewirings}
 \Omega_{CM} = \binom{2m}{k_1,\ldots,k_n} = \frac{(2m)!}{\prod_i^n (k_i)!}.
 \end{equation}
@@ -456,7 +465,7 @@ For the small triangle graph, this number is already very large: 90 different re
 
 In practice though, the fraction of edges involved in either self-loops or multi-edges is vanishingly small in the large $n$ limit, and thus we may generally ignore them without much impact. 
 Hence, the estimate of the probability of rewiring in Eq.~\ref{eq:configuration_model_probability} is only valid in large, sufficiently sparse graphs with a sufficiently bounded degree sequence.
-Under these hypotheses the expected number of edges between two vertices in the space of simple graphs is asymptotically the same as the expectation in the space of stub-labeled loopy multigraphs, i.e. $\mathbb{E}_s[a_{ij} |k] \approx k_i k(j) /(2m)$, where $s$ denotes the space of simple graphs.
+Under these hypotheses the expected number of edges between two vertices in the space of simple graphs is asymptotically the same as the expectation in the space of stub-labeled loopy multigraphs, i.e. the one previously introduced for the definition of Modularity: $\mathbb{E}_s[a_{ij} |k] \approx k_i k_j /(2m)$, where $s$ denotes the space of simple graphs.
 
 % \begin{figure}[htb]
 % \centering
@@ -481,15 +490,15 @@ In the remaining paragraphs, although flawed, we'll use the classic configuratio
 Modularity identifies communities as subset of nodes whose internal fraction of edges deviates from the null configuration model on the same subset with the term $m_c/m > (K_c/2m)^2$. Despite measuring deviation from a null model, Modularity does not take into account the statistical evidence associated with this deviation and as result is not able to separate actual communities from those arising only from statistical fluctuations of the null model. Additionally, Modularity can even find high-scoring partitions in fully random graphs~\cite{Guimera2004}.
 
 The configuration model is not the only possible null-model to use in spin-glass based quality functions and different authors proposed several variants of Modularity~\cite{ronhovde2010,ronhovde2009,traag2011} with different null models.
-The simplest variation of Modularity is the so-called ER Modularity~\cite{traag2015} that instead of the configuration model uses an Erd\H{o}s-Rényi random graph in which every edge appears with the same probability $\tilde{p}$. The number of expected edges $\left< m_c \right>$ in a community of size $n_c$ is thus (in the space of simple graphs):
+The simplest variation of Modularity is the so-called ER Modularity~\cite{traag2015} that instead of the configuration model uses an Erd\H{o}s-Rényi random graph in which every edge appears with the same probability $p_{ER}$. The number of expected edges $\left< m_c \right>$ in a community of size $n_c$ is thus (in the space of simple graphs):
 \begin{equation}
-\left< m_c \right> = \tilde{p}\binom{n_c}{2}.
+\left< m_c \right> = p_{ER}\binom{n_c}{2}.
 \end{equation}
 and plugging this null model into the RB model of Eq.~\ref{eq:rbspinglass2} we obtain the model:
 \begin{equation}\label{eq:ermodularityrb}
-\mathcal{H}^{ER} = -\sum \limits_c^C \left[\frac{m_c}{m}  - \tilde{p}\binom{n_c}{2} \right].
+\mathcal{H}^{ER} = -\sum \limits_c^C \left[\frac{m_c}{m}  - p_{ER}\binom{n_c}{2} \right].
 \end{equation}
-A null model must represent some structural properties of the original graph. As the most similar ER graph of a given graph is the one that matches its density, the probability parameter $\tilde{p}$ must be set equal to the original empirical graph density. We therefore obtain the so-called \emph{ER Modularity} by plugging the graph density in Eq.\ref{eq:ermodularityrb} and inverting its sign, to obtain $Q^{ER}$: 
+A null model must represent some structural properties of the original graph. As the most similar ER graph of a given graph is the one that matches its density, the probability parameter $p_{ER}$ must be set equal to the original empirical graph density. We therefore obtain the so-called \emph{ER Modularity} by plugging the graph density in Eq.\ref{eq:ermodularityrb} and inverting its sign, to obtain $Q^{ER}$: 
 \begin{equation}
 Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 \end{equation}

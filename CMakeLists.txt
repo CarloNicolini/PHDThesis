@@ -65,19 +65,5 @@ ADD_LATEX_DOCUMENT(
     INPUTS ${INPUT_FILES} ${TIKZ_INPUTS}
     IMAGES ${IMAGE_FILES}
     BIBFILES biblio.bib
-    
-    )
-
-#message(STATUS ${BUILD_TIME})
-#message(STATUS ${GIT_SHA1})
-set(WORD_OUTPUT_FILE "${LATEX_OUTPUT_PATH}/thesis_${BUILD_TIME}.docx")
-
-# Targets to generate the corresponding word file based on the expanded latex file
-add_custom_command(
-    OUTPUT word
-    COMMAND latexpand ${LATEX_OUTPUT_PATH}/main.tex | grep -v "^%" > ${WORD_OUTPUT_FILE}
-    )
-
-add_custom_target(
-    word ALL DEPENDS word
+    #FILTER_OUTPUT
     )
