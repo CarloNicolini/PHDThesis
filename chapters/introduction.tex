@@ -67,7 +67,7 @@ One and only one link can exist between two nodes (no \emph{multiedges}), and no
 Graphs with no multiple links and no self-loops are dubbed \emph{simple graphs}.
 In the next pages we only consider \emph{undirected graphs}, since we are not interested in the direction of link between two nodes.
 
-The adjacency matrix $\mathbf{A}=\{a_{ij}\} \in \{0,1\}^{n \times n}$ of a binary (undirected) graph is a square $n\times n$ symmetric matrix with elements $a_{ij}=1$ when an edge exists between vertex $i$ and $j$ and $0$ otherwise.
+The adjacency matrix $\mathbf{A}=\{A_{ij}\} \in \{0,1\}^{n \times n}$ of a binary (undirected) graph is a square $n\times n$ symmetric matrix with elements $A_{ij}=1$ when an edge exists between vertex $i$ and $j$ and $0$ otherwise.
 
 An \emph{edge-weighted graph} (also called weighted graph) $G=(V,E,\omega)$ is a graph that has a set of weights $\omega$ on the links (Figure~\ref{fig:graphmodelsb}). Although not true in general, we consider only weighted undirected graphs with symmetrical real adjacency matrix, meaning that if an edge exists between node $i$ and $j$ the weight from $i$ to $j$ is the same as the weight from $j$ to $i$: $\omega_{ij}=\omega_{ji}$. The weighted adjacency matrix,  indicated as $\mathbf{W}=\{ \omega_{ij} \} \in \mathbb{R}^{n\times n}$ is a real, square $n \times n$ symmetric matrix.
 
@@ -103,7 +103,7 @@ A \emph{dense} graph is a graph where almost every possible pair of nodes is con
 
 The number of edges incident to a node in a simple graph is called \emph{degree}, denoted as $k_i$ (Figure~\ref{fig:degreestrength}). Every half edge incident to a node is called \emph{stub}. A vertex with degree $k_i$ has therefore $k_i$ stubs.
 On simple weighted graphs, the sum of weights of the edges incident to a vertex $i$ is called \emph{strength} and is denoted as $s_i$. 
-In matrix terms, degree and strength are the sums over rows of the adjacency matrix $d_i=s_i=\sum_{j=1}^n a_{ij}$. It must be noted that degree and strength are equal on binary graphs, but different for weighted graphs.
+In matrix terms, degree and strength are the sums over rows of the adjacency matrix $d_i=s_i=\sum_{j=1}^n A_{ij}$. It must be noted that degree and strength are equal on binary graphs, but different for weighted graphs.
 
 The \emph{degree sequence} $\{k_i\}$ $\forall i=1,\ldots,n$ is the sequence  of the degrees of the vertices, with these numbers put in ascending order, with
 repetitions as needed. By the \emph{handshaking lemma}~\cite{leiserson2001}, the sum of all node degrees is equal to twice the number of links:
@@ -408,10 +408,10 @@ This framework, introduced by Reichardt and Bornholdt~\cite{reichardt2006} is gr
 Actually, the properties of spin glass models are subject of extremely intensive research in the last decades as their applications range from matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader to cover the details of the model in other specialized books~\cite{Mezard1990}.
 
 A spin glass model starts from the definition of an Hamiltonian, a multi-variable scalar function that describe the total energy of the physical system with the configuration of its internal components. In our case, the internal components of the system are the nodes. The configuration of the system is then expressed by the community affiliation vector $\boldsymbol\sigma$, meaning that node $i$ stays in the community $\sigma_i$ (see~\ref{sec:clustering}).
-The Hamiltonian used by Reichardt and Bornholdt (RB) counts four different contributions. The first two contributions act at intracluster level, positively weighing intracluster edges and negatively weighing intracluster non-edges with coefficients $a_{ij}$ and $b_{ij}$ respectively. The third and fourth contributions work on intercluster edges and non-edges  weighing them with factors $c_{ij}$ and $d_{ij}$. The general form of the RB model is then expressed by the following Hamiltonian:
+The Hamiltonian used by Reichardt and Bornholdt (RB) counts four different contributions. The first two contributions act at intracluster level, positively weighing intracluster edges and negatively weighing intracluster non-edges with coefficients $a_{ij}$ and $b_{ij}$ respectively. The third and fourth contributions work on intercluster edges and non-edges, weighing them with factors $c_{ij}$ and $d_{ij}$. The general form of the RB model is then expressed by the following Hamiltonian:
 
 \begin{align}\label{eq:hamiltonianspinglass}
-\mathcal{H}^{\textrm{RB}}(\boldsymbol \sigma) = - \sum_{(i,j)\in V^2} & \left[ a_{ij} A_{ij} - b_{ij}(1-A_{ij}) \right] \delta(\sigma_i,\sigma_j) + \nonumber \\ &  \left[ (c_{ij} A_{ij} - d_{ij}(1-A_{ij}) \right] (1-\delta(\sigma_i,\sigma_j)
+\mathcal{H}^{\textrm{RB}}(\boldsymbol \sigma) = - \sum_{(i,j)\in V^2} & \left[ a_{ij} A_{ij} - b_{ij}(1-A_{ij}) \right] \delta(\sigma_i,\sigma_j) + \nonumber \\ &  \left[ (c_{ij} A_{ij} - d_{ij}(1-A_{ij}) \right] (1-\delta(\sigma_i,\sigma_j))
 \end{align}
 with the convention that lowest energy states correspond to best community assignments.
 Rearranging Eq.\ref{eq:hamiltonianspinglass} and discarding the terms independent of the partition into a constant $H_0$, one then gets a simpler expression for $\mathcal{H}^{\textrm{RB}}(\sigma)$:
@@ -421,31 +421,52 @@ Rearranging Eq.\ref{eq:hamiltonianspinglass} and discarding the terms independen
 \end{equation}
 where the two parameters $\alpha_{ij}=a_{ij}+b_{ij}+c_{ij}+d_{ij}$ and $\beta_{ij}=b_{ij}+d_{ij}$ depend on the \emph{null model} one would like to compare with, i.e. the probability that an edge exists between $i$ and $j$ after some form of edges rewiring. Hence, a null model provides a mean to compare a specific set of features of a graph, with its randomized version that should specifically lack those features.
 
-If we get rid of the constant term $H_0$, set $\alpha_{ij}=1$ and note that the sums runs only over intracluster edges, we can express any quality function of the kind of Eq.~\ref{eq:rbspinglass} as an additive quality function, moving the summation indexes over the communities rather than over the pairs of nodes. The template Hamiltonian expressed as $\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma)$, reads:
+It's possible to express any quality function in the form of Eq.~\ref{eq:rbspinglass} as an additive quality function by setting $\alpha_{ij}=1$, $H_0=0$ and moving the summation indexes over the communities rather than over the pairs of nodes, as the sum is only over intracluster edges. The resulting Hamiltonian, expressed here as $\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma)$, then reads:
 \begin{equation}\label{eq:rbspinglass2}
 \mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma) = -\sum_{(i,j) \in V^2} \left[ A_{ij} - \beta_{ij} \right] \delta(\sigma_i,\sigma_j) = - \sum \limits_{c}^C \left[ m_c - \left< m_c \right> \right].
 \end{equation}
-where $m_c$ represents the number of links inside community labeled by $c$ and $\left <m_c \right >=\sum_{ij}\beta_{ij}\delta(\sigma_i,\sigma_j)$ is the expected number of links in community $c$ as prescribed by the null model $\beta_{ij}$. 
+where $m_c=\sum_{ij}A_{ij}\delta(\sigma_i,c)\delta(c,\sigma_j)$ represents the number of links inside community labeled by $c$ and $\left <m_c \right >=\sum_{ij}\beta_{ij}\delta(\sigma_i,c)\delta(c,\sigma_j)$ is the expected number of links in community $c$ as prescribed by the null model $\beta_{ij}$\footnote{Here and for the rest of the work, we set $P_{ij}:=\beta_{ij}$ for agreement with more conventional notation of null models}. 
 Among the additive quality functions that show up in the form of~\ref{eq:rbspinglass2}, the most important and popular is the \emph{Newman-Girvan's Modularity}.
 
 \subsection{Newman-Girvan Modularity}
-Newman-Girvan Modularity (or simply Modularity)~\cite{newman2006}, denoted here and for the rest of the work by $Q^N$, is based on the idea that a network obtained by randomly reshuffling the original graph edges while keeping the same degrees sequence, should not display any community structure. It turns out that this random reshuffling model can be computed analytically and takes the form:
+Newman-Girvan Modularity (or simply Modularity)~\cite{newman2006}, denoted here and for the rest of the work by $Q^N$, is based on the idea that a network obtained by randomly reshuffling the original graph edges while keeping the same degrees sequence, should not display any community structure. It turns out that this random reshuffling model probability can be computed analytically takes the form:
 \begin{equation}\label{eq:configuration_model}
-\left< a_{ij} \right > = \frac{k_i k_j}{2m}
+P_{ij} = \frac{k_i k_j}{2m}
 \end{equation}
-where $k_i$ and $k_j$ are the degrees of node $i$ and $j$. This term of comparison (Eq.~\ref{eq:configuration}) is called ``configuration model'' and is of great importance in network science as it assigns higher probability of link to nodes with high degrees, a feature that is compatible with most real world networks.
+where $k_i$ and $k_j$ are the degrees of node $i$ and $j$. This term is called ``configuration model'' and is of great importance in network science as it assigns higher probability of link to nodes with high degrees, a feature that is compatible with most real world networks.
 
-In terms of a spin glass model, Modularity thus measures the deviation from the observed intracluster density with respect to the expected intracluster density specified by the configuration model and is described by the following equation:
+In terms of a spin glass model, Modularity thus measures the deviation from the observed intracluster density with respect to the expected intracluster density specified by the configuration model and is described by the following Hamiltonian
 \begin{equation}\label{eq:newmanmodularityspinglass}
-Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ a_{ij} - \frac{k_i k_j}{2m} \right] \delta(\sigma_i,\sigma_j) = \sum_{c}^{C} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right].
+Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ a_{ij} - \frac{k_i k_j}{2m} \right] \delta(\sigma_i,\sigma_j),
 \end{equation}
+and can alternatively be expressed as sum over communities of the difference of two terms:
+\begin{equation}\label{eq:newmanmodularity}
+Q^N = \sum_{c}^{C} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right]
+\end{equation}
+Modularity takes values in the range $[-0.5,1]$. 
 
-The normalization factor $1/m$ is needed to make $Q^N$ bounded in the range $[-0.5,1]$. Modularity is an additive quality function and is relatively easy compute. Under this framework, a good partition should have $Q^N$ values close to unity, identifying groups with many more internal connections than expected at random; in contrast, a bad partition with $Q^N$ closer to zero should identify groups with no more internal connections than we expect at random.
+A good partition should have $Q^N$ values close to unity, identifying groups with many more internal connections than expected at random; in contrast, a bad partition with $Q^N$ closer to zero should identify groups with no more internal connections than we expect at random.
 
-In the next sections we will challenge this idea and show that this observation leads to false statements about modularity of networks, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with null models and specifically in the case of Newman's Modularity, hits particularly hard.
+In the next sections we will challenge this idea and show that this observation leads to false statements about modularity of networks, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models and specifically in the case of Newman's Modularity, hits particularly hard.
 
 \subsection{Resolution limit in community detection}
-As previously introduced, looking for 
+Over the years, Modularity attracted a lot of attention as it served as the main tool to inspect whether networks obtained from many different scientific areas, were showing community structure.
+The wide use of Modularity has, on one hand, opened many researchers to gain interest in complex networks, with some interesting results in sociology\todo{citare}, bioinformatics\todo{citare} and ICT\todo{citare}, on the other hand offered a fallacious view on community detection as a big problem was lurking in the very same definition of Modularity.
+
+A seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity, showing the inability of Modularity to correctly detected communities smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
+
+To show the onset of the resolution limit, let us consider a toy network, $G=(V,E)$ that is composed of three subnetworks.
+The first subnetwork, a subgraph $G_0$ with $n_0$ nodes, $m_0$ edges is connected to cliques $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:resolution_limit_fortunato}.
+
+While $G_1$ and $G_2$, are complete subgraphs and are expected to be modules by construction, $G_0$ may consist of many communities. Maximum Modularity partitions then, should identify $G_1$ and $G_2$ as communities, independently from $G_0$. To be more specific, the partition where the two cliques are separated consists in three modules and its Modularity value is denoted by $Q_{split}$. The partition instead where the two cliques are merged into a single community is denoted by $Q_{merged}$. Because Modularity is a sum over the modules,
+and the module $G_0$ with Modularity $Q_0$ is the same in both partitions, we are interested in the difference $\Delta Q = Q_{merge} - Q_{split}$ that results:
+
+\begin{align} 
+\Delta Q = \left[ \right]
+\end{align}
+\todo{CONTINUARE DA QUI}
+Modularity is expressed in Eq.~\label{eq:newmanmodularity} as the sum of the difference of two terms. Therefore if, for a community $G_c$ of a network, the first term in Modularity ($m_c/m$) is much larger than the second ($\left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$), it means that there are many more links inside $G_c$ than one would expect by random chance. This would mean that $G_c$ is a module in Modularity sense. The comparison with the null model (represented by the randomized network) leads to the quantitative definition of a community as a subgraph such that $m_c/m > \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$
+
 
 \subsubsection{Deeper analysis of the configuration model}
 In the configuration model used in Modularity the probability that a node $i$ with degree $k_i$ links any other node in the graph (including itself) is $k_i/\sum_{i}k_i$ and by means of the handshaking lemma in Eq.~\ref{eq:handshaking_lemma} is equivalent to $k_i/2m$.
