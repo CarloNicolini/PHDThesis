@@ -437,35 +437,54 @@ where $k_i$ and $k_j$ are the degrees of node $i$ and $j$. This term is called `
 
 In terms of a spin glass model, Modularity thus measures the deviation from the observed intracluster density with respect to the expected intracluster density specified by the configuration model and is described by the following Hamiltonian
 \begin{equation}\label{eq:newmanmodularityspinglass}
-Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ a_{ij} - \frac{k_i k_j}{2m} \right] \delta(\sigma_i,\sigma_j),
+Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(\sigma_i,\sigma_j),
 \end{equation}
 and can alternatively be expressed as sum over communities of the difference of two terms:
 \begin{equation}\label{eq:newmanmodularity}
 Q^N = \sum_{c}^{C} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right]
 \end{equation}
-Modularity takes values in the range $[-0.5,1]$. 
 
-A good partition should have $Q^N$ values close to unity, identifying groups with many more internal connections than expected at random; in contrast, a bad partition with $Q^N$ closer to zero should identify groups with no more internal connections than we expect at random.
+Since Modularity takes values in the range $[-0.5,1]$, then a good partition should have $Q^N$ values close to unity, identifying groups with many more internal connections than expected at random; in contrast, a bad partition with $Q^N$ closer to zero should identify groups with no more internal connections than we expect at random.
 
 In the next sections we will challenge this idea and show that this observation leads to false statements about modularity of networks, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models and specifically in the case of Newman's Modularity, hits particularly hard.
 
 \subsection{Resolution limit in community detection}
 Over the years, Modularity attracted a lot of attention as it served as the main tool to inspect whether networks obtained from many different scientific areas, were showing community structure.
-The wide use of Modularity has, on one hand, opened many researchers to gain interest in complex networks, with some interesting results in sociology\todo{citare}, bioinformatics\todo{citare} and ICT\todo{citare}, on the other hand offered a fallacious view on community detection as a big problem was lurking in the very same definition of Modularity.
+The wide use of Modularity has, on one hand, opened many researchers to gain interest in complex networks, with interesting results in sociology, bioinformatics and ICT\todo{citare}, but on the other hand offered a fallacious view on the community detection problem, as a big limit was lurking in the very same definition of Modularity.
 
-A seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity, showing the inability of Modularity to correctly detected communities smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
+In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity. Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
 
-To show the onset of the resolution limit, let us consider a toy network, $G=(V,E)$ that is composed of three subnetworks.
-The first subnetwork, a subgraph $G_0$ with $n_0$ nodes, $m_0$ edges is connected to cliques $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:resolution_limit_fortunato}.
+To show the onset of the resolution limit, we follow the lines of Fortunato and Barthelemy, with some obvious notational change. Let us consider a toy network, $G=(V,E)$ that is composed of three subnetworks.
+The first subnetwork, a subgraph $G_0$ with $n_0$ nodes, $m_0$ edges is connected to cliques $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:figure_1_barthelemy}.
 
-While $G_1$ and $G_2$, are complete subgraphs and are expected to be modules by construction, $G_0$ may consist of many communities. Maximum Modularity partitions then, should identify $G_1$ and $G_2$ as communities, independently from $G_0$. To be more specific, the partition where the two cliques are separated consists in three modules and its Modularity value is denoted by $Q_{split}$. The partition instead where the two cliques are merged into a single community is denoted by $Q_{merged}$. Because Modularity is a sum over the modules,
-and the module $G_0$ with Modularity $Q_0$ is the same in both partitions, we are interested in the difference $\Delta Q = Q_{merge} - Q_{split}$ that results:
+While $G_1$ and $G_2$, are complete subgraphs and are expected to be modules by construction, $G_0$ may consist of many communities. Maximum Modularity partitions then, should identify $G_1$ and $G_2$ as communities, independently from $G_0$. To be more specific, let the partition where the two cliques are separated be denoted by $A$, with Modularity value $Q_A$. The partition instead where the two cliques are merged into a single community is denoted by $B$, with Modularity value $Q_B$.
+To make calculations simpler, we denote the number of links $m_{12}$ as functions of $m_1$ and $m_2$, such that $m_{12}=a_{1}m_1=a_2 m_2$, $m_{01}=b_1 m_1$ and $m_{02}=b_2 m_2$ with $a_1,a_2,b_1,b_2 \geq 0$.
+Because Modularity is a sum over the modules, and the module $G_0$ with Modularity $Q_0$ is the same in both partitions, we are interested in the difference $\Delta Q = Q_{split} - Q_{merge}$ that, after some manipulations, results:
+\begin{equation} \label{eq:resolution_limit_delta}
+\Delta Q = \frac{2 m a_1 m_1 - (a_1+b_1+2)(a_2+b_2+2)m_1 m_2}{2m^2}
+\end{equation}
+Specifically, we want to check when $\Delta Q > 0$, i.e. when the partition $A$ has a higher Modularity than partition $B$. This condition is verified as long as
+\begin{equation}
+m_2 < \frac{2m a_1}{(a_1+b_1+2)(a_2+b_2+2)}.
+\end{equation}
+In the case where $a_1=a_2=0$, there are no links between $G_1$ and $G_2$ and the condition is satisfied. When instead the two subgraphs are connected ($m_{12} \neq 0$), it happens that at some values of $m_1$ and $m_2$, the partition where the two modules are merged is preferred, i.e. $\Delta Q <0$. This means that when maximizing $Q^N$ on a network, is possible to miss some important structures, if they are too small.
+More specifically, if one sets $a_1=a_2=b_1=b_2=1/m$, is easy to check that Eq.~\ref{eq:resolution_limit_delta} is not satisfied if the number of links in the modules, $m_c$ is lower than the square root of the total number of links in the network:
+\begin{equation}
+m_c < \sqrt{\frac{m}{2}}
+\end{equation}
 
-\begin{align} 
-\Delta Q = \left[ \right]
-\end{align}
-\todo{CONTINUARE DA QUI}
-Modularity is expressed in Eq.~\label{eq:newmanmodularity} as the sum of the difference of two terms. Therefore if, for a community $G_c$ of a network, the first term in Modularity ($m_c/m$) is much larger than the second ($\left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$), it means that there are many more links inside $G_c$ than one would expect by random chance. This would mean that $G_c$ is a module in Modularity sense. The comparison with the null model (represented by the randomized network) leads to the quantitative definition of a community as a subgraph such that $m_c/m > \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$
+To make this example more concrete we studied numerically this benchmark network where the three subgraphs take a precise form. For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge $(m_{01}=1, m_{02}=1)$, and to each other by $m_{12}$ edges. $G_0$ was defined as a clique of variable size with a number of edges ranging from \rm{45} to \rm{2775}. We then computed the numerical difference $\Delta Q$ and plotted as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs for $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$. For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B). With increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.5\textwidth]{images/figure_1_barthelemy.pdf}
+\caption{Analysis of the onset of the resolution limit for Modularity in a model graph (A) consisting of two cliques, $G_1$ and $G_2$, and a size-varying components $G_0$. The red line indicates the partition $A$, with $G_1$ and $G_2$ as different modules, and the blue line the partition $B$, with $G_1$ and $G_2$ merged into a single module. The graph (B) shows the difference in Modularity for increasing number of edges in $G_0$.}
+\label{fig:figure_1_barthelemy}
+\end{figure}
+
+An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links. If the number of cliques is large enough (more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. Already when considering a ring of 30 cliques made of 5 nodes, the optimal Modularity partition combines cliques two by two.
+
+%Modularity is expressed in Eq.~\label{eq:newmanmodularity} as the sum of the difference of two terms. Therefore if, for a community $G_c$ of a network, the first term in Modularity ($m_c/m$) is much larger than the second ($\left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$), it means that there are many more links inside $G_c$ than one would expect by random chance. This would mean that $G_c$ is a module in Modularity sense. The comparison with the null model (represented by the randomized network) leads to the quantitative definition of a community as a subgraph such that $m_c/m > \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$
 
 
 \subsubsection{Deeper analysis of the configuration model}
