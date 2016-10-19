@@ -1,3 +1,4 @@
+# using when-changed to monitor online file changing and do action
 project(Thesis)
 cmake_minimum_required(VERSION 2.8)
 

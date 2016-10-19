@@ -450,7 +450,7 @@ In the next sections we will challenge this idea and show that this observation 
 
 \subsection{Resolution limit in community detection}
 Over the years, Modularity attracted a lot of attention as it served as the main tool to inspect whether networks obtained from many different scientific areas, were showing community structure.
-The wide use of Modularity has, on one hand, opened many researchers to gain interest in complex networks, with interesting results in sociology, bioinformatics and ICT\todo{citare}, but on the other hand offered a fallacious view on the community detection problem, as a big limit was lurking in the very same definition of Modularity.
+The wide use of Modularity has, on one hand, opened many researchers to gain interest in complex networks, with interesting results in sociology, bioinformatics and ICT\todo{citare}, but on the other hand offered a fallacious view on the community detection problem, as an unseen consequence of Modularity maximization was its substantial limit to detect communities smaller than a certain scale.
 
 In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity. Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
 
@@ -473,7 +473,7 @@ More specifically, if one sets $a_1=a_2=b_1=b_2=1/m$, is easy to check that Eq.~
 m_c < \sqrt{\frac{m}{2}}
 \end{equation}
 
-To make this example more concrete we studied numerically this benchmark network where the three subgraphs take a precise form. For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge $(m_{01}=1, m_{02}=1)$, and to each other by $m_{12}$ edges. $G_0$ was defined as a clique of variable size with a number of edges ranging from \rm{45} to \rm{2775}. We then computed the numerical difference $\Delta Q$ and plotted as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs for $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$. For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B). With increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
+To make this example more concrete we studied numerically this benchmark network where the three subgraphs take a precise form. For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge $(m_{01}=1, m_{02}=1)$, and to each other by $m_{12}$ edges. $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs for $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$. For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B). With increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
 
 \begin{figure}[htb!]
 \centering
@@ -484,8 +484,16 @@ To make this example more concrete we studied numerically this benchmark network
 
 An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links. If the number of cliques is large enough (more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. Already when considering a ring of 30 cliques made of 5 nodes, the optimal Modularity partition combines cliques two by two.
 
-%Modularity is expressed in Eq.~\label{eq:newmanmodularity} as the sum of the difference of two terms. Therefore if, for a community $G_c$ of a network, the first term in Modularity ($m_c/m$) is much larger than the second ($\left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$), it means that there are many more links inside $G_c$ than one would expect by random chance. This would mean that $G_c$ is a module in Modularity sense. The comparison with the null model (represented by the randomized network) leads to the quantitative definition of a community as a subgraph such that $m_c/m > \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$
+The resolution limit  first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks.
 
+By way of example, certain functional processes, like color vision, have been described as anatomically localized\todo{COPIARE CITAZIONI DA MIO}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\todo{METTERE CITAZIONE}.
+
+Hence, we may expect the brain modular structure to comprise heterogeneously distributed communities.
+Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear.
+
+Hierarchical approaches have shown that large modules can be further subdivided, indicating that connectivity networks show structure at different spatial scales~\todo{COPIARE CITAZIONE}.
+However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
+To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
 \subsubsection{Deeper analysis of the configuration model}
 In the configuration model used in Modularity the probability that a node $i$ with degree $k_i$ links any other node in the graph (including itself) is $k_i/\sum_{i}k_i$ and by means of the handshaking lemma in Eq.~\ref{eq:handshaking_lemma} is equivalent to $k_i/2m$.
