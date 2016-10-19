@@ -1,28 +1,28 @@
-% \noindent\begin{figure}[htb]
-% \centering
-% \begin{minipage}[b]{0.5\textwidth}
-% \includegraphics[width=1\linewidth]{images/konigsberg.jpg}
-% \end{minipage}\begin{minipage}[b]{0.5\textwidth}
-% \centering
-% \begin{tikzpicture}
-%     \tikzset{LabelStyle/.style= {draw}}
-%     \GraphInit[vstyle=Normal]
-%     \node[VertexStyle](A){a};
-%     \node[VertexStyle,right=of A](B){b};
-%     \node[VertexStyle,right=of B](C){c};
-%     \node[VertexStyle,above= 1.2cm of B](D){d};
-%     \draw[EdgeStyle](B) to node[LabelStyle]{} (D);
-%     \tikzset{EdgeStyle/.append style = {bend left}}
-%     \draw[EdgeStyle](A) to node[LabelStyle]{} (B);
-%     \draw[EdgeStyle](B) to node[LabelStyle]{} (A);
-%     \draw[EdgeStyle](B) to node[LabelStyle]{} (C);
-%     \draw[EdgeStyle](C) to node[LabelStyle]{} (B);
-%     \draw[EdgeStyle](A) to node[LabelStyle]{} (D);
-%     \draw[EdgeStyle](D) to node[LabelStyle]{} (C);
-% \end{tikzpicture}
-% \end{minipage}
-% \caption*{\textsf{The city of K{\"o}nigsberg in an old postcard with its graph-theoretical representation, where the bridges are the edges of the graph and the city parts are represented by nodes. This city inspired Euler to start graph theory.}}
-% \end{figure}
+\noindent\begin{figure}[htb]
+\centering
+\begin{minipage}[b]{0.5\textwidth}
+\includegraphics[width=1\linewidth]{images/konigsberg.jpg}
+\end{minipage}\begin{minipage}[b]{0.5\textwidth}
+\centering
+\begin{tikzpicture}
+    \tikzset{LabelStyle/.style= {draw}}
+    \GraphInit[vstyle=Normal]
+    \node[VertexStyle](A){a};
+    \node[VertexStyle,right=of A](B){b};
+    \node[VertexStyle,right=of B](C){c};
+    \node[VertexStyle,above= 1.2cm of B](D){d};
+    \draw[EdgeStyle](B) to node[LabelStyle]{} (D);
+    \tikzset{EdgeStyle/.append style = {bend left}}
+    \draw[EdgeStyle](A) to node[LabelStyle]{} (B);
+    \draw[EdgeStyle](B) to node[LabelStyle]{} (A);
+    \draw[EdgeStyle](B) to node[LabelStyle]{} (C);
+    \draw[EdgeStyle](C) to node[LabelStyle]{} (B);
+    \draw[EdgeStyle](A) to node[LabelStyle]{} (D);
+    \draw[EdgeStyle](D) to node[LabelStyle]{} (C);
+\end{tikzpicture}
+\end{minipage}
+\caption*{\textsf{The city of K{\"o}nigsberg in an old postcard with its graph-theoretical representation, where the bridges are the edges of the graph and the city parts are represented by nodes. This city inspired Euler to start graph theory.}}
+\end{figure}
 
 The methods of network theory date back to the problem of K{\"o}nigsberg bridges, in 1735, when the famous mathematician Leonhard Euler was faced with the problem of finding a path through the city that would cross all the seven bridges just once.
 Since then a large amount of knowledge has been accumulated on networks, in what is nowadays known as graph-theory.
@@ -36,64 +36,83 @@ Additionally, brain networks have also been defined on the basis of inter-subjec
 All of these networks are ``weighted'' by definition, i.e. their links are associated with real numbers representing a measure of the strength of pairwise interactions between nodes. 
 
 Across the many properties that graphs exhibit and that are arguments of further analysis per se, one of the most directly observable is that, nodes group together forming some kind of \emph{clusters}.
-At this level of meso-scale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph. When the mesoscopic structure tends to group nodes with similar properties, the meso-scale structure is called \emph{assortative}. Such graphs with assortative structures display consist in tightly connected groups of nodes that are themselves loosely connected with other groups. These groups are therefore dubbed as \emph{communities}. The study of \emph{community} \emph{structure} is \emph{grosso} \emph{modo} the topic of this introductory chapter.
+At this level of meso-scale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph. When the mesoscopic structure tends to group nodes with similar properties, the meso-scale structure is called \emph{assortative}. Such graphs with assortative structures consist in tightly connected groups of nodes that are themselves loosely connected with other groups. These groups are therefore dubbed as \emph{communities}. 
 \bigbreak
-The community structure is one of the most studied properties of networks: a large amount of literature has grown on community detection, as proved by the one hundred pages of the relatively recent review of Fortunato~\cite{fortunato2010}.
+The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on community detection, as proven by the large review of Fortunato~\cite{fortunato2010}.
 The problem of detecting the communities, or ``graph-partitioning'' in the computer-science jargon, is of big theoretical and practical importance.
 From the theoretic point of view, communities in networks are representative of the generative probabilistic model underlying the formation of links~\cite{Karrer2011} and tell much about the statistical properties of the networks.
-On the other side, practical applications of community detection are fundamental in sociology, computer science, biology and especially in neuroscience.
+On the other side, practical applications of community detection are fundamental in sociology, computer science, biology and many other fields.
 
-%The computational and theoretical models of brain as a graph are being some of the most important subjects of research in complex networks.
 It's being increasingly understood indeed, that like many other information processing systems, the brain exhibit a modular architecture.
-Within the modules the information is processed locally and is then shared between modules on a communication backbone.\todo{mettere citazione, frase ambigua}
-Additionally, the modular organization is exhibited hierarchically at different scales, with modules inside modules, a construction that is thought to confer robustness and adaptability to the network. This kind of structure implies that modules of heterogeneous size are present at the same time in the brain networks and that an efficient method to detect the presence of large and small modules at the same time together is in order.
+Within the modules the information is processed locally and is then shared between modules on a communication backbone~\cite{DeReus2013a,VandenHeuvel2013a}.
 
+Additionally, the modular organization is exhibited hierarchically at different scales, with modules inside modules, a construction that is thought to confer robustness and adaptability to the network~\cite{meunier2010}. This kind of structure implies that modules of heterogeneous size are present at the same time in the brain networks and that an efficient method to detect the presence of large and small modules at the same time together is in order.
+
+Several methods have been proposed to resolve the community structure of complex networks~\cite{fortunato2010,lancichinetti2009}.
+Many of these methods involve the definition of a quality function that assigns positive or negative scores to edges connecting nodes within or outside the same community, and heuristics to find the optimal partition of the network that maximize this fitness function. The most popular approach is Newman's ``Modularity maximization'' and variations thereof~\cite{newman2006}.
+Following the first demonstration by~\cite{schwarz2008}, partitioning of brain networks using Modularity has been widely applied to assess the brain modular structure.
+A few, large modules, including the Default Mode Network, the central network, occipital and frontoparietal networks have been observed with remarkable consistency across subjects and studies~\cite{meunier2010,wang2010}. 
+
+Despite its popularity and merits, Newman’s approach presents some important limitations.
+Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
+As a consequence, even unambiguously defined modules, like complete sub-graphs or cliques, may be unduly merged into larger communities when they are too small compared to the size of the network. Subsequent work by various groups has shown that the resolution limit is quite pervasive~\cite{lancichinetti2009,traag2011,squartini2015,lancichinetti2011,kawamoto2015}, and affects, to a different extent, many other methods, including Reichardt and Bornholdt’s~\cite{reichardt2006}, Arenas and Gomez'~\cite{arenas2008}, Ronhovde and Nussinov's~\cite{ronhovde2009}, Rosvall and Bergstrom's (\emph{Infomap})~\cite{rosvall2008,kawamoto2015} and others.
+
+Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}. However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter. Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
+
+However, real-world networks are characterized by the coexistence of clusters of very different sizes, and no single parameter can adapt to the variety of network topologies observed in nature.
+Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 
 %Here, we present only two, from the pletora of examples that take advantage of the application of community detection.
 %In sociology, the definition of social cliques is important to identify sets of persons with some social relation~\cite{alba1973}. The social-network LinkedIn, in fact, applies community detection as a recommendation system to suggest new friends to the users.
 %Biology is extremely rich of examples where community detection plays an important role. The definition of molecular complexes that take part to the same metabolic pathway and that have the similar functions within the cell is expressed as community detection on the graph of protein-protein interaction.
 
 Before delving into the details of community detection, a short introduction to the methods and the jargon of graph-theory is in order.
-In Section~\ref{sec:elementsofgraphtheory} we introduce the mathematical concepts of graph theory. In Section~\ref{sec:communitydetectioninnetworks}, we present the problem of community detection in networks. We discuss the main issue of community detection, namely the resolution limit in~\ref{sec:resolutionlimit}. Finally, Surprise, an approach that mitigates the resolution limit is analyzed in deep in section~\ref{sec:surprise}. Different applications of community detection based on Surprise will be then the argument of the next chapters.
+In Section~\ref{sec:elementsofgraphtheory} we introduce the mathematical concepts of graph theory. In Section~\ref{sec:communitydetectioninnetworks}, we present the problem of community detection in networks. The Newman's Modularity and the null model upon which its based is discussed in~\ref{sec:newman_modularity}. The bad consequences of Modularity maximization i.e the resolution limit is discussed thoroughly in~\ref{sec:resolutionlimit}, followed by approaches to make the resolution limit less problematic.
+Finally, Surprise, an approach that really mitigates the resolution limit is briefly introduced in section~\ref{sec:surprise}. Different applications of community detection based on Surprise will be then the argument of the next chapters.
 
-This introductory chapter ends discussing the potential methodological improvements that this work may benefit in future.
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% ELEMENTS OF GRAPH THEORY %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Elements of graph theory}\label{sec:elementsofgraphtheory}
-A short introduction to the basic mathematical terminology of graph theory is given in the following paragraphs. Here we adopt the typical notation used in other works of the network science field~\cite{newman2010book,Estrada2011}.
+Here we provide to the reader the basic mathematical tools to affront the next chapter. We adopt the typical notation used in other works of the network science field~\cite{newman2010book,Estrada2011}.
 
-A \emph{graph} $G=(V,E)$ is a representation of a set $V$ of $n$ nodes, also called \emph{vertices}, connected by $m$ links (or edges), in a set $E$ (Figure~\ref{fig:graphmodelsa}).
-One and only one link can exist between two nodes (no \emph{multiedges}), and no links have the same source and target node (no self-loops) as in Figure~\ref{fig:graphmodelsc}.
-Graphs with no multiple links and no self-loops are dubbed \emph{simple graphs}.
-In the next pages we only consider \emph{undirected graphs}, since we are not interested in the direction of link between two nodes.
+A \emph{graph} $G=(V,E)$ is a representation of a set $V$ of $n$ nodes, also called \emph{vertices}, connected by $m$ links (or edges), in a set $E$ (Figure~\ref{fig:simple_unweighted_graph}). When a graph has no multiple links and no self-loops is dubbed \emph{simple graph}.
+If multiple links exist between two nodes, the graph is called ``multigraph''. Additionally if a node links itself, the graph is called ``loopy'' graph. Figure~\ref{fig:loopy_multigraph} shows a loopy multigraph. Additionally, when the direction of the links is taken in account, the graph is called \emph{directed}, as shown in Figure~\ref{fig:directedgraph}.
+
+\noindent\begin{figure}[htb!]
+\centering
+	\begin{subfigure}[b]{0.4\textwidth}%\flushleft
+		\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_simple_graph.tikz}
+		\caption{}
+		\label{fig:simple_unweighted_graph}
+	\end{subfigure}%\hspace{2cm}
+	\begin{subfigure}[b]{0.4\textwidth}%\flushright
+	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_weighted_graph.tikz}
+	\caption{}
+	\label{fig:simple_weighted_graph}
+	\end{subfigure}
+
+	\begin{subfigure}[b]{0.4\textwidth}%\flushleft
+	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_loopy_multigraph.tikz}
+	\caption{}
+	\label{fig:loopy_multigraph}
+	\end{subfigure}%\hspace{2cm}
+	\begin{subfigure}[b]{0.4\textwidth}%\flushright
+	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_directed_graph.tikz}
+	\caption{}
+	\label{fig:directedgraph}
+	\end{subfigure}
+	% \begin{subfigure}[b]{0.4\textwidth}
+	% \includegraphics[width=1.0\textwidth]{standalonetikz/tikz_degree_strength.tikz}
+	% \caption{}
+	% \label{fig:degreestrength}
+	% \end{subfigure}
+	\caption{Classes of graphs. A is a simple unweighted undirected graph. B is a simple weighted undirected graph, C is an unweighted loopy multigraph, D is a simple directed graph.}
+\end{figure}
 
 The adjacency matrix $\mathbf{A}=\{A_{ij}\} \in \{0,1\}^{n \times n}$ of a binary (undirected) graph is a square $n\times n$ symmetric matrix with elements $A_{ij}=1$ when an edge exists between vertex $i$ and $j$ and $0$ otherwise.
 
-An \emph{edge-weighted graph} (also called weighted graph) $G=(V,E,\omega)$ is a graph that has a set of weights $\omega$ on the links (Figure~\ref{fig:graphmodelsb}). Although not true in general, we consider only weighted undirected graphs with symmetrical real adjacency matrix, meaning that if an edge exists between node $i$ and $j$ the weight from $i$ to $j$ is the same as the weight from $j$ to $i$: $\omega_{ij}=\omega_{ji}$. The weighted adjacency matrix,  indicated as $\mathbf{W}=\{ \omega_{ij} \} \in \mathbb{R}^{n\times n}$ is a real, square $n \times n$ symmetric matrix.
-
-% \noindent\begin{figure}[htb]
-% 	\begin{subfigure}[b]{0.25\textwidth}\flushleft
-% 		\includegraphics[width=1.0\textwidth]{standalonetikz/tikz_simple_graph.tikz}
-% 		\caption{}
-% 		\label{fig:graphmodelsa}
-% 	\end{subfigure}%
-% 	\begin{subfigure}[b]{0.25\textwidth}\centering
-% 	\includegraphics[width=1.0\textwidth]{standalonetikz/tikz_weighted_graph.tikz}
-% 	\caption{}
-% 	\label{fig:graphmodelsb}
-% 	\end{subfigure}
-% 	\begin{subfigure}[b]{0.25\textwidth}\flushright
-% 	\includegraphics[width=1.0\textwidth]{standalonetikz/tikz_loopy_multigraph.tikz}
-% 	\caption{}
-% 	\label{fig:graphmodelsc}
-% 	\end{subfigure}%
-% 	\begin{subfigure}[b]{0.25\textwidth}
-% 	\includegraphics[width=1.0\textwidth]{standalonetikz/tikz_degree_strength.tikz}
-% 	\caption{}
-% 	\label{fig:degreestrength}
-% 	\end{subfigure}
-% 	\caption{Classes of graphs.}
-% \end{figure}
+An \emph{edge-weighted graph} (also called weighted graph) $G=(V,E,\omega)$ is a graph that has a set of weights $\omega$ on the links (Figure~\ref{fig:simple_weighted_graph}). Although not true in general, we consider only weighted undirected graphs with symmetrical real adjacency matrix, meaning that if an edge exists between node $i$ and $j$ the weight from $i$ to $j$ is the same as the weight from $j$ to $i$: $\omega_{ij}=\omega_{ji}$. The weighted adjacency matrix,  indicated as $\mathbf{W}=\{ \omega_{ij} \} \in \mathbb{R}^{n\times n}$ is a real, square $n \times n$ symmetric matrix.
 
 The simplest property of the graph, once defined nodes and edges, is the \emph{density} $\rho$. It is defined on a simple graph as the ratio of the number of edges over all possible edges:
 \begin{equation}
@@ -265,7 +284,7 @@ Finding strong communities is more difficult that finding weak communities and m
 % 		\node[draw,green,rounded corners=2mm,fit=(d.north) (d.south) (d.west) (d.east)] {};
 % 	\end{tikzpicture}
 % 	\caption{Unweighted graph}
-% 	\label{fig:graphmodelsclusterina}
+% 	\label{fig:loopy_multigraphlusterina}
 % 	\end{subfigure}
 % 	\begin{subfigure}[t]{0.48\textwidth}\centering
 % 		\begin{tikzpicture}
@@ -295,7 +314,7 @@ Finding strong communities is more difficult that finding weak communities and m
 % 		% \draw[cluster,color=green] (e) -- (d);
 % 		% \end{pgfonlayer}
 % 		\end{tikzpicture}
-% 		\caption{Weighted graph }\label{fig:graphmodelsclusteringb}
+% 		\caption{Weighted graph }\label{fig:loopy_multigraphlusteringb}
 % 	\end{subfigure}
 % 	\caption{Clustering for a unweighted and a weighted graph.}
 % \end{figure}
@@ -428,7 +447,7 @@ It's possible to express any quality function in the form of Eq.~\ref{eq:rbsping
 where $m_c=\sum_{ij}A_{ij}\delta(\sigma_i,c)\delta(c,\sigma_j)$ represents the number of links inside community labeled by $c$ and $\left <m_c \right >=\sum_{ij}\beta_{ij}\delta(\sigma_i,c)\delta(c,\sigma_j)$ is the expected number of links in community $c$ as prescribed by the null model $\beta_{ij}$\footnote{Here and for the rest of the work, we set $P_{ij}:=\beta_{ij}$ for agreement with more conventional notation of null models}. 
 Among the additive quality functions that show up in the form of~\ref{eq:rbspinglass2}, the most important and popular is the \emph{Newman-Girvan's Modularity}.
 
-\subsection{Newman-Girvan Modularity}
+\subsection{Newman-Girvan Modularity}\label{sec:newman_modularity}
 Newman-Girvan Modularity (or simply Modularity)~\cite{newman2006}, denoted here and for the rest of the work by $Q^N$, is based on the idea that a network obtained by randomly reshuffling the original graph edges while keeping the same degrees sequence, should not display any community structure. It turns out that this random reshuffling model probability can be computed analytically takes the form:
 \begin{equation}\label{eq:configuration_model}
 P_{ij} = \frac{k_i k_j}{2m}
@@ -448,18 +467,18 @@ Since Modularity takes values in the range $[-0.5,1]$, then a good partition sho
 
 In the next sections we will challenge this idea and show that this observation leads to false statements about modularity of networks, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models and specifically in the case of Newman's Modularity, hits particularly hard.
 
-\subsection{Resolution limit in community detection}
+\subsection{Resolution limit in community detection}\label{sec:resolutionlimit}
 Over the years, Modularity attracted a lot of attention as it served as the main tool to inspect whether networks obtained from many different scientific areas, were showing community structure.
 The wide use of Modularity has, on one hand, opened many researchers to gain interest in complex networks, with interesting results in sociology, bioinformatics and ICT\todo{citare}, but on the other hand offered a fallacious view on the community detection problem, as an unseen consequence of Modularity maximization was its substantial limit to detect communities smaller than a certain scale.
 
 In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity. Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
 
 To show the onset of the resolution limit, we follow the lines of Fortunato and Barthelemy, with some obvious notational change. Let us consider a toy network, $G=(V,E)$ that is composed of three subnetworks.
-The first subnetwork, a subgraph $G_0$ with $n_0$ nodes, $m_0$ edges is connected to cliques $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:figure_1_barthelemy}.
+The first subnetwork, a subgraph $G_0$ with $n_0$ nodes and $m_0$ edges is connected to two cliques, $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:figure_1_barthelemy}.
 
 While $G_1$ and $G_2$, are complete subgraphs and are expected to be modules by construction, $G_0$ may consist of many communities. Maximum Modularity partitions then, should identify $G_1$ and $G_2$ as communities, independently from $G_0$. To be more specific, let the partition where the two cliques are separated be denoted by $A$, with Modularity value $Q_A$. The partition instead where the two cliques are merged into a single community is denoted by $B$, with Modularity value $Q_B$.
-To make calculations simpler, we denote the number of links $m_{12}$ as functions of $m_1$ and $m_2$, such that $m_{12}=a_{1}m_1=a_2 m_2$, $m_{01}=b_1 m_1$ and $m_{02}=b_2 m_2$ with $a_1,a_2,b_1,b_2 \geq 0$.
-Because Modularity is a sum over the modules, and the module $G_0$ with Modularity $Q_0$ is the same in both partitions, we are interested in the difference $\Delta Q = Q_{split} - Q_{merge}$ that, after some manipulations, results:
+To make calculations simpler, we indicate the number of links $m_{12}$ as functions of $m_1$ and $m_2$, such that $m_{12}=a_{1}$, $m_1=a_2 m_2$, $m_{01}=b_1 m_1$ and $m_{02}=b_2 m_2$ with $a_1,a_2,b_1,b_2 \geq 0$.
+Since Modularity is a sum over the modules, and the module $G_0$ with Modularity $Q_0$ is the same in both partitions, we are interested in studying the difference $\Delta Q = Q_{split} - Q_{merge}$ that, after some manipulations, results:
 \begin{equation} \label{eq:resolution_limit_delta}
 \Delta Q = \frac{2 m a_1 m_1 - (a_1+b_1+2)(a_2+b_2+2)m_1 m_2}{2m^2}
 \end{equation}
@@ -468,21 +487,23 @@ Specifically, we want to check when $\Delta Q > 0$, i.e. when the partition $A$ 
 m_2 < \frac{2m a_1}{(a_1+b_1+2)(a_2+b_2+2)}.
 \end{equation}
 In the case where $a_1=a_2=0$, there are no links between $G_1$ and $G_2$ and the condition is satisfied. When instead the two subgraphs are connected ($m_{12} \neq 0$), it happens that at some values of $m_1$ and $m_2$, the partition where the two modules are merged is preferred, i.e. $\Delta Q <0$. This means that when maximizing $Q^N$ on a network, is possible to miss some important structures, if they are too small.
-More specifically, if one sets $a_1=a_2=b_1=b_2=1/m$, is easy to check that Eq.~\ref{eq:resolution_limit_delta} is not satisfied if the number of links in the modules, $m_c$ is lower than the square root of the total number of links in the network:
+More specifically, if one sets $a_1=a_2=b_1=b_2=1/m$, is easy to check that Eq.~\ref{eq:resolution_limit_delta} is not satisfied if the number of links in the modules $m_c$, is lower than the square root of the total number of links in the network:
 \begin{equation}
 m_c < \sqrt{\frac{m}{2}}
 \end{equation}
 
-To make this example more concrete we studied numerically this benchmark network where the three subgraphs take a precise form. For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge $(m_{01}=1, m_{02}=1)$, and to each other by $m_{12}$ edges. $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs for $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$. For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B). With increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
+To make this example more concrete we studied numerically this benchmark network where the three subgraphs take a precise form. For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge ($m_{01}=1, m_{02}=1$) and to each other by $m_{12}$ edges. $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted it as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs for $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$. For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B). With increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
+
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.5\textwidth]{images/figure_1_barthelemy.pdf}
+\includegraphics[width=1\textwidth]{images/barthelemy_modularity.pdf}
 \caption{Analysis of the onset of the resolution limit for Modularity in a model graph (A) consisting of two cliques, $G_1$ and $G_2$, and a size-varying components $G_0$. The red line indicates the partition $A$, with $G_1$ and $G_2$ as different modules, and the blue line the partition $B$, with $G_1$ and $G_2$ merged into a single module. The graph (B) shows the difference in Modularity for increasing number of edges in $G_0$.}
 \label{fig:figure_1_barthelemy}
 \end{figure}
 
-An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links. If the number of cliques is large enough (more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. Already when considering a ring of 30 cliques made of 5 nodes, the optimal Modularity partition combines cliques two by two.
+An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links, as shown in Figure~\ref{fig:traag_ring_of_cliques}. If the number of cliques is large enough (more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. Already when considering a ring of 30 cliques made of 5 nodes, the optimal Modularity partition combines cliques in pairs. By extending the number of cliques, then Modularity may merge them in groups of three, fours etc.
+
 
 The resolution limit  first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks.
 
@@ -495,14 +516,25 @@ Hierarchical approaches have shown that large modules can be further subdivided,
 However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
 To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
-\subsubsection{Deeper analysis of the configuration model}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
+\caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly A, but Modularity values is higher for partition B, where pairs of cliques are coalesced into separated communities.}
+\label{fig:traag_ring_of_cliques}
+\end{figure}
+
+%Modularity is expressed in Eq.~\label{eq:newmanmodularity} as the sum of the difference of two terms. Therefore if, for a community $G_c$ of a network, the first term in Modularity ($m_c/m$) is much larger than the second ($\left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$), it means that there are many more links inside $G_c$ than one would expect by random chance. This would mean that $G_c$ is a module in Modularity sense. The comparison with the null model (represented by the randomized network) leads to the quantitative definition of a community as a subgraph such that $m_c/m > \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$
+>>>>>>> 4938252df4d588d3a3eaaf54d1343d77936eb76b
+
+\newpage
+\subsection{The configuration model}
 In the configuration model used in Modularity the probability that a node $i$ with degree $k_i$ links any other node in the graph (including itself) is $k_i/\sum_{i}k_i$ and by means of the handshaking lemma in Eq.~\ref{eq:handshaking_lemma} is equivalent to $k_i/2m$.
 Hence, in absence of correlations, is easy to show that the probability that two nodes $i$ and $j$ with degrees $k_i$ and $k_j$ are linked under this model is the product of individual probabilities:
 \begin{equation}\label{eq:configuration_model_probability}
 \Pr \left ( a_{ij} | \{ k \} \right) = \Pr(k_i | \{ k \})\Pr(k_j | \{ k \})=\frac{k_i k_j}{(2m)^2}
 \end{equation}
 
-Although Modularity is most frequently applied to \emph{simple graphs}( see Fig.~\ref{fig:graphmodelsa}), the configuration model implies that the randomization is carried over the space of \emph{loopy multigraphs}.
+Although Modularity is most frequently applied to \emph{simple graphs} (see Fig.~\ref{fig:graphmodelsa}), the configuration model implies that the randomization is carried over the space of \emph{loopy multigraphs}.
 The rewiring probability considers indeed that the stubs of vertices can be reconnected both to the same source vertex (self-loops) or added to already existing edges (multi-edges).
 Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but three other distinct matchings, which produce non-simple networks (Fig.\ref{fig:reshuffle_loopy_multigraphs}). 
 In fact, the number of possible rewirings that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges, is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as:
@@ -534,8 +566,9 @@ Under these hypotheses the expected number of edges between two vertices in the 
 An approach that allows to get the right configuration model depending on the class of graph under exam relies on computational simulation of the correct rewiring probability by means of Markov Chain Monte Carlo algorithms, as proposed in ~\cite{Fosdick2016}.
 In the remaining paragraphs, although flawed, we'll use the classic configuration model from Eq.~\ref{eq:configuration_model_probability} to be adherent to most of the brain networks literature, justified also by the vanishing effects of self-loops in large sparse networks. Nonetheless, we will illustrate many of the problems that the non critical use of Modularity with this null model has introduced.
 
-
-Modularity identifies communities as subset of nodes whose internal fraction of edges deviates from the null configuration model on the same subset with the term $m_c/m > (K_c/2m)^2$. Despite measuring deviation from a null model, Modularity does not take into account the statistical evidence associated with this deviation and as result is not able to separate actual communities from those arising only from statistical fluctuations of the null model. Additionally, Modularity can even find high-scoring partitions in fully random graphs~\cite{Guimera2004}.
+\subsection{Other null models for Modularity}
+Modularity identifies communities as subset of nodes whose internal fraction of edges deviates from the null configuration model on the same subset with the term $m_c/m > (K_c/2m)^2$.
+Despite measuring deviation from a null model, Modularity does not take into account the statistical evidence associated with this deviation and as result is not able to separate actual communities from those arising only from statistical fluctuations of the null model. Additionally, Modularity can even find high-scoring partitions in fully random graphs~\cite{Guimera2004}.
 
 The configuration model is not the only possible null-model to use in spin-glass based quality functions and different authors proposed several variants of Modularity~\cite{ronhovde2010,ronhovde2009,traag2011} with different null models.
 The simplest variation of Modularity is the so-called ER Modularity~\cite{traag2015} that instead of the configuration model uses an Erd\H{o}s-Rényi random graph in which every edge appears with the same probability $p_{ER}$. The number of expected edges $\left< m_c \right>$ in a community of size $n_c$ is thus (in the space of simple graphs):
