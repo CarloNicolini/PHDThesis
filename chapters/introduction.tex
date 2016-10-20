@@ -98,7 +98,7 @@ If multiple links exist between two nodes, the graph is called ``multigraph''. A
 	\label{fig:loopy_multigraph}
 	\end{subfigure}%\hspace{2cm}
 	\begin{subfigure}[b]{0.4\textwidth}%\flushright
-	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_directed_graph.tikz}
+	%\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_directed_graph.tikz}
 	\caption{}
 	\label{fig:directedgraph}
 	\end{subfigure}
@@ -497,13 +497,12 @@ To make this example more concrete we studied numerically this benchmark network
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1\textwidth]{images/barthelemy_modularity.pdf}
+%\includegraphics[width=1\textwidth]{images/barthelemy_modularity.pdf}
 \caption{Analysis of the onset of the resolution limit for Modularity in a model graph (A) consisting of two cliques, $G_1$ and $G_2$, and a size-varying components $G_0$. The red line indicates the partition $A$, with $G_1$ and $G_2$ as different modules, and the blue line the partition $B$, with $G_1$ and $G_2$ merged into a single module. The graph (B) shows the difference in Modularity for increasing number of edges in $G_0$.}
 \label{fig:figure_1_barthelemy}
 \end{figure}
 
 An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links, as shown in Figure~\ref{fig:traag_ring_of_cliques}. If the number of cliques is large enough (more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. Already when considering a ring of 30 cliques made of 5 nodes, the optimal Modularity partition combines cliques in pairs. By extending the number of cliques, then Modularity may merge them in groups of three, fours etc.
-
 
 The resolution limit  first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks.
 
@@ -518,7 +517,7 @@ To this end, an optimization method that does not suffer from the resolution lim
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
+%\includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
 \caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly A, but Modularity values is higher for partition B, where pairs of cliques are coalesced into separated communities.}
 \label{fig:traag_ring_of_cliques}
 \end{figure}
