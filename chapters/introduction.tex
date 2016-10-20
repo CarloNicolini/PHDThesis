@@ -28,12 +28,42 @@ The methods of network theory date back to the problem of K{\"o}nigsberg bridges
 Since then a large amount of knowledge has been accumulated on networks, in what is nowadays known as graph-theory.
 
 Simple graphs are usually defined as a set of nodes, entities representative of some object, connected by a set of links, denoting the strength of the relation between pairs of nodes.
-Graphs can be used to represent any type of relation between interacting elements and the idea that graph-theory can be applied to brain networks has been pioneered first by the seminal papers of Olaf Sporns in 2004~\cite{Sporns2004}. In the framework of networks neuroscience, the nodes of graphs typically correspond to anatomically defined brain regions and the links to a measure of interregional interaction or similarity~\cite{bullmore2009}.
+Graphs can be used to represent any type of relation between interacting elements and the idea that graph-theory can be applied to brain networks has been pioneered since the last two decades.
+But why are graphs such an important tool for a better understanding of neuroscience and why is such model of the brain so powerful and predictive?
 
-For example, in resting state functional connectivity networks, link weights are defined as interregional temporal correlations in the fluctuations of the BOLD signals, and the resulting graph can be represented by a matrix where the strongest correlations indicate the presence of a link between any two specific areas.
+We know that the brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
+The elements of the nervous system interact and react over the organic substrate that they themselves define, and shape an extremely intricate pattern of electrical and metabolic activities, giving rise to the outstanding set of abilities and possibilities typical of most evolved organisms.
+Although, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate.
+
+A window over such formidable and irreducible complexity of the brain can thus be opened by specific theoretical tools able to account for the brain multiscale organization, its hierarchical structure and its modular composition.
+In this sense, the methods and algorithms offered by complex network theory, are not only the most promising, but have already been adopted in clinical contexts, as they are able to distinguish differences in the  brain connectivity spanning orders of magnitude, driving clinicians to quantitative diagnoses of diseases and eventually leading to a cure.
+
+
+The study of brain connectivity has opened many new advances in areas of neuroscience, specifically the analysis of networks architecture enlightened a number of problems concerning brain function:
+
+\todo{PAGINA3 SPORNS}
+%Even with the person cognitively at rest and awake, the human brain and, as recently discovered also most mammalian brains, engage in a typical pattern of metabolic and electrical neural activities~\cite{biswal1995,Biswal2012}.
+
+The modeling of brain in terms of networks starts from the definition of its nodes. These can be defined as electroencephalography or multi-array electrodes or as anatomically defined regions of histological, MRI or diffusion tensor imaging data. A clear delineation of network nodes, is the first step in the whole pipeline of the graph-theoretical analyses and has a paramount importance for the subsequent statistics that emerge from the data. Typically, in the framework of networks neuroscience, the nodes of brain graphs correspond to anatomically defined brain parcels and the links between nodes are a measure of interregional coordination or similarity~\cite{bullmore2009}. 
+To be more specific in resting state functional connectivity networks, link weights are defined as interregional temporal correlations in the fluctuations of the BOLD signals, and the resulting graph can be represented by a matrix where the strongest correlations indicate the presence of a link between any two specific areas.
 Other applications of graph-theory in neuroscience see the links as directly proportional to the number of white matter tracts connecting any two regions.
+
+Structural and functional brain networks can be explored using graph theory through four steps.
+\begin{enumerate}
+\item Define the network nodes. These could be defined 
+\item Estimate a continuous measure of association between nodes. This could be spectral coherence or Granger causality.
+\end{enumerate}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{images/bullmore_2009_pipeline.pdf}
+\caption{Structural and functional brain networks can be explored using graph theory through four steps.}
+\end{figure}
+
 Additionally, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{Evans2013}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a} or pharmacological challenges~\cite{Schwarz2007,schwarz2008}.
-All of these networks are ``weighted'' by definition, i.e. their links are associated with real numbers representing a measure of the strength of pairwise interactions between nodes. 
+All of these networks are ``weighted'' by definition, i.e. their links are associated with real numbers representing a measure of the strength of pairwise interactions between nodes.
+
+
+
 
 Across the many properties that graphs exhibit and that are arguments of further analysis per se, one of the most directly observable is that, nodes group together forming some kind of \emph{clusters}.
 At this level of meso-scale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph. When the mesoscopic structure tends to group nodes with similar properties, the meso-scale structure is called \emph{assortative}. Such graphs with assortative structures consist in tightly connected groups of nodes that are themselves loosely connected with other groups. These groups are therefore dubbed as \emph{communities}. 
@@ -79,36 +109,31 @@ Here we provide to the reader the basic mathematical tools to affront the next c
 A \emph{graph} $G=(V,E)$ is a representation of a set $V$ of $n$ nodes, also called \emph{vertices}, connected by $m$ links (or edges), in a set $E$ (Figure~\ref{fig:simple_unweighted_graph}). When a graph has no multiple links and no self-loops is dubbed \emph{simple graph}.
 If multiple links exist between two nodes, the graph is called ``multigraph''. Additionally if a node links itself, the graph is called ``loopy'' graph. Figure~\ref{fig:loopy_multigraph} shows a loopy multigraph. Additionally, when the direction of the links is taken in account, the graph is called \emph{directed}, as shown in Figure~\ref{fig:directedgraph}.
 
-\noindent\begin{figure}[htb!]
-\centering
-	\begin{subfigure}[b]{0.4\textwidth}%\flushleft
-		\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_simple_graph.tikz}
-		\caption{}
-		\label{fig:simple_unweighted_graph}
-	\end{subfigure}%\hspace{2cm}
-	\begin{subfigure}[b]{0.4\textwidth}%\flushright
-	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_weighted_graph.tikz}
-	\caption{}
-	\label{fig:simple_weighted_graph}
-	\end{subfigure}
+% \noindent\begin{figure}[htb!]
+% \centering
+% 	\begin{subfigure}[hb]{0.4\textwidth}
+% 		\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_simple_graph.tikz}
+% 		\caption{}
+% 		\label{fig:simple_unweighted_graph}
+% 	\end{subfigure}
+% 	\begin{subfigure}[hb]{0.4\textwidth}
+% 	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_weighted_graph.tikz}
+% 	\caption{}
+% 	\label{fig:simple_weighted_graph}
+% 	\end{subfigure}
 
-	\begin{subfigure}[b]{0.4\textwidth}%\flushleft
-	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_loopy_multigraph.tikz}
-	\caption{}
-	\label{fig:loopy_multigraph}
-	\end{subfigure}%\hspace{2cm}
-	\begin{subfigure}[b]{0.4\textwidth}%\flushright
-	%\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_directed_graph.tikz}
-	\caption{}
-	\label{fig:directedgraph}
-	\end{subfigure}
-	% \begin{subfigure}[b]{0.4\textwidth}
-	% \includegraphics[width=1.0\textwidth]{standalonetikz/tikz_degree_strength.tikz}
-	% \caption{}
-	% \label{fig:degreestrength}
-	% \end{subfigure}
-	\caption{Classes of graphs. A is a simple unweighted undirected graph. B is a simple weighted undirected graph, C is an unweighted loopy multigraph, D is a simple directed graph.}
-\end{figure}
+% 	\begin{subfigure}[hb]{0.4\textwidth}
+% 	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_loopy_multigraph.tikz}
+% 	\caption{}
+% 	\label{fig:loopy_multigraph}
+% 	\end{subfigure}
+% 	\begin{subfigure}[hb]{0.4\textwidth}
+% 	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_directed_graph.tikz}
+% 	\caption{}
+% 	\label{fig:directedgraph}
+% 	\end{subfigure}
+% 	\caption{Classes of graphs. A is a simple unweighted undirected graph. B is a simple weighted undirected graph, C is an unweighted loopy multigraph, D is a simple directed graph.}
+% \end{figure}
 
 The adjacency matrix $\mathbf{A}=\{A_{ij}\} \in \{0,1\}^{n \times n}$ of a binary (undirected) graph is a square $n\times n$ symmetric matrix with elements $A_{ij}=1$ when an edge exists between vertex $i$ and $j$ and $0$ otherwise.
 
@@ -495,12 +520,12 @@ m_c < \sqrt{\frac{m}{2}}
 To make this example more concrete we studied numerically this benchmark network where the three subgraphs take a precise form. For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge ($m_{01}=1, m_{02}=1$) and to each other by $m_{12}$ edges. $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted it as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs for $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$. For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B). With increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
 
 
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=1\textwidth]{images/barthelemy_modularity.pdf}
-\caption{Analysis of the onset of the resolution limit for Modularity in a model graph (A) consisting of two cliques, $G_1$ and $G_2$, and a size-varying components $G_0$. The red line indicates the partition $A$, with $G_1$ and $G_2$ as different modules, and the blue line the partition $B$, with $G_1$ and $G_2$ merged into a single module. The graph (B) shows the difference in Modularity for increasing number of edges in $G_0$.}
-\label{fig:figure_1_barthelemy}
-\end{figure}
+% \begin{figure}[htb!]
+% \centering
+% \includegraphics[width=1\textwidth]{images/barthelemy_modularity.pdf}
+% \caption{Analysis of the onset of the resolution limit for Modularity in a model graph (A) consisting of two cliques, $G_1$ and $G_2$, and a size-varying components $G_0$. The red line indicates the partition $A$, with $G_1$ and $G_2$ as different modules, and the blue line the partition $B$, with $G_1$ and $G_2$ merged into a single module. The graph (B) shows the difference in Modularity for increasing number of edges in $G_0$.}
+% \label{fig:figure_1_barthelemy}
+% \end{figure}
 
 An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links, as shown in Figure~\ref{fig:traag_ring_of_cliques}. If the number of cliques is large enough (more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. Already when considering a ring of 30 cliques made of 5 nodes, the optimal Modularity partition combines cliques in pairs. By extending the number of cliques, then Modularity may merge them in groups of three, fours etc.
 
@@ -511,16 +536,16 @@ By way of example, certain functional processes, like color vision, have been de
 Hence, we may expect the brain modular structure to comprise heterogeneously distributed communities.
 Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear.
 
-Hierarchical approaches have shown that large modules can be further subdivided, indicating that connectivity networks show structure at different spatial scales~\todo{COPIARE CITAZIONE}.
+Hierarchical approaches have shown that large modules can be further subdivided, indicating that connectivity networks show structure at different spatial scales~\cite{meunier2009}.
 However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
 To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
-\caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly A, but Modularity values is higher for partition B, where pairs of cliques are coalesced into separated communities.}
-\label{fig:traag_ring_of_cliques}
-\end{figure}
+% \begin{figure}[htb!]
+% \centering
+% \includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
+% \caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly A, but Modularity values is higher for partition B, where pairs of cliques are coalesced into separated communities.}
+% \label{fig:traag_ring_of_cliques}
+% \end{figure}
 
 %Modularity is expressed in Eq.~\label{eq:newmanmodularity} as the sum of the difference of two terms. Therefore if, for a community $G_c$ of a network, the first term in Modularity ($m_c/m$) is much larger than the second ($\left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$), it means that there are many more links inside $G_c$ than one would expect by random chance. This would mean that $G_c$ is a module in Modularity sense. The comparison with the null model (represented by the randomized network) leads to the quantitative definition of a community as a subgraph such that $m_c/m > \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2$
 
