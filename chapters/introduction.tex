@@ -1,39 +1,40 @@
-\noindent\begin{figure}[htb]
-\centering
-\begin{minipage}[b]{0.5\textwidth}
-\includegraphics[width=1\linewidth]{images/konigsberg.jpg}
-\end{minipage}\begin{minipage}[b]{0.5\textwidth}
-\centering
-\begin{tikzpicture}
-    \tikzset{LabelStyle/.style= {draw}}
-    \GraphInit[vstyle=Normal]
-    \node[VertexStyle](A){a};
-    \node[VertexStyle,right=of A](B){b};
-    \node[VertexStyle,right=of B](C){c};
-    \node[VertexStyle,above= 1.2cm of B](D){d};
-    \draw[EdgeStyle](B) to node[LabelStyle]{} (D);
-    \tikzset{EdgeStyle/.append style = {bend left}}
-    \draw[EdgeStyle](A) to node[LabelStyle]{} (B);
-    \draw[EdgeStyle](B) to node[LabelStyle]{} (A);
-    \draw[EdgeStyle](B) to node[LabelStyle]{} (C);
-    \draw[EdgeStyle](C) to node[LabelStyle]{} (B);
-    \draw[EdgeStyle](A) to node[LabelStyle]{} (D);
-    \draw[EdgeStyle](D) to node[LabelStyle]{} (C);
-\end{tikzpicture}
-\end{minipage}
-\caption*{\textsf{The city of K{\"o}nigsberg in an old postcard with its graph-theoretical representation, where the bridges are the edges of the graph and the city parts are represented by nodes. This city inspired Euler to start graph theory.}}
-\end{figure}
+% \noindent\begin{figure}[htb]
+% \centering
+% \begin{minipage}[b]{0.5\textwidth}
+% \includegraphics[width=1\linewidth]{images/konigsberg.jpg}
+% \end{minipage}\begin{minipage}[b]{0.5\textwidth}
+% \centering
+% \begin{tikzpicture}
+%     \tikzset{LabelStyle/.style= {draw}}
+%     \GraphInit[vstyle=Normal]
+%     \node[VertexStyle](A){a};
+%     \node[VertexStyle,right=of A](B){b};
+%     \node[VertexStyle,right=of B](C){c};
+%     \node[VertexStyle,above= 1.2cm of B](D){d};
+%     \draw[EdgeStyle](B) to node[LabelStyle]{} (D);
+%     \tikzset{EdgeStyle/.append style = {bend left}}
+%     \draw[EdgeStyle](A) to node[LabelStyle]{} (B);
+%     \draw[EdgeStyle](B) to node[LabelStyle]{} (A);
+%     \draw[EdgeStyle](B) to node[LabelStyle]{} (C);
+%     \draw[EdgeStyle](C) to node[LabelStyle]{} (B);
+%     \draw[EdgeStyle](A) to node[LabelStyle]{} (D);
+%     \draw[EdgeStyle](D) to node[LabelStyle]{} (C);
+% \end{tikzpicture}
+% \end{minipage}
+% \caption*{\textsf{The city of K{\"o}nigsberg in an old postcard with its graph-theoretical representation, where the bridges are the edges of the graph and the city parts are represented by nodes. This city inspired Euler to start graph theory.}}
+% \end{figure}
 
 %%%%%%%%% INTRO GENERALE COMPLEX NETWORKS
 It's nowadays accepted that the brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
 The elements of the nervous system interact and react over the organic substrate that they themselves define, and shape an extremely intricate pattern of electrical and metabolic activities, giving rise to the outstanding set of abilities and possibilities typical of most evolved organisms.
-Nonetheless, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate. Instead, what is being increasingly recognized is that most complex systems are irreducibly complex and that only an approach that contemplate the multiple interactions of simple subsystem, is able to account for their observed features.
+Nonetheless, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate.
+Instead, what science is increasingly recognizing is that for most systems in nature, in order to conserve the properties under investigation, it is necessary to remain within a certain level of complexity and to contemplate the multiple interactions of simple subsystems taken as a whole. It is known, in fact that many systems, despite radically different at their microscopic level, share many remarkable organizational properties, when analyzed in their entirety.
 
-A window over such formidable and irreducible complexity of the brain can thus be opened by specific theoretical tools able to account for the brain multiscale organization, its hierarchical structure and its modular composition.
-In this sense, the methods and algorithms offered by complex network theory are the most powerful and have already been adopted in clinical contexts, where they proved able to distinguish differences in the  brain connectivity, driving clinicians to quantitative diagnoses of diseases and eventually leading to a cure.
+A window over the formidable and irreducible complexity of the brain can thus be opened by specific theoretical tools able to account for the brain multi-scale organization, its hierarchical structure and its modular composition.
 
-The study of brain connectivity has already made possible new advances in areas of neuroscience. Specifically the analysis of the neural network architecture is based on the idea that the brain can be thought as a complex system at different spatial and time scales.
-Casting some of the problems that are typical of neuroscientific investigation into the language of network theory has shed light on a large number of problem concerning brain function.
+The study of brain connectivity has already made possible many advances in specializations of neuroscience, from the identification and structural characterization of the cytoarchitecture, to the macro-scale connectivity at level of nerve fibers.
+Specifically, the analysis of the architecture of the nervous is based on the idea that the brain can be thought as a complex system at different spatial and time scales. In this respect, the tools of network theory are the method of election in the analysis of complex systems.
+% Such representation relies upon the treatment of the brain as a graph, whose nodes are indicative of particular brain regions and whose lins
 %%%%%%
 \bigbreak
 
@@ -41,32 +42,29 @@ The methods of network theory date back to the problem of K{\"o}nigsberg bridges
 Since then a large amount of knowledge has been accumulated on networks, in what is nowadays known as graph-theory.
 
 In totally general settings, simple graphs are usually defined as a set of nodes, entities representative of some object, connected by a set of links, denoting the strength of the relation between pairs of nodes.
-Graphs can be used to represent any type of relation between interacting elements and the idea that graph-theory can be applied to brain networks has been pioneered starting from the middle nineties of the twentieth century.
+Graphs can be used to represent any type of relation between interacting elements and the idea that graph-theory can be applied to brain networks has been pioneered starting from the middle nineties of the twentieth century, defining a new specialization of systems biology, dubbed ``network-neuroscience''.
 
-In the framework of network neuroscience the modeling of brain in terms of networks starts from the definition of its nodes. These can be defined as electroencephalography or multi-array electrodes or as anatomically defined regions of histological, MRI or diffusion tensor imaging data. A clear delineation of network nodes, is the first step in the whole pipeline of the graph-theoretical analyses and has a paramount importance for the subsequent statistics that emerge from the data. Typically, in the framework of networks neuroscience, the nodes of brain graphs correspond to anatomically defined brain parcels and the links between nodes are a measure of interregional coordination or similarity~\cite{bullmore2009}. 
-To be more specific in resting state functional connectivity networks, link weights are defined as interregional temporal correlations in the fluctuations of the BOLD signals, and the resulting graph can be represented by a matrix where the strongest correlations indicate the presence of a link between any two specific areas.
-Other applications of graph-theory in neuroscience see the links as directly proportional to the number of white matter tracts connecting any two regions.
+In the framework of network neuroscience the modeling of brain in terms of graphs starts from the definition of its nodes. These can be defined as electroencephalography or multi-array electrodes or as anatomically defined regions of histological, MRI or diffusion tensor imaging data. A clear delineation of network nodes, is one of the first steps in the whole pipeline of the graph-theoretical analyses and is highly important for the subsequent statistics that result from the data.
 
-Structural and functional brain networks can be explored using graph theory through four steps.
-\begin{enumerate}
-\item Define the network nodes. These could be defined 
-\item Estimate a continuous measure of association between nodes. This could be spectral coherence or Granger causality.
-\end{enumerate}
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=1.0\textwidth]{images/bullmore_2009_pipeline.pdf}
-\caption{Structural and functional brain networks can be explored using graph theory through four steps.}
-\end{figure}
-
-Additionally, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{Evans2013}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a} or pharmacological challenges~\cite{Schwarz2007,schwarz2008}.
+The second step in the definition of a brain network is an estimate of the continuous association between nodes. The links indeed measure the interregional coordination or similarity between nodes.
+To be more specific in the case of fMRI studies of resting state functional connectivity, link weights are defined as interregional temporal correlations in the fluctuations of the BOLD signals, and the resulting graph can be represented by an adjacency matrix where the strongest correlations indicate the presence of a link between any two specific areas.
+In other applications like Diffusion Tensor Imaging, a technique that is able to show the effective directions of nervous fibers traits in the brain, one can see the links as directly proportional to the number of white matter tracts connecting any two regions.
+Additionally, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{Evans2013,he2007}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a}, pharmacological challenges~\cite{Schwarz2007,schwarz2008} or  spectral coherence of EEG electrical time-courses.
 All of these networks are ``weighted'' by definition, i.e. their links are associated with real numbers representing a measure of the strength of pairwise interactions between nodes.
 
+The ascendancy of the network neuroscience in the last decade, is driven by the evidence that almost independently from how the networks links are defined, brain networks some common tracts at many spatial and temporal scales.
+Among these findings we can mention for example, that they exhibit the \emph{small-world}~\cite{Watts1998,sporns2002} property, i.e. the observation that most nodes in a graph can be reached from any other node in just a few hops. Small-worldness, however, though important since it relates to phenotypic traits like IQ~\cite{}  the discovery that the brain is small-world is only a first step into the possibilities offered by network neuroscience.
+%% FIGURA BULLMORE
+% \begin{figure}[htb!]
+% \centering
+% \includegraphics[width=1.0\textwidth]{images/bullmore_2009_pipeline.pdf}
+% \caption{Structural and functional brain networks can be explored using graph theory through four steps.}
+% \end{figure}
 
-
-
-Across the many properties that graphs exhibit and that are arguments of further analysis per se, one of the most directly observable is that, nodes group together forming some kind of \emph{clusters}.
-At this level of meso-scale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph. When the mesoscopic structure tends to group nodes with similar properties, the meso-scale structure is called \emph{assortative}. Such graphs with assortative structures consist in tightly connected groups of nodes that are themselves loosely connected with other groups. These groups are therefore dubbed as \emph{communities}. 
 \bigbreak
+Across the many properties that graphs exhibit and that are arguments of further analysis \emph{per se}, one of the most directly observable is that, nodes group together forming some kind of \emph{clusters}.
+At this level of meso-scale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph. When the mesoscopic structure tends to group nodes with similar properties, the meso-scale structure is called \emph{assortative}. Such graphs with assortative structures consist in tightly connected groups of nodes that are themselves loosely connected with other groups. These groups are therefore dubbed as \emph{communities}. 
+
 The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on community detection, as proven by the large review of Fortunato~\cite{fortunato2010}.
 The problem of detecting the communities, or ``graph-partitioning'' in the computer-science jargon, is of big theoretical and practical importance.
 From the theoretic point of view, communities in networks are representative of the generative probabilistic model underlying the formation of links~\cite{Karrer2011} and tell much about the statistical properties of the networks.
@@ -343,7 +341,7 @@ Finding strong communities is more difficult that finding weak communities and m
 % 	\caption{Clustering for a unweighted and a weighted graph.}
 % \end{figure}
 
-\subsection{Models of random graphs}
+\subsection{Models of random graphs}\label{sec:models_random_graph}
 
 A large effort of network science is in the description of the generative processes that lead to observed networks. In general a random graph is a model network in which some specific set of parameters take fixed values, but the network is random in other respects.
 %In the first part of the twentieth century, mathematicians developed advanced theories of random graphs as they needed to compare the properties of real-world networks against random null hypotheses.
@@ -626,98 +624,4 @@ From a machine learning perspective, one notes that all spin glass models quanti
 % \frac{m_{r,s}}{2n_r n_s} < \gamma_{\textrm{CPM}}
 % \end{equation}
 
-\subsubsection{Surprise}\label{sec:surprise}
 
-Comparison with the graph density is part of the idea that led to a definition of a different kind of quality function that is not additive nor is based on a spin glass model but rather relies on statistical bases. In comparing the fraction of edges falling within modules against another expected value one is indeed making a statistical test to validate the hypothesis that the two populations are from the same distribution. To which level of statistical significance this test is valid though is not answered by none of the spin glass based functions.
-
-
-% \section{Artificial functional connectivity pipeline}\label{sec:artificialpipeline}
-% pipeline
-% \section{Quality functions}
-% 	\subsection{Newman modularity}
-% 	\subsection{Surprise}
-% 	\subsection{Asymptotical Surprise}
-% 	\subsection{Infomap}
-
-% 	\section{Optimization methods}
-% 	\subsection{Louvain}
-% 	\subsection{Infomap}
-% 	\subsection{FAGSO}
-% 	\subsection{PACO}
-
-% \section{Measuring partition similarity}
-% 	\subsection{Information theory based}
-% 	\subsection{NMI}
-% 	\subsubsection{VI}
-% 	\subsection{Correction for randomness: rNMI}
-
-% 	\subsection{Sensitivity-specificity}
-
-% 	\section{Benchmark networks}
-% 	\subsection{Ring of cliques}
-% 	\subsection{Stochastic block models}
-% 	\subsection{Unweighted LFR}
-% 	\subsection{Weighted LFR}
-% 	\subsection{Covariate LFR}
-
-
-%%%%%%%%%%%%%%% TRASH %%%%%%%%%%%%%%%%%%%%%
-% \begin{figure}[htb]
-% \centering
-% \begin{tabular*}{0.85\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{\fill}} l}
-% {\Large{\textsf A.}} & {\Large{\textsf B.}} & {\Large{\textsf C.}}\\
-% \begin{tikzpicture}
-% 	\GraphInit[vstyle=Normal]
-% 	\SetGraphUnit{1.5}
-% 	\begin{scope}[rotate=-135]
-% 	\Vertices{circle}{a,b,c,e}
-% 	\end{scope}
-% 	\NOEA[unit=1.414](e){d}
-% 	\Edges(a,b,e,d,c,e,a,c,b)
-% \end{tikzpicture}
-% &
-% \begin{tikzpicture}
-% 	\tikzset{LabelStyle/.style= {draw}}
-% 	\GraphInit[vstyle=Normal]
-% 	\SetGraphUnit{1.5}
-% 	\begin{scope}[rotate=-135]
-% 	\Vertices{circle}{a,b,c,e}
-% 	\end{scope}
-% 	\NOEA[unit=1.414](e){d}
-% 	\Edge[label=1](a)(b)
-% 	\Edge[label=2](a)(c)
-% 	\Edge[label=4](a)(b)
-% 	\Edge[label=0.5](d)(e)
-% 	\Edge[label=0.25](d)(c)
-% 	\Edge[label=0.15](c)(b)
-% 	\Edge[label=0.45](e)(a)
-% 	\Edge[label=3](e)(c)
-% 	\Edge[label=6](e)(b)
-% 	\Edge (a)(d)
-% \end{tikzpicture}
-% &
-% \begin{tikzpicture}
-% 	\GraphInit[vstyle=Normal]
-% 	\SetGraphUnit{1.5}
-% 	\begin{scope}[rotate=-135]
-% 	\Vertices{circle}{a,b,c,e}
-% 	\end{scope}
-% 	\NOEA[unit=1.2](e){d}
-% 	\Edges(a,b,c,d,e)
-% 	\Loop[dist = 1.5cm, dir = SO](d)
-% 	\tikzset{EdgeStyle/.append style = {bend right = 15}}
-% 	\Edge(c)(b)
-% 	\Edge(e)(a)
-% 	\tikzset{EdgeStyle/.append style = {bend left = 15}}
-% 	\Edge(c)(b)
-% 	\Edge(a)(b)
-% 	\tikzset{EdgeStyle/.append style = {bend left = 30}}
-% 	\Edge(c)(b)
-% 	\Edge(e)(a)
-% 	\tikzset{EdgeStyle/.append style = {bend right = 30}}
-% 	\Edge(c)(b)
-% \end{tikzpicture}
-% \end{tabular*}
-% \caption{Three models of graphs. (A) Simple unweighted graph. Simple edge-weighted graph. (C) Graph with multiedges and self-loops.}
-% \label{fig:graphmodels}
-% \end{figure}

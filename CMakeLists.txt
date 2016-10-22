@@ -26,7 +26,9 @@ set(IMAGE_FILES
 	images/er_graphs.pdf
 	images/configuration_model_six_stubs.pdf
 	images/configuration_model_three_stubs.pdf
+	images/bullmore_2009_pipeline.pdf
 	standalonetikz/configurationmodel.pdf
+	images/plot_surprise_pareto.pdf
 )
 
 set(INPUT_FILES
@@ -43,6 +45,7 @@ set(INPUT_FILES
 	include/misc/noise_simulation.tex
 	include/misc/powerlaw_ring_clique.tex
 	include/misc/subgraphprobability.tex
+	chapters/beyond_resolution_limit.tex
 	chapters/acknowledgment.tex
 	chapters/conclusions.tex
 	chapters/introduction.tex
@@ -66,5 +69,5 @@ ADD_LATEX_DOCUMENT(
     INPUTS ${INPUT_FILES} ${TIKZ_INPUTS}
     IMAGES ${IMAGE_FILES}
     BIBFILES biblio.bib
-    #FILTER_OUTPUT
+    FILTER_OUTPUT
     )

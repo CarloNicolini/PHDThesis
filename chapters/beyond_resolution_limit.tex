@@ -1,0 +1,176 @@
+
+In the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
+In the following sections we will explore the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
+
+To this end, we will show that Surprise, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
+Surprise maximization in brain co-activation and functional connectivity resting state networks reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
+Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure.
+
+\section{Resolution limit at work}
+SCRIVERE QUALCOSA SU RESOLUTION LIMIT NELLE BRAIN CONNECTIVITY.
+
+\section{Probability theory on clusterings}\label{sec:probability_clustering}
+A statistical comparison between the intracluster density and the global density is the idea that led to the definition of Surprise, a quality function that moves away from the framework of additive functions based on spin-glass models, as described in the previous chapter.
+
+Indeed, the spin-glass based additive quality functions, including Newman's Modularity, are by no means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
+In other terms, any spin-glass based quality function, is telling us to what level of confidence one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
+
+To answer this question, the natural way to measure statistical significance is to compute probabilities. In particular, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam.
+Precisely, the problem is the following: given a subgraph, what is the probability of observing a number of internal edges greater or equal to $m_c$ in a subgraph drawn from a random graph with a given density?
+
+This problem is exactly corresponding to a classical problem in probability, namely that of sampling without replacement from an urn containing marbles of two colors. The reason is clear if one imagines that each pair of nodes is a marble, which is red if the nodes are connected by a link and black if they are not. A number of marbles is drawn from the urn without replacement and the probability of observing a given number of marbles of one specific color is calculated by the hypergeometric distribution.
+
+The hypergeometric law can be applied to determine the probability of observing a fixed number of marbles of one color in a sample of marbles drawn from an urn without replacement. Applied to clustering, the problem corresponds to calculate the probability of observing a fixed number of internal edges in a randomly drawn set of nodes defining a community.
+Specifically, suppose that one draws a subgraph with $n_c$ nodes, $p_c$ pairs of nodes and $m_c$ edges from a graph with $n$ nodes, $p$ pairs of nodes and $m$ edges (see Section for the notation~\ref{sec:clustering}).
+The probability to observe exactly $m_c$ internal edges is therefore:
+\begin{equation}\label{eq:subgraph_probability}
+\Pr[m_c = i] = \frac{\binom{m}{i}\binom{p-m}{p_c-i} }{\binom{p}{p_c}} = \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
+\end{equation}
+where the last equality is because of the Vandermonde identity~\cite{feller1968}.
+Now, the probability of observing $i$ or more internal edges, is given by the sum of the probabilities of observing exactly $i$,$i+1$,$i+2$ etc. internal edges. Therefore by marginalizing on $i$ we get the following expression:
+\begin{equation}\label{eq:subgraph_probability_marginalized}
+\Pr[ m_c \geq i ] = \sum\limits_{i=m_c}^{m} \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
+\end{equation}
+
+In this last equation we are considering the probability of randomly drawing a subgraph with $m_c$ or more internal edges over the set of all random subgraphs with $n$ nodes and exactly $m$ edges as in the $G_{nm}$ model described in section~\ref{sec:models_random_graph}. Indeed the denominator $\binom{p}{m}$ in Equation~\ref{eq:subgraph_probability_marginalized} represent the possible number of graphs with $p$ pairs of nodes and $m$ edges. 
+
+The intuition of~\ref{eq:subgraph_probability_marginalized} gets very close to the definition of Surprise given by Aldecoa and Marin~\cite{aldecoa2011}: it exploits indeed the very same idea. If the random subgraph that is drawn from the $G_{nm}$ set has $m_\zeta=\sum_c m_c$ internal edges, representing thus a whole clustering, then the two definitions correspond.
+
+For a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, $\Pr( m_\zeta \leq m)$ exactly as in \ref{eq:subgraph_probability_marginalized}.
+Here and in the rest of the work we dub \emph{Surprise} the following probability:
+\begin{equation}\label{eq:surprise}
+S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}} = 1- \sum_{i = 0}^{m_\zeta} \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}}.
+\end{equation}
+
+Surprise computes the probability to (surprisingly) observe at least as many internal edges as within the proposed partition in a uniform random graph.
+As mentioned, model in Eq. \ref{eq:surprise}  corresponds to an urn model without reinsertion, where $S$ is the probability of extracting at least $m_\zeta$ white balls out of $m$ trials from an urn containing $p_\zeta$ white balls and $p-p_\zeta$ black balls.
+It's worth noting that $S$ is $p$-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis that the intracluster density is the same as the graph density.
+Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions with respect to $S$ are those with the highest number of intracluster edges and the smallest number of intracluster pairs.
+
+It should be noted that due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, with higher values corresponding to better clustering. Different authors \cite{ArnauVMarsS2005}, \cite{Fleck2014} refer to $S$ as Surprise, whereas others \cite{aldecoa2011}, \cite{Aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of \cite{Fleck2014} where Surprise is indicated as $S$ defined in Eq. \ref{eq:surprise}.
+
+As noted by \cite{Fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ depends only on number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely on the clustering $\zeta$.
+The landscape of this two-variables function can be explored with the help of the urn model. A clustering $\zeta$ must satisfy the following intuitive but important properties:
+\begin{enumerate}\label{list:urn_model_properties}
+\item $0 \leq m_\zeta \leq p_\zeta$\\It's impossible to draw more white balls than the white balls contained in the urn.
+\item $m\geq m_\zeta$\\It's impossible to have more white balls than total number of drawn balls.
+\item $p-p_\zeta \geq m-m_\zeta$\\It's impossible to draw more black balls than the black balls contained in the urn.
+\end{enumerate}
+The urn model also helps us to figure out some of the extremely important properties of $S$ that we'll refer in the next sections of this work:
+\begin{description}
+\item[(i)]\label{list:surprise_properties} It's less probable to have at least $m_\zeta+1$ than $m_\zeta$ white balls drawn if the urn contains the same number of $p_\zeta$ white balls:
+$$S(m_\zeta+1,p_\zeta) < S(m_\zeta,p_\zeta).$$
+\item[(ii)] It's less probable to have at least $m_\zeta$ white balls drawn if the urn has one white balls less: if $m_\zeta >0$ then $$S(m_\zeta,p_\zeta-1) < S(m_\zeta,p_\zeta).$$
+\item[(iii)] It's less probable to have at least $m_\zeta+1$ white balls drawn from an urn with one white balls more than from having at least $m_\zeta$ white balls from an urn with $p_\zeta$ white balls). If $p-p_\zeta> m-m_\zeta$ then $$S(m_\zeta+1,p_\zeta+1) < S(m_\zeta,p_\zeta).$$
+\end{description}
+The scheme in Figure \ref{fig:surprisebehaviour} explicits the order relation between the elements of the three aforementioned inequalities.
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+    \node[] (S00) at (0,0) {$S(m_\zeta,p_\zeta)$};
+    \node[] (S10) at (4,0) {$S(m_\zeta+1,p_\zeta)$};
+    \node[] (S01)  at (0,-2) {$S(m_\zeta,p_\zeta+1)$};
+    \node[] (S11)  at (4,-2) {$S(m_\zeta+1,p_\zeta+1)$};
+    
+    \draw[->,thick,>=latex] (S00) -- node[anchor=south] {\tiny{greater than}} (S10);
+    \draw[->,thick,>=latex] (S01) -- node[anchor=south] {\tiny{greater than}} (S11);
+    \draw[->,thick,>=latex] (S11) -- node[anchor=west,xshift=5,yshift=-25,rotate=90] {\tiny{greater than}} (S10);
+
+    \draw[->, thick,>=latex] (S00) -- node[anchor=south,rotate=-28] {\tiny{greater than}} (S11);
+    \draw[->,thick,>=latex] (S01) -- node[anchor=west,xshift=-6,yshift=-25,rotate=90] {\tiny{greater than}} (S00);
+\end{tikzpicture}
+\caption{Behaviour of the landscape of Surprise $S$.}
+\label{fig:surprisebehaviour}
+\end{figure}
+
+A fourth inequality $S(m_\zeta,p_\zeta+1)>S(m_\zeta+1,p_\zeta)$ is implicit by looking at the behaviour of $S(\zeta)$ for a given graph. The scheme in Figure \ref{fig:surprisebehaviour} allows to rank the values of Surprise in relation to changes in $m_\zeta$ and $p_\zeta$, in particular, it's easy to verify that $S$ satisfies the following strict order relation:
+\begin{equation}\label{eq:surpriseorderrelation}
+S(m_\zeta+1,p_\zeta)<S(m_\zeta+1,p_\zeta+1)<S(m_\zeta,p_\zeta)<S(m_\zeta,p_\zeta+1).
+\end{equation}
+
+In the convex interval $\mathcal{L}$ such that:
+\begin{equation}
+\mathcal{L} := \{ ( m_\zeta,p_\zeta) \; | m_\zeta > 0 \land p_\zeta \geq m_\zeta \land m \geq m_\zeta \land p-m > p_\zeta - m_\zeta \}
+\end{equation}
+Surprise is a monotonically increasing (decreasing $\hat{S}$) function of $p_\zeta$ and monotonically increasing function of $m_\zeta$ (increasing $\hat{S}$) as shown in Figure~\ref{fig:monotonical_surprise}.
+
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+\def \S {1};
+\def \W {11};
+\def \H {7};
+\node[anchor=south west, inner sep=0mm] at (0,0) { \includegraphics[width=\W cm]{images/plot_surprise_pareto.pdf}};
+\node[anchor=south] at (\W /2,\H +0.25) {$S(m_\zeta,p_\zeta$, $m=5$,$p=15$)};
+%\draw[help lines,xstep=1.0,ystep=1.0] (0,0) grid (\W,\H);
+\foreach \x in {1,...,\W } {\node [anchor=north] at (\x-0.5,0) {$\x$}; }
+\node[anchor=north] at (\W/2,-0.5){$p_\zeta$};
+\foreach \y in {1,...,\H} {\node [anchor=east] at (0 ,\y-0.5) {$\y$}; }
+\node[anchor=east] at (-0.5,\H/2){$m_\zeta$};
+%\node[rectangle,fill=black!10,draw=black,rounded corners=0.1cm] at (\W+1.5,\H-0.5) {$m_{\zeta},p_\zeta \not \subset \mathcal{L}$};
+\end{tikzpicture}
+\caption{Surprise increases as it gets hotter. The grey area is outside the domain of validity $\mathcal{L}$ while white are $S=0$.}
+\label{fig:monotonical_surprise}
+\end{figure}
+
+Moreover, from Figure \ref{fig:surprisebehaviour} and Figure ~\ref{fig:monotonical_surprise} follows that an optimal solution with respect to $S$ is pareto-optimal with respect to maximizing $m_\zeta$ and minimizing $p_\zeta$.
+
+With the tools of \ref{eq:surpriseorderrelation} in mind, one can infere how Surprise behaves under a perturbation of $m_\zeta$ and $p_\zeta$ by some amount $(\delta_{m_\zeta},\delta_{p_\zeta})$ and obtain a very useful tool that will help us in the rest of this work:
+\begin{equation}\label{eq:resolution_limit_condition}
+S(m_\zeta + \delta_{m_\zeta}, p_\zeta + \delta_{p_\zeta}) < S(m_\zeta,p_\zeta) \iff \delta_{m_\zeta} \geq \delta_{p_\zeta}
+\end{equation}
+
+The result in Eq.\ref{eq:resolution_limit_condition} is of great help in designing optimization algorithms as every move that increase the intracluster edges more than intracluster pairs is good, while moves that increase intracluster pairs more than intracluster edges must be ignored, therefore sparing time for the computation of Surprise. Additionally, Eq.\ref{eq:resolution_limit_condition} is a useful when analyzing the onset of the resolution limit for different models.
+In the next sections we will also cast light on resolution limit for Surprise, to show with convincing theoretical arguments that $S$ is nearly resolution-limit-free in Traag's sense~\cite{traag2015}.
+
+\section{Surprise is a statistic test}\label{sec:surprisefishertest}
+It should be noted that \emph{Surprise} is the p-value of the one-tailed Fisher exact test. In particular one can draw the contingency table for the urn model as:
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+ & Drawn & Not drawn & \textbf{Total}\\
+\hline
+Intracluster & $m_\zeta$ & $p_\zeta-m_\zeta$ & $p_\zeta$\\
+\hline
+Intercluster & $m-m_\zeta$ & $p-m-p_\zeta+m_\zeta$ & $p-p_\zeta$ \\
+\hline
+\textbf{Total} & $m$ & $p-m$ & $p$ \\
+\hline
+\end{tabular}
+\end{table}
+The odds-ratio $\textrm{OR} \in (0,\infty)$ of this $2\times 2$ contingency table is
+\begin{equation}
+\textrm{OR} = \frac{m_\zeta(p-m-p_\zeta+m_\zeta)}{(m-m_\zeta)(p_\zeta-m_\zeta)} 
+\end{equation}
+In particular minimizing Surprise corresponds to maximizing the odds-ratio $\textrm{OR}$. Very low values of $S$ tells us that we can reject the null hypothesis $H_0 := \textrm{OR} \neq 1$ with high probability.
+
+It can be shown that when the entries of the contingency table are big enough, computing $S$ corresponds to computing the $\chi^2$ statistic and it is also possible to tackle the problem of computation of $S$ by means of odds-ratio.
+If one computes the \emph{normalized log odds-ratio}:
+\begin{equation}
+\log(\textrm{OR}) = \log\left( \frac{m_\zeta(p-m-p_\zeta+m_\zeta)}{(m-m_\zeta)(p_\zeta-m_\zeta)} \right )
+\end{equation}
+and seeks the probability
+\begin{equation}
+\Pr\left(z < -\frac{|\log\textrm{OR})|}{SE} \right)
+\end{equation}
+where $z$ is a random variable with standard normal distribution $z \approx \mathcal{N}(0,1)$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+Let us consider the set of all random graphs with exactly $m$ edges and $p=\binom{n}{2}$ pairs of nodes.
+The number of such graphs is the cardinality of the Gilbert $G_{nm}$ model (Section\ref{sec:models_random_graph}), that is:
+\begin{equation}
+| \Omega_{G_{nm}} |  = \binom{p}{m}
+\end{equation}
+
+one is indeed making a statistical test to validate the hypothesis that the two populations are from the same distribution. To which level of statistical significance this test is valid though is not answered by none of the spin glass based functions.
+
+
+\begin{equation}
+\end{equation}
