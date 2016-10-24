@@ -29,6 +29,12 @@ set(IMAGE_FILES
 	images/bullmore_2009_pipeline.pdf
 	standalonetikz/configurationmodel.pdf
 	images/plot_surprise_pareto.pdf
+	images/barthelemy_surprise.pdf
+	images/barthelemy_modularity.pdf
+	images/ring_cliques_pareto.pdf
+	images/ring_of_cliques_8_8.pdf
+	images/ring_cliques_surprise.pdf
+	images/traag_ring_of_cliques.pdf
 )
 
 set(INPUT_FILES
@@ -62,6 +68,7 @@ set(TIKZ_INPUTS
 	standalonetikz/tikz_weighted_graph.tikz
 	standalonetikz/tikz_degree_strength.tikz.tex
 	standalonetikz/configurationmodel.tex
+	standalonetikz/tikz_directed_graph.tikz
 )
 
 ADD_LATEX_DOCUMENT(
@@ -69,5 +76,5 @@ ADD_LATEX_DOCUMENT(
     INPUTS ${INPUT_FILES} ${TIKZ_INPUTS}
     IMAGES ${IMAGE_FILES}
     BIBFILES biblio.bib
-    FILTER_OUTPUT
+    #FILTER_OUTPUT
     )
