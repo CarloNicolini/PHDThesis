@@ -1,8 +1,8 @@
 \noindent\begin{figure}[htb]
 \centering
-\begin{minipage}[b]{0.5\textwidth}
-\includegraphics[width=1\linewidth]{images/konigsberg.jpg}
-\end{minipage}\begin{minipage}[b]{0.5\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
+\includegraphics[width=1\textwidth]{images/konigsberg.jpg}
+\end{minipage}\begin{minipage}[b]{0.48\textwidth}
 \centering
 \begin{tikzpicture}
     \tikzset{LabelStyle/.style= {draw}}
@@ -26,7 +26,7 @@
 
 %%%%%%%%% INTRO GENERALE COMPLEX NETWORKS
 \section{Complex networks science and the brain}
-It's nowadays accepted that the brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
+The brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
 The elements of the nervous system interact and react over the organic substrate that they themselves define, and shape an extremely intricate pattern of electrical and metabolic activities, giving rise to the outstanding set of abilities and possibilities typical of most evolved organisms.
 Nonetheless, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate.
 Instead, what science is increasingly recognizing is that for most systems in nature, in order to conserve the properties under investigation, it is necessary to remain within a certain level of complexity and to contemplate the multiple interactions of simple subsystems taken as a whole. It is known, in fact that many systems, despite radically different at their microscopic level, share many remarkable organizational properties, when analyzed in their entirety.
@@ -101,8 +101,8 @@ Hence, the resolution limit may represent a critical shortcoming for the study o
 %Biology is extremely rich of examples where community detection plays an important role. The definition of molecular complexes that take part to the same metabolic pathway and that have the similar functions within the cell is expressed as community detection on the graph of protein-protein interaction.
 
 Before delving into the details of community detection, a short introduction to the methods and the jargon of graph-theory is in order.
-In Section~\ref{sec:elementsofgraphtheory} we introduce the mathematical concepts of graph theory. In Section~\ref{sec:communitydetectioninnetworks}, we present the problem of community detection in networks. The Newman's Modularity and the null model upon which its based is discussed in~\ref{sec:newman_modularity}. The bad consequences of Modularity maximization i.e the resolution limit is discussed thoroughly in~\ref{sec:resolutionlimit}, followed by approaches to make the resolution limit less problematic.
-Finally, Surprise, an approach that really mitigates the resolution limit is briefly introduced in section~\ref{sec:surprise}. Different applications of community detection based on Surprise will be then the argument of the next chapters.
+In Section~\ref{sec:elementsofgraphtheory} we introduce the mathematical concepts of graph theory. In Section~\ref{sec:communitydetectioninnetworks}, we present the problem of community detection in networks. The Newman's Modularity and the null model upon which its based is discussed in~\ref{sec:newman_modularity}. The bad consequences of Modularity maximization i.e the resolution limit and degeneracy are discussed thoroughly in~\ref{sec:resolutionlimit}, followed by approaches to make the resolution limit less problematic.
+%Finally, Surprise, an approach that really mitigates the resolution limit is briefly introduced in section~\ref{sec:surprise}. Different applications of community detection based on Surprise will be then the argument of the next chapters.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% ELEMENTS OF GRAPH THEORY %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -113,30 +113,29 @@ Here we provide to the reader the basic mathematical tools to affront the next c
 A \emph{graph} $G=(V,E)$ is a representation of a set $V$ of $n$ nodes, also called \emph{vertices}, connected by $m$ links (or edges), in a set $E$ (Figure~\ref{fig:simple_unweighted_graph}). When a graph has no multiple links and no self-loops is dubbed \emph{simple graph}.
 If multiple links exist between two nodes, the graph is called ``multigraph''. Additionally if a node links itself, the graph is called ``loopy'' graph. Figure~\ref{fig:loopy_multigraph} shows a loopy multigraph. Additionally, when the direction of the links is taken in account, the graph is called \emph{directed}, as shown in Figure~\ref{fig:directedgraph}.
 
-\noindent\begin{figure}[htb!]
+\begin{figure}[htb!]
 \centering
-	\begin{subfigure}[hb]{0.4\textwidth}
+	\begin{subfigure}[hb]{0.4\textwidth}\centering
 		\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_simple_graph.tikz}
 		\caption{}
 		\label{fig:simple_unweighted_graph}
 	\end{subfigure}
-	\begin{subfigure}[hb]{0.4\textwidth}
+	\begin{subfigure}[hb]{0.4\textwidth}\centering
 	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_weighted_graph.tikz}
 	\caption{}
 	\label{fig:simple_weighted_graph}
 	\end{subfigure}
-
-	\begin{subfigure}[hb]{0.4\textwidth}
+	\begin{subfigure}[hb]{0.4\textwidth}\centering
 	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_loopy_multigraph.tikz}
 	\caption{}
 	\label{fig:loopy_multigraph}
 	\end{subfigure}
-	\begin{subfigure}[hb]{0.4\textwidth}
+	\begin{subfigure}[hb]{0.4\textwidth}\centering
 	\includegraphics[width=0.75\textwidth]{standalonetikz/tikz_directed_graph.tikz}
 	\caption{}
 	\label{fig:directedgraph}
 	\end{subfigure}
-	\caption{Classes of graphs. A is a simple unweighted undirected graph. B is a simple weighted undirected graph, C is an unweighted loopy multigraph, D is a simple directed graph.}
+	\caption{Classes of graphs. {\textbf (a)} is a simple unweighted undirected graph. {\textbf (b)} is a simple weighted undirected graph, {\textbf (c)} is an unweighted loopy multigraph, {\textbf (d)} is a simple directed graph.}
 \end{figure}
 
 The adjacency matrix $\mathbf{A}=\{A_{ij}\} \in \{0,1\}^{n \times n}$ of a binary (undirected) graph is a square $n\times n$ symmetric matrix with elements $A_{ij}=1$ when an edge exists between vertex $i$ and $j$ and $0$ otherwise.
@@ -149,7 +148,7 @@ The simplest property of the graph, once defined nodes and edges, is the \emph{d
 \end{equation}
 A \emph{dense} graph is a graph where almost every possible pair of nodes is connected with an edge. Conversely, a graph is termed \emph{sparse} if the density is low, meaning that also the adjacency matrix is sparse and the number of edges has the order of magnitude of the number nodes $m ~\approx \mathcal{O}(n)$.
 
-The number of edges incident to a node in a simple graph is called \emph{degree}, denoted as $k_i$ (Figure~\ref{fig:degreestrength}). Every half edge incident to a node is called \emph{stub}. A vertex with degree $k_i$ has therefore $k_i$ stubs.
+The number of edges incident to a node in a simple graph is called \emph{degree}, denoted as $k_i$. Every half edge incident to a node is called \emph{stub}. A vertex with degree $k_i$ has therefore $k_i$ stubs.
 On simple weighted graphs, the sum of weights of the edges incident to a vertex $i$ is called \emph{strength} and is denoted as $s_i$. 
 In matrix terms, degree and strength are the sums over rows of the adjacency matrix $d_i=s_i=\sum_{j=1}^n A_{ij}$. It must be noted that degree and strength are equal on binary graphs, but different for weighted graphs.
 
@@ -172,7 +171,8 @@ The complementary graph $\bar{G}$ is the graph that has edges where $G$ has no e
 The \emph{empty graph} is therefore defined as the complementary graph of the clique $\bar{K}$, as it has $n$ nodes and no edges (Figure~\ref{fig:emptygraph}). The \emph{cycle graph} $C_n$ is a graph containing a single cycle through all nodes and is the smallest connected cyclic graph (Figure~\ref{fig:cyclegraph}). A \emph{tree graph} is a graph with no cycles and exactly $n-1$ edges.
 
 \begin{figure}[htb]
-	\begin{subfigure}[t]{0.24\textwidth}
+\centering
+	\begin{subfigure}[t]{0.3\textwidth}\centering
 		\begin{tikzpicture}
 			\tikzset{LabelStyle/.style= {draw,font = \small}}
 			\GraphInit[vstyle=Normal]
@@ -184,7 +184,7 @@ The \emph{empty graph} is therefore defined as the complementary graph of the cl
 		\end{tikzpicture}
 	\caption{{\footnotesize Complete graph $K_5$}}\label{fig:completegraph}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.24\textwidth}
+	\begin{subfigure}[t]{0.3\textwidth}\centering
 		\begin{tikzpicture}
 		\tikzset{LabelStyle/.style= {draw,font = \small}}
 		\GraphInit[vstyle=Normal]
@@ -195,7 +195,7 @@ The \emph{empty graph} is therefore defined as the complementary graph of the cl
 		\end{tikzpicture}
 	\caption{{\footnotesize Empty graph $\bar{K}_5$}}\label{fig:emptygraph}
 	\end{subfigure}
-	\begin{subfigure}[t]{0.24\textwidth}
+	\begin{subfigure}[t]{0.3\textwidth}\centering
 		\begin{tikzpicture}
 		\tikzset{LabelStyle/.style= {draw, font = \small}}
 		\GraphInit[vstyle=Normal]
@@ -204,18 +204,6 @@ The \emph{empty graph} is therefore defined as the complementary graph of the cl
 		\Vertices{circle}{a,b,c,d,e}
 		\end{scope}
 		\Edges(a,b,b,c,c,d,d,e,e,a)
-	\end{tikzpicture}
-	\caption{{\footnotesize Cycle graph $C_5$}}\label{fig:cyclegraph}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.24\textwidth}
-		\begin{tikzpicture}
-		\tikzset{LabelStyle/.style= {draw, font = \small}}
-		\GraphInit[vstyle=Normal]
-		\SetGraphUnit{1.5}
-		\begin{scope}[rotate=18]
-		\Vertices{circle}{a,b,c,d,e}
-		\end{scope}
-		\Edges(b,c,b,d,b,a,a,e)
 	\end{tikzpicture}
 	\caption{{\footnotesize Cycle graph $C_5$}}\label{fig:cyclegraph}
 	\end{subfigure}
@@ -256,7 +244,7 @@ The \emph{subgraph total degree} $k(\mathcal{G})$ is the sum of the degrees of t
 	\Edge[label=0.5,style={pos=0.25}](a)(d)
 	\Edge[label=3](a)(e)
 	\Edge[label=1](c)(b)
-	\node[draw=red!50,rounded corners=5mm,fit=(b.north) (a.south) (c.west) (a.east)](BORD) {};
+	\node[draw=black!50,dashed,rounded corners=5mm,fit=(b.north) (a.south) (c.west) (a.east)](BORD) {};
 	\node[left of=BORD,anchor=east, inner sep=1cm]{$\mathcal{G}$};
 \end{tikzpicture}
 \caption{Internal degree $k_{\textrm{int}}(a)=2$, internal strength $s_{\textrm{\textrm{int}}}(a)=3$, external degree $k_{\textrm{ext}}(a)=2$, external strenght $s_{\textrm{ext}}(a)=3.5$.}
@@ -563,7 +551,7 @@ Under this model a group of nodes forms a community if its internal density is g
 Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodule fraction of edges by means of a linear loss function.
 
 
-\section{Resolution limit in community detection}\label{sec:resolutionlimit}
+\section{Resolution limit}\label{sec:resolutionlimit}
 Over the years, Modularity attracted a lot of attention as it served as the main tool to inspect whether networks obtained from many different scientific areas, were showing community structure.
 The wide use of Modularity has, on one hand, led many researchers to gain interest in complex networks, with results in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics} just to mention a few, but on the other hand offered a fallacious view on the community detection problem as an unseen consequence of Modularity maximization was its substantial limit to detect communities smaller than a certain scale.
 
@@ -609,7 +597,7 @@ An even more striking example of how the resolution limit affects Modularity is 
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
-\caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly A, but Modularity values is higher for partition B, where pairs of cliques are coalesced into separated communities.}
+\caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly the one on left (A), but Modularity values is higher for the partition on the right (B), where pairs of cliques are coalesced into separated communities.}
 \label{fig:traag_ring_of_cliques}
 \end{figure}
 
@@ -617,7 +605,7 @@ If the number of cliques is large enough (they are more than $\sqrt{m}$), Modula
 
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
 
-By way of example, certain functional processes, like color vision, have been described as anatomically localized\todo{COPIARE CITAZIONI DA MIO}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\todo{METTERE CITAZIONE}.
+By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
 
 Hence, we may expect the brain modular structure to comprise heterogeneously distributed communities. Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear.
 

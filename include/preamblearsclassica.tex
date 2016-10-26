@@ -12,13 +12,13 @@
 \usepackage{scrhack} % fix warnings when using KOMA with listings package
 \usepackage{mparhack,fixltx2e,relsize} % typographical niceties
 
-\usepackage[eulerchapternumbers,%           % chapter numbers font: Euler
-            beramono,%                      % fixed-width font: Bera Mono
-            eulermath,%                     % math font: AMS Euler
-            pdfspacing,%                    % better line filling
-            listings,%                      % listings
-            dottedtoc,%                     % align TOC page numbers to right
-            floatperchapter,                 % float objects numbered by chapter
+\usepackage[eulerchapternumbers,   % chapter numbers font: Euler
+            beramono,%             % fixed-width font: Bera Mono
+            eulermath,%            % math font: AMS Euler
+            pdfspacing,%           % better line filling
+            listings,%             % listings
+            dottedtoc,%            % align TOC page numbers to right
+            floatperchapter,       % float objects numbered by chapter
             pdfspacing
             ]{classicthesis}                % classicthesis style
 \usepackage{arsclassica} % improve classicthesis
@@ -28,18 +28,13 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
 \usepackage{lettrine}
-%\usepackage[sc]{mathpazo} % Use the Palatino font
-%\documentclass[a4paper,twoside]{book}
-%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
 \usepackage{graphicx}
-% \usepackage{hyperref}
 \usepackage{float} % to create the new float named Algorithm
 \usepackage{clrscode}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage{tikz}
 \usetikzlibrary{fit}
 \usepackage{tikzscale}
-
 \usepackage{appendix}
 \usepackage{longtable}
 \usepackage{tkz-graph}
@@ -50,16 +45,14 @@
 \newfloat{Algorithm}{tbp}{lop}
 \definecolor{halfgray}{gray}{0.55}
 
-%\linespread{1.12} % Line spacing - Palatino needs more space between lines
-
 % \titleformat{\chapter}[block]%
 %         {\normalfont\Large\sffamily}%
 %         {{\color{halfgray}\chapterNumber\thechapter%
 %         \hspace{10pt}\vline}  }{10pt}%
 %         {\spacedallcaps}[\chapterdecoration]
 % To enable decoration
-%\newcommand\chapterdecoration{\input{include/chapterdecoration.tex}}
-%\setlength{\headheight}{1.1\baselineskip}
+% \newcommand\chapterdecoration{\input{include/chapterdecoration.tex}}
+% \setlength{\headheight}{1.1\baselineskip}
 
 
 \pgfdeclarelayer{background}
