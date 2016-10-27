@@ -500,7 +500,7 @@ p_{ij} = \Pr \left ( a_{ij} | \{ k \} \right) = \Pr(k_i | \{ k \}) + \Pr(k_j | \
 
 Although Modularity is most frequently applied to \emph{simple graphs} (see Fig.~\ref{fig:simple_unweighted_graph}), the configuration model implies that the randomization is carried over the space of \emph{loopy multigraphs} (Figure~\ref{fig:loopy_multigraph}).
 The rewiring probability considers indeed that the stubs of vertices can be reconnected both to the same source vertex (self-loops) or added to already existing edges (multi-edges).
-Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but three other distinct matchings, which produce non-simple networks (Fig.\ref{fig:reshuffle_loopy_multigraphs}). 
+Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but many other distinct matchings, which produce non-simple networks as shown in Figure~\ref{fig:reshuffle_loopy_multigraphs} where just four of them has been generated. 
 In fact, the number of possible rewirings that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges, is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as:
 \begin{equation}\label{eq:cm_possible_rewirings}
 \Omega_{CM} = \binom{2m}{k_1,\ldots,k_n} = \frac{(2m)!}{\prod_i^n k_i!}.
@@ -511,20 +511,18 @@ In practice though, the fraction of edges involved in either self-loops or multi
 Hence, the estimate of the probability of rewiring in Eq.~\ref{eq:configuration_model_probability} is only valid in large, sufficiently sparse graphs with a sufficiently bounded degree sequence.
 Under these hypotheses the expected number of edges between two vertices in the space of simple graphs is asymptotically the same as the expectation in the space of stub-labeled loopy multigraphs, i.e. the one previously introduced for the definition of Modularity: $\mathbb{E}_s[a_{ij} |k] \approx k_i k_j /(2m)$, where $s$ denotes the space of simple graphs.
 
-\begin{figure}[htb]
-\centering
-\begin{subfigure}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=1\textwidth]{images/configuration_model_six_stubs.pdf}
+\begin{figure}[htb]\centering
+\begin{subfigure}[t]{0.45\textwidth}\centering
+\includegraphics[height=2.5cm]{images/configuration_model_six_stubs.pdf}
 \caption{}
 \label{fig:reshuffle_simple_graphs}
 \end{subfigure}
-\begin{subfigure}[t]{0.45\textwidth}
-\includegraphics[width=1\textwidth]{images/configuration_model_three_stubs.pdf}
+\begin{subfigure}[t]{0.45\textwidth}\centering
+\includegraphics[height=2.5cm]{images/configuration_model_three_stubs.pdf}
 \caption{}
 \label{fig:reshuffle_loopy_multigraphs}
 \end{subfigure}
-\caption{}
+\caption{Twelve of the ninety different possible rewirings of a triangle graph in the configuration model.}
 \label{fig:configuration_model_stubs}
 \end{figure}
 An approach that allows to get the right configuration model depending on the class of graph under exam, relies on the computational simulation of the correct rewiring probability by means of Markov Chain Monte Carlo algorithms, as proposed in~\cite{Fosdick2016}.
