@@ -635,18 +635,18 @@ To this end, an optimization method that does not suffer from the resolution lim
 \section{Degeneracy}\label{sec:degeneracy}
 In the previous section we introduced the resolution limit and noticed that the differences in Modularity when evaluating wheter to split or to merge two modules may be very small.
 Indeed, even in the case where it would not be beneficial for Modularity to merge two modules, i.e $\Delta Q <0$, this difference can be made arbitrarily close to zero. Because the number of possible different partitions of a graph with $n$ nodes (the Bell number $B_n$) grows faster than exponentially in $n$~\cite{stanley1997}, then a combinatorially large number of operations may lead to solutions that are radically different in terms of partition distance, but only slightly suboptimal in terms of modularity, with values very close to the global maximum.
-
 Thus, counterintuitively, when the network becomes more modular, the globally optimal partitions becomes harder to find among the growing number of suboptimal but competitive alternatives.
 
-This consideration explains the observation that nearly-optimal solution tend to group into high-modularity plateaus, although thay may differ substantially~\cite{good2009}. This phenomenon, dubbed as \emph{degeneracy} affects Newman's Modularity and probably many other spin-glass based quality functions.
-As a matter of example, in the ring of clique graph, penalty in Modularity for merging a pair of adjacent cliques in the ring of cliques graph~\ref{fig:traag_ring_of_cliques} is given by:
+This consideration explains the observation that nearly-optimal solution tend to group into high-modularity plateaus, although they may differ substantially~\cite{good2009}. This phenomenon, dubbed \emph{degeneracy} affects Newman's Modularity and probably many other spin-glass based quality functions.
+
+As a matter of example, in the ring of clique graph, penalty in Modularity for merging a pair of adjacent cliques in the ring of cliques graph shown in Figure~\ref{fig:traag_ring_of_cliques}, is given by:
 \begin{equation}\label{eq:modularity_difference_ring_clique}
 \Delta Q = \frac{1}{r\left(\binom{n_r}{2}+1\right)}-2r^{-2}
 \end{equation}
 where $r$ is the number of cliques and $n_r$ the number of nodes in each clique.
 In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring_clique} tends to a very small but negative value, indicating that a solution where the cliques are merged, may have a Modularity very close to the optimum. Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
 
-This powerful argument against the improper use of Modularity, can be made also more visually appealing. We sampled the configuration space of partitions in a ring of clique network through a Montecarlo procedure and annotated its corresponding values of quality function for each partition.
+This powerful argument against an improper use of Modularity, can be also cast in visual terms. We sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated its corresponding values of quality function for each partition.
 We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
 In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function.
 An highly degenerate plateu can be observed in~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity stay in the same neighborhood.
