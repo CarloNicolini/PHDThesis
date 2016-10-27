@@ -522,7 +522,7 @@ Under these hypotheses the expected number of edges between two vertices in the 
 \caption{}
 \label{fig:reshuffle_loopy_multigraphs}
 \end{subfigure}
-\caption{Twelve of the ninety different possible rewirings of a triangle graph in the configuration model.}
+\caption{Twelve of the ninety different possible rewirings of a triangle graph in the configuration model. In (a) only rewirings leading to simple graphs are considered. In (b) just four rewirings leading to loopy-multigraphs are shown.}
 \label{fig:configuration_model_stubs}
 \end{figure}
 An approach that allows to get the right configuration model depending on the class of graph under exam, relies on the computational simulation of the correct rewiring probability by means of Markov Chain Monte Carlo algorithms, as proposed in~\cite{Fosdick2016}.
@@ -598,7 +598,6 @@ An even more striking example of how the resolution limit affects Modularity is 
 \caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly the one on left (A), but Modularity values is higher for the partition on the right (B), where pairs of cliques are coalesced into separated communities.}
 \label{fig:traag_ring_of_cliques}
 \end{figure}
-
 If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs. By extending the number of cliques, then Modularity may merge them in groups of three, fours etc.
 
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
@@ -611,7 +610,26 @@ Hierarchical approaches have shown that large modules can be further subdivided,
 However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
 To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
-%A common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}. From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$.
+\subsection{Resolution parameter}
+Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}.
+
+In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
+From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$, resulting in a modified modularity $Q^N(\gamma)$:
+
+\begin{equation}
+Q^N(\sigma,\gamma) = \sum_c^C \left[ \frac{m_c}{m} - \gamma \left( \frac{K_c}{2m}\right)^2 \right]
+\end{equation}
+
+However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter.
+Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters. 
+Indeed this is due to two opposite coexisting effects: the tendency to merge small subgraphs, which dominates when the resolution is low and the tendency to split large subgraphs, which dominates when the resolution is high.
+In benchmark networks with heterogeneous distributions of cluster sizes, the simultaneous elimination of both biases is not possible and multiresolution modularity is not capable to recover the planted community structure even in graphs where the ground-truth structure is evident.
+Therefore, adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
+
+Real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
+Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
+
+
 
 % Among these models, Traag et al~\cite{traag2011} takes as null model a constant quantity specified by a parameter $\gamma_{\textrm{CPM}}$.    
 
@@ -631,20 +649,20 @@ To this end, an optimization method that does not suffer from the resolution lim
 
 %%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%
 \section{Degeneracy}\label{sec:degeneracy}
-In the previous section we introduced the resolution limit and noticed that the differences in Modularity when evaluating wheter to split or to merge two modules may be very small.
-Indeed, even in the case where it would not be beneficial for Modularity to merge two modules, i.e $\Delta Q <0$, this difference can be made arbitrarily close to zero. Because the number of possible different partitions of a graph with $n$ nodes (the Bell number $B_n$) grows faster than exponentially in $n$~\cite{stanley1997}, then a combinatorially large number of operations may lead to solutions that are radically different in terms of partition distance, but only slightly suboptimal in terms of modularity, with values very close to the global maximum.
+The differences in Modularity between optimal and suboptimal partitions can be very small, as observed in Figure~\ref{fig:figure_1_barthelemy}B, where $\Delta Q$ between the two partitions where the cliques are merged or splitted, remains close to zero for a large range of $m_0$ especially at $m_{12}=1$.
+Indeed, even in the case where it would not be beneficial for Modularity to merge two modules, i.e $\Delta Q <0$, this difference can be made arbitrarily close to zero.
+As the number of possible different partitions of a graph with $n$ nodes (the Bell number $B_n$) grows faster than exponentially in $n$~\cite{stanley1997}, a combinatorially large number of operations may lead to solutions that are radically different in terms of partition distance, but only slightly suboptimal in terms of modularity, with values very close to the global maximum.
 Thus, counterintuitively, when the network becomes more modular, the globally optimal partitions becomes harder to find among the growing number of suboptimal but competitive alternatives.
 
 This consideration explains the observation that nearly-optimal solution tend to group into high-modularity plateaus, although they may differ substantially~\cite{good2009}. This phenomenon, dubbed \emph{degeneracy} affects Newman's Modularity and probably many other spin-glass based quality functions.
-
-As a matter of example, in the ring of clique graph, penalty in Modularity for merging a pair of adjacent cliques in the ring of cliques graph shown in Figure~\ref{fig:traag_ring_of_cliques}, is given by:
+As a matter of example, the variation in Modularity for merging a pair of adjacent cliques in the ring of cliques graph shown in Figure~\ref{fig:traag_ring_of_cliques}, is given by:
 \begin{equation}\label{eq:modularity_difference_ring_clique}
 \Delta Q = \frac{1}{r\left(\binom{n_r}{2}+1\right)}-2r^{-2}
 \end{equation}
 where $r$ is the number of cliques and $n_r$ the number of nodes in each clique.
-In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring_clique} tends to a very small but negative value, indicating that a solution where the cliques are merged, may have a Modularity very close to the optimum. Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
+In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring_clique} tends to a small negative value, indicating that a solution where the cliques are merged, may have a Modularity very close to the optimum. Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
 
-This powerful argument against an improper use of Modularity, can be also cast in visual terms. We sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated its corresponding values of quality function for each partition.
+To make this argument more intuitive, we extrapolated a visually appealing form of the complex landscape of partitions' Modularity for a ring of clique network. We sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated the corresponding values of Modularity for every partition.
 We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
 In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function.
 An highly degenerate plateu can be observed in~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity stay in the same neighborhood.
@@ -655,3 +673,5 @@ An highly degenerate plateu can be observed in~\ref{fig:degeneracylandscape} whe
 \caption{Degeneracy landscape for Newman's Modularity in a ring of cliques with $r=24$ cliques of $n_r=5$ nodes. The axes CC1 and CC2 are complicated functions of the original partition space computed as to maintain the distance relation between points and their scale is unimportant.}
 \label{fig:degeneracylandscape}
 \end{figure}
+
+Any quality function suffering degeneracy of solutions, should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}.
