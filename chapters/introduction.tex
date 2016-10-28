@@ -296,9 +296,9 @@ Finding strong communities is more difficult that finding weak communities and m
 		\end{scope}
 		\NOEA[unit=1.414](e){d}
 		\Edges(a,b,e,d,c,e,a,c,b)
-		\node[draw,red,rounded corners=2mm,fit=(a.north) (a.south) (a.west) (b.east)] {};
-		\node[draw,blue,rounded corners=2mm,fit=(e.north) (e.south) (e.west) (c.east)] {};
-		\node[draw,green,rounded corners=2mm,fit=(d.north) (d.south) (d.west) (d.east)] {};
+		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(a.north) (a.south) (a.west) (b.east)] {};
+		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(e.north) (e.south) (e.west) (c.east)] {};
+		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(d.north) (d.south) (d.west) (d.east)] {};
 	\end{tikzpicture}
 	\caption{Unweighted graph}
 	\label{fig:loopy_multigraphlusterina}
@@ -322,9 +322,9 @@ Finding strong communities is more difficult that finding weak communities and m
 		\Edge[label=3](e)(c)
 		\Edge[label=6](e)(b)
 		\Edge (a)(d)
-		\node[draw,red,rounded corners=2mm,fit=(a.north) (a.south) (a.west) (b.east)] {};
-		\node[draw,blue,rounded corners=2mm,fit=(e.north) (e.south) (e.west) (c.east)] {};
-		\node[draw,green,rounded corners=2mm,fit=(d.north) (d.south) (d.west) (d.east)] {};
+		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(a.north) (a.south) (a.west) (b.east)] {};
+		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(e.north) (e.south) (e.west) (c.east)] {};
+		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(d.north) (d.south) (d.west) (d.east)] {};
 		% \tikzstyle{cluster} = [fill,opacity=.5,fill opacity=.5,line cap=round, line join=round, line width=50pt]
 		% \begin{pgfonlayer}{background}
 		% \draw[cluster,color=purple] (a) -- (b) -- (c);
@@ -630,21 +630,26 @@ Real-world networks are characterized by the coexistence of clusters of very dif
 Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 
 
+\subsection{Resolution-limit free quality functions}
+Among these models of quality function based on spin glass models, Traag et al~\cite{traag2011} takes as null model a constant quantity specified by a parameter $\gamma_{\textrm{CPM}}$.    
 
-% Among these models, Traag et al~\cite{traag2011} takes as null model a constant quantity specified by a parameter $\gamma_{\textrm{CPM}}$.    
+The \emph{Constant Potts Model} (CPM) identifies community as subset of nodes whose internal density $\rho_c$ is bigger than the overall graph density multiplied by a factor $\gamma_{\textrm{CPM}}$ that defines the typical scale of the communities. In the framework of Reichardt and Bornholdt, the CPM model has the following Hamiltonian: 
+\begin{equation}\label{eq:cpm_hamiltonian}
+H(\sigma)^{\textrm{CPM}} = - \sum \limits_{(i,j) \in V^2} \left[ a_{ij} - \rho \gamma_{\textrm{CPM}} \right] \delta(\sigma_i,\sigma_j).
+\end{equation}
+A rework of Eq.~\ref{eq:cpm_hamiltonian} permits to write the CPM model as:
 
-% The \emph{Constant Potts Model} (CPM) identifies community as subset of nodes whose internal density $\rho_c$ is bigger than the overall graph density multiplied by a factor $\gamma_{\textrm{CPM}}$ that defines the typical scale of the communities. In the framework of Reichardt and Bornholdt, the CPM model has the following Hamiltonian: 
-% \begin{equation}\label{eq:cpm_hamiltonian}
-% H(\sigma)^{\textrm{CPM}} = - \sum \limits_{(i,j) \in V^2} \left[ a_{ij} - \rho \gamma_{\textrm{CPM}} \right] \delta(\sigma_i,\sigma_j).
-% \end{equation}
-% Reworking~\ref{eq:cpm_hamiltonian} and using the definitions of intracluster edges and intracluster nodes one can write the model is simple terms as
-% \begin{equation}\label{eq:cpm_ermodel}
-% H(\sigma)^{\textrm{CPM}} = - \sum \limits_c^C \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
-% \end{equation}
-% In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives. In fact, the parameter $\gamma_{\textrm{CPM}}$ acts as the inner and outer edge density threshold. That is, suppose there is a community c with $m_c$ edges and $n_c$ nodes. Then is better to split it into two communities $r$ and $s$ if: 
-% \begin{equation}
-% \frac{m_{r,s}}{2n_r n_s} < \gamma_{\textrm{CPM}}
-% \end{equation}
+\begin{equation}\label{eq:cpm_ermodel}
+H(\sigma)^{\textrm{CPM}} = - \sum \limits_c^C \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
+\end{equation}
+In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives.
+In fact, the parameter $\gamma_{\textrm{CPM}}$ acts as the inner and outer edge density threshold.
+That is, suppose there is a community c with $m_c$ edges and $n_c$ nodes. Then is better to split it into two communities $r$ and $s$ if: 
+\begin{equation}
+\frac{m_{r,s}}{2n_r n_s} < \gamma_{\textrm{CPM}}
+\end{equation}
+
+
 
 
 %%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%

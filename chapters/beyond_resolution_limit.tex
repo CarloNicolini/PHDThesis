@@ -44,10 +44,12 @@ S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i
 
 Surprise computes the probability to (surprisingly) observe at least as many internal edges as within the proposed partition in a uniform random graph.
 As mentioned, model in Eq. \ref{eq:surprise}  corresponds to an urn model without reinsertion, where $S$ is the probability of extracting at least $m_\zeta$ white balls out of $m$ trials from an urn containing $p_\zeta$ white balls and $p-p_\zeta$ black balls.
-Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions with respect to $S$ are those with the highest number of intracluster edges and the smallest number of intracluster pairs.
+Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions with respect to $S$ are those with the highest number of intracluster edges and the smallest number of intracluster pairs. 
+
+Differently from Modularity, $S(\zeta)=1$ both for the partition where every node is in a separated community ($C=n$,$p_\zeta=0$,$m_\zeta=0$) and for the partition that entails all nodes into a single group ($C=1$,$p_\zeta=p$,$m_\zeta=m$) as is evident from its formulation in terms of urn model. Indeed, as Newman's Modularity is zero when $C=1$, it is different than zero in the case $C=n$. In this sense Surprise is a more meaningful quality function as both the extremal partitions are uninteresting.
 
 It should be noted that due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is equivalent with respect to optimum solutions, where higher values correspond to better clustering.
-Different authors \cite{arnauVMarsS2005}, \cite{fleck2014} refer to $S$ as Surprise, whereas others \cite{aldecoa2011}, \cite{aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of \cite{fleck2014} where Surprise is indicated as $S$ defined in Eq. \ref{eq:surprise}.
+Different authors \cite{arnauVMarsS2005}, \cite{fleck2014} refer to $S$ as Surprise, whereas others \cite{aldecoa2011}, \cite{aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of \cite{fleck2014} where Surprise is indicated as $S$ defined in Eq. \ref{eq:surprise} and indicate $\hat{S}$ where needed.
 
 \subsection{General properties of Surprise}
 As noted by \cite{fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ is depending only on the number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely $S:=S(m_\zeta,p_\zeta)$.
@@ -137,20 +139,18 @@ In the next sections we will show to what extent Surprise is affected by the res
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Resolution limit and Surprise}
 Unfortunately, the resolution limit appears to be an intrinsic feature of many methods that optimize global quality functions, and there appears to be a ``narrow scope to resolution-limit-free methods''~\cite{traag2015}. 
-Surprise has been shown to outperform other network partitioning methods in the detection of small features within large graphs, but the extent to which it suffered from the resolution limit was unknown~\cite{aldecoa2011,aldecoa2013} until our work~\cite{Nicolini2016}.
+Surprise has been shown to outperform other network partitioning methods in the detection of small features within large graphs, but the extent to which it suffered from the resolution limit was unknown~\cite{aldecoa2011,aldecoa2013}, until our work~\cite{Nicolini2016}.
 
-As pointed out by the authors who originally introduced Surprise~\cite{aldecoa2011}, while Modularity-based methods define a community as a region with an unexpectedly high density of links with respect to the global characteristics of the network, Surprise weights the number of actual intracluster edges against the maximum number of links given the nodes in the clusters.
+As pointed out by Aldecoa~\cite{aldecoa2011}, the author who originally introduced Surprise, while Modularity-based methods define a community as a region with an unexpectedly high density of links with respect to the global characteristics of the network, Surprise weights the number of actual intracluster edges against the maximum number of links given the nodes in the clusters.
 Hence, Surprise is able to discriminate local subnetworks whose internal density is close to that of a clique independently of their size.
 In the following, we assess the extent to which the resolution limit may affect Surprise.
 
 In order to assess to what extent Surprise is affected by the resolution limit, we directly compared Newman's Modularity and Surprise in the example of Fortunato and Barthelemy as illustrated in the previous chapter in Figure~\ref{fig:figure_1_barthelemy}. Already for $m_{12} = 1$, i.e. when the two cliques $G_1$ and $G_2$ were connected by only one edge, $Q^N$ showed sign inversion for $m_0 \approx 200$, meaning that it was beneficial for Modularity to merge two cliques.
-
-Surprise instead never merges cliques in the example of Fortunato and Barthelemy, as evident from Figure~\ref{fig:barthelemy_surprise}.
-
+In this same example though, Surprise instead never merges cliques, as made evident in Figure~\ref{fig:barthelemy_surprise}.
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{images/barthelemy_surprise.pdf}
-\caption{Example of a toy network with Surprise.}
+\includegraphics[width=1.0\textwidth]{images/barthelemy_surprise.pdf}
+\caption{Difference in $\hat{S}$ between the partition where the two cliques are separated (red) and the partition where the two cliques are merged (blue), as in the benchmark network of Fortunato and Barthelemy. As the quantity $\Delta \hat{S}$ is always positive, Surprise is never going to merge cliques, independently from other global paramters.}
 \label{fig:barthelemy_surprise}
 \end{figure}
 
@@ -168,50 +168,46 @@ An important consequence of this definition is that a resolution-limit-free meth
 This observation prompted us to explore the behavior of $\hat{S}$ in the ring of cliques model graph, as an extension of Fortunato and Barthelemy's model.
 Interestingly, given its two-variables formulation, Surprise optimization can be seen as a multiobjective optimization problem where one seeks to minimize the intracluster pairs while maximizing the number of intracluster edges.
 With increasing graph size, the computational problem of calculating $\hat{S}$ for every possible partition becomes rapidly intractable (maximization of $S$ is NP hard)~\cite{fleck2014}.
-However, as pointed out by Fleck et al.~\cite{fleck2014}, the Surprise optimal clustering must be Pareto optimal with respect to minimizing $p_\zeta$ and maximizing $m_\zeta$, i.e. any further improvement in one of the two variables must occur at the expense of the other.
+However, as explained before and pointed out by Fleck et al.~\cite{fleck2014}, the Surprise optimal clustering must be Pareto optimal with respect to minimizing $p_\zeta$ and maximizing $m_\zeta$, i.e. any further improvement in one of the two variables must occur at the expense of the other.
 
-In this sense, the problem of Surprise optimization is equivalent to a linear program, where one seeks to minimize $p_\zeta$ while keeping $m_\zeta$ equal to a constant $h$, choosing among the resulting clustering, the one that maximizes $\hat{S}$.
-Hence, to delineate the Pareto frontier in the $m_\zeta,p_\zeta$ space, we need to solve $m$ integer linear programs (ILP) in the form:
+In this sense, the problem of Surprise optimization is equivalent to a linear program, where one seeks to minimize $p_\zeta$ while keeping $m_\zeta$ equal to a constant $h$ from $1$ to $m$, choosing then among the resulting $m$ clusterings, the one that maximizes $\hat{S}$.
+Hence, to delineate the Pareto frontier in the $(m_\zeta,p_\zeta)$ space, we need to solve $m$ integer linear programs (ILP) in the form:
 \begin{align}
 \textrm{minimize} \sum_{\{i,j\} \in \binom{V}{2}} \mathcal{X}_{ij} \nonumber \\
 \textrm{s.t.} \quad \mathcal{X}_{ij} \in \{0,1 \} \nonumber \\
 \quad \mathcal{X}_{ik} + \mathcal{X}_{ki} - \mathcal{X}_{ij} \leq 1 \nonumber \\
 \sum_{\{i,j\} \in E} \mathcal{X}_{ij}=h \nonumber
 \end{align}
-where $\mathcal{X}_{ij}$ are a set of $\binom{n}{2}$ binary variables corresponding to vertex pairs, with the interpretation that $\mathcal{X}_{ij}=1$ if vertex $i$ and vertex $j$ are in the same community. The objective function $\sum_{ij}\mathcal{X}_{ij}$ measures the number of intracluster pairs $p_\zeta$.
-The constraint are necessary in order to ensure that if node $i$ and node $j$ are in the same community and node $i$ and node $k$ are in the same community, then node $j$ and node $k$ are in the same community too.
-
-%where we sought to minimize $p_\zeta$ while keeping $m_\zeta$ equal to a constant $h$, with $\mathcal{h}$ ranging from $0$ (trivial partition where every vertex is a community) to $m$ (trivial partition with all vertices in the same community).
-Linear programs were solved using the Python interfaces of Gurobi 5.7.3 on Linux (Gurobi Optimizer Version 5.7, Gurobi Optimization, Inc., Houston, Texas, United States).
+where $\mathcal{X}_{ij}$ are a set of $\binom{n}{2}$ binary variables corresponding to vertex pairs, with the interpretation that $\mathcal{X}_{ij}=1$ if vertex $i$ and vertex $j$ are in the same community. The objective function $\sum_{ij}\mathcal{X}_{ij}$ measures the number of intracluster pairs $p_\zeta$, while the number of intracluster edges $m_\zeta=\sum_{ij \in E} \mathcal{X}_{ij}$ was set equal to a fixed $h \in [0,m]$. The remaining constraints are necessary in order to ensure transitivity, i.e. if nodes $i$ and $j$ are in the same community, nodes $i$ and $k$ are in the same community, then nodes $j$ and $k$ share the same community too. 
+Figure~\ref{fig:ring_cliques_pareto} shows the Pareto frontier for a ring of cliques where we independently varied the number of cliques $r$ and the number of nodes $n$ in every clique\footnote{Linear programs were solved using the Python interfaces of Gurobi 5.7.3 on Linux (Gurobi Optimizer Version 5.7, Gurobi Optimization, Inc., Houston, Texas, United States).}.
+As $\hat{S}$ reaches its minimum (zero) both in the case where all nodes are separated communities ($p_\zeta=0$) or when a single community entails all nodes ($p_\zeta=p$), Figure~\ref{fig:ring_cliques_surprise} shows monotonically increasing Surprise along the frontier with increasing $p_\zeta$ up to the Surprise optimum, indicated by black circles in the Pareto front of Figure~\ref{fig:ring_cliques_pareto}, whereas the corresponding partition identified each clique as a separate community.
+Importantly, in the range of parameters we have investigated, Surprise optimization never merged cliques in the ring of cliques, independently of the size of the graph, and behaved as a Traag's resolution-limit free method.
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/ring_cliques_pareto.pdf}
-\caption{Pareto front for a ring of cliques graph. Optimal solutions with respect to Surprise are indicated as small black dots/}
+\includegraphics[width=1\textwidth]{images/ring_cliques_pareto.pdf}
+\caption{Pareto front for a ring of cliques graph. Optimal solutions with respect to Surprise are indicated as small black dots.}
 \label{fig:ring_cliques_pareto}
 \end{figure}
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/ring_cliques_surprise.pdf}
-\caption{Surprise for a ring of cliques graph.}
+\includegraphics[width=1\textwidth]{images/ring_cliques_surprise.pdf}
+\caption{Surprise $\hat{S}$ for a ring of cliques graph at different levels of $p_\zeta$ for corresponding solutions at fixed $m_\zeta$.}
 \label{fig:ring_cliques_surprise}
 \end{figure}
-
-Figure~\ref{fig:ring_cliques_pareto} shows the Pareto frontier for a ring of cliques where we independently varied the number of cliques $r$ and the number of nodes $n$ in every clique.
-Interestingly, $\hat{S}$ increased monotonically along the Pareto frontier with increasing $p_\zeta$ (Figure~\ref{fig:ring_cliques_surprise}), until it reached its optimum, indicated by black circles in the Pareto frontier, for the partition that identified each clique as a separate community.
-Importantly, in the range of parameters we have investigated, Surprise optimization never merged cliques in the ring of cliques, independently of the size of the graph, and behaved as a Traag's resolution-limit free method.
 
 While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
 Nonetheless, the size of the graphs we have explored numerically is quite typical of brain-connectivity networks and we feel encouraged to apply Surprise maximization to the study of the community structure of the brain.
 
-Interestingly, the maximum value of Surprise for given $m_\zeta,p_\zeta$ seems to be sharply peaked and very distant from other values at different $m_\zeta, p_\zeta$, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in section~\ref{sec:degeneracy}. This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
-We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}:
+Curiously, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in section~\ref{sec:degeneracy}.
+This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
+We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}:
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{images/degeneracy_rc_n5_k24.png}
-\caption{Degeneracy of Modularity, Surprise and Asymptotical Surprise in a ring of cliques graph.}
+\includegraphics[width=1.0\textwidth]{images/degeneracy_surprise.pdf}
+\caption{Degeneracy of Surprise landscape in a ring of cliques graph.}
 \label{fig:degeneracy_surprise}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
