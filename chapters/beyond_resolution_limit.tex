@@ -198,13 +198,22 @@ Linear programs were solved using the Python interfaces of Gurobi 5.7.3 on Linux
 \label{fig:ring_cliques_surprise}
 \end{figure}
 
-Figure 2B shows the Pareto frontier for a ring of cliques where we independently varied the number of cliques $r$ and the number of nodes $n$ in every clique.
-Interestingly, $\hat{S}$ increased monotonically along the Pareto frontier with increasing $p_\zeta$ (Fig. 2C), until it reached its optimum, indicated by black circles in the Pareto frontier, for the partition that identi ed each clique as a separate community.
+Figure~\ref{fig:ring_cliques_pareto} shows the Pareto frontier for a ring of cliques where we independently varied the number of cliques $r$ and the number of nodes $n$ in every clique.
+Interestingly, $\hat{S}$ increased monotonically along the Pareto frontier with increasing $p_\zeta$ (Figure~\ref{fig:ring_cliques_surprise}), until it reached its optimum, indicated by black circles in the Pareto frontier, for the partition that identified each clique as a separate community.
 Importantly, in the range of parameters we have investigated, Surprise optimization never merged cliques in the ring of cliques, independently of the size of the graph, and behaved as a Traag's resolution-limit free method.
+
 While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
 Nonetheless, the size of the graphs we have explored numerically is quite typical of brain-connectivity networks and we feel encouraged to apply Surprise maximization to the study of the community structure of the brain.
 
+Interestingly, the maximum value of Surprise for given $m_\zeta,p_\zeta$ seems to be sharply peaked and very distant from other values at different $m_\zeta, p_\zeta$, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in section~\ref{sec:degeneracy}. This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
+We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}:
 
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{images/degeneracy_rc_n5_k24.png}
+\caption{Degeneracy of Modularity, Surprise and Asymptotical Surprise in a ring of cliques graph.}
+\label{fig:degeneracy_surprise}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
