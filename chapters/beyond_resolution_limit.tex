@@ -178,11 +178,25 @@ Hence, to delineate the Pareto frontier in the $m_\zeta,p_\zeta$ space, we need 
 \quad \mathcal{X}_{ik} + \mathcal{X}_{ki} - \mathcal{X}_{ij} \leq 1 \nonumber \\
 \sum_{\{i,j\} \in E} \mathcal{X}_{ij}=h \nonumber
 \end{align}
-where $\mathcal{X}_{ij}$ are a set of $\binom{n}{2}$ binary variables corresponding to vertex pairs, with the interpretation that $\mathcal{X}_{ij}=1$ if vertex $i$ and vertex $j$ are in the same community.
+where $\mathcal{X}_{ij}$ are a set of $\binom{n}{2}$ binary variables corresponding to vertex pairs, with the interpretation that $\mathcal{X}_{ij}=1$ if vertex $i$ and vertex $j$ are in the same community. The objective function $\sum_{ij}\mathcal{X}_{ij}$ measures the number of intracluster pairs $p_\zeta$.
 The constraint are necessary in order to ensure that if node $i$ and node $j$ are in the same community and node $i$ and node $k$ are in the same community, then node $j$ and node $k$ are in the same community too.
 
 %where we sought to minimize $p_\zeta$ while keeping $m_\zeta$ equal to a constant $h$, with $\mathcal{h}$ ranging from $0$ (trivial partition where every vertex is a community) to $m$ (trivial partition with all vertices in the same community).
- Linear programs were solved using the Python interfaces of Gurobi 5.7.3 on Linux (Gurobi Optimizer Version 5.7, Gurobi Optimization, Inc., Houston, Texas, United States).
+Linear programs were solved using the Python interfaces of Gurobi 5.7.3 on Linux (Gurobi Optimizer Version 5.7, Gurobi Optimization, Inc., Houston, Texas, United States).
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.8\textwidth]{images/ring_cliques_pareto.pdf}
+\caption{Pareto front for a ring of cliques graph. Optimal solutions with respect to Surprise are indicated as small black dots/}
+\label{fig:ring_cliques_pareto}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.8\textwidth]{images/ring_cliques_surprise.pdf}
+\caption{Surprise for a ring of cliques graph.}
+\label{fig:ring_cliques_surprise}
+\end{figure}
 
 Figure 2B shows the Pareto frontier for a ring of cliques where we independently varied the number of cliques $r$ and the number of nodes $n$ in every clique.
 Interestingly, $\hat{S}$ increased monotonically along the Pareto frontier with increasing $p_\zeta$ (Fig. 2C), until it reached its optimum, indicated by black circles in the Pareto frontier, for the partition that identi ed each clique as a separate community.
