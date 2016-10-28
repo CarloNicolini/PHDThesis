@@ -215,13 +215,12 @@ A simple graph is said \emph{connected} if there exist a path between any pair o
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Clustering}\label{sec:clustering}
-Grouping nodes according to some criterion is the basis of community detection. 
+Grouping nodes according to some criterion of similarity between them is the basis of the formation of clusters in networks.
 A set of mutually disjoint, induced subgraphs that covers all the nodes is called a \emph{clustering}.
 A clustering $\zeta = \{\zeta_c\}$ of $G$ is a partitioning of the set $V$ into $C$ disjoint sets of nodes, $\zeta_c \subseteq V$, which we call \emph{modules} or \emph{communities}, interchangeably. 
 Each module is a node-induced subgraph $\mathcal{G}:=(V[\zeta_c],E[\zeta_c])$, also indicated as $G[\zeta_c]$.
 
 We denote the number of nodes of the module $G[\zeta_c]$ with $n_c$, the number of edges with $m_c$ and the total number of pairs of nodes with $p_c=\binom{n_c}{2}$.
-
 From the notational point of view, a clustering can alternatively be defined with a \emph{node assignment vector} $\sigma \in \mathbb{N}^n$ in which every node is assigned to an integer label representing the community index. 
 
 The \emph{Kronecker delta} on the assignment vector $\delta(\sigma_i,\sigma_j)=1$ indicates when two nodes lie in the same module and $\delta(\sigma_i,\sigma_j)=0$ when they belongs to different modules.
@@ -374,16 +373,16 @@ a binomial distribution that can be approximated to a Poisson distribution for l
 \Pr(k) \approx \frac{(n p_{ER})^k e^{-n p_{ER}} }{k!}.
 \end{equation}
 \bigbreak
-In generalizing the concepts of random networks models, one can define every simple graph on $n$ nodes as the output of a random process where each edge $(i,j) $ is sampled with a probability $\Pr(i,j,{\boldsymbol \theta})$ with $\boldsymbol \theta$ is a vector of hyperparameters. In the simplest case of the ER graph, this generative model is an uniform probability distribution with $\boldsymbol \theta=p_{ER}$ as every pair of nodes is linked by an edge with constant probability:
+In generalizing the concepts of random networks models, one can define every simple graph on $n$ nodes as the output of a random process where each edge $(i,j) $ is sampled with a probability $\Pr(i,j,{\boldsymbol \theta})$ with $\boldsymbol \theta$ a vector of hyperparameters. In the simplest case of the ER graph, this generative model is an uniform probability distribution with $\boldsymbol \theta=p_{ER}$ as every pair of nodes is linked by an edge with constant probability:
 \begin{equation}
 \Pr(i,j) = p_{ER}.
 \end{equation}
 
 The ER model, despite its advantages (it allows to compute almost all network measures analytically) does not realistically represent empirical networks. Its Poissonian degree distribution (Figure~\ref{fig:deg_dist_poisson_er}) is far from the degree distributions seen in most of the real-world networks. In fact, the empirical behavior of the degree distribution of real networks is one of the main reasons why they attracted so much interest from the scientific community.
 
-The world-wide-web, as well as the connectome of the worm \emph{C. Elegans}\footnote{\emph{Caenorbiditis elegans}, a small nematode worm, famous as the first living organism whose connectome has been completely mapped.} and many other examples, show that the degree distribution is not centered around a mean value as predicted by ER model. 
+The world-wide-web, as well as the connectome of the worm \emph{C. Elegans}\footnote{\emph{Caenorbiditis elegans}, a small nematode worm, famous as the first living organism whose connectome has been completely mapped.} and many other examples, shows that the degree distribution is not centered around a mean value as predicted by ER model. 
 
-\noindent\begin{figure}
+\begin{figure}
 \centering
 \begin{minipage}[b]{0.5\textwidth}
 \includegraphics[height=4cm]{images/deg_dist_poisson_er.pdf}
@@ -395,13 +394,12 @@ The world-wide-web, as well as the connectome of the worm \emph{C. Elegans}\foot
 \label{fig:deg_dist_poisson_er}
 \end{figure}
 
-Instead, in real networks, highly connected nodes exist within a bulk of low connected nodes and the tails of the distribution are not decaying exponentially, producing the observed phenomenon of \emph{heavy tails}.
-It turns out, that many networks display a degree distribution that follows a \emph{power-law} form
+Instead, in real networks, highly connected nodes exist within a bulk of low connected nodes and the degree distribution is not decaying exponentially, thus producing the observed phenomenon of \emph{heavy tails}. Indeed, many networks display a degree distribution that follows a \emph{power-law} form
 \begin{equation}
 \Pr(k) \propto k^{-\gamma}
 \end{equation}
 where $\gamma$ is usually included in the $[2,3]$ interval.
-Power-law distributions, are also dubbed \emph{scale-free}, as they lack a specific scale. For some multiplicative constant $\alpha$ one indeed has that $P(\alpha k)=f(\alpha)P(k)$ where $f$ is a function only of the parameter $\alpha$. Therefore, the functional form of the power-law remain unchanged.
+Power-law distributions, also dubbed \emph{scale-free}, lack a specific scale. Indeed, $P(\alpha k)=f(\alpha)P(k)$ for some multiplicative constant $\alpha$  and $f$ a function of $\alpha$. Therefore, the functional form of the power-law remain unchanged.
 
 Hence, in understanding the limitation of the Erd\H{o}s-Rényi model, researchers developed a multitude of generative models of graphs that tried to better model properties like the heavy-tails seen in power-laws or also the \emph{small-worldness} phenomenon, i.e. the observation that most nodes in a network are reachable from every other in a small number of hops.
 To keep in account the features of empirical networks, other models of networks have been developed like the models of Watts-Strogatz~\cite{Watts1998} model and Barabasi-Albert~\cite{Barabasi1999}.
@@ -419,18 +417,18 @@ For example, in the Watts-Strogatz model a graph with groups of densely connecte
 The resulting graph shows the property of having short average path length, although the degree distribution is not power-law.
 To prevent this issue, the Barabasi-Albert graph model aims to construct graphs with a dynamic attachment process.
 In the BA model, one considers a small number $n_0$ of initial nodes. Then at each step, one adds a new node and connect it to a fixed number $(\leq n_0)$ of nodes that already exist in the network. The probability that the new node will be connected to a node $i$ is then proportional to $k_i^{p_s}$,  where $p_s$ is a parameter called the \emph{scaling exponent}. That algorithm generates graphs in which the frequency of nodes with degree $k$ is asymptotically proportional to ${k}^{-3}$. This power relationship between frequencies and degrees indicates that this model accounts for the power-law distribution of degrees seen in many real networks.
-
 Although very well studied, both models are still lacking a strong community structure and more complex models have been studied by the network science community.
 
 \section{Community detection in networks}
 \label{sec:communitydetectioninnetworks}
-
-The process of grouping nodes in a graph to establish their common behavioral properties, is a popular technique that goes under the name of \emph{community detection}. As the definition of community is not well stated, it is therefore important to have a quantitative way to evaluate the goodness of a clustering.
+The distribution of edges and degrees is not only globally, but also locally inhomogeneous, with high concentrations of edges within special groups of vertices, and low concentrations between these groups. This feature of real networks is called community structure. 
+The process of grouping nodes in a graph to establish their common behavioral properties, is a popular technique that goes under the name of \emph{community detection}.
+As the definition of community is not well stated, it is therefore important to have a quantitative way to evaluate the goodness of a clustering.
 
 A \emph{quality function} is a function $\mathcal{Q}$ that given a clustering of a graph $\zeta$ returns a scalar number. Usually one identifies ``good'' clusterings with high scores of the quality function and ``bad'' clusterings with low scores. In this sense, is possible to rank partitions from bad to good, although is important to stress that the definition of ``good'' or ``bad'' is an \emph{ill-posed problem} as every quality function one designs puts the emphasis on some features of the community organization and perhaps not on others.
-Here and in the following sections, we strongly point out that the concept of quality function and community detection methods are separate as the first is a way to assess the goodness of a partition while the second relies on quality function to design efficient algorithms and heuristics to find such good partitions.
+Here and in the following sections, we strongly point out that the concept of quality function and community detection methods are separate as the first is a way to assess the goodness of a partition while the second relies on the definition of a quality function to design efficient algorithms and heuristics to find such good partitions.
 
-One of the most important properties of a quality function is when it can be expressed as sum over communities. Such quality functions are dubbed \emph{additive}: for a generic function of a cluster $f(\zeta_i)$, an additive quality function specify the goodness of a clustering as sum of $f$ over the distinct communities as follows:
+One of the most important properties of a quality function is when it can be expressed as a sum over communities. Such quality functions are dubbed \emph{additive}: for a generic function of a cluster, or subgraph, $f(\zeta_i)$, an additive quality function specify the goodness of a clustering as sum of $f$ over the distinct communities as follows:
 \begin{equation}\label{eq:additive_quality}
 \mathcal{Q} = \sum \limits_{\zeta_c \in \zeta} f(\zeta_c).
 \end{equation}
@@ -440,7 +438,7 @@ The majority of quality functions are additive, even if this requirement is not 
 The simplest requirement of a quality function, is to put emphasis on intracluster edges and penalize intercluster edges. In this terms, local optima should correspond to partitions where the communities emerge as dense areas in the network loosely connected among them.
 Here we present a general framework for the definition of suitable quality functions for community detection that meets these requirements.
 
-This framework, introduced by Reichardt and Bornholdt~\cite{reichardt2006} is grounded in statistical mechanics, a branch of physics that studies the macroscopic and microscopic properties of systems of many interacting elements. Within this model, the problem of community detection is cast in terms of finding the \emph{ground state} of a spin glass, a model describing the behavior of large sets of interacting magnets.
+This framework, introduced by Reichardt and Bornholdt~\cite{reichardt2006} is grounded in statistical mechanics, a branch of physics that studies the macroscopic and microscopic properties of systems of many interacting elements. Within this model, the problem of community detection is cast in terms of finding the \emph{ground state} of a spin glass, a model describing the behavior of large sets of interacting microscopic magnets.
 Actually, the properties of spin glass models are subject of extremely intensive research in the last decades as their applications range from matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader to cover the details of the model in other specialized books~\cite{Mezard1990}.
 
 A spin glass model starts from the definition of an Hamiltonian, a multi-variable scalar function that describe the total energy of the physical system with the configuration of its internal components. In our case, the internal components of the system are the nodes. The configuration of the system is then expressed by the community affiliation vector $\boldsymbol\sigma$, meaning that node $i$ stays in the community $\sigma_i$ (see~\ref{sec:clustering}).
@@ -471,9 +469,9 @@ An important consequence of such randomization is that any stub in this null mod
 P_{ij} = \frac{k_i k_j}{2m}
 \end{equation}
 where $k_i$ and $k_j$ are the degrees of node $i$ and $j$. The ``configuration model''  is of great importance in network science as it assigns higher probability of link to nodes with high degrees, a feature that is compatible with most real world networks. 
-We'll address the motivations of the configuration model details in the section~\ref{sec:configuration_model}.
+We'll address the motivations of the configuration model in  details in section~\ref{sec:configuration_model}.
 
-In terms of a spin glass model, Modularity thus measures the deviation from the observed intracluster density with respect to the expected intracluster density specified by the configuration model. Modularity is described in the form of~\ref{eq:rbspinglass2} but normalized by the number of edges in the graph. Modularity is then defined in terms of a normalized Hamiltonian that takes the form described in Eq.~\ref{eq:newmanmodularityspinglass}.
+In terms of a spin glass model, Modularity thus measures the deviation from the observed intracluster density with respect to the expected intracluster density specified by the configuration model. Modularity is described in the form of~\ref{eq:rbspinglass2} but normalized by the number of edges in the graph. taking the form described in Eq.~\ref{eq:newmanmodularityspinglass}.
 \begin{equation}\label{eq:newmanmodularityspinglass}
 Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(\sigma_i,\sigma_j),
 \end{equation}
@@ -500,25 +498,24 @@ p_{ij} = \Pr \left ( a_{ij} | \{ k \} \right) = \Pr(k_i | \{ k \}) + \Pr(k_j | \
 
 Although Modularity is most frequently applied to \emph{simple graphs} (see Fig.~\ref{fig:simple_unweighted_graph}), the configuration model implies that the randomization is carried over the space of \emph{loopy multigraphs} (Figure~\ref{fig:loopy_multigraph}).
 The rewiring probability considers indeed that the stubs of vertices can be reconnected both to the same source vertex (self-loops) or added to already existing edges (multi-edges).
-Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but many other distinct matchings, which produce non-simple networks as shown in Figure~\ref{fig:reshuffle_loopy_multigraphs} where just four of them has been generated. 
+Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but many other distinct matchings, which produce non-simple networks as shown in Figure~\ref{fig:reshuffle_loopy_multigraphs} where just four of them have been generated. 
 In fact, the number of possible rewirings that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges, is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as:
 \begin{equation}\label{eq:cm_possible_rewirings}
 \Omega_{CM} = \binom{2m}{k_1,\ldots,k_n} = \frac{(2m)!}{\prod_i^n k_i!}.
 \end{equation}
 For the small triangle graph, this number is already very large: 90 different rewirings are possible!
-
 In practice though, the fraction of edges involved in either self-loops or multi-edges is vanishingly small in the large $n$ limit, and thus we may generally ignore them without much impact. 
 Hence, the estimate of the probability of rewiring in Eq.~\ref{eq:configuration_model_probability} is only valid in large, sufficiently sparse graphs with a sufficiently bounded degree sequence.
 Under these hypotheses the expected number of edges between two vertices in the space of simple graphs is asymptotically the same as the expectation in the space of stub-labeled loopy multigraphs, i.e. the one previously introduced for the definition of Modularity: $\mathbb{E}_s[a_{ij} |k] \approx k_i k_j /(2m)$, where $s$ denotes the space of simple graphs.
 
 \begin{figure}[htb]\centering
 \begin{subfigure}[t]{0.45\textwidth}\centering
-\includegraphics[height=2.5cm]{images/configuration_model_six_stubs.pdf}
+\includegraphics[height=2.4cm]{images/configuration_model_six_stubs.pdf}
 \caption{}
 \label{fig:reshuffle_simple_graphs}
 \end{subfigure}
 \begin{subfigure}[t]{0.45\textwidth}\centering
-\includegraphics[height=2.5cm]{images/configuration_model_three_stubs.pdf}
+\includegraphics[height=2.4cm]{images/configuration_model_three_stubs.pdf}
 \caption{}
 \label{fig:reshuffle_loopy_multigraphs}
 \end{subfigure}
@@ -599,6 +596,11 @@ An even more striking example of how the resolution limit affects Modularity is 
 \label{fig:traag_ring_of_cliques}
 \end{figure}
 If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs. By extending the number of cliques, then Modularity may merge them in groups of three, fours etc.
+
+Traag et al.~\cite{traag2011} proposed a rigorous definition of resolution-limit-free graph partitioning.
+A quality function is resolution-limit-free if, given an optimal partition $\zeta$ of a graph $G$, any module $\zeta_i$ is also optimal for the graph induced by the nodes in $\zeta_i$.
+In other words, each community of the optimal partition is not split by optimization of the quality function applied to the subgraph induced by the nodes in the community.
+Hence, each community does not depend on the rest of the network and is both locally and globally optimal.
 
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
 

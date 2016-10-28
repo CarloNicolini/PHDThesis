@@ -159,11 +159,7 @@ Indeed, $\Delta \hat{S}$ was always positive and grew monotonically with increas
 Hence, the two cliques $G_1$ and $G_2$ were always resolved by Surprise as separate communities independently of the network size, and also in the presence of some ``fuzziness'', i.e. when $m_{12}>1$ and the two cliques were connected by more than one edge.
 In order to assess whether this behavior reflects a general property of Surprise, or is incidental to this particular example, we have also studied a generalization of Fortunato and Barthelemy's model.
 
-Traag et al.~\cite{traag2011} proposed a rigorous definition of resolution-limit-free graph partitioning.
-A quality function is resolution-limit-free if, given an optimal partition $\zeta$ of a graph $G$, any module $\zeta_i$ is also optimal for the graph induced by the nodes in $\zeta_i$.
-In other words, each community of the optimal partition is not split by optimization of the quality function applied to the subgraph induced by the nodes in the community.
-Hence, each community does not depend on the rest of the network and is both locally and globally optimal.
-An important consequence of this definition is that a resolution-limit-free method will never depend on the size of the network to merge cliques in a graph comprising $r$ cliques of $n_r$ nodes connected in a ring structure as in Figure~\ref{fig:traag_ring_of_cliques}.
+A consequence of the definition of a resolution limit free in Traag's sense, is that such method will never depend on the size of the network to merge cliques in a graph comprising $r$ cliques of $n_r$ nodes connected in a ring structure as in Figure~\ref{fig:traag_ring_of_cliques}.
 
 This observation prompted us to explore the behavior of $\hat{S}$ in the ring of cliques model graph, as an extension of Fortunato and Barthelemy's model.
 Interestingly, given its two-variables formulation, Surprise optimization can be seen as a multiobjective optimization problem where one seeks to minimize the intracluster pairs while maximizing the number of intracluster edges.
@@ -172,7 +168,7 @@ However, as explained before and pointed out by Fleck et al.~\cite{fleck2014}, t
 
 In this sense, the problem of Surprise optimization is equivalent to a linear program, where one seeks to minimize $p_\zeta$ while keeping $m_\zeta$ equal to a constant $h$ from $1$ to $m$, choosing then among the resulting $m$ clusterings, the one that maximizes $\hat{S}$.
 Hence, to delineate the Pareto frontier in the $(m_\zeta,p_\zeta)$ space, we need to solve $m$ integer linear programs (ILP) in the form:
-\begin{align}
+\begin{align}\label{eq:surprise_ilp}
 \textrm{minimize} \sum_{\{i,j\} \in \binom{V}{2}} \mathcal{X}_{ij} \nonumber \\
 \textrm{s.t.} \quad \mathcal{X}_{ij} \in \{0,1 \} \nonumber \\
 \quad \mathcal{X}_{ik} + \mathcal{X}_{ki} - \mathcal{X}_{ij} \leq 1 \nonumber \\
@@ -204,7 +200,7 @@ Curiously, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharpl
 This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
 We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}:
 
-\begin{figure}
+\begin{figure}[htb!]
 \centering
 \includegraphics[width=1.0\textwidth]{images/degeneracy_surprise.pdf}
 \caption{Degeneracy of Surprise landscape in a ring of cliques graph.}
