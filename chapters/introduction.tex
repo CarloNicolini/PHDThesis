@@ -546,12 +546,14 @@ Interestingly, from a machine learning perspective, all spin glass models quanti
 
 
 \section{Resolution limit}\label{sec:resolutionlimit}
-Over the years, Modularity attracted a lot of attention as it served as the main tool to inspect whether networks obtained from many different scientific areas, were showing community structure.
-The wide use of Modularity has, on one hand, led many researchers to gain interest in complex networks, with results in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics} just to mention a few, but on the other hand offered a fallacious view on the community detection problem as an unseen consequence of Modularity maximization was its substantial limit to detect communities smaller than a certain scale.
+Modularity attracted a lot of attention over the years as it  became the tool of election to inspect the community structure of networks.
+On one side, the wide use of Modularity, led many researchers to gain interest in complex networks, with results in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics} just to mention a few, but on the other side it offered a fallacious view on the community detection problem. 
+Indeed, although simple in many sense, Modularity optimization was hiding a problem that heavily limits its use in real world networks.
 
-In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity. Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
-
+In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity.
+Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
 To illustrate what is meant by the resolution limit, here we follow the example of Fortunato and Barthelemy, with some obvious notational change.
+
 Let us consider a toy network, $G=(V,E)$ that is composed of three subnetworks, as shown in~\ref{fig:figure_1_barthelemy}A.
 The first subnetwork, a subgraph $G_0$ with $n_0$ nodes and $m_0$ edges is connected to two cliques, $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:figure_1_barthelemy}.
 
@@ -559,7 +561,7 @@ While $G_1$ and $G_2$, are complete subgraphs and are expected to be modules by 
 To be more specific, let the partition where the two cliques are separated be denoted by $A$, with Modularity value $Q_A$. On the other hand, the partition where the two cliques are merged into a single community is denoted by $B$, with Modularity value $Q_B$.
 To ease the calculations, we indicate the number of links $m_{12}$ as functions of $m_1$ and $m_2$, such that $m_{12}=a_{1}$, $m_1=a_2 m_2$, $m_{01}=b_1 m_1$ and $m_{02}=b_2 m_2$ with $a_1,a_2,b_1,b_2 \geq 0$.
 
-As Modularity is a sum over the modules, and the module $G_0$ has the same Modularity $Q_0$ in both partitions, we study the difference $\Delta Q = Q_{A} - Q_{B}$ that, after some manipulations, results:
+As Modularity is a sum over the modules, and the module $G_0$ has the same Modularity $Q_0$ in both partitions, we are interested in studying the difference $\Delta Q = Q_{A} - Q_{B}$. After some simple algebraic manipulations it results:
 \begin{equation} \label{eq:resolution_limit_delta}
 \Delta Q = \frac{2 m a_1 m_1 - (a_1+b_1+2)(a_2+b_2+2)m_1 m_2}{2m^2}
 \end{equation}
@@ -570,12 +572,13 @@ m_2 < \frac{2m a_1}{(a_1+b_1+2)(a_2+b_2+2)}.
 In the case where $a_1=a_2=0$, there are no links between $G_1$ and $G_2$ and the condition is satisfied. When instead the two subgraphs are connected ($m_{12} \neq 0$), it happens that at some values of $m_1$ and $m_2$, the partition where the two modules are merged is preferred, i.e. $\Delta Q <0$. This means that when maximizing $Q^N$ on a network, is possible to miss some important structures, if they are too small.
 More specifically, if the two modules have the same size and one sets $a_1=a_2=b_1=b_2=1/m$, is easy to check that Eq.~\ref{eq:resolution_limit_delta} is not satisfied if the number of links in the modules $m_c$, is lower than the square root of the total number of links in the network:
 \begin{equation}
-m_c < \sqrt{\frac{m}{2}}
+m_c < \sqrt{\frac{m}{2}}.
 \end{equation}
 
 To make this example more concrete we studied numerically a toy network where the three subgraphs take a precise form.
 For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge ($m_{01}=m_{02}=1$) and to each other by $m_{12}$ edges.
-The module $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted it as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs for $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$. For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B).
+The module $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted it as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs when $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$.
+For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B).
 With increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
 
 
@@ -594,13 +597,52 @@ An even more striking example of how the resolution limit affects Modularity is 
 \caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly the one on left (A), but Modularity values is higher for the partition on the right (B), where pairs of cliques are coalesced into separated communities.}
 \label{fig:traag_ring_of_cliques}
 \end{figure}
-If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs. By extending the number of cliques, then Modularity may merge them in groups of three, fours etc.
+If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs.
+Yet extending the number of cliques, Modularity may merge cliques into groups of three, fours etc.
 
-Traag et al.~\cite{traag2011} proposed a rigorous definition of resolution-limit-free graph partitioning.
+\subsection{Resolution parameter}
+Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}.
+
+In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
+From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$, resulting in a modified modularity $Q^N(\gamma)$:
+\begin{equation}
+Q^N(\sigma,\gamma) = \sum_c^C \left[ \frac{m_c}{m} - \gamma_{N} \left( \frac{K_c}{2m}\right)^2 \right]
+\end{equation}
+
+However, exact specification of $\gamma_{N}$ requires prior knowledge of the expected size of the communities.
+Moreover, it has been shown~\cite{lancichinetti2011} that an adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters. 
+Indeed this is due to two opposite coexisting effects: the tendency to merge small subgraphs, which dominates when the resolution is low and the tendency to split large subgraphs, which dominates when the resolution is high.
+
+In benchmark networks with heterogeneous distributions of cluster sizes, the simultaneous elimination of both biases is not possible and multiresolution modularity is not capable to recover the planted community structure even in graphs where the ground-truth structure is evident.
+Therefore, adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
+
+In another attempt to better tolerate the resolution limit, scholars applied appropriate techniques of edge reweighting~\cite{berry2011} to enhance communities prior to Modularity maximization.
+Although this technique proved able to better tolerate the detrimental effect of the resolution limit, it only shifted the scale of the problem.
+After all, real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
+Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
+
+\subsection{Resolution-limit free quality functions and the Constant Potts Model}
+In an attempt to quantitatively characterize the resolution limit, Traag et al.~\cite{traag2011} proposed a rigorous definition of \emph{resolution-limit-free} graph partitioning.
+
 A quality function is resolution-limit-free if, given an optimal partition $\zeta$ of a graph $G$, any module $\zeta_i$ is also optimal for the graph induced by the nodes in $\zeta_i$.
 In other words, each community of the optimal partition is not split by optimization of the quality function applied to the subgraph induced by the nodes in the community.
 Hence, each community does not depend on the rest of the network and is both locally and globally optimal.
+Then, in order to design such resolution-limit-free quality function, Traag took a spin glass model, with a null model specified by constant quantity $\gamma_{\textrm{CPM}}$~\cite{traag2011} and dubbed it \emph{Constant Potts Model}.
 
+The \emph{Constant Potts Model} (CPM) identifies community as subset of nodes whose internal density $\rho_c$ is bigger than the overall graph density multiplied by a factor $\gamma_{\textrm{CPM}}$ that defines the typical scale of the communities. In the framework of Reichardt and Bornholdt, the CPM model has the following Hamiltonian: 
+\begin{equation}\label{eq:cpm_hamiltonian}
+H(\sigma)^{\textrm{CPM}} = - \sum \limits_{(i,j) \in V^2} \left[ a_{ij} - \rho \gamma_{\textrm{CPM}} \right] \delta(\sigma_i,\sigma_j),
+\end{equation}
+that once reworked results in an additive quality function in the form of Eq.~\ref{eq:cpm_hamiltonian} 
+\begin{equation}\label{eq:cpm_ermodel}
+H(\sigma)^{\textrm{CPM}} = \sum \limits_c^C \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
+\end{equation}
+In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives; indeed it acts as the inner and outer edge density threshold.
+In the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{CPM}$ exceeds the inter-community density $m_{r,s}/(2n_r n_s)$.
+
+Although very promising, the CPM never took off in the analysis of brain networks mainly because of the problem of tuning $\gamma_{CPM}$.\todo[inline]{FIX FRASE}
+
+\subsection{Effects of resolution limit}
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
 
 By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
@@ -611,56 +653,20 @@ Hierarchical approaches have shown that large modules can be further subdivided,
 However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
 To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
-\subsection{Resolution parameter}
-Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}.
 
-In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
-From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$, resulting in a modified modularity $Q^N(\gamma)$:
-
-\begin{equation}
-Q^N(\sigma,\gamma) = \sum_c^C \left[ \frac{m_c}{m} - \gamma \left( \frac{K_c}{2m}\right)^2 \right]
-\end{equation}
-
-However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter.
-Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters. 
-Indeed this is due to two opposite coexisting effects: the tendency to merge small subgraphs, which dominates when the resolution is low and the tendency to split large subgraphs, which dominates when the resolution is high.
-In benchmark networks with heterogeneous distributions of cluster sizes, the simultaneous elimination of both biases is not possible and multiresolution modularity is not capable to recover the planted community structure even in graphs where the ground-truth structure is evident.
-Therefore, adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
-
-Real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
-Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
-
-
-\subsection{Resolution-limit free quality functions}
-Among these models of quality function based on spin glass models, Traag et al~\cite{traag2011} takes as null model a constant quantity specified by a parameter $\gamma_{\textrm{CPM}}$.    
-
-The \emph{Constant Potts Model} (CPM) identifies community as subset of nodes whose internal density $\rho_c$ is bigger than the overall graph density multiplied by a factor $\gamma_{\textrm{CPM}}$ that defines the typical scale of the communities. In the framework of Reichardt and Bornholdt, the CPM model has the following Hamiltonian: 
-\begin{equation}\label{eq:cpm_hamiltonian}
-H(\sigma)^{\textrm{CPM}} = - \sum \limits_{(i,j) \in V^2} \left[ a_{ij} - \rho \gamma_{\textrm{CPM}} \right] \delta(\sigma_i,\sigma_j).
-\end{equation}
-A rework of Eq.~\ref{eq:cpm_hamiltonian} permits to write the CPM model as:
-
-\begin{equation}\label{eq:cpm_ermodel}
-H(\sigma)^{\textrm{CPM}} = - \sum \limits_c^C \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
-\end{equation}
-In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives.
-In fact, the parameter $\gamma_{\textrm{CPM}}$ acts as the inner and outer edge density threshold.
-That is, suppose there is a community c with $m_c$ edges and $n_c$ nodes. Then is better to split it into two communities $r$ and $s$ if: 
-\begin{equation}
-\frac{m_{r,s}}{2n_r n_s} < \gamma_{\textrm{CPM}}
-\end{equation}
 
 
 
 
 %%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%
 \section{Degeneracy}\label{sec:degeneracy}
-The differences in Modularity between optimal and suboptimal partitions can be very small, as observed in Figure~\ref{fig:figure_1_barthelemy}B, where $\Delta Q$ between the two partitions where the cliques are merged or splitted, remains close to zero for a large range of $m_0$ especially at $m_{12}=1$.
+The differences in Modularity between optimal and suboptimal partitions can be very small, as observed in Figure~\ref{fig:figure_1_barthelemy}B, where $\Delta Q$ between the two partitions with splitted or merged cliques, remains close to zero for a large range of $m_0$ especially at $m_{12}=1$.
 Indeed, even in the case where it would not be beneficial for Modularity to merge two modules, i.e $\Delta Q <0$, this difference can be made arbitrarily close to zero.
-As the number of possible different partitions of a graph with $n$ nodes (the Bell number $B_n$) grows faster than exponentially in $n$~\cite{stanley1997}, a combinatorially large number of operations may lead to solutions that are radically different in terms of partition distance, but only slightly suboptimal in terms of modularity, with values very close to the global maximum.
-Thus, counterintuitively, when the network becomes more modular, the globally optimal partitions becomes harder to find among the growing number of suboptimal but competitive alternatives.
 
-This consideration explains the observation that nearly-optimal solution tend to group into high-modularity plateaus, although they may differ substantially~\cite{good2009}. This phenomenon, dubbed \emph{degeneracy} affects Newman's Modularity and probably many other spin-glass based quality functions.
+The total number of different partitions in a graph is the Bell number $B_n$~\cite{stanley1997} and it grows faster than exponentially in $n$, therefore a combinatorially large number of sub-optimal partitions exist around the global optimum. These partitions may be very close in terms of Modularity to the optimum but radically different in terms of similarity.
+Thus, counter-intuitively, when the network becomes more modular, the globally optimal partitions becomes harder to find among the growing number of suboptimal but competitive alternatives.
+
+This consideration explains the empirical observation that nearly-optimal solution tend to group into high-modularity plateaus, although they may differ substantially~\cite{good2009}. This phenomenon, dubbed \emph{degeneracy} affects Newman's Modularity and probably many other spin-glass based quality functions.
 As a matter of example, the variation in Modularity for merging a pair of adjacent cliques in the ring of cliques graph shown in Figure~\ref{fig:traag_ring_of_cliques}, is given by:
 \begin{equation}\label{eq:modularity_difference_ring_clique}
 \Delta Q = \frac{1}{r\left(\binom{n_r}{2}+1\right)}-2r^{-2}

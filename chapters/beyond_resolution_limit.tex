@@ -1,4 +1,5 @@
 In the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
+
 In the following sections we will explore the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
 
 To this end, we will show that Surprise, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
@@ -6,25 +7,24 @@ Surprise maximization in brain co-activation and functional connectivity resting
 Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure.
 
 \section{Probability theory on clusterings}\label{sec:probability_clustering}
-A statistical comparison between the intracluster and the global densities is the idea that leads to the definition of Surprise, a quality function that moves away from the framework of additive functions based on spin-glass models, as described in the previous chapter.
-
+Starting from the idea of statistical comparison between the intracluster and the global densities, Surprise can be thought as a quality function that moves away from the framework of additive functions based on spin-glass models, as described in the previous chapter.
 Indeed, the spin-glass based additive quality functions, including Newman's Modularity, are by no means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
-In other terms, no spin-glass based quality function is telling us to what level of confidence one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
+In other terms, no spin-glass based quality function is telling us the level of confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
 
-In order to answer this question, one should instead compute probabilities, as they are the natural way to measure statistical significance. In particular, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam.
+To address this question, one should instead compute probabilities, as they are the natural way to measure statistical significance.
+Specifically, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam.
 
 Precisely, the problem is the following: given a subgraph, what is the probability of observing another subgraph with a larger number of internal edges drawn from a random graph with a given density?
-This problem is exactly corresponding to a classical problem in probability, namely that of sampling without replacement from an urn containing marbles of two colors. The reason is clear if one imagines that each pair of nodes is a marble, which is red if the nodes are connected by a link and black if they are not.
-A number of marbles is drawn from the urn without replacement and the probability of observing a given number of marbles of one specific color is calculated by means of the hypergeometric law.
-
-Indeed, the hypergeometric law tells exactly the probability of observing a fixed number of marbles of one color in a sample of marbles drawn from an urn without replacement. Applied to clustering, the problem corresponds to calculate the probability of observing a fixed number of internal edges in a randomly drawn set of nodes defining a community.
-Specifically, suppose that one draws a subgraph with $n_c$ nodes, $p_c$ pairs of nodes and $m_c$ edges from a graph with $n$ nodes, $p$ pairs of nodes and $m$ edges (see Section for the notation~\ref{sec:clustering}).
+This question is answered by the urn model in classical probability theory. The reason is clear if one imagines that each pair of nodes is a marble, which is one color if the nodes are connected by a link and the other color if they are not.
+A number of marbles is drawn from an urn without replacement and the probability of observing a given number of marbles of one specific color is calculated by means of the hypergeometric law.
+When applied to clustering, the problem corresponds to the calculation of the probability to observe a fixed number of internal edges in a randomly drawn set of nodes defining a community.
+For example, suppose that one draws a subgraph with $n_c$ nodes, $p_c$ pairs of nodes and $m_c$ edges from a graph with $n$ nodes, $p$ pairs of nodes and $m$ edges (see Section for the notation~\ref{sec:clustering}).
 As indicated by the urn model, the probability to observe exactly $m_c$ internal edges is given by:
 \begin{equation}\label{eq:subgraph_probability}
-\Pr[m_c = i] = \frac{\binom{m}{i}\binom{p-m}{p_c-i} }{\binom{p}{p_c}} = \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
+\Pr[i=m_c] = \frac{\binom{m}{i}\binom{p-m}{p_c-i} }{\binom{p}{p_c}} = \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
 \end{equation}
 where the last equality is because of the Vandermonde identity~\cite{feller1968}.
-The probability in Eq.~\ref{eq:subgraph_probability} is simply understood in terms of urn model as there are $\binom{p_c}{i}$ ways of choosing exactly $i$ black marbles from a population of $p_c$ black marbles, $\binom{p-p_c}{m-i}$ ways of choosing $(m-i)$ white marbles from a population of $(p-p_c)$ white marbles. and a total possible number of combinations of $m$ marbles taken from a population of $p$ marbles.
+The probability in Eq.~\ref{eq:subgraph_probability} is simply understood in terms of urn model as there are $\binom{p_c}{i}$ ways of choosing exactly $i$ black marbles from a population of $p_c$ black marbles, $\binom{p-p_c}{m-i}$ ways of choosing $(m-i)$ white marbles from a population of $(p-p_c)$ white marbles and a total possible number of combinations of $m$ marbles taken from a population of $p$ of them.
 As the probability of observing $i$ or more internal edges, is given by the sum of the probabilities of observing exactly $i$,$i+1$,$i+2$ etc. internal edges, summing on $i$ yields the probability of getting \emph{at least} $m_c$ white marbles:
 \begin{equation}\label{eq:subgraph_probability_marginalized}
 \Pr[ m_c \geq i ] = \sum\limits_{i=m_c}^{m} \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
