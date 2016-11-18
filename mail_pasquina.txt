@@ -28,11 +28,15 @@ Al fine di identificare un metodo capace di discrimare comunità grandi e piccol
 Il capitolo 2 della tesi quindi si occupa di definire nello specifico la Surprise e studiarne le proprietà matematiche alla luce anche della teoria dell'ottimizzazione. Se questa parte può risultare molto tecnica è perchè a mio parere risulta necessaria per capire i reali vantaggi dell'uso della Surprise per le analisi fMRI.
 Successivamente, descrivo il primo metodo di ottimizzazione della Surprise che ho ideato, basato su un algoritmo iterativo che ho chiamato FAGSO e che è stato oggetto della nostra prima pubblicazione su Scientific Reports.
 
-La Surprise però è una funzione costo che presuppone che il grafo sia in forma binaria vale a dire che data la sua formulazione discreta non può tenere conto del peso dei link fra nodi. A tal fine, nel capitolo 3 presento 
+La Surprise però è una funzione costo che presuppone che il grafo sia in forma binaria vale a dire che data la sua formulazione discreta non può tenere conto del peso dei link fra nodi. A tal fine, nel capitolo 3 presento una funzione costo che deriva da un'estensione asintotica della Surprise e che permette di tenere in conto i pesi dei lati, grazie ad una nuova formulazione in termini di teoria dell'informazione.
 
+Dopo aver studiato in dettaglio anche le proprietà della funzione costo Asymptotical Surprise, come fatto nel capitolo precedente, ne analizzerò le performance su reti sintetiche e reali. In particolare analizzerò gli effetti del rumore iniettato direttamente sulle serie temporali fMRI basate su reti che mostrano una struttura in comunità nota a priori.
+Con questo benchmark, che è alla base del lavoro pubblicato da poco su Neuroimage, mostrerò che la Asymptotical Surprise possiede una maggiore specificità e sensibilità rispetto sia a Newman's Modularity che ad un altro metodo di community detection chiamato Infomap.
+La maggiore specificità e sensibilità permettono di discriminare aree più piccole ad alta intercorrelazione. Questa proprietà permette inoltre di ridefinire quali sono gli hubs delle reti fMRI e questa analisi la presenterò nel corso del capitolo 4.
 
+Le implicazioni della ridefinita struttura modulare sono di grande importanza, infatti alcuni hub che erano stati identificati rispetto alle comunità di Newman's Modularity trovano una diversa posizione. Ad esempio le aree del precuneo e della corteccia cingolata, alla luce della partizione offerta da Asymptotical Surprise, occupano un ruolo di connector hubs, vale a dire di aree ad alto degree che partecipano nello scambio di informazione. Queste due aree inoltre partecipano attivamente al Default Mode Network e sono particolarmente vulnerabili a disturbi neurologici.
 
-
+In un ultima parte della tesi vorrei introdurre alcune applicazioni di community detection atte alla comparazione di reti provenienti da soggetti sani, confrontandole con soggetti malati. Nel lavoro che stiamo facendo nello specifico ci occupiamo degli effetti sulla connetività funzionale fMRI a riposo in pazienti alcolisti. Sembra infatti che questi pazienti mostrino un'alterazione a livello dell'insula che può venire discriminata solamente grazie ad un metodo ad alta risoluzione coma la Asymptotical Surprise.
 
 
 
