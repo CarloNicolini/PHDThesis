@@ -11,4 +11,30 @@ In particolare, grazie alla tecnica di neuroimaging nota come resting state conn
 
 Sotto questa ipotesi dunque investigare la struttura modulare e gerarchica delle reti di connettività funzionale resting state è di principale importanza per stabilire quantitativamente dei biomarker che possano essere in futuro essere utilizzati per diagnosi precoci di malattie quali schizofrenia, alzheimer o malattie dello spettro autistico.
 
-Fin qui tutto bene, però esiste un problema che fino a prima del mio lavoro di tesi non era stato mai preso in considerazione. Nella tipica 
+Fin qui tutto bene, però esiste un problema che fino a prima del mio lavoro di tesi non era stato mai preso in considerazione.
+Nella tipica pipeline del neuroimager, dopo le scansioni fMRI, segue un preprocessing necessario alla  rimozione dei vari artefatti (movimento, slice timing etc). Uno volta ottenute le serie temporali "pulite", si calcolano una matrice di correlazione che indica la sincronia temporale fra le aree analizzate. Partendo da questa matrice, con delle soglie si definisce un grafo come l'insieme di nodi e link tali che la loro correlazione superi tale soglia.
+La struttura modulare "in comunità" poi viene studiata tramite algoritmi che sono diventati classici nella letterature delle reti complesse, con questo mi riferisco al metodo della Modularità di Newman.
+
+Questa Modularity trova sottoinsiemi di nodi più densamente connessi fra di loro che rispetto ad un modello nullo che prevede di confrontare ogni sottinsieme di nodi con una versione randomizzata dove i link fra nodi vengono mescolati a caso.
+Nel corso degli studi sulla Newman's Modularity è emerso però che tale "funzione qualità" è affetta da un problema che ne limita la capacità di identificare comunità più piccole quando si è in presenza di comunità più ampie. Per essere specifici, il numero massimo di link che possono essere trovati in una comunità identificata dal metodo di Newman è proporzionale alla radice quadrata del numero totale di link del grafo (che a sua volta dipende dalla threshold). Questo fenomeno è noto come "resolution limit".
+
+Nonostante da tempo siano stati pensati dei metodi di "community detection" che sono svincolati dal "resolution limit" (alcuni solo parzialmente, al vero), dagli studi di neuroimaging che hanno applicato la teoria dei grafi è apparso che la maggior parte di essi ha applicato la Modularity, in quanto a nostro parere il codice per effettuare tali analisi è liberamente disponibile in una serie di pacchetti semplici da usare.
+
+Un metodo di community detection che non soffra di questo limite di risoluzione può essere di grande aiuto nello studio delle reti di connettività funzionale, in quanto non vi è nessuna garanzia che la dimensione delle comunità in tali reti sia approssimativamente costante.
+Piuttosto, date le proprietà delle reti in esame che risultano avere una distribuzione dei degree dei nodi powerlaw (il degree è il numero di vicini di ogni nodo), sarebbe da aspettarsi che la distribuzione della dimensione delle comunità sia anch'essa powerlaw.
+
+Al fine di identificare un metodo capace di discrimare comunità grandi e piccole dentro una rete fMRI, ho trovato aiuto in una riformulazione del problema basata sulla teoria delle probabilità. La nuova funzione costo che ho adottato per l'analisi di tali rete è nota come Surprise e a differenza della Newman's Modularity è estremamente meno affetta dal resolution limit, essendo capace di discriminare comunità grandi una manciata di nodi, addirittura identificando come "trashbin communities" singoli nodi, i quali statisticamente non possono stare all'interno di nessun'altra comunità.
+
+Il capitolo 2 della tesi quindi si occupa di definire nello specifico la Surprise e studiarne le proprietà matematiche alla luce anche della teoria dell'ottimizzazione. Se questa parte può risultare molto tecnica è perchè a mio parere risulta necessaria per capire i reali vantaggi dell'uso della Surprise per le analisi fMRI.
+Successivamente, descrivo il primo metodo di ottimizzazione della Surprise che ho ideato, basato su un algoritmo iterativo che ho chiamato FAGSO e che è stato oggetto della nostra prima pubblicazione su Scientific Reports.
+
+La Surprise però è una funzione costo che presuppone che il grafo sia in forma binaria vale a dire che data la sua formulazione discreta non può tenere conto del peso dei link fra nodi. A tal fine, nel capitolo 3 presento 
+
+
+
+
+
+
+
+
+
