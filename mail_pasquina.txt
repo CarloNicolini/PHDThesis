@@ -1,0 +1,14 @@
+Cara Pasquina,
+
+Volevo farti venire a conoscenza del mio progetto di tesi che racchiude tutto il lavoro svolto in questi tre anni.
+
+Come ben saprai il mio progetto riguarda metodiche nuove di analisi di dati fMRI che si basano sulla teoria dei grafi.
+
+Nella prima parte del lavoro voglio evidenziare come questi metodi stiano diventando via via sempre più importanti nell'affrontare le sfide scientifiche e computazionali poste dai dataset di sempre maggiore dimensione e dettaglio che vengono offerti dai metodi di neuroimmagine moderni.
+Proprio per questo, analizzarli con strumenti adeguati è diventato sempre più difficile.
+
+In particolare, grazie alla tecnica di neuroimaging nota come resting state connectivity, è stato possibile identificare una serie di aree corticali che partecipano in maniera sincrona alle fluttuazioni emodinamiche, evidenziando come tali correlazioni quando alterate possano indicare la presenza di una patologia caratteristica.
+
+Sotto questa ipotesi dunque investigare la struttura modulare e gerarchica delle reti di connettività funzionale resting state è di principale importanza per stabilire quantitativamente dei biomarker che possano essere in futuro essere utilizzati per diagnosi precoci di malattie quali schizofrenia, alzheimer o malattie dello spettro autistico.
+
+Fin qui tutto bene, però esiste un problema che fino a prima del mio lavoro di tesi non era stato mai preso in considerazione. Nella tipica 
