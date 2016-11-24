@@ -206,12 +206,14 @@ We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we em
 \caption{Degeneracy of Surprise landscape in a ring of cliques graph.}
 \label{fig:degeneracy_surprise}
 \end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Statistical test}\label{sec:surprisefishertest}
 Surprise considers the problem of community detection as the one of making the intracluster density as different as possible from the global density in statistical terms. In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis $H_0$ that the intracluster density is the same as the graph density.
 It turns indeed out that this problem has an equivalent description in statistics, where one seeks to maximize the \emph{odds-ratio} of the $2 \times 2$ contingency table defined in Table~\ref{tab:contingency_table}.
+
 \begin{table}[htb!]
 \centering
 \begin{tabular}{|c|c|c|c|}
@@ -228,6 +230,7 @@ Intercluster & $m-m_\zeta$ & $p-m-p_\zeta+m_\zeta$ & $p-p_\zeta$ \\
 \caption{Contingency table for the urn model.}
 \label{tab:contingency_table}
 \end{table}
+
 The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can therefore be used regardless of the sample characteristics. A simpler $\chi^2$ statistic can be used when the elements of the contingency table are large enough, although only an approximation of the \emph{p}-value can be obtained.
 In this case it's possible to tackle the problem of computation of $S$ by means of odds-ratio. Precisely, the \emph{normalized log odds-ratio} is computed as 
 \begin{equation}
@@ -240,3 +243,18 @@ and in the asymptotic case, Surprise is equal to the probability:
 where $z$ is a random variable with standard normal distribution $z \approx \mathcal{N}(0,1)$.
 
 Although of almost null interest for the case of binary graphs, this last equation is telling us that in developing a version of Surprise that will keep into account weighted graphs, we should in some way rely on its asymptotic distribution.
+
+\section{Maximization of Surprise}
+
+Community detection is a NP-hard problem, and heuristics have to be developed for the optimization of quality functions for relatively large networks. In their original paper, Aldecoa et al.~\cite{aldecoa2011} applied metaheuristics, involving the evaluation of $S$ for partitions resulting from seven different community detection methods, each of those maximizing different quality functions.
+Here, we sought direct maximization of Surprise by exploiting FAGSO~\cite{jiang2014}, an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree~\cite{leiserson2001}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation.
+At the beginning, each community consists only of one vertex.
+Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set.
+This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random.
+The detailed pseudocode of this algorithm is reported in Figure~\ref{fig:fagso}. The code in \texttt{C++}, \texttt{Python} and \texttt{GNU Octave} is available at \url{https://github.com/carlonicolini/}
+
+\begin{figure}
+\input{include/misc/fagso.tex}
+\caption{FAGSO algorithm}
+\label{fig:fagso}
+\end{figure}
