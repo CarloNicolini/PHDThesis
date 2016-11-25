@@ -362,7 +362,9 @@ Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of t
 \label{fig:gagraph}
 \end{figure}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Models of random graphs %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Models of random graphs}\label{sec:models_random_graph}
 
 A large effort of network science is in the description of the generative processes that lead to observed networks. In general a random graph is a model network in which some specific set of parameters take fixed values, but the network is random in other respects.
@@ -447,6 +449,26 @@ The resulting graph shows the property of having short average path length, alth
 To prevent this issue, the Barabasi-Albert graph model aims to construct graphs with a dynamic attachment process.
 In the BA model, one considers a small number $n_0$ of initial nodes. Then at each step, one adds a new node and connect it to a fixed number $(\leq n_0)$ of nodes that already exist in the network. The probability that the new node will be connected to a node $i$ is then proportional to $k_i^{p_s}$,  where $p_s$ is a parameter called the \emph{scaling exponent}. That algorithm generates graphs in which the frequency of nodes with degree $k$ is asymptotically proportional to ${k}^{-3}$. This power relationship between frequencies and degrees indicates that this model accounts for the power-law distribution of degrees seen in many real networks.
 Although very well studied, both models are still lacking a strong community structure and more complex models have been studied by the network science community.
+
+\subsection{Stochastic block models}
+The most commonly used generative model for random modular networks is called the stochastic block model (SBM), which generalizes the Erd\H{o}s-Rényi random graph by giving each pair of nodes a connection probability depending on what groups they belong to.
+
+In simplest variant of the stochastic block model, i.e. the \emph{planted partition model}, to each node pair is assigned a probability of linking $\Pr_{ij}$ that only depends on the module each node belongs to.
+In particular, one sets the number of modules $|C|$ (or blocks) in advance and define an equal number of nodes in every module.
+Nodes in the same block are then connected with probability $p_{in}$ and nodes in different modules with probability $p_{out}$, as shown in Figure~\ref{fig:planted_peixoto}.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{images/peixoto_block_models.pdf}
+\caption{Planted partition model with different intra- and extracluster linking probabilities and number of modules. A., $|C|=2, p_{in}=0.99, p_{out}=0.025$, B. $|C|=3, p_{in}=0.98, p_{out}=0.06$, C. $|C|=4 p_{in}=0.97, p_{out}=0.12$. Adapted from~\cite{Peixoto2015}.}
+\label{fig:planted_peixoto}
+\end{figure}
+
+Although largely used, the planted-partition model has several drawbacks. Indeed, each node has the same expected degree and all communities have the same size. While, on the theoretical side these properties help when analytically studying the property of the model, they also make it badly suited for real world applications. These features are unrealistic as complex networks are known to be characterized by heterogeneous degree distributions and community sizes.
+
+To overcome the unrealistic settings of the planted partition model, the Lancichinetti-Fortunato-Radicchi (LFR) model first described in~\cite{lancichinetti2008} modified the planted partition model to include powerlaw degree distribution and community size, as observed in real networks. The model was further extended to be able to generate weighted networks with overlapping modules in~\cite{Lancichinetti2009a}. 
+
+
 
 \section{Community detection in networks}
 \label{sec:communitydetectioninnetworks}
