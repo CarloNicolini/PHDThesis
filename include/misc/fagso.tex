@@ -1,0 +1,86 @@
+%%%% FAGSO %%%%
+\begin{small}
+\begin{codebox}
+\Procname{$\proc{Fagso}(G)$}
+\li $S\gets 0$ \Comment \emph{Initialize Surprise to $0$}
+\li $D \gets \emptyset$ \Comment \emph{Initialize disjoint set forest}
+\li \For each vertex $v$ in $V[G]$
+\li \Do \proc{Make-Set}(v)
+\End
+\li $E' \gets \proc{Sort-Jaccard}(E)$ \Comment \emph{Sort edges in decreasing order by Jaccard index}
+\li \For each edge$(u,v) \in E'$, \Comment \emph{Taken in decreasing order by Jaccard index}
+\li \Do \If $\proc{Find-Set}(u) \neq \proc{Find-Set}(v)$
+\li \Then \If $\proc{Surprise}(G,D \cup \{ (u,v)\} ) > S$
+\li $D \gets D \cup  \{(u,v)\}$
+\li $\proc{Union(u,v)}$ \Comment\emph{Merge the communities $u$ and $v$ belong}
+\li $S=\proc{Surprise}(G,D)$ \Comment \emph{Update current Surprise}
+\End
+\End
+\li
+\Return $D$
+\end{codebox}
+
+%%%% MAKE-SET %%%%
+\begin{codebox}
+\Procname{$\proc{Make-Set}(x)$}
+\li $p[x] \gets x$
+\li $rank[x] \gets 0$
+\end{codebox}
+%%%% LINK %%%%
+\begin{codebox}
+\Procname{$\proc{Link}(x,y)$}
+\li \If $rank[x]>rank[y]$
+\li \Then $p[y]\gets x$
+\li \Else $p[x]\gets y$
+\li \If $rank[x] = rank[y]$
+\li \Then $rank[y] \gets rank[y]+1$
+\End
+\End
+\end{codebox}
+%%%% UNION %%%%
+\begin{codebox}
+\Procname{$\proc{Union}(x,y)$}
+\li \proc{Link}(\proc{Find-Set}$(x)$,\proc{Find-Set}$(y)$)
+\end{codebox}
+%%%% FIND-SET %%%%
+\begin{codebox}
+\Procname{$\proc{Find-Set}(x)$}
+\li \If $x\neq p[x]$
+\li \Then $p[x] \gets \proc{Find-Set}(p[x])$
+\End
+\li\Return $p[x]$
+\end{codebox}
+%%%% SURPRISE %%%%
+\begin{codebox}
+\Procname{$\proc{Surprise}(G,D)$}
+\li $m_{\xi} \gets 0$ \Comment \emph{Number of intracluster edges}
+\li $p_{\xi} \gets 0$ \Comment \emph{Number of intracluster pairs of vertices}
+\li $m \gets |E[G]|$ \Comment \emph{Number of edges}
+\li $p \gets \binom{\left| V[G]\right|}{2}$ \Comment \emph{Number of pairs of vertices}
+\li \For each $g$ in $\proc{Connected-Components-Subgraphs}(D,G)$
+\li \Do $m_{\xi} \gets m_{\xi} + \left|E[g]\right|$
+\li $p_{\xi} \gets p_{\xi} + \binom{\left| V[g]\right|}{2}$
+\End
+\li \Return $-\log_{10}\left( \sum \limits_{i=m_\zeta}^m \dfrac{\binom{p_\xi}{i}\binom{p-p_{\xi}}{m-i}}{\binom{p}{m}} \right)$
+\end{codebox}
+%%%% MST PRIM %%%%
+% \begin{codebox}
+% \Procname{\proc{MST-Prim}$(G,w,r)$}
+% \li \For each $u \in V[G]$
+% \li \Do $key[u]\gets \infty$
+% \li $\pi[u] \gets $ NIL \End
+% \li $key[r] \gets 0$
+% \li $Q \gets V[G]$
+% \li \While $Q \neq \emptyset$ 
+% \li \Do $u\gets \proc{Extract-Min}(Q)$
+% \li \For each $v \in Adj[u]$ 
+% \li \Do \If $v\in Q$ and $w(u,v) < key[v]$
+% \li \Then $\pi[v]\gets u$
+% \li $key[v]\gets w(u,v)$
+% \End
+% \End
+% \End
+% \End
+% \End
+% \end{codebox}
+\end{small}
