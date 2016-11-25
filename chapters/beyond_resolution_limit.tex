@@ -1,4 +1,6 @@
-In the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
+\bigbreak
+
+\lettrine{I}{n} the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
 
 In the following sections we will explore the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
 
@@ -147,7 +149,8 @@ In the following, we assess the extent to which the resolution limit may affect 
 
 In order to assess to what extent Surprise is affected by the resolution limit, we directly compared Newman's Modularity and Surprise in the example of Fortunato and Barthelemy as illustrated in the previous chapter in Figure~\ref{fig:figure_1_barthelemy}. Already for $m_{12} = 1$, i.e. when the two cliques $G_1$ and $G_2$ were connected by only one edge, $Q^N$ showed sign inversion for $m_0 \approx 200$, meaning that it was beneficial for Modularity to merge two cliques.
 In this same example though, Surprise instead never merges cliques, as made evident in Figure~\ref{fig:barthelemy_surprise}.
-\begin{figure}
+
+\begin{figure}[htb!]
 \centering
 \includegraphics[width=1.0\textwidth]{images/barthelemy_surprise.pdf}
 \caption{Difference in $\hat{S}$ between the partition where the two cliques are separated (red) and the partition where the two cliques are merged (blue), as in the benchmark network of Fortunato and Barthelemy. As the quantity $\Delta \hat{S}$ is always positive, Surprise is never going to merge cliques, independently from other global paramters.}
@@ -181,14 +184,14 @@ Importantly, in the range of parameters we have investigated, Surprise optimizat
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1\textwidth]{images/ring_cliques_pareto.pdf}
+\includegraphics[width=0.8\textwidth]{images/ring_cliques_pareto.pdf}
 \caption{Pareto front for a ring of cliques graph. Optimal solutions with respect to Surprise are indicated as small black dots.}
 \label{fig:ring_cliques_pareto}
 \end{figure}
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1\textwidth]{images/ring_cliques_surprise.pdf}
+\includegraphics[width=0.8\textwidth]{images/ring_cliques_surprise.pdf}
 \caption{Surprise $\hat{S}$ for a ring of cliques graph at different levels of $p_\zeta$ for corresponding solutions at fixed $m_\zeta$.}
 \label{fig:ring_cliques_surprise}
 \end{figure}
@@ -196,14 +199,14 @@ Importantly, in the range of parameters we have investigated, Surprise optimizat
 While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
 Nonetheless, the size of the graphs we have explored numerically is quite typical of brain-connectivity networks and we feel encouraged to apply Surprise maximization to the study of the community structure of the brain.
 
-Curiously, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in section~\ref{sec:degeneracy}.
+Curiously, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in Section~\ref{sec:degeneracy}.
 This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
-We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}:
+We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}.
 
-\begin{figure}[htb!]
+\begin{figure}[ht]
 \centering
-\includegraphics[width=1.0\textwidth]{images/degeneracy_surprise.pdf}
-\caption{Degeneracy of Surprise landscape in a ring of cliques graph.}
+\includegraphics[width=0.8\textwidth]{images/degeneracy_surprise.pdf}
+\caption{Degeneracy of Surprise landscape in a ring of cliques graph. No plateaus exist, indicating the uniqueness of the global maximum that emerges from the other local optima.}
 \label{fig:degeneracy_surprise}
 \end{figure}
 
@@ -213,6 +216,18 @@ We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we em
 \subsection{Statistical test}\label{sec:surprisefishertest}
 Surprise considers the problem of community detection as the one of making the intracluster density as different as possible from the global density in statistical terms. In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis $H_0$ that the intracluster density is the same as the graph density.
 It turns indeed out that this problem has an equivalent description in statistics, where one seeks to maximize the \emph{odds-ratio} of the $2 \times 2$ contingency table defined in Table~\ref{tab:contingency_table}.
+
+The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can therefore be used regardless of the sample characteristics. A simpler $\chi^2$ statistic can be used when the elements of the contingency table are large enough, although only an approximation of the \emph{p}-value can be obtained.
+In this case it's possible to tackle the problem of computation of $S$ by means of odds-ratio. Precisely, the \emph{normalized log odds-ratio} is computed as 
+\begin{equation}
+\log(\textrm{OR}) = \log\left( \frac{m_\zeta(p-m-p_\zeta+m_\zeta)}{(m-m_\zeta)(p_\zeta-m_\zeta)} \right )
+\end{equation}
+and in the asymptotic case, Surprise is equal to the probability:
+\begin{equation}\label{eq:prob_or_se}
+\Pr\left(z < -\frac{|\log\textrm{OR})|}{SE} \right)
+\end{equation}
+where $z$ is a random variable with standard normal distribution $z \approx \mathcal{N}(0,1)$.
+Although not interesting in the case of binary graphs, equation~\ref{eq:prob_or_se} is telling us that in developing a version of Surprise that will keep into account weighted graphs, we should in some way rely on its asymptotic distribution.
 
 \begin{table}[htb!]
 \centering
@@ -231,30 +246,30 @@ Intercluster & $m-m_\zeta$ & $p-m-p_\zeta+m_\zeta$ & $p-p_\zeta$ \\
 \label{tab:contingency_table}
 \end{table}
 
-The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can therefore be used regardless of the sample characteristics. A simpler $\chi^2$ statistic can be used when the elements of the contingency table are large enough, although only an approximation of the \emph{p}-value can be obtained.
-In this case it's possible to tackle the problem of computation of $S$ by means of odds-ratio. Precisely, the \emph{normalized log odds-ratio} is computed as 
-\begin{equation}
-\log(\textrm{OR}) = \log\left( \frac{m_\zeta(p-m-p_\zeta+m_\zeta)}{(m-m_\zeta)(p_\zeta-m_\zeta)} \right )
-\end{equation}
-and in the asymptotic case, Surprise is equal to the probability:
-\begin{equation}
-\Pr\left(z < -\frac{|\log\textrm{OR})|}{SE} \right)
-\end{equation}
-where $z$ is a random variable with standard normal distribution $z \approx \mathcal{N}(0,1)$.
+\section{Maximization of Surprise}\label{sec:max_surprise_fagso}
 
-Although of almost null interest for the case of binary graphs, this last equation is telling us that in developing a version of Surprise that will keep into account weighted graphs, we should in some way rely on its asymptotic distribution.
+Community detection is a NP-hard problem, and heuristics have to be developed for the optimization of quality functions for relatively large networks. In their original paper, Aldecoa et al.~\cite{aldecoa2011} applied metaheuristics, involving the evaluation of Surprise for partitions resulting from seven different community detection methods, each of those maximizing different quality functions.
+Here, we describe direct maximization of Surprise by exploiting FAGSO~\cite{jiang2014}, an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree~\cite{leiserson2001}.
+The detailed pseudocode of this algorithm is reported in Algorithm~\ref{alg:fagso} and illustrated step by step on an example network in Figure~\ref{fig:fagso_working}.
 
-\section{Maximization of Surprise}
-
-Community detection is a NP-hard problem, and heuristics have to be developed for the optimization of quality functions for relatively large networks. In their original paper, Aldecoa et al.~\cite{aldecoa2011} applied metaheuristics, involving the evaluation of $S$ for partitions resulting from seven different community detection methods, each of those maximizing different quality functions.
-Here, we sought direct maximization of Surprise by exploiting FAGSO~\cite{jiang2014}, an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree~\cite{leiserson2001}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation.
+The first step of FAGSO consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints nodes.
+An union-find data structure is used to hold the community structure throughout the computation.
 At the beginning, each community consists only of one vertex.
-Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set.
-This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random.
-The detailed pseudocode of this algorithm is reported in Figure~\ref{fig:fagso}. The code in \texttt{C++}, \texttt{Python} and \texttt{GNU Octave} is available at \url{https://github.com/carlonicolini/}
+Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community.
+This step is repeated for all edges and the final community structure is returned in the disjoint-set.
+
+FAGSO finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
+The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Octave} is available at \url{https://github.com/carlonicolini/fagso}.
+
+\begin{Algorithm}[htb!]
+\input{include/misc/fagso.tex}
+\caption{Pseudocode of FAGSO, with description of the implementation of union-find data structure.}
+\label{alg:fagso}
+\end{Algorithm}
 
 \begin{figure}
-\input{include/misc/fagso.tex}
-\caption{FAGSO algorithm}
-\label{fig:fagso}
+\centering
+\includegraphics[width=0.8\textwidth]{images/fagso.pdf}
+\caption{FAGSO algorithm steps illustrated. Firstly, Jaccard indices are computed. In box A., every node is associated to a separate community and FAGSO evaluates whether to merge nodes $d$ and $f$ in the same community as the edge they form has the highest Jaccard index. Since this merge results in an increased value of Surprise, $d$ and $f$ are merged in box B. then FAGSO proceeds to evaluate the merge of nodes $a$ and $b$ as their Jaccard index is the second greatest. FAGSO merges the two nodes in a second community and proceeds updating the Surprise value and analyzing the subsequent merges in boxes D to F, until no moves are available and FAGSO terminates with the community structure in box G.}
+\label{fig:fagso_working}
 \end{figure}

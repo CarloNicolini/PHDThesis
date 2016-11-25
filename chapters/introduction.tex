@@ -54,7 +54,7 @@ All of these networks are ``weighted'' by definition, i.e. their links are assoc
 
 The ascendancy of the network neuroscience in the last decade, is driven by the evidence that almost independently from how the networks links are defined, brain networks share some common tracts at many spatial and temporal scales.
 
-Among these findings we can mention for example, that they exhibit the \emph{small-world}~\cite{Watts1998,sporns2002} property, in other words, most nodes in a graph can be reached from any other node in just a few hops. Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance is likely to be related to how efficiently our brain integrates information between multiple brain regions.
+Among these findings we can mention for example, that they exhibit the \emph{small-world}~\cite{Watts1998,sporns2002,Sporns2004a} property, in other words, most nodes in a graph can be reached from any other node in just a few hops. Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance is likely to be related to how efficiently our brain integrates information between multiple brain regions.
 
 Additionally, other measures have been correlated with phenotypic and structural traits. ``Rich-clubs'' are subset of high degree nodes who are very \emph{rich} in connections and form a communication backbone that might be valuable in supporting high-level and more cognitively advanced forms of information processing. Interestingly, it's thought that the presence of a rich club increases the diversity of the functional repertoire over and above the effects produced by scale free type topology alone~\cite{senden2014}.
 Forms of rich-club organization has been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,DeReus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex. Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication. 
@@ -90,7 +90,7 @@ Despite its popularity and merits, Newman’s approach presents some important l
 Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
 As a consequence, even unambiguously defined modules, like complete sub-graphs or cliques, may be unduly merged into larger communities when they are too small compared to the size of the network. Subsequent work by various groups has shown that the resolution limit is quite pervasive~\cite{lancichinetti2009,traag2011,squartini2015,lancichinetti2011,kawamoto2015}, and affects, to a different extent, many other methods, including Reichardt and Bornholdt’s~\cite{reichardt2006}, Arenas and Gomez'~\cite{arenas2008}, Ronhovde and Nussinov's~\cite{ronhovde2009}, Rosvall and Bergstrom's (\emph{Infomap})~\cite{rosvall2008,kawamoto2015} and others.
 
-Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}. However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter. Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
+Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}. However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter. Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multi-resolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
 
 However, real-world networks are characterized by the coexistence of clusters of very different sizes, and no single parameter can adapt to the variety of network topologies observed in nature.
 Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
@@ -266,7 +266,7 @@ The \emph{inter-cluster density} is instead defined as the ratio of edges with o
 &p_\zeta= \sum \limits_{c=1}^C \binom{|V[\mathcal{G_c}]|}{2} = \sum \limits_{c=1}^C p_c.
 \end{align}
 
-\subsubsection{Communities}
+\subsection{Communities}
 Although no definition of community is universally accepted, the majority of community detection methods aim at implicitly or explicitly finding the best trade-off between intra- and inter-cluster density over all the communities.
 A tentative definition of theoretically sound and well defined concept of community has been made by Radicchi with the so called \emph{weak and strong criteria}~\cite{radicchi2004}.
 
@@ -334,11 +334,41 @@ Finding strong communities is more difficult that finding weak communities and m
 	\caption{Clustering for a unweighted and a weighted graph.}
 \end{figure}
 
+\subsection{Nodal roles}
+Every node in a network is characterized by its role in relation to other nodes. Given an optimal modular structure, some nodes act as bridges between two communities, having neighbors in one or other module, some other instead share the majority of neighbors inside their same community.
+
+To investigate differences in nodes roles as determined by different community detection methods, its usual to attribute each node two parameters~\cite{guimera2005}. The first, dubbed \emph{participation coefficient}, indicated by $P_i$ reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} 
+\begin{equation}\label{eq:participationcoeff}
+P_i = 1 - \sum_c \left( \frac{k_{ic}}{k_i} \right)^2
+\end{equation}
+where $k_{ic}$ is the number of links of node $i$ to nodes in module $c$ and $k_i$ is the total degree of node $i$.
+Converselely, the second parameter dubbed \emph{within-module degree}, indicated by $z_i$,  reflects the degree of connectivity of a node, and is defined as: 
+\begin{equation}\label{eq:withinmoduledegree}
+z_i = \frac{k_i - \left< k_{c_i} \right>}{\sigma_{k_{c_i}}}
+\end{equation}
+where $k_i$ is the node degree,  $\left< k_{c_i} \right>$ is the average degree of nodes in the same module $c$ of node $i$ and $\sigma_{k_{c_i}}$ the standard deviation of the degree of nodes in the same module $c$ of node $i$.
+
+Hub classification is critical for the interpretation of the roles played by the highly connected nodes within the network structure.
+The Guimera and Amaral~\cite{guimera2005} classification scheme, specifies for every node its participation coefficient and within module degree z-score, placing the nodes over a 2D cartesian space, divided in seven regions.
+As indicated in Figure~\ref{fig:gagraph}, depending on the specific cut-off values of participation coefficient and intra-modular connectivity, the nodes are defined as ultra-peripheral (region R1), peripheral (region R2), connector non-hubs (region R3), kinless non-hubs (region R4), provincial hubs (region R5), connector hubs (region R6) and kinless hubs (region R7). Naturally, connector hubs are of great importance for communication between modules.
+Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
+These hubs are responsible for integration of the different modules into a cohesive structure, and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.8\textwidth]{images/guimera_amaral_coact_q.pdf}
+\caption{Guimera Amaral classification scheme for the modular structure obtained induced by Modularity maximization of a co-activation network as obtained from~\cite{crossley2013a}.
+Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of the seven different regions, assigning it its role. Nodes total degree is color coded with colors fro yellow to red, as shown in the legend.}
+\label{fig:gagraph}
+\end{figure}
+
+
 \subsection{Models of random graphs}\label{sec:models_random_graph}
 
 A large effort of network science is in the description of the generative processes that lead to observed networks. In general a random graph is a model network in which some specific set of parameters take fixed values, but the network is random in other respects.
 %In the first part of the twentieth century, mathematicians developed advanced theories of random graphs as they needed to compare the properties of real-world networks against random null hypotheses.
-The theory of random graphs studies the intersection between graph theory and probability theory. %A random graph is a probability space $(\Omega,\mathcal{F},\mathcal{P})$, where the sample space $\Omega$ is a nonempty set of graphs, the set of events $\mathcal{F}$ is a collection of subsets of the sample space (usually the power set of $\Omega$), and $\mathcal{P}$ is a function that assigns a probability to each event. It is usual to describe a random graph by a sequence of steps to construct it. Such a sequence is called an \emph{random graph model}.
+The theory of random graphs studies the intersection between graph theory and probability theory.
+%A random graph is a probability space $(\Omega,\mathcal{F},\mathcal{P})$, where the sample space $\Omega$ is a nonempty set of graphs, the set of events $\mathcal{F}$ is a collection of subsets of the sample space (usually the power set of $\Omega$), and $\mathcal{P}$ is a function that assigns a probability to each event. It is usual to describe a random graph by a sequence of steps to construct it. Such a sequence is called an \emph{random graph model}.
 
 %Given the unavailability of computer simulations at that time, the simplest model dates back to 1959 and is due to Erd\H{o}s and Rényi~\cite{Erdos1959}. In the Erd\H{o}s-Rényi model (also called $G_{n,m}$ model, the sample space $\Omega$ is the set of all graphs having $n$ nodes and $m$ edges.
 One of the simples models is the network generated by selecting exactly $m$ edges from the possible $\binom{n}{2}$ edges and placing them at random. This model is mathematically known as $G(n,m)$ or \emph{Gilbert} random graph. In probabilistic terms, the $G(n,m)$ graph is equivalent to say that the network is sampled choosing uniformly from the set $\Omega$ of $\binom{\binom{n}{2}}{m}$ possible graphs. Strictly speaking, a random graph model is better defined as an ensemble of networks, therefore as a probability distribution $\mathcal{P}(\Omega)$ over the space of all graphs $G$. The Gilbert random graph model is then associated with a probability distribution centered in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges, and zero otherwise.
@@ -383,10 +413,10 @@ The world-wide-web, as well as the connectome of the worm \emph{C. Elegans}\foot
 
 \begin{figure}
 \centering
-\begin{minipage}[b]{0.5\textwidth}
+\begin{minipage}[b]{0.5\textwidth}\centering
 \includegraphics[height=4cm]{images/deg_dist_poisson_er.pdf}
 \end{minipage}\noindent
-\begin{minipage}[b]{0.5\textwidth}
+\begin{minipage}[b]{0.5\textwidth}\centering
 \includegraphics[height=4cm]{images/er_graphs.pdf}
 \end{minipage}
 \caption{Examples of ER graphs. On the left the Poisson degree distribution of an ER network, $n=1000$,$p=0.04$. On the right ER model instances at different values of $p$. Adapted from~\cite{Estrada2011}.}
@@ -613,10 +643,10 @@ However, exact specification of $\gamma_{N}$ requires prior knowledge of the exp
 Moreover, it has been shown~\cite{lancichinetti2011} that an adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters. 
 Indeed this is due to two opposite coexisting effects: the tendency to merge small subgraphs, which dominates when the resolution is low and the tendency to split large subgraphs, which dominates when the resolution is high.
 
-In benchmark networks with heterogeneous distributions of cluster sizes, the simultaneous elimination of both biases is not possible and multiresolution modularity is not capable to recover the planted community structure even in graphs where the ground-truth structure is evident.
-Therefore, adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
+In benchmark networks with heterogeneous distributions of cluster sizes, the simultaneous elimination of both biases is not possible and multi-resolution modularity is not capable to recover the planted community structure even in graphs where the ground-truth structure is evident.
+Therefore, adjustment of the resolution parameter is an attempt to balance these two biases, but multi-resolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
 
-In another attempt to better tolerate the resolution limit, scholars applied appropriate techniques of edge reweighting~\cite{berry2011} to enhance communities prior to Modularity maximization.
+In another attempt to better tolerate the resolution limit, scholars applied appropriate techniques of edge re-weighting~\cite{berry2011} to enhance communities prior to Modularity maximization.
 Although this technique proved able to better tolerate the detrimental effect of the resolution limit, it only shifted the scale of the problem.
 After all, real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
 Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
@@ -640,7 +670,7 @@ H(\sigma)^{\textrm{CPM}} = \sum \limits_c^C \left[m_c - \gamma_{\textrm{CPM}} n_
 In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives; indeed it acts as the inner and outer edge density threshold.
 In the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{CPM}$ exceeds the inter-community density $m_{r,s}/(2n_r n_s)$.
 
-Although very promising, the CPM never took off in the analysis of brain networks mainly because of the problem of tuning $\gamma_{CPM}$.\todo[inline]{FIX FRASE}
+Unfortunately, the operation of tuning the resolution parameter, both in the CPM model as well as in other similar models, is difficult and no largely accepted method exists, making all the models based on a resolution parameter, scarcely used in practical applications.
 
 \subsection{Effects of resolution limit}
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
@@ -654,11 +684,9 @@ However, these findings do not provide information on the optimal partition of t
 To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
 
-
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Degeneracy}\label{sec:degeneracy}
 The differences in Modularity between optimal and suboptimal partitions can be very small, as observed in Figure~\ref{fig:figure_1_barthelemy}B, where $\Delta Q$ between the two partitions with splitted or merged cliques, remains close to zero for a large range of $m_0$ especially at $m_{12}=1$.
 Indeed, even in the case where it would not be beneficial for Modularity to merge two modules, i.e $\Delta Q <0$, this difference can be made arbitrarily close to zero.

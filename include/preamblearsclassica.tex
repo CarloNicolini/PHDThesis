@@ -3,7 +3,7 @@
               %twoside,openright,%          % double sided
               titlepage,%                   % new page after the title
               headinclude,footinclude,%    % header at foot of the page
-              BCOR5mm,%                     % 5 mm bookbinding
+              %BCOR5mm,%                     % 5 mm bookbinding
               numbers=noenddot,%            % no point after section number
               cleardoublepage=empty,%       % empty pages without header at 
 ]{scrreprt} % KOMA class
@@ -19,10 +19,10 @@
             listings,%             % listings
             dottedtoc,%            % align TOC page numbers to right
             floatperchapter,       % float objects numbered by chapter
-            pdfspacing
+            pdfspacing,
             ]{classicthesis}                % classicthesis style
 \usepackage{arsclassica} % improve classicthesis
-
+\usepackage[left=4cm,right=3cm,top=3cm,bottom=3cm]{geometry}
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
@@ -41,6 +41,7 @@
 \usepackage{tabularx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{rotating}
 
 \newfloat{Algorithm}{tbp}{lop}
 \definecolor{halfgray}{gray}{0.55}

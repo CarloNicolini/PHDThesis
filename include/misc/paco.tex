@@ -26,6 +26,6 @@
 \End \End \End
 \li \Return $C$
 \end{codebox}
-\caption{Pseudocode of the PACO algorithm. The function PACO takes as input a graph $G$ and returns the nodes community membership vector $C$. Line $1$ initializes the value of Surprise to $0$. Line $2$ assign to each node in the graph its community. Line $3$ creates a list of edges $E'$ sorted in decreasing order by their Jaccard coefficient. Line $4$ iterates on every edge $e=(u,v)$ and at line $6$ checks if the endpoints they share the same community. Line $8$ copies the membership vector to a temporary vector $C'$. Lines $9-13$ choose randomly at chance if to put node $u$ in the community of $v$ or viceversa. Line $14$ computes the new value of Surprise $S'$ from the just updated community membership $C$. The function \textsc{ComputeSurprise} returns the value of Surprise for graph $G$ and partition $C$. Lines $15$ to $18$ checks if the new value of Surprise $S'$ is greater than the previously stored value $S$ and update Surprise and the membership vector, otherwise continue to the next edge. Line $19$ returns the final community membership assignment.}
+\caption{Pseudocode of the PACO algorithm.}
 \label{algo:paco}
 \end{Algorithm}
