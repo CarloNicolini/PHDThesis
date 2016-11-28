@@ -145,17 +145,23 @@ In short, we sampled partitions from a benchmark network consisting in 24 clique
 We sampled the configuration space of partitions through a Montecarlo procedure and annotated its corresponding values of quality function for each partition. We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA). In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function. Whereas a large plateau of solutions with similar values of maximum Modularity is observed (~\ref{fig:degeneracylandscape}A, consistent with ~\cite{good2009}, Asymptotical Surprise and Surprise display a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracylandscape}B and \ref{fig:degeneracylandscape}C. Hence, degeneracy of nearly-optimal solutions does not appear to severely affect Surprise or Asymptotical Surprise, and a consensus approach is not deemed necessary for these functions.
 This analysis supports our choice to select the solution with the highest value of the fitness function.
 
-Our implementation of PACO as well as the code to generate benchmark LFR networks was written in \texttt{C++} with bindings in Matlab, Octave, Python. PACO is available at \url{goo.gl/vpaggl}. The LFR software is available at \url{github.com/carlonicolini/lfrwmx}.
+Our implementation of PACO as well as the code to generate benchmark LFR networks was written in \texttt{C++} with bindings in MATLAB\textsuperscript{\textregistered}, Octave, Python. PACO is available at \url{goo.gl/vpaggl}. The MATLAB\textsuperscript{\textregistered} wrapper of the LFR software for weighted non-overlapping networks generation is freely available at: \newline \url{github.com/carlonicolini/lfrwmx}.
 
 
 \subsection{Measures of partition quality}
 For each method, we analyzed the level of agreement of the detected community structure against the planted one in terms of Normalized Mutual Information (NMI)~\cite{Danon2005}.
 Additionally, we used two different coefficients of similarity between partitions: Sensitivity and Specificity. 
-
-To this end, we quantified the confusion matrix $\mathbf{C}$ between the detected and planted modules. Each element $C_{ij}$ is the number of nodes in the planted community-$i$ that appear in the detected community-$j$.
+To this end, we quantified the confusion matrix $\mathbf{C}$ between the detected and planted modules. Each element $C_{ij}$ is the number of nodes in the planted community $i$ that appear in the detected community $j$.
 For each planted community we scored as true positives (TP) the nodes correctly identified as belonging to the ground-truth community, and as false positives (FP) the nodes wrongly assigned to a community; similarly false negatives (FN) were nodes wrongly classified in different communities and true negatives (TN) the nodes correctly classified as out of the community.
 Sensitivity, defined as $TP/(TP+FN)$, decreases with increasing number of False Negatives. Specificity instead is defined as $TN/(TN+FP)$ and decreases when many nodes are wrongly assigned in the same community.
-Additionally, we computed Accuracy and Matthew Correlation Coefficient (see Supplementary Materials for definitions).
+Additionally, we computed Accuracy and Matthew Correlation Coefficient. Accuracy (Acc) and Matthew Correlation Coefficient (MCC) are defined on the basis of the confusion matrix as:
+\begin{align*}
+\textrm{Acc}=\frac{(TP+TN)}{TP+FP+TN+FN} \qquad \textrm{MCC}=\frac{(TP\times TN-FP\times FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+\end{align*}
+Accuracy takes in account the proportion of correctly classified samples and can present relatively high values even in the case of poorly performing detection methods when the classes have very different size.
+The Matthew Correlation Coefficient  takes into account true and false positives and negatives. It's a balanced coefficient, to use especially when classes are very imbalanced.
+
+
 
 %The main difference between PACO and its predecessor FAGSO is the data structure used to store the community structure. FAGSO maintains the community structure in a disjoint-set data structure and when one vertex is moved into another's community, the two modules are merged into one (Supplementary Materials, Figure S2, S3).
 %Conversely, PACO moves single nodes between different communities, and never merges modules (Supplementary Materials, Figure S3, boxes C, D). This results in a more finely-grained optimization that allows a better exploration of the quality function landscape.

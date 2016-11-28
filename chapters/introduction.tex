@@ -245,7 +245,7 @@ The \emph{subgraph total degree} $k(\mathcal{G})$ is the sum of the degrees of t
 	\node[draw=black!50,dashed,rounded corners=5mm,fit=(b.north) (a.south) (c.west) (a.east)](BORD) {};
 	\node[left of=BORD,anchor=east, inner sep=1cm]{$\mathcal{G}$};
 \end{tikzpicture}
-\caption{Internal degree $k_{\textrm{int}}(a)=2$, internal strength $s_{\textrm{\textrm{int}}}(a)=3$, external degree $k_{\textrm{ext}}(a)=2$, external strenght $s_{\textrm{ext}}(a)=3.5$.}
+\caption{Internal degree $k_{\textrm{int}}(a)=2$, internal strength $s_{\textrm{\textrm{int}}}(a)=3$, external degree $k_{\textrm{ext}}(a)=2$, external strength $s_{\textrm{ext}}(a)=3.5$.}
 \label{fig:internaldegree}
 \end{figure}
 
@@ -353,11 +353,10 @@ The Guimera and Amaral~\cite{guimera2005} classification scheme, specifies for e
 As indicated in Figure~\ref{fig:gagraph}, depending on the specific cut-off values of participation coefficient and intra-modular connectivity, the nodes are defined as ultra-peripheral (region R1), peripheral (region R2), connector non-hubs (region R3), kinless non-hubs (region R4), provincial hubs (region R5), connector hubs (region R6) and kinless hubs (region R7). Naturally, connector hubs are of great importance for communication between modules.
 Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
 These hubs are responsible for integration of the different modules into a cohesive structure, and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
-
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/guimera_amaral_coact_q.pdf}
-\caption{Guimera Amaral classification scheme for the modular structure obtained induced by Modularity maximization of a co-activation network as obtained from~\cite{crossley2013a}.
+\includegraphics[width=0.65\textwidth]{images/guimera_amaral_coact_q.pdf}
+\caption{Guimera and Amaral classification scheme for the modular structure obtained induced by Modularity maximization of a co-activation network as obtained from~\cite{crossley2013a}.
 Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of the seven different regions, assigning it its role. Nodes total degree is color coded with colors fro yellow to red, as shown in the legend.}
 \label{fig:gagraph}
 \end{figure}
@@ -365,8 +364,8 @@ Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% Models of random graphs %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Models of random graphs}\label{sec:models_random_graph}
 
+\subsection{Models of random graphs}\label{sec:models_random_graph}
 A large effort of network science is in the description of the generative processes that lead to observed networks. In general a random graph is a model network in which some specific set of parameters take fixed values, but the network is random in other respects.
 %In the first part of the twentieth century, mathematicians developed advanced theories of random graphs as they needed to compare the properties of real-world networks against random null hypotheses.
 The theory of random graphs studies the intersection between graph theory and probability theory.
@@ -456,12 +455,16 @@ In the BA model, one considers a small number $n_0$ of initial nodes. Then at ea
 Although very well studied, both models are still lacking a strong community structure and more complex models have been studied by the network science community.
 
 \subsection{Stochastic block models}
-None of the previously reported generative model account explicitly for the modular structure. The modules often observed in the ER model are due to statistical fluctuations. The BA model, too, does not take into account a block structure, when generating a power-law network. To overcome this limitations, the most commonly used generative model for random modular networks is called the stochastic block model (SBM)~\cite{holland1983}, which generalizes the Erd\H{o}s-Rényi random graph by giving each pair of nodes a connection probability depending only on their module affiliation.
-This model tends to produce graphs containing communities, subsets characterized by being connected with one another with particular edge densities.
+None of the previously reported generative models explicitly accounts for the modular structure.
+The modules often observed in the ER model are due to statistical fluctuations.
+The BA model, too, does not take into account a block structure, when generating a power-law network and clusters in BA model are due to local structures around nodes with high degree.
+To overcome this limitations, a variable encoding the block structure must be taken into account explicitly. 
+The most commonly used generative model for random modular networks is called the stochastic block model (SBM)~\cite{holland1983}, which generalizes the Erd\H{o}s-Rényi random graph by giving each pair of nodes a connection probability depending only on their module affiliation $\boldsymbol \sigma$.
+The SBM model tends to produce graphs containing communities, subsets characterized by being connected with one another with particular edge densities.
 
-A stochastic block model for undirected graphs is defined by three variables: the number of nodes $n$, the set of communities in form of a membership vector $\boldsymbol \sigma$ and a symmetric square matrix  $\mathbf{B} \in \mathbb{R}^{|C| \times |C|}$ of edge probabilities between modules. In the case the matrix $\mathbf{B}$ is constant, the SBM recovers the ER model. 
+A stochastic block model for undirected graphs is defined by three variables: the number of nodes $n$, the set of communities in form of a membership vector $\boldsymbol \sigma$ and a symmetric square matrix  $\mathbf{B} \in \mathbb{R}^{|C| \times |C|}$ of edge probabilities between modules. In the case the matrix $\mathbf{B}$ is constant, the SBM recovers the ER model.
 
-In the case the matrix $\mathbf{B}$ takes only two different values, the simplest variant of the stochastic block model dubbed as the \emph{planted partition model}, each pair of nodes in the same block are connected with probability $B_{ij}=p_{in}$ and pairs of nodes in different modules are linked with probability $p_{out}$, as shown in Figure~\ref{fig:planted_peixoto}, or in other terms the module linking probability matrix is $\mathbf{B}= p_{in}\delta(\sigma_i,\sigma_j) + p_{in}\delta(\sigma_i,\sigma_j) $
+In the case the matrix $\mathbf{B}$ takes only two different values, a model known as the \emph{planted partition model}, each pair of nodes in the same block are connected with probability $\mathbf{B}_{ij}=p_{in}$ and pairs of nodes in different modules are linked with probability $\mathbf{B}_{ij}=p_{out}$, as shown in Figure~\ref{fig:planted_peixoto}, or in other terms the module linking probability matrix is $\mathbf{B}= p_{in}\delta(\sigma_i,\sigma_j) + p_{in}\delta(\sigma_i,\sigma_j)$.
 In building the planted partition model, though one has to set in advance the number of modules $|C|$ (or blocks) and define an equal number of nodes in every module.
 
 \begin{figure}[htb!]
@@ -473,30 +476,44 @@ In building the planted partition model, though one has to set in advance the nu
 
 Although largely used, the planted-partition model has several drawbacks.
 Indeed, as generalization of the ER model, each node has the same expected degree and all communities have the same size.
-While, on the theoretical side these properties are of great help when performing analytical calculations, they also make it badly suited for real world applications.
-These features are unrealistic as complex networks are known to be characterized by heterogeneous degree distributions and community sizes.
+While, on the theoretical side these properties are of great help when performing analytical calculations, they also make it badly suited for real world applications, as degree homogeneity is seldom realized.
 
-To overcome the unrealistic settings of the planted partition model, the Lancichinetti-Fortunato-Radicchi (LFR) model first described in~\cite{lancichinetti2008} modified the planted partition model to exhibit powerlaw distribution of both node degrees and community size, as observed in real networks.
-The LFR model has been used primarily as benchmark for evaluating the effectiveness of different community detection methods. It was further extended to be able to generate weighted networks with overlapping modules in~\cite{Lancichinetti2009a}. 
+To overcome the unrealistic settings of the planted partition model, the Lancichinetti\hyp{}Fortunato\hyp{}Radicchi (LFR) model, first described in~\cite{lancichinetti2008}, modified the planted partition model to exhibit powerlaw distribution of both node degrees and community size, with coefficients $\tau_d$ and $\tau_c$ respectively, as observed in real networks.
+The LFR model has been used primarily as benchmark for evaluating the effectiveness of different community detection methods~\cite{fortunato2010,lancichinetti2009}. It was further extended to be able to generate weighted networks with overlapping modules in~\cite{Lancichinetti2009a}.
+In the LFR model, each node share a fraction $1-\mu_t$ of edges with nodes in its same community and a fraction $\mu_t$ with nodes in other communities: $0 \leq \mu_t \leq 1$ is dubbed the \emph{topological mixing parameter}.
+Additionally, on weighted networks, a parameter $\beta$ is used to assign strength to each node: $s_i=k_i^\beta$ and a parameter $\mu_w$ is used to partition the node strength into an intra-community component proportional to $(1-\mu_w)$ and an inter-community component proportional to $\mu_w$: $s_i = (1-\mu_w)s_i^{(int)} + (\mu_w)s_i^{(ext)}$.
+The modularity of the network is controlled primarily by the topological mixing coefficient. If $\mu_t$ is exactly zero, the network consists of isolated components and the stochastic block matrix is completely assortative (diagonal). Conversely for $\mu_t=1$, the block matrix has zero on the diagonal and is completely disassortative, exhibiting no links inside communities and only links between them. The generated network is \emph{multipartite}.
 
-The LFR model has a richer variety of parameters.
-\begin{table}[htb!]\centering
-\begin{tabular}{lr}
-\hline 
-$\left<k\right>$  & Desidered average degree.\\
-$\tau_d$ & Coefficient for the power-law distribution of nodes degrees. \\
-$\tau_c$ & Coefficient for the power-law distribution of community size. \\
-$\mu_t$ & Topological mixing coefficient.\\
-$\mu_w$ & Weights mixing coefficient.\\
-$\beta$ & Exponential parameter for strenghts distribution.\\
+The LFR model has a number of other parameters that control all the network parameters with great precision~\cite{lancichinetti2008,Lancichinetti2009a}, described in Figure~\ref{tab:lfrparams}.
+\begin{figure}[htb!]\centering
+\begin{footnotesize}
+\noindent\begin{minipage}[b!]{0.48\textwidth}
+\begin{tabular}{l|p{1\textwidth}}
+\hline
+$\tau_d \geq 1$ & Power-law exponent of nodes degrees.\\
+$\tau_c \geq 1$ & Power-law exponent of community size.\\
+$\beta \geq 1$  &Exponential parameter for strengths distribution.\\
+$C \in [0,1]$ & Desidered average clustering coefficient.\\
 $\min_c$ & Minimum number of nodes in each community.\\
-$\max_c$ & Maximum number of nodes in each community.\\
-
+$\max_c$  & Maximum number of nodes in each community.\\
+$\mu_t \in [0,1]$ & Topological mixing coefficient.\\
+$\mu_w \in [0,1]$ & Weights mixing coefficient.\\
+$\left<k\right>$ &Desidered average degree.\\
+\hline
 \end{tabular}
-\caption{Meaning of LFR parameters.}
-\end{table}
+\end{minipage}\hfill
+\begin{minipage}[b!]{0.35\textwidth}\flushright
+\includegraphics[width=1\textwidth]{images/LFRexample.pdf}
+\end{minipage}
+\end{footnotesize}
+\caption{LFR parameters and a single instance with $n=600$, $\left<k \right>=12$, $\tau_d=2$, $\tau_c=1$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.}
+\label{tab:lfrparams}
+\end{figure}
 
+The LFR model is a great importance as it served as benchmark test for community detection algorithms and as model of heterogeneity of modules size when studying the performance of detection.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% COMMUNITY DETECTION %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Community detection in networks}
 \label{sec:communitydetectioninnetworks}
 The distribution of edges and degrees is not only globally, but also locally inhomogeneous, with high concentrations of edges within special groups of vertices, and low concentrations between these groups. This feature of real networks is called community structure. 
