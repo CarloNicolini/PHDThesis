@@ -54,10 +54,10 @@ All of these networks are ``weighted'' by definition, i.e. their links are assoc
 
 The ascendancy of the network neuroscience in the last decade, is driven by the evidence that almost independently from how the networks links are defined, brain networks share some common tracts at many spatial and temporal scales.
 
-Among these findings we can mention for example, that they exhibit the \emph{small-world}~\cite{Watts1998,sporns2002,Sporns2004a} property, in other words, most nodes in a graph can be reached from any other node in just a few hops. Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance is likely to be related to how efficiently our brain integrates information between multiple brain regions.
+Among these findings we can mention for example, that they exhibit the \emph{small-world}~\cite{watts1998,sporns2002,sporns2004a} property, in other words, most nodes in a graph can be reached from any other node in just a few hops. Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance is likely to be related to how efficiently our brain integrates information between multiple brain regions.
 
 Additionally, other measures have been correlated with phenotypic and structural traits. ``Rich-clubs'' are subset of high degree nodes who are very \emph{rich} in connections and form a communication backbone that might be valuable in supporting high-level and more cognitively advanced forms of information processing. Interestingly, it's thought that the presence of a rich club increases the diversity of the functional repertoire over and above the effects produced by scale free type topology alone~\cite{senden2014}.
-Forms of rich-club organization has been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,DeReus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex. Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication. 
+Forms of rich-club organization has been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,dereus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex. Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication. 
 Abnormal rich-club connectivity is hypothesized to be related  to familial vulnerability for schizophrenia~\cite{collin2014impaired}.
 
 %% FIGURA BULLMORE
@@ -73,11 +73,11 @@ At this level of meso-scale organization, the topological properties of nodes ar
 
 The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on community detection, as proven by the large review of Fortunato~\cite{fortunato2010}.
 The problem of detecting the communities, or ``graph-partitioning'' in the computer-science jargon, is of big theoretical and practical importance.
-From the theoretic point of view, communities in networks are representative of the generative probabilistic model underlying the formation of links~\cite{Karrer2011} and tell much about the statistical properties of the networks.
+From the theoretic point of view, communities in networks are representative of the generative probabilistic model underlying the formation of links~\cite{karrer2011} and tell much about the statistical properties of the networks.
 On the other side, practical applications of community detection are fundamental in sociology, computer science, biology and many other fields.
 
 It's being increasingly understood indeed, that like many other information processing systems, the brain exhibit a modular architecture.
-Within the modules the information is processed locally and is then shared between modules on a communication backbone~\cite{DeReus2013a,VandenHeuvel2013a}.
+Within the modules the information is processed locally and is then shared between modules on a communication backbone~\cite{dereus2013a,vandenheuvel2013a}.
 
 Additionally, the modular organization is exhibited hierarchically at different scales, with modules inside modules, a construction that is thought to confer robustness and adaptability to the network~\cite{meunier2010}. This kind of structure implies that modules of heterogeneous size are present at the same time in the brain networks and that an efficient method to detect the presence of large and small modules at the same time together is in order.
 
@@ -437,7 +437,7 @@ where $\gamma$ is usually included in the $[2,3]$ interval.
 Power-law distributions, also dubbed \emph{scale-free}, lack a specific scale. Indeed, $P(\alpha k)=f(\alpha)P(k)$ for some multiplicative constant $\alpha$  and $f$ a function of $\alpha$. Therefore, the functional form of the power-law remain unchanged.
 
 Hence, in understanding the limitation of the Erd\H{o}s-Rényi model, researchers developed a multitude of generative models of graphs that tried to better model properties like the heavy-tails seen in power-laws or also the \emph{small-worldness} phenomenon, i.e. the observation that most nodes in a network are reachable from every other in a small number of hops.
-To keep in account the features of empirical networks, other models of networks have been developed like the models of Watts-Strogatz~\cite{Watts1998} model and Barabasi-Albert~\cite{Barabasi1999}.
+To keep in account the features of empirical networks, other models of networks have been developed like the models of Watts-Strogatz~\cite{watts1998} model and Barabasi-Albert~\cite{barabasi1999}.
 
 For example, in the Watts-Strogatz model a graph with groups of densely connected nodes is generated as follows:
 \begin{enumerate}
@@ -534,7 +534,7 @@ The simplest requirement of a quality function, is to put emphasis on intraclust
 Here we present a general framework for the definition of suitable quality functions for community detection that meets these requirements.
 
 This framework, introduced by Reichardt and Bornholdt~\cite{reichardt2006} is grounded in statistical mechanics, a branch of physics that studies the macroscopic and microscopic properties of systems of many interacting elements. Within this model, the problem of community detection is cast in terms of finding the \emph{ground state} of a spin glass, a model describing the behavior of large sets of interacting microscopic magnets.
-Actually, the properties of spin glass models are subject of extremely intensive research in the last decades as their applications range from matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader to cover the details of the model in other specialized books~\cite{Mezard1990}.
+Actually, the properties of spin glass models are subject of extremely intensive research in the last decades as their applications range from matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader to cover the details of the model in other specialized books~\cite{mezard1990}.
 
 A spin glass model starts from the definition of an Hamiltonian, a multi-variable scalar function that describe the total energy of the physical system with the configuration of its internal components. In our case, the internal components of the system are the nodes. The configuration of the system is then expressed by the community affiliation vector $\boldsymbol\sigma$, meaning that node $i$ stays in the community $\sigma_i$ (see~\ref{sec:clustering}).
 The Hamiltonian used by Reichardt and Bornholdt (RB) counts four different contributions. The first two contributions act at intracluster level, positively weighing intracluster edges and negatively weighing intracluster non-edges with coefficients $a_{ij}$ and $b_{ij}$ respectively. The third and fourth contributions work on intercluster edges and non-edges, weighing them with factors $c_{ij}$ and $d_{ij}$. The general form of the RB model is then expressed by the following Hamiltonian:

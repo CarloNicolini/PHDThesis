@@ -10,20 +10,6 @@ We used BrainNetViewer as a tool for the visualization of the communities on bra
 
 
 \subsection{Hub classification}
-
-Hub classification is critical for the interpretation of the roles played by the highly connected nodes within the network structure. Resolution limited methods may result in misclassification of hubs, and the resulting partitions may not accurately reflect the modular organization of the connectivity network.
-To investigate differences in hubs' roles as determined by different community detection methods we have adopted the Guimera and Amaral~\cite{guimera2005} classification scheme, specifying for every node its participation coefficient and within module degree z-score. The participation coefficient reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} 
-\begin{equation}\label{eq:participationcoeff}
-P_i = 1 - \sum_c \left( \frac{k_{ic}}{k_i} \right)^2
-\end{equation}
-where $k_{ic}$ is the number of links of node $i$ to nodes in module $s$ and $k_i$ is the total degree of node $i$.
-
-Conversely, the within-module degree reflects the degree of connectivity of a node, and is defined as: 
-\begin{equation}\label{eq:withinmoduledegree}
-z_i = \frac{k_i - \left< k_i \right>}{\sigma_{k_i}}
-\end{equation}
-In the Guimera and Amaral model, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score. These hubs are responsible for integration of the different modules into a cohesive structure, and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
-
 We mapped participation coefficients $P_i$ and within module degrees $Z_i$ in our benchmark resting state functional connectivity network for Newman's Modularity, Infomap and Asymptotical Surprise. Following Guimera and Amaral scheme, we identified connector hubs for each of the three methods as those with simultaneously large values of participation coefficient and within module degree (larger than 0.62 and 1.5, respectively).
 
 \section{Results}
@@ -111,7 +97,7 @@ This is consistent with the findings of~\cite{fortunato2007}, that showed that f
 For Infomap, this limit is less severe and is determined by the number of inter-cluster edges~\cite{kawamoto2015}. Accordingly, the effects of the resolution limit were not apparent in this model network, where modules are sparingly connected by single edges.
 Asymptotical Surprise presented the best performance, consistent with the idea that this cost function is quasi-resolution limit free~\cite{traag2015}.
 
-However, real brain networks are characterized by heterogeneous distributions of node degree, with fat tails and power-law decays~\cite{bullmore2009}. Such heterogeneity is critical, as it determines some of the remarkable features of brain connectivity networks, including resilience to random failure and rich-clubness~\cite{VandenHeuvel2011,vandenHeuvel2013a}. To provide a more realistic benchmark, we used the Lancichinetti-Fortunato-Radicchi algorithm~\cite{lancichinetti2008}, that makes it possible to generate networks with realistic and tunable power law degree distribution and community sizes.
+However, real brain networks are characterized by heterogeneous distributions of node degree, with fat tails and power-law decays~\cite{bullmore2009}. Such heterogeneity is critical, as it determines some of the remarkable features of brain connectivity networks, including resilience to random failure and rich-clubness~\cite{vandenheuvel2011,vandenheuvel2013a}. To provide a more realistic benchmark, we used the Lancichinetti-Fortunato-Radicchi algorithm~\cite{lancichinetti2008}, that makes it possible to generate networks with realistic and tunable power law degree distribution and community sizes.
 
 For LFR networks, the difference in performance in the low-noise regime was more nuanced for the three methods compared in this study, possibly a result of a fuzzier community structure of the LFR network compared to the ring of cliques, and of the narrower distribution of cluster sizes. However, the picture appears different when noise and intersubject variability were injected into the network structure.
 
@@ -129,7 +115,7 @@ This rules out the idea that the higher sensitivity to small clusters of Asympto
 \subsection{Community detection in functional connectivity networks by Asymptotical Surprise}
 
 Application of Asymptotical Surprise maximization to a group-level, resting state functional connectivity network from the brains of $27$ healthy subjects revealed a heterogeneous distribution of modules, with large and small modules coexisting in the optimal partition.
-This is in keeping with previous findings with binary Surprise~\cite{Nicolini2016}.
+This is in keeping with previous findings with binary Surprise~\cite{nicolini2016}.
 These modules closely reflect functional networks reported in many studies using Independent Component Analysis or other multivariate methods, including the sensorimotor, visual, default mode, executive, and attentional networks.
 Moreover, anatomically defined subcortical structures, like the hippocampus and parahippocampal formations emerged as independent moduli.
 
@@ -142,17 +128,17 @@ However, Asymptotical Surprise appears to provide superior performance in identi
 
 Hierarchical clustering methods have been extensively applied to investigate the structure of brain connectivity networks, showing smaller and smaller clusters as the modules are iteratively subdivided~\cite{meunier2010}.  Maximization of Asymptotical Surprise reflects the optimal cut through the dendrogram representing connectivity at these different levels of subdivision, and provides information on the optimal partition of the network. Hence, the heterogeneous distribution of cluster sizes retrieved by Asymptotical Surprise suggests that multiple scales of structure exist at the same level of the dendrogram.
 
-Finally, abnormal functional connectivity has been observed in a number of neurological and psychiatric diseases, but the coarse resolution of methods like Newman's Modularity~\cite{Fornito2015} may have not detected differences in the modular organization of networks in patients compared to healthy controls. The improved resolution and sensitivity to multiscale structure afforded by Asymptotical Surprise may provide a powerful means to assess the brain functional architecture in disease states, thus contributing a potential imaging-based marker and a key to interpret the functional effects of aberrant connectivity.
+Finally, abnormal functional connectivity has been observed in a number of neurological and psychiatric diseases, but the coarse resolution of methods like Newman's Modularity~\cite{fornito2015} may have not detected differences in the modular organization of networks in patients compared to healthy controls. The improved resolution and sensitivity to multiscale structure afforded by Asymptotical Surprise may provide a powerful means to assess the brain functional architecture in disease states, thus contributing a potential imaging-based marker and a key to interpret the functional effects of aberrant connectivity.
 \subsection{Hub classification}
 The presence of heterogeneously distributed modules in functional connectivity networks may have  important consequences for our understanding of the brain functional organization. By way of example, it has been shown that highly connected nodes, or hubs, are critically important in brain connectivity networks, and may play different roles depending on their position and connectivity distribution within and between modules~\cite{bullmore2009}. Hubs that primarily connect to nodes within the same community are dubbed “provincial hubs”, and are thought to be responsible for the definition and stability of the modules. Conversely, hubs that connect different modules are referred to as “connector hubs” and ensure integration of the activity of the network. The classification of hubs  strongly depends on the modular structure that is considered, and inaccurate partitioning due to the resolution limit can lead to the wrong interpretation of their role in the interplay between segregation and integration of brain function~\cite{bullmore2009}. The present study suggests that this may have been the case in previous studies, in which resolution limited methods characterized by an intrinsic scale have been used, and provides a solution that may enable more accurate classification of hubs and nodes.
 
-The connector hubs identified by our three methods (Asymptotical Surprise, InfoMap and Newman) present some substantial differences, consistent with the idea that hub classification depends on community structure. These differences are particularly interesting in the light of the important role that connector hubs are thought to play in integrating information flow through the brain, and their putative role in brain disease \cite{Crossley2014,Stam2014}. By way of example, the Precuneus and the Cingulate Cortex are highlighted  by Asymptotical Surprise, but not by Newman's Modularity, as connector hubs. These are two key elements of the Default Mode Network that have been consistently identified as vulnerable regions in neurological diseases~\cite{vandenHeuvel2013a,Buckner2009}. 
+The connector hubs identified by our three methods (Asymptotical Surprise, InfoMap and Newman) present some substantial differences, consistent with the idea that hub classification depends on community structure. These differences are particularly interesting in the light of the important role that connector hubs are thought to play in integrating information flow through the brain, and their putative role in brain disease \cite{crossley2014,stam2014}. By way of example, the Precuneus and the Cingulate Cortex are highlighted  by Asymptotical Surprise, but not by Newman's Modularity, as connector hubs. These are two key elements of the Default Mode Network that have been consistently identified as vulnerable regions in neurological diseases~\cite{vandenheuvel2013a,buckner2009}. 
 Community detection by resolution limited free methods should enable more accurate classification of hub nodes, and improve our understanding of their role in brain disease.  
 
 \subsection{Limitations}
 Some caution should be taken in the interpretation of the graphs in Figures \ref{fig:nmisensitivityspecificityringclique} and \ref{fig:nmisensitivityspecificitylfr}.
 Indeed, the SNRs of the synthetic networks we have generated reflect noise with features, like a Rician distribution, that mimic some, but not all aspects of the variability of experimental data.
-By way of example, the brain parcellation scheme applied to define the nodes, and the heterogeneity of voxels within these parcels, may play a role that is difficult to model in toy networks~\cite{Fornito2010}.
+By way of example, the brain parcellation scheme applied to define the nodes, and the heterogeneity of voxels within these parcels, may play a role that is difficult to model in toy networks~\cite{fornito2010}.
 Hence, the simulated Sensitivity and Specificity as a function of SNR and number of subjects should not be taken as absolute values to be used in the power and sample size estimation in real experimental designs.
 Nevertheless, these simulations provide useful information on the dependence of these parameters on noise levels, and a rigorous means to assess the relative merits of different community detection methods.
 

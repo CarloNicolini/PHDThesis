@@ -46,7 +46,7 @@ where the binary Kullback-Leibler divergence~\cite{kullback1951} is $$D_{\textrm
 
 In the framework of information theory~\cite{cover2006}, Asymptotical Surprise represents the Kullback-Leibler divergence between the observed and expected fraction of intra-cluster edges; it encodes the information lost when the prior distribution $\left <q \right >$ is used to approximate the posterior distribution $q$. Kullback-Leibler divergence is a quasi-distance on probability distributions as it is always non-negative, non-symmetric and zero only when $q=\left< q \right>$, like binary Surprise.
 
-Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks ~\cite{traag2015}. Nicely, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density consider edge weights. This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, seamlessly permitting the need of sparsification procedures prior to the community detection, as shown in~\cite{Nicolini2017}.
+Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks ~\cite{traag2015}. Nicely, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density consider edge weights. This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, seamlessly permitting the need of sparsification procedures prior to the community detection, as shown in~\cite{nicolini2017}.
 
 Numerically Asymptotical Surprise approximates very well Surprise already for networks with more than 50 nodes, as shown in Figure~\ref{fig:asymptotical_surprise_comparison}.
 
@@ -80,7 +80,7 @@ The running time of PACO is linear in the number of nodes and quadratic in the a
 
 \subsection{Comparison of PACO and FAGSO}
 
-FAGSO is an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree and is described in~\cite{Nicolini2016}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation. At the beginning, each community consists only of one vertex. Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set. This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
+FAGSO is an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree and is described in~\cite{nicolini2016}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation. At the beginning, each community consists only of one vertex. Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set. This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
 
 PACO and FAGSO are based on the same idea of greedy agglomeration of edges that leads to increment in Surprise, but the implementation of the agglomeration step is different.
 In the box A of Figure~\ref{fig:pacofagso} both the algorithms are considering whether to merge nodes from edge $d-g$ into the same community or not.
@@ -117,7 +117,7 @@ The layout of (B) was generated with the graph-tool library~\cite{peixoto_graph_
 \label{fig:lfrringclique}
 \end{figure}
 
-One important finding in~\cite{Nicolini2016} is that brain networks are organized in modules with heterogeneous size distributions.
+One important finding in~\cite{nicolini2016} is that brain networks are organized in modules with heterogeneous size distributions.
 We implemented this property in our two types of benchmark networks.
 For the first test, we generated a ring of cliques with $300$ nodes, and sizes of the cliques sampled from a power-law with exponent $\tau_c=2$, minimum and maximum clique size respectively $\min_c=5$, $\max_c=50$ (see also Supplementary Materials S4).
 For each subject of the sample, we synthesized $150$ time-points for each node using the \texttt{neuRosim R} package~\cite{neurosim2011}. We set the baseline value of all the time series to $100$~\cite{Welvaert2013}.
@@ -149,7 +149,7 @@ Our implementation of PACO as well as the code to generate benchmark LFR network
 
 
 \subsection{Measures of partition quality}
-For each method, we analyzed the level of agreement of the detected community structure against the planted one in terms of Normalized Mutual Information (NMI)~\cite{Danon2005}.
+For each method, we analyzed the level of agreement of the detected community structure against the planted one in terms of Normalized Mutual Information (NMI)~\cite{danon2005}.
 Additionally, we used two different coefficients of similarity between partitions: Sensitivity and Specificity. 
 To this end, we quantified the confusion matrix $\mathbf{C}$ between the detected and planted modules. Each element $C_{ij}$ is the number of nodes in the planted community $i$ that appear in the detected community $j$.
 For each planted community we scored as true positives (TP) the nodes correctly identified as belonging to the ground-truth community, and as false positives (FP) the nodes wrongly assigned to a community; similarly false negatives (FN) were nodes wrongly classified in different communities and true negatives (TN) the nodes correctly classified as out of the community.
