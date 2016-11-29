@@ -1,16 +1,3 @@
-\subsection{Human resting state network}
-We applied Asymptotical Surprise maximization by PACO to a reference resting state fMRI functional connectivity dataset from healthy subjects~\cite{crossley2013a} made available to the scientific community through the public Brain Connectivity Toolbox~\cite{rubinov2010}. 
-Detailed experimental and image processing procedures are described in the original paper~\cite{crossley2013a}, alongside with the ethical statements.
-
-In short, fMRI data were acquired from 27 healthy volunteers at 3T.
-Gradient echo-planar imaging data were collected for 5 min with 2s TR and 13 and 31 ms echo-times. Thirty six interleaved 3mm slices with in-plane resolution of $3.5\times 3.5$ mm were acquired.
-Time series were extracted from 638 brain regions defined by a template~\cite{crossley2013a}, corrected for motion and band-passed (0.01–0.1Hz). Functional connectivity was defined in terms of pairwise Pearson correlations at a subject's level.
-A group-level functional connectivity matrix was calculated by averaging individuals' matrices after Fisher-transform, and thresholded to retain 18625 edges, as described in Crossley et al.~\cite{crossley2013a}.
-We used BrainNetViewer as a tool for the visualization of the communities on brain templates~\cite{xia2013}.
-
-
-\subsection{Hub classification}
-We mapped participation coefficients $P_i$ and within module degrees $Z_i$ in our benchmark resting state functional connectivity network for Newman's Modularity, Infomap and Asymptotical Surprise. Following Guimera and Amaral scheme, we identified connector hubs for each of the three methods as those with simultaneously large values of participation coefficient and within module degree (larger than 0.62 and 1.5, respectively).
 
 \section{Results}
 \subsection{Synthetic networks}

@@ -49,7 +49,7 @@ In the framework of network neuroscience the modeling of brain in terms of graph
 The second step in the definition of a brain network is an estimate of the continuous association between nodes. The links indeed measure the interregional coordination or similarity between nodes.
 To be more specific in the case of fMRI studies of resting state functional connectivity, link weights are defined as interregional temporal correlations in the fluctuations of the BOLD signals, and the resulting graph can be represented by an adjacency matrix where the strongest correlations indicate the presence of a link between any two specific areas.
 In other applications like Diffusion Tensor Imaging, a technique that is able to show the effective directions of nervous fibers traits in the brain, one can see the links as directly proportional to the number of white matter tracts connecting any two regions.
-Additionally, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{evans2013,he2007}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a}, pharmacological challenges~\cite{schwarz2007,schwarz2008} or  spectral coherence of EEG electrical time-courses.
+Additionally, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{evans2013,he2007}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a}, pharmacological challenges~\cite{schwarz2007,schwarz2008} or spectral coherence of EEG electrical time-courses.
 All of these networks are ``weighted'' by definition, i.e. their links are associated with real numbers representing a measure of the strength of pairwise interactions between nodes.
 
 The ascendancy of the network neuroscience in the last decade, is driven by the evidence that almost independently from how the networks links are defined, brain networks share some common tracts at many spatial and temporal scales.
@@ -60,14 +60,18 @@ Additionally, other measures have been correlated with phenotypic and structural
 Forms of rich-club organization has been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,dereus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex. Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication. 
 Abnormal rich-club connectivity is hypothesized to be related  to familial vulnerability for schizophrenia~\cite{collin2014impaired}.
 
+More generally, network neuroscience has matured the ability not only to map alterations at the level of structural or functional connectome, but recently it started predicting and generating hypotheses about underlying pathophysiological mechanisms of disease. Clinically useful predictions are now being made on the basis of network indicators, viewed as biomarkers of brain alterations~\cite{fornito2015}.
+
+From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{kandel2013}. Contrarily, primary sensory cortices have low topological centrality and degree, therefore damage to primary sensory areas only affect them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008}.
 %% FIGURA BULLMORE
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=1.0\textwidth]{images/bullmore_2009_pipeline.pdf}
 \caption{Structural and functional brain networks can be explored using graph theory through four steps.}
+\label{fig:bullmore2009pipeline}
 \end{figure}
 
-\bigbreak
+
 Across the many properties that graphs exhibit and that are arguments of further analysis \emph{per se}, one of the most directly observable is that, nodes group together forming some kind of \emph{clusters}.
 At this level of meso-scale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph. When the mesoscopic structure tends to group nodes with similar properties, the meso-scale structure is called \emph{assortative}. Such graphs with assortative structures consist in tightly connected groups of nodes that are themselves loosely connected with other groups. These groups are therefore dubbed as \emph{communities}. 
 
@@ -85,6 +89,11 @@ Several methods have been proposed to resolve the community structure of complex
 Many of these methods involve the definition of a quality function that assigns positive or negative scores to edges connecting nodes within or outside the same community, and heuristics to find the optimal partition of the network that maximize this fitness function. The most popular approach is Newman's ``Modularity maximization'' and variations thereof~\cite{newman2006}.
 Following the first demonstration by~\cite{schwarz2008}, partitioning of brain networks using Modularity has been widely applied to assess the brain modular structure.
 A few, large modules, including the Default Mode Network, the central network, occipital and frontoparietal networks have been observed with remarkable consistency across subjects and studies~\cite{meunier2010,wang2010}. 
+
+\begin{figure}
+\includegraphics[width=1.0\textwidth]{images/nrn3901-f5.jpg}
+\caption{The relation between modules and hubs in the brain is depicted in a. where the possibility of overlapping modules is taken in consideration.}
+\end{figure}
 
 Despite its popularity and merits, Newman’s approach presents some important limitations.
 Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
@@ -353,6 +362,8 @@ The Guimera and Amaral~\cite{guimera2005} classification scheme, specifies for e
 As indicated in Figure~\ref{fig:gagraph}, depending on the specific cut-off values of participation coefficient and intra-modular connectivity, the nodes are defined as ultra-peripheral (region R1), peripheral (region R2), connector non-hubs (region R3), kinless non-hubs (region R4), provincial hubs (region R5), connector hubs (region R6) and kinless hubs (region R7). Naturally, connector hubs are of great importance for communication between modules.
 Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
 These hubs are responsible for integration of the different modules into a cohesive structure, and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
+In contrast, provincial hubs are more importantly involved in functional specialization and local processing, therefore damage to these areas should yield really specific clinical deficits, whereas damage to connector hubs results in complex and pervasive neurological dysfunctions.
+
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.65\textwidth]{images/guimera_amaral_coact_q.pdf}
