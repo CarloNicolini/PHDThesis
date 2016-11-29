@@ -52,6 +52,14 @@ In other applications like Diffusion Tensor Imaging, a technique that is able to
 Additionally, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{evans2013,he2007}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a}, pharmacological challenges~\cite{schwarz2007,schwarz2008} or spectral coherence of EEG electrical time-courses.
 All of these networks are ``weighted'' by definition, i.e. their links are associated with real numbers representing a measure of the strength of pairwise interactions between nodes.
 
+%% FIGURA BULLMORE
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{images/bullmore_2009_pipeline.pdf}
+\caption{Structural and functional brain networks can be explored using graph theory through four steps.}
+\label{fig:bullmore2009pipeline}
+\end{figure}
+
 The ascendancy of the network neuroscience in the last decade, is driven by the evidence that almost independently from how the networks links are defined, brain networks share some common tracts at many spatial and temporal scales.
 
 Among these findings we can mention for example, that they exhibit the \emph{small-world}~\cite{watts1998,sporns2002,sporns2004a} property, in other words, most nodes in a graph can be reached from any other node in just a few hops. Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance is likely to be related to how efficiently our brain integrates information between multiple brain regions.
@@ -63,16 +71,16 @@ Abnormal rich-club connectivity is hypothesized to be related  to familial vulne
 More generally, network neuroscience has matured the ability not only to map alterations at the level of structural or functional connectome, but recently it started predicting and generating hypotheses about underlying pathophysiological mechanisms of disease. Clinically useful predictions are now being made on the basis of network indicators, viewed as biomarkers of brain alterations~\cite{fornito2015}.
 
 From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{kandel2013}. Contrarily, primary sensory cortices have low topological centrality and degree, therefore damage to primary sensory areas only affect them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008}.
-%% FIGURA BULLMORE
+Degeneracy (or redundancy) is also important when evaluating the consequences of brain lesions. A poorer prognosis is registered when the interested area of the insult has low degeneracy, i.e. only that area is deputed to a particular region such that no other area may compensate. Additionally a severe impairment of neurocognitive functions is associated with damage to highly central nodes, as shown in Figure~\ref{fig:prognosis_centrality}.
+
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1.0\textwidth]{images/bullmore_2009_pipeline.pdf}
-\caption{Structural and functional brain networks can be explored using graph theory through four steps.}
-\label{fig:bullmore2009pipeline}
+\includegraphics[width=1\textwidth]{images/prognosis.pdf}
+\caption{Hypothetical relation between centrality of node subjected to an pathological insult, its degeneracy and the expected functional impairment.}
+\label{fig:prognosis_centrality}
 \end{figure}
 
-
-Across the many properties that graphs exhibit and that are arguments of further analysis \emph{per se}, one of the most directly observable is that, nodes group together forming some kind of \emph{clusters}.
+Across the many other properties that graphs exhibit and that are arguments of further analysis \emph{per se}, one of the most directly observable is that, nodes group together forming some kind of \emph{clusters}.
 At this level of meso-scale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph. When the mesoscopic structure tends to group nodes with similar properties, the meso-scale structure is called \emph{assortative}. Such graphs with assortative structures consist in tightly connected groups of nodes that are themselves loosely connected with other groups. These groups are therefore dubbed as \emph{communities}. 
 
 The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on community detection, as proven by the large review of Fortunato~\cite{fortunato2010}.
@@ -89,11 +97,6 @@ Several methods have been proposed to resolve the community structure of complex
 Many of these methods involve the definition of a quality function that assigns positive or negative scores to edges connecting nodes within or outside the same community, and heuristics to find the optimal partition of the network that maximize this fitness function. The most popular approach is Newman's ``Modularity maximization'' and variations thereof~\cite{newman2006}.
 Following the first demonstration by~\cite{schwarz2008}, partitioning of brain networks using Modularity has been widely applied to assess the brain modular structure.
 A few, large modules, including the Default Mode Network, the central network, occipital and frontoparietal networks have been observed with remarkable consistency across subjects and studies~\cite{meunier2010,wang2010}. 
-
-\begin{figure}
-\includegraphics[width=1.0\textwidth]{images/nrn3901-f5.jpg}
-\caption{The relation between modules and hubs in the brain is depicted in a. where the possibility of overlapping modules is taken in consideration.}
-\end{figure}
 
 Despite its popularity and merits, Newman’s approach presents some important limitations.
 Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
@@ -361,16 +364,25 @@ Hub classification is critical for the interpretation of the roles played by the
 The Guimera and Amaral~\cite{guimera2005} classification scheme, specifies for every node its participation coefficient and within module degree z-score, placing the nodes over a 2D cartesian space, divided in seven regions.
 As indicated in Figure~\ref{fig:gagraph}, depending on the specific cut-off values of participation coefficient and intra-modular connectivity, the nodes are defined as ultra-peripheral (region R1), peripheral (region R2), connector non-hubs (region R3), kinless non-hubs (region R4), provincial hubs (region R5), connector hubs (region R6) and kinless hubs (region R7). Naturally, connector hubs are of great importance for communication between modules.
 Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
+
 These hubs are responsible for integration of the different modules into a cohesive structure, and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
 In contrast, provincial hubs are more importantly involved in functional specialization and local processing, therefore damage to these areas should yield really specific clinical deficits, whereas damage to connector hubs results in complex and pervasive neurological dysfunctions.
 
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=0.65\textwidth]{images/guimera_amaral_coact_q.pdf}
-\caption{Guimera and Amaral classification scheme for the modular structure obtained induced by Modularity maximization of a co-activation network as obtained from~\cite{crossley2013a}.
-Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of the seven different regions, assigning it its role. Nodes total degree is color coded with colors fro yellow to red, as shown in the legend.}
+\noindent\begin{figure}[htb!]
+\begin{subfigure}[t]{0.5\textwidth}\centering
+\includegraphics[height=0.35\textwidth]{images/guimera_amaral_coact_q.pdf}
+\caption{Guimera and Amaral classification scheme for the modular structure obtained induced by Modularity maximization of a co-activation network as obtained from~\cite{crossley2013a}. Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of the seven different regions, assigning it its role. Nodes total degree is color coded with colors fro yellow to red, as shown in the legend.}
 \label{fig:gagraph}
+\end{subfigure}
+\begin{subfigure}[t]{0.5\textwidth}
+\centering
+\includegraphics[height=0.35\textwidth]{images/hubs_nonhubs.pdf}
+\caption{Schematic assessment of nodal roles. Interestingly under this convention, bridges represent the most extreme case of nodes, with a relatively equal distribution of connectivity between different modules. Bridges are thus best detected when overlapping communities are allowed. They bridges hubs and non-hubs occupy the R7 region of the original GA scheme. Adapted from~\cite{fornito2015}.}
+\label{fig:hubs_bridges}
+\end{subfigure}
+\caption{}
 \end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% Models of random graphs %%%%%%%%%%%%%%%%%%%%%%
@@ -651,6 +663,54 @@ Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 Under this model a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
 Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodule fraction of edges by means of a linear loss function.
 
+\subsection{Comparing community structure in networks}
+Some benchmark networks have an annotated community structure representing the ground-truth assignment of nodes into communities made by experts in the field, like for example the karate-club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
+Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth
+
+
+A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past. They are used to provide quantitatively a number that tells how two partitions are similar.
+Usually the result is normalized in the $[0,1]$ range, being towards $1$ for very similar clusterings and toward $0$ when mostly dissimilar.
+These metrics are adopted especially in the benchmarking of community detection methods, when the specific outcome of some algorithm is compared with a ground truth partition, usually a-priori determined.
+
+% It's natural then to compare the outcome of any community detection method against the planted modular structure on this kind of networks. The most accepted choice is to measure the ``distance '' of partitions with the help of the tools from information theory.
+%In this respect, we stick to the widely used ``Normalized Mutual Information'' (NMI).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The most well-grounded and performing metrics are rooted in information theory\cite{cover2006}.
+The \emph{Normalized Mutual Information} \cite{danon2005} and the \emph{Variation of Information}\cite{meila2007} are the most widely used, despite it has been recently found that both of them suffer of systematic errors due to the finite size of the network \cite{zhang2015}. In the rest of the discussions we ignore the limitation of finite size effects, by only working with relatively large networks.
+
+Normalized Mutual Information (NMI) and Variation of Information (VI) assume that clustering comparison is a problem of message decoding. Implicit in this, is the idea that if two partitions are similar, inferring one partition from the other needs very little information. 
+
+Let us consider two generic partitions $\mathcal{X}=(X_1,X_2,\ldots,X_{n_x})$ and $\mathcal{Y}=(Y_1,Y_2,\ldots,Y_{n_y})$ of a graph $\mathcal{G}$ with $n_X$ and $n_Y$ communities respectively.
+We indicate with $n$ the number of nodes, with $n_i^X$ and $n_j^Y$ the number of nodes in communities $X_i$ and $Y_j$, and with $n_{ij}$ the number of nodes shared by clusters $X_i$ and $Y_j$, $n_{ij}=| X_i \cap Y_j|$.
+%
+Let us also consider the community assignments $\{ x_i\}$ and  $\{ y_i\}$ for partitions $\mathcal{X}$ and $\mathcal{Y}$ respectively; we treat the labels $x$ and $y$  as values of two random variables $X$ and $Y$ with joint distribution $P(x,y)=P(X=x, Y=y) = n_{xy}/n$, which implies that $P(x)=P(X=x)=n_x^X/n$ and $P(y)=P(Y=y)=n_y^Y/n$.
+The \emph{mutual information} is then defined as $I(X,Y)=H(X) - H(X|Y)$ where $H(X)=-\sum_x P(x) \log P(X)$ is the Shannon entropy of $x$~\cite{cover2006}.
+The mutual information itself is not very useful, because hierarchically splitting the clusters in $X$ would produce no change in the prior $H(X|Y)$ and partitions with different hierarchies of the same clusters, would go unnoticed.
+This observation led \cite{danon2005} to define normalized mutual information as 
+\begin{equation}\label{eq:nmi}
+\textrm{NMI}(\mathcal{X},\mathcal{Y}) = \frac{2I(X,Y)}{H(X)+H(Y)}
+\end{equation}
+Similar to NMI is the Variation of Information \cite{meila2007}, 
+\begin{equation}\label{eq:vi}
+\textrm{VI}(\mathcal{X},\mathcal{Y}) = H(X|Y) + H(Y|X)
+\end{equation}
+which, has the desirable property that it defines a metric on the space of the partitions as it is a proper distance. Variation of information is also a local measure, i. e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
+As noted by Karrer \cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range. 
+Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding overall similarity.
+
+It is possible though to study partitioning on a community-wise basis by explicitly enumerating all the similarity between groups of nodes of two different partitions.
+
+Let's assume we have two different clusterings $\zeta_1,\zeta_2$ obtained from two different runs of some non-deterministic community detection algorithm. For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zeta_1|$,$1\leq j \leq |\zeta_2|$ then the cluster homogeneity is defined as:
+
+\begin{align}
+\Pr(\textrm{overlap}) = \frac{\binom{|c_j|}{|c_i \cap c_j|}\binom{N-|c_j|}{|c_i|-|c_i \cap c_j|}}{\binom{N}{|c_i|}}
+\end{align}
+%
+\todo{fix discorso cluster homogeneity}
 
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it  became the tool of election to inspect the community structure of networks.
