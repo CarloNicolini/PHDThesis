@@ -149,3 +149,43 @@ This phenomenon may be less critical for methods like Newman's Modularity that h
 
 \section{Conclusion}
 We have extended the use of Surprise, a resolution-limit-free fitness function for the study of the modular structure of complex networks, to weighted brain functional connectivity networks. Specifically, we have developed a novel method, dubbed PACO, for the optimization of Asymptotical Surprise, a weighted counterpart of Surprise in the limit of large networks. We have applied PACO optimization of Asymptotical Surprise in synthetic networks to evaluate the relative merits of this novel approach against Newman's Modularity and Infomap, two of the leading methods used for community detection in brain connectivity networks. Specifically, we have implemented a process to inject noise into networks endowed with a ground-truth modular structure to assess the trade-off between improved resolution afforded by Asymptotical Surprise and potential sensitivity to spurious correlations introduced by variability in the data. Asymptotical Surprise optimization proved superior to existing methods in terms of Sensitivity and accuracy in detection of the planted structure as measured by Normalized Mutual Information, while showing comparable Specificity. We have also applied our approach to the partitioning of functional connectivity networks from resting state fMRI experiments. Direct comparison with other methods clearly demonstrated improved capability to identify neurofunctionally plausible and anatomically well-defined substructures otherwise concealed by the resolution limit. Asymptotical Surprise revealed a complex modular structure of resting state connectivity, with communities of widely different sizes reflecting distributed functional networks alongside with small, anatomically or functionally defined modules. This evidence corroborates the idea that the resolution limit may have negatively affected current models of the brain modular organization and the identification of the hubs responsible for integration of functional modules.  The application of methods like Asymptotical Surprise provides a novel, powerful approach to study the modular structure of brain connectivity beyond this limit.
+
+
+
+\begin{figure}[!ht]
+\includegraphics[width=1.0\textwidth]{images/ring_clique_spec_sens.pdf}
+\caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to a power-law ring of clique network. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
+\label{fig:nmisensitivityspecificityringclique}
+\end{figure}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.0\textwidth]{images/lfr_spec_sens.pdf}
+\caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to Lancichinetti-Fortunato-Radicchi (LFR) networks. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
+\label{fig:nmisensitivityspecificitylfr}
+\end{figure}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.0\textwidth]{images/comparison_newman_infomap_surprise.pdf}
+\caption{Adjacency matrix of the resting state functional connectivity network. The node indices have been reordered by module membership in each graph, and the red lines highlight the community structures obtained by A) Louvain-Newman's Modularity  ($Q=0.4967$); B)  Infomap ($L=8.5173$); C) Asymptotical Surprise ($S_a=5925.28$).}
+\label{fig:partitioncomparison}
+\end{figure}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.0\textwidth]{images/cervellini_4x4_surprise.pdf}
+\caption{Sixteen largest modules found by Asymptotical Surprise Maximization in the resting state network overlaid on an MRI brain template. The modules are ranked by decreasing size, and named after corresponding functional networks previously identified by multivariate analysis of resting state fMRI data, or by the comprised anatomical districts.}
+\label{fig:cervellini4x4}
+\end{figure}
+
+\begin{figure}[!ht]
+\includegraphics[width=1.0\textwidth]{images/participation_coeff_surprise.pdf}
+\caption{Anatomical distributions of the participation coefficient and within-module degree z-score for the resting state functional connectivity network partitioned by the three community detection methods.}
+\label{fig:hubclassification}
+\end{figure}
+
+
+\begin{figure}[!ht]
+\includegraphics[width=1.0\textwidth]{images/large_values_participation.pdf}
+\caption{Nodes presenting simultaneously large values of the participation coefficient and  within-module degree (larger than 0.6 and 1.5, respectively) for the three community detection methods. These nodes are thought to represent the connector hubs responsible for the integration of the networks's modules.
+}
+\label{fig:hubclassification_threshold}
+\end{figure}
