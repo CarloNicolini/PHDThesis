@@ -846,9 +846,9 @@ The \emph{Constant Potts Model} (CPM) identifies community as subset of nodes wh
 \begin{equation}\label{eq:cpm_hamiltonian}
 H(\sigma)^{\textrm{CPM}} = - \sum \limits_{(i,j) \in V^2} \left[ a_{ij} - \rho \gamma_{\textrm{CPM}} \right] \delta(\sigma_i,\sigma_j),
 \end{equation}
-that once reworked results in an additive quality function in the form of Eq.~\ref{eq:cpm_hamiltonian} 
+that once reworked in an additive quality function, results in the form of Eq.~\ref{eq:cpm_hamiltonian} 
 \begin{equation}\label{eq:cpm_ermodel}
-H(\sigma)^{\textrm{CPM}} = \sum \limits_c^C \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
+Q^{\textrm{CPM}} = \sum \limits_c^{|C|} \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
 \end{equation}
 In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives; indeed it acts as the inner and outer edge density threshold.
 In the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{CPM}$ exceeds the inter-community density $m_{r,s}/(2n_r n_s)$.
