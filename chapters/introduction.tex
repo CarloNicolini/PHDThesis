@@ -669,9 +669,9 @@ In the remaining paragraphs, although flawed, we'll use the classic configuratio
 
 \subsection{Other null models for Modularity}
 Modularity identifies communities as subset of nodes whose internal fraction of edges deviates from the null configuration model on the same subset with the term $m_c/m > (K_c/2m)^2$.
-Despite measuring deviation from a null model, Modularity does not take into account the statistical evidence associated with this deviation and as result is not able to separate actual communities from those arising only from statistical fluctuations of the null model. Additionally, Modularity can even find high-scoring partitions in fully random graphs~\cite{guimera2004} and in artificially built graphs with no community structure~\cite{kehagias2013}.
+Despite measuring deviation from a null model, Modularity does not take into account the statistical evidence associated with this deviation. For this reason, Modularity is not able to separate actual communities from those arising only from statistical fluctuations of the null model. Even worse, Modularity can find high-scoring partitions in fully random graphs~\cite{guimera2004} and in artificially built graphs with no community structure~\cite{kehagias2013}.
 
-Importantly, the configuration model is not the only possible null-model to use in spin-glass based quality functions. Different authors proposed several variants of Modularity~\cite{ronhovde2010,ronhovde2009,traag2011} with different null models.
+The configuration model is not the only possible null-model to use in spin-glass based quality functions. Different authors proposed several variants of Modularity~\cite{ronhovde2010,ronhovde2009,traag2011} with different null models.
 The simplest variation of Modularity is the so-called ER Modularity~\cite{traag2015} that instead of the configuration model uses an Erd\H{o}s-Rényi random graph in which every edge appears with the same probability $p_{\textrm{ER}}$. The number of expected edges $\left< m_c \right>$ in a community of size $n_c$ is thus (in the space of simple graphs):
 \begin{equation}
 \left< m_c \right> = p_{\textrm{ER}}\binom{n_c}{2}.
@@ -680,61 +680,83 @@ and plugging this null model into the RB model of Eq.~\ref{eq:rbspinglass2} we o
 \begin{equation}\label{eq:ermodularityrb}
 \mathcal{H}^{ER} = -\sum \limits_c^C \left[\frac{m_c}{m}  - p_{\textrm{ER}}\binom{n_c}{2} \right].
 \end{equation}
-As the most similar ER graph of a given graph is the one that matches its density, the probability parameter $p_{\textrm{ER}}$ must be set equal to the original empirical graph density $\rho$. We therefore obtain the so-called ER Modularity by plugging the graph density in Eq.\ref{eq:ermodularityrb} and inverting its sign, to obtain $Q^{ER}$: 
+As the most similar ER graph of a given graph is the one that matches its density, the probability parameter $p_{\textrm{ER}}$ must be set equal to the original empirical graph density $\rho$. The so-called ER Modularity is derived by plugging the graph density in Eq.\ref{eq:ermodularityrb} and inverting its sign: 
 \begin{equation}
 Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 \end{equation}
 Under this model a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
-Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodule fraction of edges by means of a linear loss function.
+Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodule fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible and loss functions that take into account the relative size of clusters are possible.
 
 \subsection{Comparing community structure in networks}
-Some benchmark networks have an annotated community structure representing the ground-truth assignment of nodes into communities made by experts in the field, like for example the karate-club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
-Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth
-
+Some benchmark networks come with an annotated community structure representing the ground-truth assignment of nodes into communities, the annotations being made by experts in the field, like for example the karate-club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
+Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth community.
+As the number of community detection methods increased over the years, also a quantitative way to assess their performance was requested.
 
 A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past. They are used to provide quantitatively a number that tells how two partitions are similar.
-Usually the result is normalized in the $[0,1]$ range, being towards $1$ for very similar clusterings and toward $0$ when mostly dissimilar.
-These metrics are adopted especially in the benchmarking of community detection methods, when the specific outcome of some algorithm is compared with a ground truth partition, usually a-priori determined.
+Typically the result is normalized in the $[0,1]$ range, being towards $1$ for very similar clusterings and toward $0$ when mostly dissimilar. These metrics are adopted especially in the benchmarking of community detection methods, when the specific outcome of some algorithm is compared with a ground truth partition, usually a-priori determined.
 
-% It's natural then to compare the outcome of any community detection method against the planted modular structure on this kind of networks. The most accepted choice is to measure the ``distance '' of partitions with the help of the tools from information theory.
-%In this respect, we stick to the widely used ``Normalized Mutual Information'' (NMI).
+The most well-grounded and performing metrics for the comparison of two community structures are rooted in information theory\cite{cover2006}.
+The \emph{Normalized Mutual Information}~\cite{danon2005} and the \emph{Variation of Information}~\cite{meila2007} are the most widely used, despite it has been recently found that both of them suffer of systematic errors due to the finite size of the network \cite{zhang2015a}. In the rest of the discussions we ignore the limitation of finite size effects, by only working with relatively large networks.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The most well-grounded and performing metrics are rooted in information theory\cite{cover2006}.
-The \emph{Normalized Mutual Information} \cite{danon2005} and the \emph{Variation of Information}\cite{meila2007} are the most widely used, despite it has been recently found that both of them suffer of systematic errors due to the finite size of the network \cite{zhang2015a}. In the rest of the discussions we ignore the limitation of finite size effects, by only working with relatively large networks.
+Normalized Mutual Information (NMI) assumes that the clustering comparison is a problem of message decoding. Implicit in this, is the idea that if two partitions are similar, inferring one partition from the other needs very little information. 
 
-Normalized Mutual Information (NMI) and Variation of Information (VI) assume that clustering comparison is a problem of message decoding. Implicit in this, is the idea that if two partitions are similar, inferring one partition from the other needs very little information. 
-
-Let us consider two generic partitions $\mathcal{X}=(X_1,X_2,\ldots,X_{n_x})$ and $\mathcal{Y}=(Y_1,Y_2,\ldots,Y_{n_y})$ of a graph $\mathcal{G}$ with $n_X$ and $n_Y$ communities respectively.
-We indicate with $n$ the number of nodes, with $n_i^X$ and $n_j^Y$ the number of nodes in communities $X_i$ and $Y_j$, and with $n_{ij}$ the number of nodes shared by clusters $X_i$ and $Y_j$, $n_{ij}=| X_i \cap Y_j|$.
-%
-Let us also consider the community assignments $\{ x_i\}$ and  $\{ y_i\}$ for partitions $\mathcal{X}$ and $\mathcal{Y}$ respectively; we treat the labels $x$ and $y$  as values of two random variables $X$ and $Y$ with joint distribution $P(x,y)=P(X=x, Y=y) = n_{xy}/n$, which implies that $P(x)=P(X=x)=n_x^X/n$ and $P(y)=P(Y=y)=n_y^Y/n$.
-The \emph{mutual information} is then defined as $I(X,Y)=H(X) - H(X|Y)$ where $H(X)=-\sum_x P(x) \log P(X)$ is the Shannon entropy of $x$~\cite{cover2006}.
-The mutual information itself is not very useful, because hierarchically splitting the clusters in $X$ would produce no change in the prior $H(X|Y)$ and partitions with different hierarchies of the same clusters, would go unnoticed.
-This observation led \cite{danon2005} to define normalized mutual information as 
+Let us consider two generic partitions of a graph denoted by their clusterings $\zeta^x,\zeta^y$ with $c_x$ and $c_y$ communities respectively: $\zeta^x=\{\zeta^x_1,\ldots,\zeta^x_{c_x}\}$ and $\zeta^y=\{\zeta^y_1,\ldots,\zeta^y_{c_y}\}$.
+The number of nodes in the $i$-th community of $\zeta^x$ is $n_i :=|\zeta^x_i|$ and the number of nodes in the $j$-th community of $\zeta^y$ is $n_j:=|\zeta^y_j|$. The two communities share a number of nodes $n_{ij}=| \zeta^x_i \cap \zeta^y_j|$.
+Let us also consider the community assignments $\boldsymbol\sigma^x_i$ and $\boldsymbol\sigma^y_i$ for partitions $\zeta^x$ and $\zeta^y$ respectively; we treat the labels as values of two random variables $X$ and $Y$ with joint distribution $P(x,y)=P(X=x, Y=y) = n_{xy}/n$, which implies that $P(x)=P(X=x)=n_x^X/n$ and $P(y)=P(Y=y)=n_y^Y/n$.
+The \emph{mutual information} between the two clusterings $\zeta^x,\zeta^y$ is then defined as 
+\begin{equation}I(X,Y)=H(X) - H(X|Y)
+\end{equation}
+where $H(X)=-\sum_x p(x) \log p(x)$ is the Shannon entropy of $X$~\cite{cover2006}.
+The mutual information itself is not very useful, because hierarchically splitting the clusters in $\zeta^x$ would produce no change in the prior $H(X|Y)$ and partitions with different hierarchies of the same clusters, would go unnoticed.
+This observation led Danon~\cite{danon2005} to introduce normalized mutual information for clustering comparison as: 
 \begin{equation}\label{eq:nmi}
-\textrm{NMI}(\mathcal{X},\mathcal{Y}) = \frac{2I(X,Y)}{H(X)+H(Y)}
+\textrm{NMI}(X,Y) = \frac{2I(X,Y)}{H(X)+H(Y)}
 \end{equation}
-Similar to NMI is the Variation of Information \cite{meila2007}, 
+Explicitly, NMI is defined on top of the confusion matrix as:
+\begin{equation}\label{eq:nmiexplicit}
+\textrm{NMI} = \dfrac{2\sum \limits_{i=1}^{c_x} \sum \limits_{j=1}^{c_y} \frac{n_{ij}}{n} \log\left( \frac{n_{ij}n}{n_i n_j} \right)} {\left(-\sum \limits_{k=1}^{c_x} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right) + \left(-\sum \limits_{k=1}^{c_y} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right)}
+\end{equation}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (-1.1cm,0cm) (CL) {$H(X|Y)$};
+    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (1.1cm,0cm) (CR) {$H(Y|X)$};    
+    \node[rotate=90] at (0cm,0cm) (IXY) {$I(X;Y)$};
+    \node[] at (0cm,2cm) (HXY) {$H(X,Y)$};
+    \node[] at (-2.5cm,-2cm) (HX) {$H(X)$};
+    \node[] at (2.5cm,-2cm) (HY) {$H(Y)$};
+    \node[] at (0cm,-2cm) (VI) {$VI(X,Y)$};
+    \draw[->] (HX) -- (CL);
+    \draw[->] (HY) -- (CR);
+    \draw[->] (HXY) -- (CL);
+    \draw[->] (HXY) -- (CR);
+    \draw[->] (VI) -- (CL);
+    \draw[->] (VI) -- (CR);
+\end{tikzpicture}
+\caption{Venn diagram representation of the important quantities used to treat the clustering comparison problem in terms of information theory. The two circles are the entropies of variables $X$ and $Y$. The mutual information $H(X;Y)$ is the intersection of the information in $X$ with the information in $Y$. The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y)$ because $I(X;Y)$ is counted twice.}
+\end{figure}
+
+Meila proposed another measure based on entropy, Variation of Information (VI)~\cite{meila2007}. VI measures how much knowing the cluster assignment for an item in clustering $X$ reduces the uncertainty about the item's cluster in clustering $Y$. Is defined as:
 \begin{equation}\label{eq:vi}
-\textrm{VI}(\mathcal{X},\mathcal{Y}) = H(X|Y) + H(Y|X)
+\textrm{VI}(X,Y) = H(X|Y) + H(Y|X)
 \end{equation}
-which, has the desirable property that it defines a metric on the space of the partitions as it is a proper distance. Variation of information is also a local measure, i. e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
+and it has the desirable property that it defines a metric on the space of the partitions as it is a proper distance.
+Variation of information is also a local measure, i. e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
 As noted by Karrer \cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range. 
 Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding overall similarity.
+It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding overall similarity to summarize it in a single scalar.
 
-It is possible though to study partitioning on a community-wise basis by explicitly enumerating all the similarity between groups of nodes of two different partitions.
+% It is possible though to study partitioning on a community-wise basis by explicitly enumerating all the similarity between groups of nodes of two different partitions.
 
-Let's assume we have two different clusterings $\zeta_1,\zeta_2$ obtained from two different runs of some non-deterministic community detection algorithm. For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zeta_1|$,$1\leq j \leq |\zeta_2|$ then the cluster homogeneity is defined as:
+% Let's assume we have two different clusterings $\zeta^x,\zeta^y$ obtained from two different runs of some non-deterministic community detection algorithm. For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zeta_1|$,$1\leq j \leq |\zeta_2|$ then the cluster homogeneity is defined as:
 
-\begin{align}
-\Pr(\textrm{overlap}) = \frac{\binom{|c_j|}{|c_i \cap c_j|}\binom{N-|c_j|}{|c_i|-|c_i \cap c_j|}}{\binom{N}{|c_i|}}
-\end{align}
-%
-\todo{fix discorso cluster homogeneity}
+% \begin{align}
+% \Pr(\textrm{overlap}) = \frac{\binom{|c_j|}{|c_i \cap c_j|}\binom{N-|c_j|}{|c_i|-|c_i \cap c_j|}}{\binom{N}{|c_i|}}
+% \end{align}
+% %
+% \todo{fix discorso cluster homogeneity}
 
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it  became the tool of election to inspect the community structure of networks.
