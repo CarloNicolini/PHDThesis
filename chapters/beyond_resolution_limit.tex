@@ -1,20 +1,19 @@
 \bigbreak
 
 \lettrine{I}{n} the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
-
-In the following sections we will explore the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
+We explored the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
 
 To this end, we will show that Surprise, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
 Surprise maximization in brain co-activation and functional connectivity resting state networks reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
-Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure.
+Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure. 
+In this chapter we will introduce Surprise from its theoretical foundations and discuss its properties in details. Finally, an explicitly made algorithm for Surprise optimization in binary graphs is presented, with a comparison of its performance on benchmark networks.
 
 \section{Probability theory on clusterings}\label{sec:probability_clustering}
-Starting from the idea of statistical comparison between the intracluster and the global densities, Surprise can be thought as a quality function that moves away from the framework of additive functions based on spin-glass models, as described in the previous chapter.
-Indeed, the spin-glass based additive quality functions, including Newman's Modularity, are by no means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
-In other terms, no spin-glass based quality function is telling us the level of confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
+As previously described, no spin-glass based additive quality function, including Newman's Modularity, is by no means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
+In other terms, no spin-glass based quality function is telling us the level of statistical confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
 
 To address this question, one should instead compute probabilities, as they are the natural way to measure statistical significance.
-Specifically, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam.
+Specifically, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam. Surprise can be thought as a quality function that moves away from the framework of additive functions based on spin-glass models, as described in the previous chapter and tries to address these questions quantitatively.
 
 Precisely, the problem is the following: given a subgraph, what is the probability of observing another subgraph with a larger number of internal edges drawn from a random graph with a given density?
 This question is answered by the urn model in classical probability theory. The reason is clear if one imagines that each pair of nodes is a marble, which is one color if the nodes are connected by a link and the other color if they are not.
@@ -35,9 +34,9 @@ As the probability of observing $i$ or more internal edges, is given by the sum 
 In this last equation we are considering the probability of randomly drawing a subgraph with $m_c$ or more internal edges over the set of all random subgraphs with $n$ nodes and exactly $m$ edges as in the $G_{nm}$ model described in section~\ref{sec:models_random_graph}. Indeed, the denominator $\binom{p}{m}$ in Equation~\ref{eq:subgraph_probability_marginalized} represent the possible number of graphs with $p$ pairs of nodes and $m$ edges. 
 
 \section{Surprise}
-The intuition of Eq.~\ref{eq:subgraph_probability_marginalized} gets very close to the definition of Surprise given by Aldecoa and Marin~\cite{aldecoa2011}: it exploits indeed the very same idea. If the random subgraph that is drawn from the $G_{n,m}$ set has $m_\zeta=\sum_c m_c$ internal edges and $p_\zeta=\sum_c p_c$ pairs of edges, representing thus a whole clustering, then the two definitions correspond.
+The intuition of Eq.~\ref{eq:subgraph_probability_marginalized} gets very close to the definition of Surprise given by Aldecoa and Marin~\cite{aldecoa2011}, giving to Surprise a clearer theoretical motivation. If the random subgraph that is drawn from the $G_{n,m}$ set has $m_\zeta=\sum_c m_c$ internal edges and $p_\zeta=\sum_c p_c$ pairs of edges, thus representing a whole clustering, then the two definitions are perfectly corresponding.
 
-For a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, exactly as in \ref{eq:subgraph_probability_marginalized}.
+For a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, exactly as in~\ref{eq:subgraph_probability_marginalized}.
 Here and in the rest of the work we dub \emph{Surprise} the following probability:
 \begin{equation}\label{eq:surprise}
 S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}} 
@@ -45,16 +44,16 @@ S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i
 \end{equation}
 
 Surprise computes the probability to (surprisingly) observe at least as many internal edges as within the proposed partition in a uniform random graph.
-As mentioned, model in Eq. \ref{eq:surprise}  corresponds to an urn model without reinsertion, where $S$ is the probability of extracting at least $m_\zeta$ white balls out of $m$ trials from an urn containing $p_\zeta$ white balls and $p-p_\zeta$ black balls.
+As mentioned, model in Eq.~\ref{eq:surprise}  corresponds to an urn model without reinsertion, where $S$ is the probability of extracting at least $m_\zeta$ white balls out of $m$ trials from an urn containing $p_\zeta$ white balls and $p-p_\zeta$ black balls.
 Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions with respect to $S$ are those with the highest number of intracluster edges and the smallest number of intracluster pairs. 
 
 Differently from Modularity, $S(\zeta)=1$ both for the partition where every node is in a separated community ($C=n$,$p_\zeta=0$,$m_\zeta=0$) and for the partition that entails all nodes into a single group ($C=1$,$p_\zeta=p$,$m_\zeta=m$) as is evident from its formulation in terms of urn model. Indeed, as Newman's Modularity is zero when $C=1$, it is different than zero in the case $C=n$. In this sense Surprise is a more meaningful quality function as both the extremal partitions are uninteresting.
 
 It should be noted that due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is equivalent with respect to optimum solutions, where higher values correspond to better clustering.
-Different authors \cite{arnauVMarsS2005}, \cite{fleck2014} refer to $S$ as Surprise, whereas others \cite{aldecoa2011}, \cite{aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of \cite{fleck2014} where Surprise is indicated as $S$ defined in Eq. \ref{eq:surprise} and indicate $\hat{S}$ where needed.
+Different authors~\cite{arnauVMarsS2005,fleck2014} refer to $S$ as Surprise, whereas others~\cite{aldecoa2011,aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of~\cite{fleck2014} where Surprise is indicated as $S$ defined in Eq.~\ref{eq:surprise} and indicate $\hat{S}$ where needed.
 
 \subsection{General properties of Surprise}
-As noted by \cite{fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ is depending only on the number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely $S:=S(m_\zeta,p_\zeta)$.
+As noted by~\cite{fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ is depending only on the number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely $S:=S(m_\zeta,p_\zeta)$.
 In estabilishing the domain of validity of $(m,p,m_\zeta,p_\zeta)$ the urn model is of help. A valid clustering $\zeta$ of mutually disjoint communities automatically satisfies intuitive but important requirements:
 \begin{obs}
 It's impossible to draw more white balls than the white balls contained in the urn, therefore $p_\zeta \geq m_\zeta$.
@@ -79,7 +78,7 @@ It's less probable to draw at least $m_\zeta$ white balls if the urn has one whi
 \begin{props}\label{prop:prop3}
 It's less probable to draw at least $m_\zeta+1$ white balls if the urn has $p_\zeta+1$ white balls, than drawing at least $m_\zeta$ white balls if the urn has $p_\zeta$ white balls, therefore $S(m_\zeta+1,p_\zeta+1) < S(m_\zeta,p_\zeta)$.
 \end{props}
-The scheme in Figure \ref{fig:surprisebehaviour} explicits the order relation between the elements of the three aforementioned inequalities.
+The scheme in Figure~\ref{fig:surprisebehaviour} explicits the order relation between the elements of the three aforementioned inequalities.
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}
@@ -99,12 +98,12 @@ The scheme in Figure \ref{fig:surprisebehaviour} explicits the order relation be
 
 A fourth inequality $S(m_\zeta,p_\zeta+1)>S(m_\zeta+1,p_\zeta)$ is implicit by looking at the behaviour of $S(\zeta)$ for a given graph. 
 %\subsection{Pareto optimality}
-The scheme in Figure \ref{fig:surprisebehaviour} allows to rank the values of Surprise in relation to changes in $m_\zeta$ and $p_\zeta$. It's easy  verify that $S$ satisfies the following strict order relation:
+The scheme in Figure~\ref{fig:surprisebehaviour} allows to rank the values of Surprise in relation to changes in $m_\zeta$ and $p_\zeta$. It's easy  verify that $S$ satisfies the following strict order relation:
 \begin{equation}\label{eq:surpriseorderrelation}
 S(m_\zeta+1,p_\zeta)<S(m_\zeta+1,p_\zeta+1)<S(m_\zeta,p_\zeta)<S(m_\zeta,p_\zeta+1).
 \end{equation}
 This property leads us to the observation that Surprise $S$ is a monotonically decreasing function (increasing $\hat{S}$) of $m_\zeta$ and monotonically increasing function (decreasing $\hat{S}$) of $p_\zeta$ in the convex interval $\mathcal{L}$.
-Moreover, from Figure \ref{fig:surprisebehaviour} follows that optimal solutions with respect to $S$ are Pareto-optimal with respect to maximizing $m_\zeta$ and minimizing $p_\zeta$.
+Moreover, from Figure~\ref{fig:surprisebehaviour} follows that optimal solutions with respect to $S$ are Pareto-optimal with respect to maximizing $m_\zeta$ and minimizing $p_\zeta$.
 In other words, a partition that is optimum with respect to Surprise is such that no further increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has higher $\hat{S}$.
 
 % \begin{figure}[htb!]

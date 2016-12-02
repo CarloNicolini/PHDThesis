@@ -25,7 +25,7 @@
 \end{figure}
 
 %%%%%%%%% INTRO GENERALE COMPLEX NETWORKS
-\section{Complex networks science and the brain}
+\section{Complex networks science and the brain}\label{sec:complexnetworksciencebrain}
 The brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
 The neurons interact over the organic substrate that they themselves define, and shape an extremely intricate pattern of electrical and metabolic activities, giving rise to the outstanding set of abilities and possibilities typical of most evolved organisms.
 Nonetheless, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate.
@@ -741,7 +741,7 @@ Meila proposed another measure based on entropy, Variation of Information (VI)~\
 \begin{equation}\label{eq:vi}
 \textrm{VI}(X,Y) = H(X|Y) + H(Y|X)
 \end{equation}
-and it has the desirable property that it defines a metric on the space of the partitions as it is a proper distance.
+and it has the desirable property that, being a proper distance, it defines a metric on the space of the partitions.
 Variation of information is also a local measure, i. e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
 As noted by Karrer \cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range. 
 Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
@@ -760,7 +760,7 @@ It's worth noting that the majority of the aforementioned metrics do not take in
 
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it  became the tool of election to inspect the community structure of networks.
-On one side, the wide use of Modularity, led many researchers to gain interest in complex networks, with results in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics} just to mention a few, but on the other side it offered a fallacious view on the community detection problem. 
+On one side, the wide use of Modularity, led many researchers to gain interest in complex networks, with results in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics}, just to mention a few, but on the other side it offered a fallacious view on the community detection problem.
 Indeed, although simple in many sense, Modularity optimization was hiding a problem that heavily limits its use in real world networks.
 
 In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thoroughly analysis of Modularity.
@@ -769,7 +769,6 @@ To illustrate what is meant by the resolution limit, here we follow the example 
 
 Let us consider a toy network, $G=(V,E)$ that is composed of three subnetworks, as shown in~\ref{fig:figure_1_barthelemy}A.
 The first subnetwork, a subgraph $G_0$ with $n_0$ nodes and $m_0$ edges is connected to two cliques, $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:figure_1_barthelemy}.
-
 While $G_1$ and $G_2$, are complete subgraphs and are expected to be modules by construction, $G_0$ may consist of many communities. Maximum Modularity partitions then, should identify $G_1$ and $G_2$ as communities, independently from $G_0$.
 To be more specific, let the partition where the two cliques are separated be denoted by $A$, with Modularity value $Q_A$. On the other hand, the partition where the two cliques are merged into a single community is denoted by $B$, with Modularity value $Q_B$.
 To ease the calculations, we indicate the number of links $m_{12}$ as functions of $m_1$ and $m_2$, such that $m_{12}=a_{1}$, $m_1=a_2 m_2$, $m_{01}=b_1 m_1$ and $m_{02}=b_2 m_2$ with $a_1,a_2,b_1,b_2 \geq 0$.
@@ -819,9 +818,8 @@ Fixes have been proposed to circumvent the resolution limit, including the intro
 In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
 From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$, resulting in a modified modularity $Q^N(\gamma)$:
 \begin{equation}
-Q^N(\sigma,\gamma) = \sum_c^C \left[ \frac{m_c}{m} - \gamma_{N} \left( \frac{K_c}{2m}\right)^2 \right]
+Q^N(\sigma,\gamma) = \sum_c^C \left[ \frac{m_c}{m} - \gamma_{N} \left( \frac{K_c}{2m}\right)^2 \right].
 \end{equation}
-
 However, exact specification of $\gamma_{N}$ requires prior knowledge of the expected size of the communities.
 Moreover, it has been shown~\cite{lancichinetti2011} that an adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters. 
 Indeed this is due to two opposite coexisting effects: the tendency to merge small subgraphs, which dominates when the resolution is low and the tendency to split large subgraphs, which dominates when the resolution is high.
@@ -832,7 +830,6 @@ Therefore, adjustment of the resolution parameter is an attempt to balance these
 In another attempt to better tolerate the resolution limit, scholars applied appropriate techniques of edge re-weighting~\cite{berry2011} to enhance communities prior to Modularity maximization.
 Although this technique proved able to better tolerate the detrimental effect of the resolution limit, it only shifted the scale of the problem.
 After all, real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
-Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 
 \subsection{Resolution-limit free quality functions and the Constant Potts Model}
 In an attempt to quantitatively characterize the resolution limit, Traag et al.~\cite{traag2011} proposed a rigorous definition of \emph{resolution-limit-free} graph partitioning.
@@ -857,14 +854,15 @@ Unfortunately, the operation of tuning the resolution parameter, both in the CPM
 
 \subsection{Effects of resolution limit}
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
-
 By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
 
 Hence, we may expect the brain modular structure to comprise heterogeneously distributed communities. Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear.
-
 Hierarchical approaches have shown that large modules can be further subdivided, indicating that connectivity networks show structure at different spatial scales~\cite{meunier2009}.
 However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
-To this end, an optimization method that does not suffer from the resolution limit would be needed.
+
+Thus, the resolution limit is a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature. The limitation on the number of detected modules in brain networks is evident in studies where typically four or five communities of the same size are detected in humans, as in Crossley et al.~\cite{crossley2013a}, Meunier et al.~\cite{meunier2009a,meunier2010}, Fair et al.~\cite{fair2009} or also in mouse models~\cite{schwarz2008}. To this end, an optimization method that does not suffer from the resolution limit would be needed.
+
+It's also very important to stress that comparing the Modularity value $Q^N$ across different networks obtained in different studies, with possibly different number of nodes or different densities is an erroneous practice although $Q^N$ is normalized in the range $[0,1]$. As shown by a number of studies~\cite{good2009,kehagias2013,radicchi2010}, even in graphs which do have a natural community structure, high modularity values can be achieved by partitions which do not respect this natural structure. Hence, the Modularity value is only a numerical indication of the current status of optimization of the detected community structure on a specific graph and should never be confronted across different networks.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -898,3 +896,4 @@ An highly degenerate plateu can be observed in~\ref{fig:degeneracylandscape} whe
 \end{figure}
 
 Any quality function suffering degeneracy of solutions, should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while instead in the case of the existence of a net global optimum, a sharper peak should be exhibited.
+We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behavior and uniqueness of the optimum solution.

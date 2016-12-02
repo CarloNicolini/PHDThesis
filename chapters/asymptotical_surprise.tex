@@ -90,6 +90,18 @@ This detail allows PACO to explore more finely the landscape of optimization as 
 
 \input{include/misc/pacofagso.tex}
 
+\section{Determination of the correct threshold: percolation analysis}
+Functional connectivity networks are usually obtained as similarity matrices of physiologicals time signals of different area of the brain. The process of converting such similarity matrices into networks, described introductorily in the first chapter (Section~\ref{sec:complexnetworksciencebrain} , Figure\ref{fig:bullmore2009pipeline}) is not obvious. In most of the works, a threshold is chosen such that all the edge weights greater than that value are kept, while other links, indicative of noisy signal are discarded. Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold? No systematic choice of the \emph{correct} threshold, if any, has been selected pragmatically in the brain network science literature and different scholars motivated their choice by different needs.
+
+The final network density is a quantity that has a fundamental importance.
+
+
+{\color{red}
+Sparsification was obtained by removing edges with weights below the most stringent threshold that maintained the network connectedness, a procedure known as  percolation analysis~\cite{gallos2012,bardella2016a,alexander-bloch2010}. This approach measures the size of the largest connected component of the network upon iterative removal of the weakest edges and enables data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
+}
+
+
+
 \subsection{Synthetic benchmark networks}
 Here we introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested.
 
