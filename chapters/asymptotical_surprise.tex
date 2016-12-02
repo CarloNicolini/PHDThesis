@@ -91,15 +91,21 @@ This detail allows PACO to explore more finely the landscape of optimization as 
 \input{include/misc/pacofagso.tex}
 
 \section{Determination of the correct threshold: percolation analysis}
-Functional connectivity networks are usually obtained as similarity matrices of physiologicals time signals of different area of the brain. The process of converting such similarity matrices into networks, described introductorily in the first chapter (Section~\ref{sec:complexnetworksciencebrain} , Figure\ref{fig:bullmore2009pipeline}) is not obvious. In most of the works, a threshold is chosen such that all the edge weights greater than that value are kept, while other links, indicative of noisy signal are discarded. Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold? No systematic choice of the \emph{correct} threshold, if any, has been selected pragmatically in the brain network science literature and different scholars motivated their choice by different needs.
+Functional connectivity networks are typically obtained as similarity matrices of physiologicals time signals over different brain areas. The process of converting such similarity matrices into networks, described introductorily in the first chapter (Section~\ref{sec:complexnetworksciencebrain} , Figure\ref{fig:bullmore2009pipeline}) is not obvious. In most of the works, a threshold is chosen such that all the edge weights greater than a given value are kept, while other links, indicative of correlations due to noisy components are discarded. The network can then be binarized, by setting all setting all edge weights to 1. If this procedure may help yielding a better view on the underlying structure, represents an hot debate in the literaure.\todo{mettere citazione}.
+Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
+No well-accepted method to choose the \emph{correct} threshold to use, if any, has been adopted pragmatically in the brain networks literature and different scholars motivated their choice by different needs.\todo{mettere citazione}.
+Indeed, weak links may contain significant structural information, and procedures to identify the optimal tradeoff are the subject of active investigations\todo{mettere citazione}.
+As the final network density is of fundamental importance when performing community detection, the clustering outcome depends heavily on it.
+Hence, a completely data-driven thresholding procedure is needed, that helps in transforming a similarity matrix into a network. 
 
-The final network density is a quantity that has a fundamental importance.
+Here, we explore the use of percolation analysis, a method grounded in statistical physics, to identify the optimal sparsification threshold for community detection in brain connectivity networks.
+Borrowing the ideas of statistical physics of granular systems~\todo{METTERECITAZIONE}, percolation is meant as a methodology to evaluate the topological connectedness in a weighted graph upon iterative removal of the weakest edges. This should enables data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
+Variants of this methods have been applied directly in different studies~\cite{gallos2012,bardella2016a,alexander-bloch2010}. 
 
-
-{\color{red}
-Sparsification was obtained by removing edges with weights below the most stringent threshold that maintained the network connectedness, a procedure known as  percolation analysis~\cite{gallos2012,bardella2016a,alexander-bloch2010}. This approach measures the size of the largest connected component of the network upon iterative removal of the weakest edges and enables data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
-}
-
+Here, by using synthetic networks endowed with a ground-truth modular structure and realistic topological features typical of human brain functional connectivity networks, we show that percolation analysis can be applied to identify the optimal sparsification threshold that maximizes information on the networks' community structure.
+We validate this approach using three different community detection methods widely applied to the analysis of brain connectivity networks: Newman's modularity, InfoMap and Asymptotical Surprise.
+Importantly, we test the effects of noise and data variability, which are critical factors to determine the optimal threshold.
+This data-driven method should prove particularly useful in the analysis of the community structure of brain networks in populations characterized by different connectivity strengths, such as patients and controls.
 
 
 \subsection{Synthetic benchmark networks}
