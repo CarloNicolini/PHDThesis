@@ -508,8 +508,8 @@ The major advantage of the LFR model is the tunable level of community mixing. I
 Additionally, given a degree sequence, taken by sampling the power law distribution with exponent $\tau_d$, on weighted networks a parameter $\beta$ is used to assign strength to each node: $s_i=k_i^\beta$ where the parameter $\mu_w$ is used to partition the node strength into an intra-community component proportional to $$(1-\mu_w)$$ and an inter-community component proportional to $\mu_w$: $$s_i = (1-\mu_w)s_i^{(int)} + (\mu_w)s_i^{(ext)}$$. This power-law form of node strengths is chosen to match observations on real graphs, as indicated by~\cite{barrat2004}.
 The actual weights of the edges are then chosen to minimize the variance between the expected and the observed strengths by means of an iterative optimization step. Hence is possible to obtain a theoretical estimate of the average edge weights that reads:
 \begin{align}
-\left< w^{int} \right> = \frac{(1-\mu_w)\left< s\right>}{\frac{(1-\mu_t)\left< k\right>} = \frac{(1-\mu_w)}{(1-\mu_t)}\left < k \right>^{\beta-1} \\
-\left< w^{ext} \right> = \frac{(\mu_w)\left< s\right>}{\frac{(\mu_t)\left< k\right>} = \frac{(\mu_w)}{(\mu_t)}\left < k \right>^{\beta-1}.
+\left< w^{int} \right> &= \frac{(1-\mu_w)\left< s\right>}{(1-\mu_t)}\left< k\right> = \frac{(1-\mu_w)}{(1-\mu_t)}\left < k \right>^{\beta-1} \\
+\left< w^{ext} \right> &= \frac{(\mu_w)\left< s\right>}{(\mu_t)}\left< k\right> = \frac{(\mu_w)}{(\mu_t)}\left < k \right>^{\beta-1}.
 \end{align}
 As for the planted partition model, where communities where defined as long as $p_{in}>p_{out}$, for the case of the LFR model, one asks that in order for communities to be such it must be that
 \begin{equation}
