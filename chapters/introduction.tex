@@ -195,7 +195,7 @@ consequently the \emph{average node degree} is given by
 \noindent\textbullet \,The complementary graph $\bar{G}$ is the graph that has edges where $G$ has no edges and vice-versa, formally $\bar{G}=(V,V\times V - E)$.
 The \emph{empty graph} is therefore defined as the complementary graph of the clique $\bar{K}$, as it has $n$ nodes and no edges (Figure~\ref{fig:emptygraph}). The \emph{cycle graph} $C_n$ is a graph containing a single cycle through all nodes and is the smallest connected cyclic graph (Figure~\ref{fig:cyclegraph}). A \emph{tree graph} is a graph with no cycles and exactly $n-1$ edges.
 
-\begin{figure}[htb]
+\noindent\begin{figure}[htb]
 \centering
 	\begin{subfigure}[t]{0.3\textwidth}\centering
 		\begin{tikzpicture}
@@ -237,6 +237,7 @@ The \emph{empty graph} is therefore defined as the complementary graph of the cl
 \noindent\textbullet \,A subgraph $\mathcal{G}$ of a graph $G$ is said to be \emph{induced} if, for any pair of vertices $i$ and $j$ of $\mathcal{G}$, the pair $(i,j)$ is an edge of $\mathcal{G}$ if and only if $(i,j)$ is also an edge of $G$. In other words, $\mathcal{G}$ is an induced subgraph of $G$ if it has the most edges that appear in $G$ over the same vertex set. If $\mathcal{G}$ is chosen based on a vertex subset $S$ of $V(G)$, then $\mathcal{G}$ can be written as $G[S]$ and is said to be induced by $S$.
 
 \noindent\textbullet \,A simple graph is said \emph{connected} if there exist a path between any pair of nodes. If the graph itself is not connected, then it is formed by a set of connected subgraphs, also called \emph{weakly connected components}.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Clustering}\label{sec:clustering}
@@ -315,56 +316,21 @@ Finding strong communities is more difficult than finding weak communities and m
 
 The \emph{global definition} are based on an interpretation of the network as a whole, whose communities are an essential part of it, which cannot be taken apart without destroying its connectivity. Most of the global criteria of communities encompass global property of the graph that are used by algorithm to deliver a modular decomposition, in this sense the global definitions are always indirect, often based on \emph{null models} or for example on dynamical processes on the network (random walkers~\cite{pons2006} or more complex processes such those described by the map equation  Infomap~\cite{rosvall2008}).
 
-% \begin{figure}[htb]
-% \centering
-% 	\begin{subfigure}[t]{0.25\textwidth}\centering
-% 	\begin{tikzpicture}
-% 		\GraphInit[vstyle=Normal]
-% 		\SetGraphUnit{1.5}
-% 		\begin{scope}[rotate=-135]
-% 		\Vertices{circle}{a,b,c,e}
-% 		\end{scope}
-% 		\NOEA[unit=1.414](e){d}
-% 		\Edges(a,b,e,d,c,e,a,c,b)
-% 		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(a.north) (a.south) (a.west) (b.east)] {};
-% 		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(e.north) (e.south) (e.west) (c.east)] {};
-% 		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(d.north) (d.south) (d.west) (d.east)] {};
-% 	\end{tikzpicture}
-% 	\caption{Unweighted graph}
-% 	\label{fig:loopy_multigraphlusterina}
-% 	\end{subfigure}
-% 	\begin{subfigure}[t]{0.25\textwidth}\centering
-% 		\begin{tikzpicture}
-% 		% This is from http://tex.stackexchange.com/questions/1175/drawing-a-hypergraph
-% 		% it's needed to draw clusterings (or hyperedges)
-% 		\tikzset{LabelStyle/.style= {draw,font = \small}}
-% 		\GraphInit[vstyle=Normal]
-% 		\SetGraphUnit{1.5}
-% 		\begin{scope}[rotate=-135]
-% 		\Vertices{circle}{a,b,c,e}
-% 		\end{scope}
-% 		\NOEA[unit=1.414](e){d}
-% 		\Edge[label=4](a)(b)
-% 		\Edge[label=0.5](d)(e)
-% 		\Edge[label=0.2](d)(c)
-% 		\Edge[label=0.1](c)(b)
-% 		\Edge[label=0.4](e)(a)
-% 		\Edge[label=3](e)(c)
-% 		\Edge[label=6](e)(b)
-% 		\Edge (a)(d)
-% 		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(a.north) (a.south) (a.west) (b.east)] {};
-% 		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(e.north) (e.south) (e.west) (c.east)] {};
-% 		\node[draw,gray!80,dashed,rounded corners=2mm,fit=(d.north) (d.south) (d.west) (d.east)] {};
-% 		% \tikzstyle{cluster} = [fill,opacity=.5,fill opacity=.5,line cap=round, line join=round, line width=50pt]
-% 		% \begin{pgfonlayer}{background}
-% 		% \draw[cluster,color=purple] (a) -- (b) -- (c);
-% 		% \draw[cluster,color=green] (e) -- (d);
-% 		% \end{pgfonlayer}
-% 		\end{tikzpicture}
-% 		\caption{Weighted graph }\label{fig:loopy_multigraphlusteringb}
-% 	\end{subfigure}
-% 	\caption{Clustering for a unweighted and a weighted graph.}
-% \end{figure}
+Apart from global or local definitions of communities is the indication that multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,schwarz2007} such as ICA or other multivariate methods.
+This empirical evidence, shown not only in humans but also in higher vertebrates such as cats~\cite{scannell1995} and macaques~\cite{felleman1991}, suggests that to some extent the high level functional organization is based on the balance of two competing principles of segregation and integration.
+The nervous system is obviously shaped by this balance as the need of fast information processing is satisfied by small-scale neuronal circuits, typically at the first stages of sensory input processing (e.g. the very localized functional area of visual processing V1 or the primary motor cortices), while at larger scale the cortex works in concert connecting all the segregated areas in a larger, widely distributed complex network.
+It is more and more recognized~\cite{tononi1994,tononi1998,deco2015} that complex behaviors arise thanks to the dynamical interplay of the integrated and segregated actions of different regions of the brain.
+
+The network communities and hubs support this segregation-integration balance. Recently, experiments in which computational dynamical processes are simulated over the topology of the whole-brain networks~\cite{deco2015} have shed light over the role of communities in shaping the cortical activity. Indeed it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs (and the rich clubs) are deputed to convey that information over the whole brain.
+
+Among the many advantages that a modular organization of the brain benefits, two are of greatest importance. The organization of a system into many compartments devoted for different roles (and possibly with some level of overlap) is surely an evolutionary advantage. 
+Keeping the system compartmentalized can limit the influence of external sources of perturbation, thus bounding the interdependence of biological processes going on in each unit. Computational and evolutionary studies have indeed shown that a modular organization emerges spontaneously as it promotes flexibility to an ever-changing outside environment~\cite{kashtan2005,kashtan2007}. 
+An external environment that keeps changing, forces organism to quickly adapt and to develop modules apt to respond adaptively to the outside driving forces.
+As the goals where changing with time during evolution, the naturally evolved subnetworks, were not ``written'' every time from scratch, but were only rewired slightly in order for other parts to be built that connected the previously optimal sub-routines, a practice that is paradoxically very common even in software engineering. 
+Dynamics of module or patterns emergence and reuse have also been observed in bacterial metabolic networks~\cite{kreimer2008} and interestingly in non-biological networks. In the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behavior is encoded as fitness function~\cite{bongard2011}.
+
+A second benefit for modular brain networks resides in the increased resilience to sudden external perturbations. Local disruptive modification may only affect one module, whereas the others are preserved from the insult. Both for externally or internally generated fluctuations, a modular architecture thus prevent functional disruption of the network leading to possible death of the organism. Taken together the modular architecture of brain networks is of key importance for the healthy brain.
+
 
 \subsection{Nodal roles}
 Every node in a network is characterized by its role in relation to other nodes. Given a clustering $\zeta$, some nodes act as bridges between two or more communities, having neighbors in one or other module. Other nodes instead share the majority of neighbors inside their same community.
@@ -402,6 +368,13 @@ In contrast, provincial hubs are more importantly involved in functional special
 \label{fig:hubs_bridges}
 \end{figure}
 
+\begin{figure}[htb!]
+\centering
+\hfill\includegraphics[height=0.25\textwidth]{images/brain_network_basics.pdf}\hfill
+\includegraphics[height=0.25\textwidth]{images/brain_network_communities.pdf}\hfill
+\caption{Meaning of communities, hubs and connectors in an artistic view. Adapted from~\cite{sporns2016}.}
+\label{fig:brain_network_communities}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% Models of random graphs %%%%%%%%%%%%%%%%%%%%%%
