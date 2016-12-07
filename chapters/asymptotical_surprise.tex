@@ -19,7 +19,7 @@ Finally, we apply Asymptotical Surprise to weighted functional connectivity netw
 As introduced in the previous sections, Surprise~\cite{aldecoa2011,aldecoa2013} is a quality measure of the partition of a binary network that has its roots in probability theory.
 For a given partition $\zeta$, Surprise represents the probability that a graph drawn uniformly at random from the set of all graphs with $n$ nodes, $p=\binom{n}{2}$ pairs and $m$ edges has at least as many intra-cluster edges as $G$. Intuitively the lower the probability the better the partition.  For binary networks, Surprise can be computed within the discrete probability theory of urn models as shown in Equation~\ref{eq:surprise}.
 
-In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution. We introduce  $q=m_\zeta/m$ and $\left<q \right>=p_\zeta/p$ as the observed and expected fraction of intracluster edges. By only taking into account the dominant term of the sum in Eq.~\ref{eq:surprise} (the one with $i=m_\zeta$), we obtain with some manipulations an approximate expression for the logarithmic of Surprise:
+In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution. We introduce  $q=m_\zeta/m$ and $\left<q \right>=p_\zeta/p$ as the observed and expected fraction of intracluster edges. By only taking into account the dominant term of the sum in Eq.~\ref{eq:surprise} (the one with $i=m_\zeta$), we obtain with some manipulations an approximate expression for the logarithmic Surprise\footnote{If not specified, since here we use natural base logarithms.}:
 \begin{equation}\label{eq:surprise_dominant}
 \log(S) \approx \log \left( \frac{\binom{\left<q\right> p}{m_\zeta} \binom{(1-\left<q\right>)p}{m(1-q)}}{\binom{p}{m}} \right)
 \end{equation}
@@ -37,16 +37,14 @@ Discarding the term $(m/p)^{-m}$, independent of the partition, we obtain an asy
 \end{equation}
 Interestingly, this last equation corresponds to the binary Kullback-Leibler divergence $m D_{KL}(q \| \left< q \right>)$, which is interpretable as the distance between the two probability distributions $q$ and $\left<q\right>$, or more precisely, as the information lost (in nats since we are using natural base logarithms) when we encode the distribution $q$ with the distribution $\left< q\right>$. 
 Thus, in the limit of large networks, Surprise $\hat{S}$ can be approximated by a binomial distribution: this observation led to definition of Asymptotical Surprise $\mathcal{S}_a$~\cite{traag2015}:
-
 \begin{equation}\label{eq:asymptoticalsurprise}
 \mathcal{S}_a = m D_{\textrm{KL}}\left( q \| \left< q \right> \right)
 \end{equation}
-
 where the binary Kullback-Leibler divergence~\cite{kullback1951} is $$D_{\textrm{KL}}(x\|| y) = x \log \left(\frac{x}{y} \right) + (1-x)\log \left (\frac{1-x}{1-y} \right).$$
 
 In the framework of information theory~\cite{cover2006}, Asymptotical Surprise represents the Kullback-Leibler divergence between the observed and expected fraction of intra-cluster edges; it encodes the information lost when the prior distribution $\left <q \right >$ is used to approximate the posterior distribution $q$. Kullback-Leibler divergence is a quasi-distance on probability distributions as it is always non-negative, non-symmetric and zero only when $q=\left< q \right>$, like binary Surprise.
 
-Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks ~\cite{traag2015}. Nicely, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density consider edge weights. This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, seamlessly permitting the need of sparsification procedures prior to the community detection, as shown in~\cite{nicolini2017}.
+Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks ~\cite{traag2015}. Nicely, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density consider edge weights. This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, seamlessly permitting the need of sparsification procedures prior to the community detection, as shown in~\cite{nicolini2017}. A property of Kullback-Leibler divergence that is extremely useful when analyzing the landscape of the quality function Asymptotical Surprise is its \emph{convexity}. A convex quality function warranties a landscape with a global optimum and no degeneracy.
 
 Numerically Asymptotical Surprise approximates very well Surprise already for networks with more than 50 nodes, as shown in Figure~\ref{fig:asymptotical_surprise_comparison}.
 

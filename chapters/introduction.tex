@@ -242,6 +242,7 @@ The \emph{empty graph} is therefore defined as the complementary graph of the cl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Clustering}\label{sec:clustering}
 Grouping nodes according to some criterion of similarity between them is the basis of the formation of clusters in networks.
+
 \noindent\textbullet \,A set of mutually disjoint, induced subgraphs that covers all the nodes is called a \emph{clustering}.
 A clustering $\zeta = \{\zeta_c\}$ of $G$ is a partitioning of the set $V$ into $C$ disjoint sets of nodes, $\zeta_c \subseteq V$, which we call \emph{modules} or \emph{communities}, interchangeably. 
 Each module is a node-induced subgraph $\mathcal{G}:=(V[\zeta_c],E[\zeta_c])$, also indicated as $G[\zeta_c]$.
@@ -545,7 +546,7 @@ $\left<k\right>$ &Desidered average degree.\\
 \label{tab:lfrparams}
 \end{figure}
 
-The LFR model is a great importance as it served as benchmark test for community detection algorithms and as model of heterogeneity of modules size when studying the performance of detection.
+The LFR model is of great importance as it served as benchmark test for community detection algorithms and as model of heterogeneity of modules size when studying the performance of community detection methods.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -884,3 +885,31 @@ An highly degenerate plateu can be observed in~\ref{fig:degeneracylandscape} whe
 
 Any quality function suffering degeneracy of solutions, should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while instead in the case of the existence of a net global optimum, a sharper peak should be exhibited.
 We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behavior and uniqueness of the optimum solution.
+
+\section{Consensus clustering}
+The issue of degeneracy is not only affecting Newman's Modularity $Q^N$ but other quality functions as well.
+In this respect, it's clear that choosing the partition with the highest quality value isn't meaningful and a choice that consider all the good partitions at the plateau is desired. 
+An optimal partition of the network can then be expressed as a \emph{median} of the solutions over the optimal plateau.
+This approach known as \emph{consensus clustering} is advantageous to combine strengths and weakness of found partitions, whereby some local effects of noise during optimization are averaged over a large set of solutions.
+Such approach for consensus clustering is typically based on a meta-algorithm rather than a proper community detection method. Indeed, given a community detection method, consensus clustering forms an ensemble of optimal solutions from which an association matrix $\mathcal{A}$ is computed, where edges are proportional to the probability that two nodes are connected in the same community.
+Consensus communities are then obtained clustering iteratively the thresholded  association matrix. The choice of the threshold that makes the association matrix sparser~\cite{lancichinetti2012} is dictated by the properties of the chosen method of community detection itself. Typically with a smartly chosen threshold, consensus clustering converges in a few iterations. The pseudo-code illustrated in Alg.~\ref{alg:consensus_clustering} illustrates all the steps of consensus clustering.
+
+\begin{Algorithm}[htb!]
+\begin{codebox}
+\Procname{\proc{ConsensusClustering}(a graph $G$, a community detection method)}
+\li Apply community detection on $G$ for $n_p$ times, yielding $n_p$ different partitions.
+\li Compute the consensus (association) matrix $\mathcal{A}$ where $\mathcal{A}_{ij}$ is the probability \\that vertex $i$ and $j$ are assigned in the same community over $n_p$ partitions.
+\li Threshold the association matrix $\mathcal{A}$ with a parameter $\tau$.
+\li Apply community detection on $\mathcal{A}$ for $n_p$ times to yield $n_p$ partitions.
+\li If $\mathcal{A}$ is block diagonal (all partitions are equal) stop, else return to 1.
+\end{codebox}
+\caption{Pseudocode for the implementation of consensus clustering.}
+\label{alg:consensus_clustering}
+\end{Algorithm}
+
+\section{The bias of the null model for Modularity}
+Functional connectivity networks are typically measured as the Pearson correlation of time series of BOLD signals from different areas of the brain. When trying to extrapolate an optimal community assignment on such correlation matrix though, the null model of Modularity is not appropriate. As shown in a paper by MacMahon~\cite{macmahon2015}, indeed the configuration model introduces a systematic bias as it is not consistent with the definition of Pearson correlation.
+Ideally, the Modular structure in a full correlation matrix (a correlation matrix with all nonzero entries) should reflect a balance between positively and negatively correlated units. Specifically, correlation communities should be internally positively correlated while externally negatively correlated. The null model proposed by MacMahon and Garlaschelli~\cite{macmahon2015} redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large scale oscillation that positively correlates all areas, is removed
+
+
+ \todo{citare articolo garlaschelli?}
