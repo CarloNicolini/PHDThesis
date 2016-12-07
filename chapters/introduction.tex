@@ -505,11 +505,11 @@ While, these properties are of great help when performing analytical calculation
 To overcome the unrealistic settings of the planted partition model, the Lancichinetti\hyp{}Fortunato\hyp{}Radicchi (LFR) model, first described in~\cite{lancichinetti2008}, modified the planted partition model to exhibit powerlaw distribution of both node degrees and community size, with exponents $\tau_d$ and $\tau_c$ respectively, as observed in real networks.
 As each realization is accompanied by the membership affiliation vector $\boldsymbol \sigma$, the LFR model has been used primarily as benchmark for evaluating the effectiveness of different community detection methods~\cite{fortunato2010,lancichinetti2009} at different level of difficulty. It was further extended to be able to generate weighted networks with overlapping modules in~\cite{lancichinetti2009a}.
 The major advantage of the LFR model is the tunable level of community mixing. Indeed, each node share a fraction $1-\mu_t$ of edges with nodes in its same community and a fraction $\mu_t$ with nodes in other communities: $0 \leq \mu_t \leq 1$ is dubbed the \emph{topological mixing parameter}.
-Additionally, given a degree sequence, taken by sampling the power law distribution with exponent $\tau_d$, on weighted networks a parameter $\beta$ is used to assign strength to each node: $s_i=k_i^\beta$ where the parameter $\mu_w$ is used to partition the node strength into an intra-community component proportional to $$(1-\mu_w)$$ and an inter-community component proportional to $\mu_w$: $$s_i = (1-\mu_w)s_i^{(int)} + (\mu_w)s_i^{(ext)}$$. This power-law form of node strengths is chosen to match observations on real graphs, as indicated by~\cite{barrat2004}.
+Additionally, given a degree sequence, taken by sampling the power law distribution with exponent $\tau_d$, on weighted networks a parameter $\beta$ is used to assign strength to each node: $s_i=k_i^\beta$ where the parameter $\mu_w$ is used to partition the node strength into an intra-community component proportional to $(1-\mu_w)$ and an inter-community component proportional to $\mu_w$: $s_i = (1-\mu_w)s_i^{(int)} + (\mu_w)s_i^{(ext)}$. This power-law form of node strengths is chosen to match observations on real graphs, as indicated by~\cite{barrat2004}.
 The actual weights of the edges are then chosen to minimize the variance between the expected and the observed strengths by means of an iterative optimization step. Hence is possible to obtain a theoretical estimate of the average edge weights that reads:
 \begin{align}
-\left< w^{int} \right> &= \frac{(1-\mu_w)\left< s\right>}{(1-\mu_t)}\left< k\right> = \frac{(1-\mu_w)}{(1-\mu_t)}\left < k \right>^{\beta-1} \\
-\left< w^{ext} \right> &= \frac{(\mu_w)\left< s\right>}{(\mu_t)}\left< k\right> = \frac{(\mu_w)}{(\mu_t)}\left < k \right>^{\beta-1}.
+\left< w^{int} \right> &= \frac{(1-\mu_w)\left< s\right>}{(1-\mu_t)}\left< k\right> =& \frac{(1-\mu_w)}{(1-\mu_t)}\left < k \right>^{\beta-1} \\
+\left< w^{ext} \right> &= \frac{(\mu_w)\left< s\right>}{(\mu_t)}\left< k\right> =& \frac{(\mu_w)}{(\mu_t)}\left < k \right>^{\beta-1}.
 \end{align}
 As for the planted partition model, where communities where defined as long as $p_{in}>p_{out}$, for the case of the LFR model, one asks that in order for communities to be such it must be that
 \begin{equation}
@@ -546,6 +546,7 @@ $\left<k\right>$ &Desidered average degree.\\
 \end{figure}
 
 The LFR model is a great importance as it served as benchmark test for community detection algorithms and as model of heterogeneity of modules size when studying the performance of detection.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% COMMUNITY DETECTION %%%%%%%%%%%%%%%%%%%%%%%%
@@ -869,14 +870,14 @@ As a matter of example, the variation in Modularity for merging a pair of adjace
 where $r$ is the number of cliques and $n_r$ the number of nodes in each clique.
 In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring_clique} tends to a small negative value, indicating that a solution where the cliques are merged, may have a Modularity very close to the optimum. Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
 
-To make this argument more intuitive, we extrapolated a visually appealing form of the complex landscape of partitions' Modularity for a ring of clique network. We sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated the corresponding values of Modularity for every partition.
+To make this argument more intuitive, we extrapolated a visually appealing form of the complex landscape of partitions' Modularity for a ring of cliques network. We sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated the corresponding values of Modularity for every partition as in~\cite{good2009}.
 We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
 In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function.
 An highly degenerate plateu can be observed in~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity stay in the same neighborhood.
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.6\textwidth]{images/degeneracy_modularity.pdf}
+\includegraphics[width=0.75\textwidth]{images/degeneracy_modularity.pdf}
 \caption{Degeneracy landscape for Newman's Modularity in a ring of cliques with $r=24$ cliques of $n_r=5$ nodes. The axes CC1 and CC2 are complicated functions of the original partition space computed as to maintain the distance relation between points and their scale is unimportant.}
 \label{fig:degeneracylandscape}
 \end{figure}
