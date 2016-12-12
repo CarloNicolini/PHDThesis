@@ -1,44 +1,57 @@
 Cara Pasquina,
 
-Volevo farti venire a conoscenza del mio progetto di tesi che racchiude tutto il lavoro svolto in questi tre anni.
+Volevo farti venire a conoscenza del mio progetto di tesi che racchiude tutto il lavoro svolto in questi tre anni. Come da tempistiche indicateci dalla Marcazzan, entro il 26 gennaio dovrò consegnarti la versione preliminare della tesi, insieme ad una relazione sulle attività svolte durante il PhD.
 
 Come ben saprai il mio progetto riguarda metodiche nuove di analisi di dati fMRI che si basano sulla teoria dei grafi.
-
 Nella prima parte del lavoro voglio evidenziare come questi metodi stiano diventando via via sempre più importanti nell'affrontare le sfide scientifiche e computazionali poste dai dataset di sempre maggiore dimensione e dettaglio che vengono offerti dai metodi di neuroimmagine moderni.
 Proprio per questo, analizzarli con strumenti adeguati è diventato sempre più difficile.
 
-In particolare, grazie alla tecnica di neuroimaging nota come resting state connectivity, è stato possibile identificare una serie di aree corticali che partecipano in maniera sincrona alle fluttuazioni emodinamiche, evidenziando come tali correlazioni quando alterate possano indicare la presenza di una patologia caratteristica.
+In particolare, grazie alla tecnica di neuroimaging nota come resting state connectivity, è stato possibile identificare una serie di aree corticali che partecipano in maniera sincrona alle fluttuazioni emodinamiche, evidenziando come tali correlazioni, quando alterate, possano indicare la presenza di una patologia specifica.
 
-Sotto questa ipotesi dunque investigare la struttura modulare e gerarchica delle reti di connettività funzionale resting state è di principale importanza per stabilire quantitativamente dei biomarker che possano essere in futuro essere utilizzati per diagnosi precoci di malattie quali schizofrenia, alzheimer o malattie dello spettro autistico.
+Sotto questa ipotesi dunque investigare la struttura modulare e gerarchica delle reti di connettività funzionale resting state è di principale importanza per stabilire quantitativamente dei biomarker che possano essere in futuro essere utilizzati per diagnosi precoci di malattie quali schizofrenia, Alzheimer o malattie dello spettro autistico.
 
-Fin qui tutto bene, però esiste un problema che fino a prima del mio lavoro di tesi non era stato mai preso in considerazione.
-Nella tipica pipeline del neuroimager, dopo le scansioni fMRI, segue un preprocessing necessario alla  rimozione dei vari artefatti (movimento, slice timing etc). Uno volta ottenute le serie temporali "pulite", si calcolano una matrice di correlazione che indica la sincronia temporale fra le aree analizzate. Partendo da questa matrice, con delle soglie si definisce un grafo come l'insieme di nodi e link tali che la loro correlazione superi tale soglia.
+Nella tipica pipeline del neuroimager, dopo le scansioni fMRI, segue un preprocessing necessario alla rimozione dei vari artefatti (movimento, slice timing etc).
+Uno volta ottenute le serie temporali "pulite", si calcolano una matrice di correlazione che indica la sincronia temporale fra le aree analizzate. Partendo da questa matrice, con delle soglie si definisce un grafo come l'insieme di nodi e link tali che la loro correlazione superi tale soglia.
 La struttura modulare "in comunità" poi viene studiata tramite algoritmi che sono diventati classici nella letterature delle reti complesse, con questo mi riferisco al metodo della Modularità di Newman.
+Nell'analisi della struttura modulare delle reti di functional connectivity con il metodo di Newman esiste però un problema che fino a prima del mio lavoro di tesi non era stato mai preso in considerazione esplicitamente in questo campo.
 
-Questa Modularity trova sottoinsiemi di nodi più densamente connessi fra di loro che rispetto ad un modello nullo che prevede di confrontare ogni sottinsieme di nodi con una versione randomizzata dove i link fra nodi vengono mescolati a caso.
-Nel corso degli studi sulla Newman's Modularity è emerso però che tale "funzione qualità" è affetta da un problema che ne limita la capacità di identificare comunità più piccole quando si è in presenza di comunità più ampie. Per essere specifici, il numero massimo di link che possono essere trovati in una comunità identificata dal metodo di Newman è proporzionale alla radice quadrata del numero totale di link del grafo (che a sua volta dipende dalla threshold). Questo fenomeno è noto come "resolution limit".
+La Modularity di Newman trova sottoinsiemi di nodi più densamente connessi fra di loro rispetto ad un modello nullo che prevede di confrontare ogni sottinsieme di nodi con una versione randomizzata dove i link fra nodi vengono mescolati a caso.
+Nel corso degli studi sulla Newman's Modularity è emerso però che tale "funzione qualità" è affetta da un problema che limita la capacità di identificare comunità più piccole quando si è in presenza di comunità più ampie.
+Per essere specifici, il numero massimo di link che possono essere trovati in una comunità identificata dal metodo di Newman è proporzionale alla radice quadrata del numero totale di link del grafo (che a sua volta dipende dalla threshold). Questo fenomeno è noto come "resolution limit".
 
-Nonostante da tempo siano stati pensati dei metodi di "community detection" che sono svincolati dal "resolution limit" (alcuni solo parzialmente, al vero), dagli studi di neuroimaging che hanno applicato la teoria dei grafi è apparso che la maggior parte di essi ha applicato la Modularity, in quanto a nostro parere il codice per effettuare tali analisi è liberamente disponibile in una serie di pacchetti semplici da usare.
+Nonostante da tempo siano stati pensati dei metodi di "community detection" che sono svincolati dal "resolution limit" (alcuni solo parzialmente, al vero), dagli studi di neuroimaging che hanno applicato la teoria dei grafi è apparso che la maggior parte di essi ha applicato la Modularity per un motivo semplicissimo: il codice per effettuare tali analisi è liberamente disponibile in una serie di pacchetti molto semplici da usare.
 
 Un metodo di community detection che non soffra di questo limite di risoluzione può essere di grande aiuto nello studio delle reti di connettività funzionale, in quanto non vi è nessuna garanzia che la dimensione delle comunità in tali reti sia approssimativamente costante.
 Piuttosto, date le proprietà delle reti in esame che risultano avere una distribuzione dei degree dei nodi powerlaw (il degree è il numero di vicini di ogni nodo), sarebbe da aspettarsi che la distribuzione della dimensione delle comunità sia anch'essa powerlaw.
 
-Al fine di identificare un metodo capace di discrimare comunità grandi e piccole dentro una rete fMRI, ho trovato aiuto in una riformulazione del problema basata sulla teoria delle probabilità. La nuova funzione costo che ho adottato per l'analisi di tali rete è nota come Surprise e a differenza della Newman's Modularity è estremamente meno affetta dal resolution limit, essendo capace di discriminare comunità grandi una manciata di nodi, addirittura identificando come "trashbin communities" singoli nodi, i quali statisticamente non possono stare all'interno di nessun'altra comunità.
+Al fine di identificare un metodo capace di discrimare comunità grandi e piccole dentro una rete fMRI, ho trovato aiuto in una riformulazione del problema basata sulla teoria delle probabilità.
+La nuova funzione costo che ho adottato per l'analisi di tali rete è nota come Surprise e a differenza della Newman's Modularity è estremamente meno affetta dal resolution limit, essendo capace di discriminare comunità grandi una manciata di nodi, addirittura identificando come "trashbin communities" singoli nodi, i quali statisticamente non possono stare all'interno di nessun'altra comunità.
 
-Il capitolo 2 della tesi quindi si occupa di definire nello specifico la Surprise e studiarne le proprietà matematiche alla luce anche della teoria dell'ottimizzazione. Se questa parte può risultare molto tecnica è perchè a mio parere risulta necessaria per capire i reali vantaggi dell'uso della Surprise per le analisi fMRI.
+Il capitolo 2 della tesi quindi si occupa di definire nello specifico la Surprise e studiarne le proprietà matematiche alla luce anche della teoria dell'ottimizzazione. Se questa parte può risultare molto tecnica è perchè a mio parere risulta necessaria per capire i reali vantaggi dell'uso della Surprise per le analisi fMRI. Il capitolo 2 si basa largamente sul primo articolo "Communit
 Successivamente, descrivo il primo metodo di ottimizzazione della Surprise che ho ideato, basato su un algoritmo iterativo che ho chiamato FAGSO e che è stato oggetto della nostra prima pubblicazione su Scientific Reports.
 
-La Surprise però è una funzione costo che presuppone che il grafo sia in forma binaria vale a dire che data la sua formulazione discreta non può tenere conto del peso dei link fra nodi. A tal fine, nel capitolo 3 presento una funzione costo che deriva da un'estensione asintotica della Surprise e che permette di tenere in conto i pesi dei lati, grazie ad una nuova formulazione in termini di teoria dell'informazione.
+La Surprise però è una funzione costo che presuppone che il grafo sia in forma binaria. Questo significa che data la formulazione discreta di Surprise, essa non può tenere conto del peso dei link fra nodi, un'informazione importante che spesso viene scartata nelle analisi.
+Al fine di includere anche i pesi dei nodi nella ricerca della struttura modulare che meglio fitta la rete in esame, nel capitolo 3 presento una funzione costo che deriva da un'estensione asintotica della Surprise e che permette di tenere in conto i pesi dei lati, grazie ad una nuova formulazione in termini di teoria dell'informazione.
 
 Dopo aver studiato in dettaglio anche le proprietà della funzione costo Asymptotical Surprise, come fatto nel capitolo precedente, ne analizzerò le performance su reti sintetiche e reali. In particolare analizzerò gli effetti del rumore iniettato direttamente sulle serie temporali fMRI basate su reti che mostrano una struttura in comunità nota a priori.
-Con questo benchmark, che è alla base del lavoro pubblicato da poco su Neuroimage, mostrerò che la Asymptotical Surprise possiede una maggiore specificità e sensibilità rispetto sia a Newman's Modularity che ad un altro metodo di community detection chiamato Infomap.
-La maggiore specificità e sensibilità permettono di discriminare aree più piccole ad alta intercorrelazione. Questa proprietà permette inoltre di ridefinire quali sono gli hubs delle reti fMRI e questa analisi la presenterò nel corso del capitolo 4.
+Con questo benchmark, che è alla base del lavoro pubblicato da poco su Neuroimage (Nicolini, C., 2017. "Community detection in weighted networks beyond the resolution limit"), mostro che la Asymptotical Surprise possiede una maggiore specificità e sensibilità rispetto sia a Newman's Modularity che ad un altro metodo di community detection chiamato Infomap, attualmente considerato il metodo migliore.
+La maggiore specificità e sensibilità di Asymptotical Surprise permettono di discriminare aree più piccole ad alta intercorrelazione.
+Questa proprietà permette inoltre di ridefinire quali sono gli hubs delle reti fMRI in quanto la struttura modulare è cambiata.
 
-Le implicazioni della ridefinita struttura modulare sono di grande importanza, infatti alcuni hub che erano stati identificati rispetto alle comunità di Newman's Modularity trovano una diversa posizione. Ad esempio le aree del precuneo e della corteccia cingolata, alla luce della partizione offerta da Asymptotical Surprise, occupano un ruolo di connector hubs, vale a dire di aree ad alto degree che partecipano nello scambio di informazione. Queste due aree inoltre partecipano attivamente al Default Mode Network e sono particolarmente vulnerabili a disturbi neurologici.
+Le implicazioni della ridefinita struttura modulare sono di grande importanza, infatti alcuni hub che erano stati identificati rispetto alle comunità di Newman's Modularity trovano una diversa posizione. Ad esempio le aree del precuneo e della corteccia cingolata, alla luce della partizione offerta da Asymptotical Surprise, occupano un ruolo di connector hubs, vale a dire di aree ad alto degree che partecipano nello scambio di informazione fra moduli.
+Queste due aree inoltre partecipano attivamente al Default Mode Network e sono particolarmente vulnerabili a disturbi neurologici.
 
-In un ultima parte della tesi vorrei introdurre alcune applicazioni di community detection atte alla comparazione di reti provenienti da soggetti sani, confrontandole con soggetti malati. Nel lavoro che stiamo facendo nello specifico ci occupiamo degli effetti sulla connetività funzionale fMRI a riposo in pazienti alcolisti. Sembra infatti che questi pazienti mostrino un'alterazione a livello dell'insula che può venire discriminata solamente grazie ad un metodo ad alta risoluzione coma la Asymptotical Surprise.
+In un ultima parte della tesi vorrei introdurre alcune applicazioni di community detection atte alla comparazione di reti provenienti da soggetti sani, confrontandole con soggetti malati. Nel lavoro che stiamo facendo nello specifico ci occupiamo degli effetti sulla connettività funzionale fMRI a riposo in pazienti schizofrenici.
+Sorprendentemente infatti si trova che una minore connettività in questi pazienti, non produce unicamente maggiore frammentazione delle aree funzionali ma anche una sostanziale riorganizzazione delle stesse.
+Ad esempio le cortecce temporali subiscono una divisione funzionale in più comunità, mentre però in generale la tolleranza ad insulti esterni della rete funzionale di questi pazienti risulta sostanzialmente invariata, un effetto che può spiegare e giustificare la persistenza evolutiva dei geni collegati alla schizofrenia, nonostante queste ipotesi rimangano speculative.
 
+Ecco, a grandi linee è così che ho intenzione di procedere per il lavoro di tesi e sulla parte tecnica ho già diverso materiale, almeno i primi due capitoli sono pronti.
 
+Vorrei avere, prima di procedere oltre con i capitoli, un tuo parere su come ti sembra più appropriato andare avanti, anche alla luce della tipologia di revisori esterni (ed interni) che normalmente vengono interpellati per lavori collegati al neuroimaging.
+
+Grazie mille per l'aiuto e le dritte.
+
+Carlo
 
 
 
