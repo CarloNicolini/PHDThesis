@@ -1,5 +1,34 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% COMMUNITY DETECTION %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Community structure in the brain}
+A systematic analysis of the structure of neural systems in different organisms points out that from the small nematode worm \emph{Caenorhabditis Elegans} to the most complex human brain, modularity plays a prominent role.
+
+Among the many advantages that a modular organization of the brain benefits, two are of greatest importance. The organization of a system into many compartments devoted for different roles (and possibly with some level of overlap) is surely an evolutionary advantage. 
+Keeping the system compartmentalized can limit the influence of external sources of perturbation, thus bounding the interdependence of biological processes going on in each unit. Computational and evolutionary studies have indeed shown that a modular organization emerges spontaneously, promoting flexibility to an ever-changing outside environment~\cite{kashtan2005,kashtan2007} and maximizing bidirectional information exchange between neural populations~\cite{yamaguti2015}.
+An external environment that keeps changing, forces organism to quickly adapt and to develop modules apt to respond adaptively to the outside driving forces.
+As the goals where changing with time during evolution, the naturally evolved subnetworks, were not ``written'' every time from scratch, but were only rewired slightly in order for other parts to be built that connected the previously optimal sub-routines, a practice that is paradoxically very common even in software engineering. 
+Dynamics of module or patterns emergence and reuse have also been observed in bacterial metabolic networks~\cite{kreimer2008} and interestingly in non-biological networks. In the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behavior is encoded as fitness function~\cite{bongard2011}.
+
+A second benefit for modular brain networks resides in the increased resilience to sudden external perturbations. Local disruptive modification may only affect one module, whereas the others are preserved from the insult. Both for externally or internally generated fluctuations, a modular architecture thus prevent functional disruption of the network leading to possible death of the organism. Taken together the modular architecture of brain networks is of key importance for the healthy brain.
+Topological modularity of brain connectivity networks is thus thought to reflect functional and anatomical segregation, a feature that may confer robustness and adaptivity to brain networks. 
+
+Following initial work by~\cite{hilgetag2000a}, several graph theoretical methods have been deployed to investigate the modular structure of brain networks~\cite{meunier2009,meunier2010,Power2011}.
+Typically, these methods rely on the optimization of a fitness function that measures the quality of a network partition against that of an ensemble of randomized networks with similar statistical properties (the ``null model''). Optimization of the fitness function of choice is often computationally demanding and scales steeply with increasing network size. Hence, heuristics are needed to calculate nearly optimal partitions of large networks, like those derived from neuroimaging data, within reasonable computation time~\cite{blondel2008,rosvall2008}.
+
+Further, meta-analytic studies of cortical networks for both the cat~\cite{scannel1995} and macaque~\cite{felleman1991} suggest that such networks are modular with a limited number of (typically four) prominent clusters corresponding to the main functional division of the cortex, visual, auditory, frontolimbic and somatosensory.
+
+Relying upon such findings is the additional evidence for such networks as consistently identified by multivariate methods such as Independent Component Analysis (ICA)~\cite{beckmann2012,calhoun2001}, Probabilistic Independent Component Analysis (PICA)~\cite{beckmann2004,beckmann2005}, general linear models , clustering~\cite{cordes2002,lee2012}
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=1.0\textwidth]{images/vandenheuvel_networks.pdf}
+\caption{Resting state networks}
+\label{fig:vandenheuvelnetworks}
+\end{figure}
+
+% The analysis found 10 patterns with potential functional relevance, consisting of regions known to be involved in motor function, visual processing, executive functioning, auditory processing, memory, and the so-called default-mode network, each with BOLD signal changes up to 3\%. In general, areas with a high mean percentage BOLD signal are consistent and show the least variation around the mean
+
 \section{Community detection in networks}
 \label{sec:communitydetectioninnetworks}
 % Most of the real-world networks exhibit a degree distribution that is not only globally, but also locally inhomogeneous, with high concentrations of edges within special groups of nodes, and low concentrations among such groups. This feature of real networks is called community structure. 
