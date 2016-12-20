@@ -1,31 +1,32 @@
-\noindent\begin{figure}[htb]
-\centering
-\begin{minipage}[t]{0.48\textwidth}
-\includegraphics[width=1\textwidth]{images/konigsberg.jpg}
-\end{minipage}\begin{minipage}[b]{0.48\textwidth}
-\centering
-\begin{tikzpicture}
-    \tikzset{LabelStyle/.style= {draw}}
-    \GraphInit[vstyle=Normal]
-    \node[VertexStyle](A){a};
-    \node[VertexStyle,right=of A](B){b};
-    \node[VertexStyle,right=of B](C){c};
-    \node[VertexStyle,above= 1.2cm of B](D){d};
-    \draw[EdgeStyle](B) to node[LabelStyle]{} (D);
-    \tikzset{EdgeStyle/.append style = {bend left}}
-    \draw[EdgeStyle](A) to node[LabelStyle]{} (B);
-    \draw[EdgeStyle](B) to node[LabelStyle]{} (A);
-    \draw[EdgeStyle](B) to node[LabelStyle]{} (C);
-    \draw[EdgeStyle](C) to node[LabelStyle]{} (B);
-    \draw[EdgeStyle](A) to node[LabelStyle]{} (D);
-    \draw[EdgeStyle](D) to node[LabelStyle]{} (C);
-\end{tikzpicture}
-\end{minipage}
-\caption*{\textsf{The city of K{\"o}nigsberg in an old postcard with its graph-theoretical representation, where the bridges are the edges of the graph and the city parts are represented by nodes. This city inspired Euler to start graph theory.}}
-\end{figure}
+% \noindent\begin{figure}[htb]
+% \centering
+% \begin{minipage}[t]{0.48\textwidth}
+% \includegraphics[width=1\textwidth]{images/konigsberg.jpg}
+% \end{minipage}\begin{minipage}[b]{0.48\textwidth}
+% \centering
+% \begin{tikzpicture}
+%     \tikzset{LabelStyle/.style= {draw}}
+%     \GraphInit[vstyle=Normal]
+%     \node[VertexStyle](A){a};
+%     \node[VertexStyle,right=of A](B){b};
+%     \node[VertexStyle,right=of B](C){c};
+%     \node[VertexStyle,above= 1.2cm of B](D){d};
+%     \draw[EdgeStyle](B) to node[LabelStyle]{} (D);
+%     \tikzset{EdgeStyle/.append style = {bend left}}
+%     \draw[EdgeStyle](A) to node[LabelStyle]{} (B);
+%     \draw[EdgeStyle](B) to node[LabelStyle]{} (A);
+%     \draw[EdgeStyle](B) to node[LabelStyle]{} (C);
+%     \draw[EdgeStyle](C) to node[LabelStyle]{} (B);
+%     \draw[EdgeStyle](A) to node[LabelStyle]{} (D);
+%     \draw[EdgeStyle](D) to node[LabelStyle]{} (C);
+% \end{tikzpicture}
+% \end{minipage}
+% \caption*{\textsf{The city of K{\"o}nigsberg in an old postcard with its graph-theoretical representation, where the bridges are the edges of the graph and the city parts are represented by nodes. This city inspired Euler to start graph theory.}}
+% \end{figure}
 
 %%%%%%%%% INTRO GENERALE COMPLEX NETWORKS
-\section{Complex networks science and the brain}\label{sec:complexnetworksciencebrain}
+%\section{Complex networks science and the brain}\label{sec:complexnetworksciencebrain}
+\bigbreak
 The brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
 The neurons interact over the organic substrate that they themselves define, and shape an extremely intricate pattern of electrical and metabolic activities, giving rise to the outstanding set of abilities and possibilities typical of most evolved organisms.
 Nonetheless, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate.
