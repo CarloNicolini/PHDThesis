@@ -339,8 +339,8 @@ Likewise, the \emph{subgraph external degree} $K_{\textrm{ext}}(\mathcal{G})$ is
 
 \noindent\textbullet \, The total intracluster edges and total intracluster node pairs numbers are the sum over all modules $c$ of intracommunity edges and node pairs:
 \begin{align}
-&m_\zeta= \sum \limits_{c=1}^C |E[\mathcal{G_c}]| = \sum \limits_{c=1}^C m_c \\
-&p_\zeta= \sum \limits_{c=1}^C \binom{|V[\mathcal{G_c}]|}{2} = \sum \limits_{c=1}^C p_c.
+&m_\zeta= \sum \limits_{c=1}^C |E \left[ \mathcal{G}_c \right]| = \sum \limits_{c=1}^C m_c \\
+&p_\zeta= \sum \limits_{c=1}^C \binom{|V \left[ \mathcal{G}_c \right]|}{2} = \sum \limits_{c=1}^C p_c.
 \end{align}
 
 \subsection{Communities}\label{sec:communities}
@@ -354,7 +354,7 @@ The most important local criterion for communities definition are the \emph{comp
 
 For a community $\mathcal{G}$ to be defined in \emph{strong} sense, every node in the community must exhibit a larger internal degree than external degree. The concept is made quantitative in the following definition (Eq.~\ref{eq:strongcommunities}):
 \begin{equation}\label{eq:strongcommunities}
-\forall i \in V[\mathcal{G}] \qquad k_{\textrm{int}}(i) > k_{\textrm{ext}}(i).
+\forall i \in V[ \mathcal{G} ] \qquad k_{\textrm{int}}(i) > k_{\textrm{ext}}(i).
 \end{equation}
 The strong community criterion is extremely stringent and most real-world networks do not exhibit such property, even the simplest.
 It is possible though to weaken this constraint, asking that \emph{on average} the internal degree is greater than the external degree.  Upon this idea the concept of \emph{weak communities} is built (Eq.~\ref{eq:communityweak}):
