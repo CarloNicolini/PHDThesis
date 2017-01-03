@@ -201,76 +201,6 @@ Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 Under this model a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
 Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible and loss functions that take into account the relative size of clusters are possible.
 
-\subsection{Comparing community structure in networks}
-Some benchmark networks come with an annotated community structure representing the ground-truth assignment of nodes into communities, the annotations being made by experts in the field, like for example the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
-Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth community.
-As the number of community detection methods increased over the years, also a quantitative way to assess their performance was requested.
-
-A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past. They are used to provide quantitatively a number that tells how two partitions are similar.
-Typically the result is normalized in the $[0,1]$ range, being towards $1$ for very similar clusterings and toward $0$ when mostly dissimilar. These metrics are adopted especially in the benchmarking of community detection methods when the specific outcome of some algorithm is compared with a ground truth partition, usually, a-priori determined.
-
-The most well-grounded and performing metrics for the comparison of two community structures are rooted in information theory\cite{cover2006}.
-The \emph{Normalized Mutual Information}~\cite{danon2005} and the \emph{Variation of Information}~\cite{meila2007} are the most widely used, despite it has been recently found that both of them suffer of systematic errors due to the finite size of the network \cite{zhang2015a}. In the rest of the discussions, we ignore the limitation of finite size effects, by only working with relatively large networks.
-
-Normalized Mutual Information (NMI) assumes that the clustering comparison is a problem of message decoding. Implicit in this is the idea that if two partitions are similar, inferring one partition from the other needs very little information. 
-
-Let us consider two generic partitions of a graph denoted by their clusterings $\zeta^x,\zeta^y$ with $c_x$ and $c_y$ communities respectively: $\zeta^x=\{\zeta^x_1,\ldots,\zeta^x_{c_x}\}$ and $\zeta^y=\{\zeta^y_1,\ldots,\zeta^y_{c_y}\}$.
-The number of nodes in the $i$-th community of $\zeta^x$ is $n_i :=|\zeta^x_i|$ and the number of nodes in the $j$-th community of $\zeta^y$ is $n_j:=|\zeta^y_j|$. The two communities share a number of nodes $n_{ij}=| \zeta^x_i \cap \zeta^y_j|$.
-Let us also consider the community assignments $\boldsymbol\sigma^x_i$ and $\boldsymbol\sigma^y_i$ for partitions $\zeta^x$ and $\zeta^y$ respectively; we treat the labels as values of two random variables $X$ and $Y$ with joint distribution $P(x,y)=P(X=x, Y=y) = n_{xy}/n$, which implies that $P(x)=P(X=x)=n_x^X/n$ and $P(y)=P(Y=y)=n_y^Y/n$.
-The \emph{mutual information} between the two clusterings $\zeta^x,\zeta^y$ is then defined as 
-\begin{equation}I(X,Y)=H(X) - H(X|Y)
-\end{equation}
-where $H(X)=-\sum_x p(x) \log p(x)$ is the Shannon entropy of $X$~\cite{cover2006}.
-The mutual information itself is not very useful, because hierarchically splitting the clusters in $\zeta^x$ would produce no change in the prior $H(X|Y)$ and partitions with different hierarchies of the same clusters, would go unnoticed.
-This observation led Danon~\cite{danon2005} to introduce normalized mutual information for clustering comparison as: 
-\begin{equation}\label{eq:nmi}
-\textrm{NMI}(X,Y) = \frac{2I(X,Y)}{H(X)+H(Y)}
-\end{equation}
-Explicitly, NMI is defined on top of the confusion matrix as:
-\begin{equation}\label{eq:nmiexplicit}
-\textrm{NMI} = \dfrac{2\sum \limits_{i=1}^{c_x} \sum \limits_{j=1}^{c_y} \frac{n_{ij}}{n} \log\left( \frac{n_{ij}n}{n_i n_j} \right)} {\left(-\sum \limits_{k=1}^{c_x} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right) + \left(-\sum \limits_{k=1}^{c_y} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right)}
-\end{equation}
-
-\begin{figure}
-\centering
-\begin{tikzpicture}
-    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (-1.1cm,0cm) (CL) {$H(X|Y)$};
-    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (1.1cm,0cm) (CR) {$H(Y|X)$};    
-    \node[rotate=90] at (0cm,0cm) (IXY) {$I(X;Y)$};
-    \node[] at (0cm,2cm) (HXY) {$H(X,Y)$};
-    \node[] at (-2.5cm,-2cm) (HX) {$H(X)$};
-    \node[] at (2.5cm,-2cm) (HY) {$H(Y)$};
-    \node[] at (0cm,-2cm) (VI) {$VI(X,Y)$};
-    \draw[->] (HX) -- (CL);
-    \draw[->] (HY) -- (CR);
-    \draw[->] (HXY) -- (CL);
-    \draw[->] (HXY) -- (CR);
-    \draw[->] (VI) -- (CL);
-    \draw[->] (VI) -- (CR);
-\end{tikzpicture}
-\caption{Venn diagram representation of the important quantities used to treat the clustering comparison problem in terms of information theory. The two circles are the entropies of variables $X$ and $Y$. The mutual information $H(X;Y)$ is the intersection of the information in $X$ with the information in $Y$. The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y)$ because $I(X;Y)$ is counted twice.}
-\end{figure}
-
-Meila proposed another measure based on entropy, Variation of Information (VI)~\cite{meila2007}. VI measures how much knowing the cluster assignment for an item in clustering $X$ reduces the uncertainty about the item's cluster in clustering $Y$. Is defined as:
-\begin{equation}\label{eq:vi}
-\textrm{VI}(X,Y) = H(X|Y) + H(Y|X)
-\end{equation}
-and it has the desirable property that, being a proper distance, it defines a metric on the space of the partitions.
-Variation of information is also a local measure, i. e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
-As noted by Karrer \cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range. 
-Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
-
-It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding the overall similarity to summarize it in a single scalar.
-
-% It is possible though to study partitioning on a community-wise basis by explicitly enumerating all the similarity between groups of nodes of two different partitions.
-
-% Let's assume we have two different clusterings $\zeta^x,\zeta^y$ obtained from two different runs of some non-deterministic community detection algorithm. For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zeta_1|$,$1\leq j \leq |\zeta_2|$ then the cluster homogeneity is defined as:
-
-% \begin{align}
-% \Pr(\textrm{overlap}) = \frac{\binom{|c_j|}{|c_i \cap c_j|}\binom{N-|c_j|}{|c_i|-|c_i \cap c_j|}}{\binom{N}{|c_i|}}
-% \end{align}
-% %
-% \todo{fix discorso cluster homogeneity}
 
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it became the tool of election to inspect the community structure of networks.
@@ -300,13 +230,9 @@ More specifically, if the two modules have the same size and one sets $a_1=a_2=b
 \begin{equation}
 m_c < \sqrt{\frac{m}{2}}.
 \end{equation}
-
 To make this example more concrete we studied numerically a toy network where the three subgraphs take a precise form.
 For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge ($m_{01}=m_{02}=1$) and to each other by $m_{12}$ edges.
-The module $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted it as a function of the number of edges $m_0$ in the $G_0$ clique. The onset of the resolution limit occurs when $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$.
-For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B).
-With an increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
-
+The module $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted it as a function of the number of edges $m_0$ in the $G_0$ clique.
 
 \begin{figure}[htb!]
 \centering
@@ -315,6 +241,9 @@ With an increasing number of intercluster edges $m_{12}$, the resolution limit a
 \label{fig:figure_1_barthelemy}
 \end{figure}
 
+The onset of the resolution limit occurs when $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$.
+For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B).
+With an increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
 An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links, as shown in Figure~\ref{fig:traag_ring_of_cliques}. 
 
 \begin{figure}[htb!]
@@ -366,7 +295,7 @@ In the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{C
 
 Unfortunately, the operation of tuning the resolution parameter, both in the CPM model as well as in other similar models, is difficult and no largely accepted method exists, making all the models based on a resolution parameter, scarcely used in practical applications.
 
-{\color{red}
+
 \subsection{Effects of resolution limit}
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
 By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
@@ -378,7 +307,7 @@ However, these findings do not provide information on the optimal partition of t
 Thus, the resolution limit is a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature. The limitation on the number of detected modules in brain networks is evident in studies where typically four or five communities of the same size are detected in humans, as in Crossley et al.~\cite{crossley2013a}, Meunier et al.~\cite{meunier2009a,meunier2010}, Fair et al.~\cite{fair2009} or also in mouse models~\cite{schwarz2008}. To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
 It's also very important to stress that comparing the Modularity value $Q^N$ across different networks obtained in different studies, with possibly a different number of nodes or different densities is an erroneous practice although $Q^N$ is normalized in the range $[0,1]$. As shown by a number of studies~\cite{good2009,kehagias2013,radicchi2010}, even in graphs which do have a natural community structure, high modularity values can be achieved by partitions which do not respect this natural structure. Hence, the Modularity value is only a numerical indication of the current status of optimization of the detected community structure on a specific graph and should never be confronted across different networks.
-}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%
@@ -413,7 +342,7 @@ A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whe
 Any quality function suffering degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while instead of in the case of the existence of a net global optimum, a sharper peak should be exhibited.
 We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behavior and uniqueness of the optimum solution.
 
-\section{Consensus clustering}
+\subsection{Consensus clustering}
 The issue of degeneracy is not only affecting Newman's Modularity $Q^N$ but other quality functions as well.
 In this respect, it's clear that choosing the partition with the highest quality value isn't meaningful and a choice that considers all the good partitions at the plateau is desired. 
 An optimal partition of the network can then be expressed as a \emph{median} of the solutions over the optimal plateau.
@@ -435,8 +364,26 @@ Consensus communities are then obtained clustering iteratively the thresholded a
 \end{Algorithm}
 
 \section{The bias of the null model for Modularity}
-Functional connectivity networks are typically measured as the Pearson correlation of time series of BOLD signals from different areas of the brain. When trying to extrapolate an optimal community assignment on such correlation matrix, though, the null model of Modularity is not appropriate. As shown in a paper by MacMahon~\cite{macmahon2015}, indeed the configuration model introduces a systematic bias as it is not consistent with the definition of Pearson correlation.
-Ideally, the Modular structure in a full correlation matrix (a correlation matrix with all nonzero entries) should reflect a balance between positively and negatively correlated units. Specifically, correlation communities should be internally positively correlated while externally negatively correlated. The null model proposed by MacMahon and Garlaschelli~\cite{macmahon2015} redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed
+The null model of Modularity is not only is at the basis of the issues of resolution limit and degeneracy, but can be shown to be highly inadequate when used in brain networks based on estimates of Pearson correlation of BOLD time series.
+As shown by MacMahon and Garlaschelli~\cite{macmahon2015}, indeed the configuration model introduces a systematic bias as it is not consistent with the definition of Pearson correlation.
+Ideally, the Modular structure in a full correlation matrix (a correlation matrix with all nonzero entries) should reflect a balance between positively and negatively correlated units. Correlation communities should be internally positively correlated while externally negatively correlated, but this does not happen when naively applying Modularity to correlation-based networks.
+Such inadequacy results from a systematic bias that the configuration model introduces, here shortly explained.
 
-
- \todo{citare articolo garlaschelli?}
+Given $n$ time series $\mathbf{X}=\{ X_1, \ldots, X_n\}$ from the parcellation atlas, the Pearson correlation matrix is computed as
+\begin{equation}
+C_{ij} = \frac{\textrm{Cov}(X_i,X_j)}{\sqrt{\textrm{Var}(X_i)\textrm{Var}(X_j) }}.
+\end{equation}
+A naive application of Newman's Modularity to such correlation matrix results in:
+\begin{equation}
+Q^N= \frac{1}{C_{\textrm{norm}}} \sum \limits_{ij} \left[ C_{ij} - \langle C_{ij} \rangle \right] \delta(\sigma_i,\sigma_j) = \left[ C_{ij} - \frac{k_i k_j}{C_{\textrm{norm}}} \right] \delta(\sigma_i,\sigma_j)
+\end{equation}
+where $k_i=\sum_{j=1}^n C_{ij}$. Unfortunately though, this last term is biased as, expanding the terms $k_i$ one obtains:
+\begin{equation}
+k_i =\sum_{j=1}^n C_{ij}= \sum_{j=1}^n \textrm{Cov}(X_i,X_j) = \sum_{j=1}^n \textrm{Cov}(X_i,X_{tot})
+\end{equation}
+where $X_{tot}=\sum_{j=1}^n x_j$ has zero mean but non unit variance, and the configuration model naively applied to correlation matrices becomes:
+\begin{equation}
+\frac{k_i k_j}{2m} = \textrm{Corr}(X_i,X_{tot})\textrm{Corr}(X_j,X_{tot})
+\end{equation}
+Such badly-adapted configuration model does not give more importance to pairs of strongly correlated time series but rather to pairs of time series whose direct correlation $C_{ij}$ is larger than the common signal $X_{tot}$.
+The null model proposed by MacMahon and Garlaschelli redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed and only terms that retain true correlations are maintained.
