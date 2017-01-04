@@ -1,0 +1,27 @@
+1. Intro: graph representation of brain connectivity
+
+chiamare Prefazione -> synopsis
+
+Dividere introduzione in due capitoli: Introduction: complex network science and the brain (anche complex networks of brain connectivity) (fino a 1.2.5) 
+
+Capitolo 2: modular organization of brain connectivity: the resolution limit (paragrafi da 1.3 a 1.7)
+riprendere pesantemente il significato dello studio della struttura modulare all'inizio di questo nuovo capitolo 2.
+(prendere parte dalla introduzione pagina 6) (piccola review dei moduli trovati in diversi articoli).
+
+Capitolo 3: Beyond the resolution limit: binary networks
+
+Capitolo 4: weighted networks...
+
+Capitolo 5: rimettere applicazioni a brain sia parte binary che parte weighted ed alla fine una parte sui pazienti schizo.
+Mettere contenuti articoli scirep e neuroimage.
+
+=== Seconda opzione:
+Inserire contenuti brain presi da articoli scirep nel capitolo 3 beyond the resolution limit:binary e nel capitolo 4: 
+sui dati pesati, discussione come in neuroimage.
+
+
+Finale:
+Prime applicazioni ai pazienti, motivazioni di perchè usare Surprise su queste reti e applicazioni a schizo (breve motivazione della differenza aspettata) ed alcolisti.
+non però direttamente a livello clinico e un po' meno graph-theory. Review di Stam e Fornito.
+
+

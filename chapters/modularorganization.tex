@@ -55,8 +55,7 @@ As a matter of example, the default-mode network or DMN (Figure~\ref{fig:vandenh
 Literature studies suggested that the DMN may support internal mental processing like mind-wandering or abstract thinking and planning of events in the future~\cite{gusnard2001,buckner2008}. Additionally, evidence has pointed to disruptions in the DMN with people with Alzheimer's and autism spectrum disorders~\cite{buckner2008,washington2014}.
 Subcortical communities have also been identified with rs-fMRI. With appropriate ICA seeding, it's possible to observe functional modules located at the thalamus and hyppocampus~\cite{lee2012,nicolini2016}.
 
-The evidence of modules in functional brain networks has been explained as the possible basis of a large variety of processes. By way of example, certain functional processes, like color vision, have been described as
-anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
+The evidence of modules in functional brain networks has been explained as the possible basis of a large variety of processes. By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
 Interestingly modules of functional brain networks are non-static as recent studies found that they tend to become less and less modular with aging~\cite{meunier2009a}. In all respects, the experimental evidence of the modular organization is a powerful and robust marker against which to measure the health of the brain. 
 Shortly, there are a number of reasons, why the brain is organized as a modular system, from the reduced metabolic cost, to the evolutionary advantage of evolving locally optimal substructures.
 Thus, modularity is not only a biologically plausible but it is probably necessary to maintain the rich repertoire of cognitive tasks that our brain engages in every day of our life.
@@ -69,7 +68,7 @@ Fixes have been proposed to circumvent the resolution limit, including the intro
 However, real-world networks are characterized by the coexistence of clusters of very different sizes, and no single parameter can adapt to the variety of network topologies observed in nature.
 Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 
-In the following sections we illustrate the current graph-theoretical approaches for community detection in networks, discussing the theory of community detection, ending the discussion with some of the greatest problems when practically applying modularity maximization.
+In the following sections we are going to illustrate the current graph-theoretical approaches for community detection in networks, to discuss the theory of community detection, and end evidentiating the practical problems of Modularity maximization.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,8 +136,8 @@ whereby optimal partitions have high values of $Q^N$. As already done in Eq.~\re
 Q^N = \sum_{c}^{|C|} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right]
 \end{equation}
 
-Modularity takes values in the range $[-0.5,1]$, then a good partition should have $Q^N$ values close to unity, identifying groups with much more internal connections than expected at random. In contrast, a bad partition with $Q^N$ closer to zero should identify groups with no more internal connections than we expect at random.
-In the next sections, we will challenge this idea and show that this observation has lead to false statements, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models. Specifically, in the case of Newman's Modularity, the resolution limit hit hard.
+Modularity takes values in the range $[-0.5,1]$, then a good partition should have $Q^N$ values close to unity, identifying groups with much more internal connections than expected at random. In contrast, a bad partition with $Q^N$ close to zero should identify groups with no more internal connections than we expect at random.
+In the next sections, we will challenge this idea and show that this observation has lead to false statements, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models. Specifically, in the case of Newman's Modularity, the resolution limit hampers its ability to detect modules smaller than a scale determined by the size of the graph.
 
 \subsection{The configuration model}\label{sec:configuration_model}
 A central property of the configuration model is the probability $P_{ij}$ of the occurrence of an edge between two specified vertices $i$ and $j$.
@@ -155,7 +154,7 @@ P_{ij} = \Pr \left ( a_{ij} | \{ k \} \right) = \Pr(k_i | \{ k \}) + \Pr(k_j | \
 Although Modularity is most frequently applied to \emph{simple graphs} (see Fig.~\ref{fig:simple_unweighted_graph}), the configuration model implies that the randomization is carried over the space of \emph{loopy multigraphs} (Figure~\ref{fig:loopy_multigraph}).
 The rewiring probability considers indeed that the stubs of nodes can be reconnected both to the same source vertex (self-loops) or added to already existing edges (multi-edges).
 Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but many other distinct matchings producing non-simple networks as shown in Figure~\ref{fig:reshuffle_loopy_multigraphs}.
-In fact, the number of possible re-wirings that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges, is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as:
+In fact, the number of possible re-wirings that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges, is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as the multinomial distribution:
 \begin{equation}\label{eq:cm_possible_rewirings}
 \Omega_{CM} = \binom{2m}{k_1,\ldots,k_n} = \frac{(2m)!}{\prod_i^n k_i!}.
 \end{equation}
@@ -256,7 +255,7 @@ If the number of cliques is large enough (they are more than $\sqrt{m}$), Modula
 Yet extending the number of cliques, Modularity may merge cliques into groups of three, fours etc.
 
 \subsection{Resolution parameter}
-Different authors proposed solutions in order to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
+Different authors proposed solutions that try to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
 
 In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
 From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$, resulting in a modified modularity $Q^N(\gamma)$:
@@ -291,16 +290,15 @@ that once reworked in an additive quality function, results in the form of Eq.~\
 Q^{\textrm{CPM}} = \sum \limits_c^{|C|} \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
 \end{equation}
 In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives; indeed it acts as the inner and outer edge density threshold.
-In the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{CPM}$ exceeds the inter-community density $m_{r,s}/(2n_r n_s)$.
+Hence, in the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{CPM}$ exceeds the inter-community density $m_{r,s}/(2n_r n_s)$.
 
 Unfortunately, the operation of tuning the resolution parameter, both in the CPM model as well as in other similar models, is difficult and no largely accepted method exists, making all the models based on a resolution parameter, scarcely used in practical applications.
 
 
 \subsection{Effects of resolution limit}
-In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest.
-By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
-
-Hence, we may expect the brain modular structure to comprise heterogeneously distributed communities. Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear.
+In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest. Indeed, there are some functional processes in the brain that are thought to be better represented as anatomically localized like the first stages of sensory processing, while others are seen as more globally integrated processing system, in particular attentional processes~\cite{alnaes2015}.
+Hence, we may expect the brain modular structure to comprise heterogeneously distributed communities.
+Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear.
 Hierarchical approaches have shown that large modules can be further subdivided, indicating that connectivity networks show structure at different spatial scales~\cite{meunier2009}.
 However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
 
@@ -339,15 +337,18 @@ A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whe
 \label{fig:degeneracylandscape}
 \end{figure}
 
-Any quality function suffering degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while instead of in the case of the existence of a net global optimum, a sharper peak should be exhibited.
+Any quality function suffering degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while instead of in the case of the existence of a distinct global optimum, a sharper peak should be exhibited.
 We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behavior and uniqueness of the optimum solution.
+
+\section{Alternative approaches to Modularity}
+If the problems of Modularity are evident, researchers tried to mitigate them with alternative meta-approaches. The issue of degeneracy indeed, implicitly maintains that in the absence of a clearly optimal partition, many partitions should be used instead. Yet, the problem of the resolution limit that arises from an inadequate choice of the configuration model as the null hypothesis, can be tackled by a proper choice of the null model that keeps into account the sources of random noise directly from the time series which the correlation matrix is originated from. Here we briefly discuss these two potential solutions to the problems we have just introduced.
 
 \subsection{Consensus clustering}
 The issue of degeneracy is not only affecting Newman's Modularity $Q^N$ but other quality functions as well.
 In this respect, it's clear that choosing the partition with the highest quality value isn't meaningful and a choice that considers all the good partitions at the plateau is desired. 
 An optimal partition of the network can then be expressed as a \emph{median} of the solutions over the optimal plateau.
 This approach, known as \emph{consensus clustering}, is advantageous to combine strengths and weakness of found partitions, whereby some local effects of noise during optimization are averaged over a large set of solutions.
-Such approach for consensus clustering is typically based on a meta-algorithm rather than a proper community detection method. Indeed, given a community detection method, consensus clustering forms an ensemble of optimal solutions from which an association matrix $\mathcal{A}$ is computed, where edges are proportional to the probability that two nodes are connected in the same community.
+Such approach for consensus clustering is typically based on a meta-algorithm rather than a proper community detection method. Indeed, given a community detection method, consensus clustering forms an ensemble of optimal solutions from which an association matrix $\mathcal{A}$ is computed, where edges are proportional to the probability that two nodes are connected in the same community. 
 Consensus communities are then obtained clustering iteratively the thresholded association matrix. The choice of the threshold that makes the association matrix sparser~\cite{lancichinetti2012} is dictated by the properties of the chosen method of community detection itself. Typically with a smartly chosen threshold, consensus clustering converges in a few iterations. The pseudo-code illustrated in Alg.~\ref{alg:consensus_clustering} illustrates all the steps of consensus clustering.
 
 \begin{Algorithm}[htb!]
@@ -363,10 +364,12 @@ Consensus communities are then obtained clustering iteratively the thresholded a
 \label{alg:consensus_clustering}
 \end{Algorithm}
 
-\section{The bias of the null model for Modularity}
+Although useful to address the degeneracy issue, this approach keeps suffering the resolution limit, as the sub-optimal optimal solutions which the consensus partition is made of, are themselves resolution-limited.
+
+\subsection{The bias of the null model for Modularity}
 The null model of Modularity is not only is at the basis of the issues of resolution limit and degeneracy, but can be shown to be highly inadequate when used in brain networks based on estimates of Pearson correlation of BOLD time series.
 As shown by MacMahon and Garlaschelli~\cite{macmahon2015}, indeed the configuration model introduces a systematic bias as it is not consistent with the definition of Pearson correlation.
-Ideally, the Modular structure in a full correlation matrix (a correlation matrix with all nonzero entries) should reflect a balance between positively and negatively correlated units. Correlation communities should be internally positively correlated while externally negatively correlated, but this does not happen when naively applying Modularity to correlation-based networks.
+Ideally, the modular structure in a full correlation matrix (a correlation matrix with all nonzero entries) should reflect a balance between positively and negatively correlated units. Correlation communities should be internally positively correlated while externally negatively correlated, but this does not happen when naively applying Modularity to correlation-based networks.
 Such inadequacy results from a systematic bias that the configuration model introduces, here shortly explained.
 
 Given $n$ time series $\mathbf{X}=\{ X_1, \ldots, X_n\}$ from the parcellation atlas, the Pearson correlation matrix is computed as

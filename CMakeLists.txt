@@ -55,19 +55,22 @@ set(INPUT_FILES
 	chapters/acknowledgment.tex
 	chapters/conclusions.tex
 	chapters/introduction.tex
-	chapters/preface.tex
+	chapters/synopsis.tex
 	chapters/appendix_surprise.tex
 	chapters/discussions.tex
+	chapters/modularorganization.tex
+	chapters/realworld.tex
 	chapters/notation.tex
 	chapters/results.tex
+	chapters/hyphenations.tex
 )
 
 set(TIKZ_INPUTS
 	standalonetikz/tikz_simple_graph.tikz
 	standalonetikz/tikz_loopy_multigraph.tikz
 	standalonetikz/tikz_weighted_graph.tikz
-	standalonetikz/tikz_degree_strength.tikz.tex
-	standalonetikz/configurationmodel.tex
+	#standalonetikz/tikz_degree_strength.tikz.tex
+	#standalonetikz/configurationmodel.tex
 	standalonetikz/tikz_directed_graph.tikz
 )
 
@@ -75,6 +78,6 @@ ADD_LATEX_DOCUMENT(
     main.tex
     INPUTS ${INPUT_FILES} ${TIKZ_INPUTS}
     IMAGES ${IMAGE_FILES}
-    BIBFILES biblio.bib
+    BIBFILES biblio2.bib
     #FILTER_OUTPUT
     )

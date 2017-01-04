@@ -231,7 +231,7 @@ In matrix terms, degree and strength are the sums over rows of the adjacency mat
 \end{equation}
 consequently the \emph{average node degree} is given by
 \begin{equation}
-\left< k \right> = \frac{2m}{n}.
+\langle  k \rangle = \frac{2m}{n}.
 \end{equation}
 
 \noindent\textbullet \,The \emph{neighborhood} of node $i$ is the set $\Gamma_i=\{j \in V | (i,j) \in E \}$. In other words, the neighbor nodes of $i$ are the nodes which share and endpoint edge to $i$. 
@@ -383,9 +383,9 @@ P_i = 1 - \sum_c \left( \frac{k_{ic}}{k_i} \right)^2
 where $k_{ic}$ is the number of links of node $i$ to nodes in module $c$ and $k_i$ is the total degree of node $i$.
 Converselely, the second parameter dubbed \emph{within-module degree}, indicated by $z_i$,  reflects the degree of connectivity of a node to node in its same community, and is defined as: 
 \begin{equation}\label{eq:withinmoduledegree}
-z_i = \frac{k_i - \left< k_{c_i} \right>}{\sigma_{k_{c_i}}}
+z_i = \frac{k_i - \langle  k_{c_i} \rangle }{\sigma_{k_{c_i}}}
 \end{equation}
-where $k_i$ is the node degree,  $\left< k_{c_i} \right>$ is the average degree of nodes in the same module $c$ of node $i$ and $\sigma_{k_{c_i}}$ the standard deviation of the degree of nodes in the same module $c$ of node $i$.
+where $k_i$ is the node degree,  $\langle  k_{c_i} \rangle $ is the average degree of nodes in the same module $c$ of node $i$ and $\sigma_{k_{c_i}}$ the standard deviation of the degree of nodes in the same module $c$ of node $i$.
 
 Hub classification is critical for the interpretation of the roles played by the highly connected nodes within the network structure.
 The Guimera and Amaral~\cite{guimera2005} classification scheme, specifies for every node its participation coefficient and within-module degree z-score, lying the nodes over a 2D cartesian space, divided into seven regions as shown in Figure~\ref{fig:gagraph}.
@@ -442,15 +442,15 @@ Differently from the $G(n,m)$ model, because of the Bernoulli distribution of ed
 As every graph obtained from the Erd\H{o}s-Rényi model is a sample from a probability space, a description in terms of ensemble averages is more appropriate.
 In the ER model, the expected number of edges in such a graph is the average over $\binom{n}{2}$ independent coin tosses with probability $p_{\textrm{ER}}$:
 \begin{equation}
-\left< m  \right> = \binom{n}{2}p_{\textrm{ER}}
+\langle  m  \rangle = \binom{n}{2}p_{\textrm{ER}}
 \end{equation}
-and the expected degree $\left< k \right>$ is the same for every node
+and the expected degree $\langle  k \rangle $ is the same for every node
 \begin{equation}
-\left< k \right> = p_{\textrm{ER}}(n-1).
+\langle  k \rangle = p_{\textrm{ER}}(n-1).
 \end{equation}
 The probability that a node $i$, chosen at random, has degree $k$ is called the \emph{degree distribution}. In general terms, such probability is expressed as:
 \begin{equation}
-\Pr(k) = \frac{\left< |\{ i \| k_i=k \}| \right>}{n}.
+\Pr(k) = \frac{\langle  |\{ i \| k_i=k \}| \rangle }{n}.
 \end{equation}
 In the ER model, a given node is connected with probability $p_{\textrm{ER}}$ to each of the other $n-1$ nodes. Hence, the probability of being connected to a particular $k$ other nodes and not to any of the others is $p^k(1-p)^{n-1-k}$, but since there are $\binom{n-1}{k}$ ways to choose those $k$ other nodes, hence the total probability of being connected to exactly $k$ others is:
 \begin{equation}
@@ -541,12 +541,12 @@ The major advantage of the LFR model is the tunable level of community mixing. I
 Additionally, given a degree sequence, taken by sampling the power law distribution with exponent $\tau_d$, on weighted networks a parameter $\beta$ is used to assign strength to each node: $s_i=k_i^\beta$ where the parameter $\mu_w$ is used to partition the node strength into an intra-community component proportional to $(1-\mu_w)$ and an inter-community component proportional to $\mu_w$: $s_i = (1-\mu_w)s_i^{(int)} + (\mu_w)s_i^{(ext)}$. This power-law form of node strengths is chosen to match observations on real graphs, as indicated by~\cite{barrat2004}.
 The actual weights of the edges are then chosen to minimize the variance between the expected and the observed strengths by means of an iterative optimization step. Hence is possible to obtain a theoretical estimate of the average edge weights that reads:
 \begin{align}
-\left< w^{int} \right> &= \frac{(1-\mu_w)\left< s\right>}{(1-\mu_t)}\left< k\right> =& \frac{(1-\mu_w)}{(1-\mu_t)}\left < k \right>^{\beta-1} \\
-\left< w^{ext} \right> &= \frac{(\mu_w)\left< s\right>}{(\mu_t)}\left< k\right> =& \frac{(\mu_w)}{(\mu_t)}\left < k \right>^{\beta-1}.
+\langle  w^{int} \rangle &= \frac{(1-\mu_w)\langle  s\rangle }{(1-\mu_t)}\langle  k\rangle = \frac{(1-\mu_w)}{(1-\mu_t)}\langle  k \rangle ^{\beta-1} \\
+\langle  w^{ext} \rangle &= \frac{(\mu_w)\langle  s\rangle }{(\mu_t)}\langle  k\rangle = \frac{(\mu_w)}{(\mu_t)}\langle  k \rangle ^{\beta-1}.
 \end{align}
 As for the planted partition model, where communities where defined as long as $p_{in}>p_{out}$, for the case of the LFR model, one asks that in order for communities to be such it must be that
 \begin{equation}
-\left< w^{int} \right> \geq \left< w^{ext} \right>
+\langle  w^{int} \rangle \geq \langle  w^{ext} \rangle 
 \end{equation}
 resulting in the equivalent formulation $\mu_w  \geq \mu_t$. If this last condition is not met indeed each node would bring more weight about its connectivity on the edge weights rather than on its degree, that is why: most community detection algorithms working with weighted networks, thus would be informed of the large edge weights and are mislead considering the node as an hub even in the presence of just a few neighbors.
 
@@ -566,7 +566,7 @@ $\min_c$ & Minimum number of nodes in each community.\\
 $\max_c$  & Maximum number of nodes in each community.\\
 $\mu_t \in [0,1]$ & Topological mixing coefficient.\\
 $\mu_w \in [0,1]$ & Weights mixing coefficient.\\
-$\left<k\right>$ &Desidered average degree.\\
+$\langle k\rangle $ &Desidered average degree.\\
 \hline
 \end{tabular}
 \end{minipage}\hfill
@@ -574,13 +574,18 @@ $\left<k\right>$ &Desidered average degree.\\
 \includegraphics[width=1\textwidth]{images/LFRexample.pdf}
 \end{minipage}
 \end{footnotesize}
-\caption{LFR parameters and a single instance with $n=600$, $\left<k \right>=12$, $\tau_d=2$, $\tau_c=1$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.}
+\caption{LFR parameters and a single instance with $n=600$, $\langle k \rangle =12$, $\tau_d=2$, $\tau_c=1$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.}
 \label{tab:lfrparams}
 \end{figure}
 
 The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods.
 
+% \subsection{Power law ring of cliques}
+% The modified ring of clique network as indicated in the main text is composed by a ring structure of cliques whose sizes are randomly sampled from a power-law distribution with exponent $\tau_c=1$. 
+% The power-law distribution of sizes of cliques in this benchmark is consistent with the heterogeneous size of modules observed in brain connectivity using the binary version of Surprise. An example realization of the benchmark network is shown in Figure \ref{fig:ring_of_clique_powerlaw}.
+% \input{include/powerlaw_ring_clique.tex}
 
+%%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%5
 \subsection{Comparing community structure in networks}
 Some benchmark networks come with an annotated community structure representing the ground-truth assignment of nodes into communities, the annotations being made by experts in the field, like for example the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
 Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth community.
@@ -651,3 +656,22 @@ It's worth noting that the majority of the aforementioned metrics do not take in
 % \end{align}
 % %
 % \todo{fix discorso cluster homogeneity}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% PERCOLATION ANALYSIS %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Percolation analysis}
+Functional connectivity networks are typically obtained as similarity matrices of physiological time signals over different brain areas. The process of converting such similarity matrices into networks, described in the previous chapters is not obvious.
+In most of the works, a threshold is chosen such that all the edge weights greater than a given value are kept, while other links, indicative of correlations due to possibly noisy components are discarded.
+Sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable. However, weak links may also contain significant structural information, and procedures to identify the optimal tradeoff are the subject of active.
+The network can then be binarized, by setting all edge weights to unity.
+Whether this procedure may help obtaining a better view on the underlying structure, it represents an hot debate in the literature~\cite{rubinov2010,thomas2011}.
+Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
+No well-accepted method to choose the best threshold has been adopted pragmatically in the brain networks literature and different scholars motivated their choice by different needs~\cite{gallos2012,lee2011,scheinost2012}.
+Indeed, weak links may contain significant structural information~\cite{thomas2011}, and procedures to identify the optimal trade-off are the subject of active investigations~\cite{zahoranszky-kohalmi2016a}.
+As the final network density is of fundamental importance when performing community detection, the clustering outcome depends heavily on it.
+Hence, a completely data-driven thresholding procedure is needed, that helps in transforming a similarity matrix into a network. 
+
+Here, we explore the use of percolation analysis, a method grounded in statistical physics, to identify the optimal sparsification threshold for community detection in brain connectivity networks. The percolation threshold corresponds to the point where the largest connected component of the network starts breaking apart. A threshold just below this point is the one that maximizes the information extracted by subsequent application of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies. 
+
+The most common choice when comparing networks from different groups, is to adopt a fixed threshold that keeps the same number of edges in the two groups. This does not take in account the particularities of the analyzed group and datasets. Percolation analysis should enable data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations. It is indeed important to stress that the distribution of the weight as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror these information. To this end, it has been demonstrated, especially in patient group such as in schizophrenia, autism or alcoholism, that the brain presents weaker connectivity than in health control persons~\cite{alexander-bloch2010}.

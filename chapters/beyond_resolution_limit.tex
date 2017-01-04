@@ -2,6 +2,7 @@
 
 \lettrine{I}{n} the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
 We explored the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
+Additionally, the question wheter 
 
 To this end, we will show that Surprise\index{Surprise}, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
 Surprise maximization in brain co-activation and functional connectivity resting state networks reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
@@ -10,12 +11,11 @@ In this chapter we will introduce Surprise from its theoretical foundations and 
 
 \section{Binary networks}
 \subsection{A probabilistic interpretation of community detection}\label{sec:probability_clustering}
-As previously described, no spin-glass based additive quality function, including Newman's Modularity, is by no means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
+As previously described, no spin-glass based additive quality function, including Newman's Modularity, is by any means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
 In other terms, no spin-glass based quality function is telling us the level of statistical confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
 
 To address this question, one should instead compute probabilities, as they are the natural way to measure statistical significance.
 Specifically, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam. Surprise can be thought as a quality function that moves away from the framework of additive functions based on spin-glass models, as described in the previous chapter and tries to address these questions quantitatively.
-
 Precisely, the problem is the following: given a subgraph, what is the probability of observing another subgraph with a larger number of internal edges drawn from a random graph with a given density?
 This question is answered by the urn model in classical probability theory. The reason is clear if one imagines that each pair of nodes is a marble, which is one color if the nodes are connected by a link and the other color if they are not.
 A number of marbles is drawn from an urn without replacement and the probability of observing a given number of marbles of one specific color is calculated by means of the hypergeometric law.
@@ -35,22 +35,19 @@ As the probability of observing $i$ or more internal edges, is given by the sum 
 In this last equation we are considering the probability of randomly drawing a subgraph with $m_c$ or more internal edges over the set of all random subgraphs with $n$ nodes and exactly $m$ edges as in the $G_{nm}$ model described in section~\ref{sec:models_random_graph}. Indeed, the denominator $\binom{p}{m}$ in Equation~\ref{eq:subgraph_probability_marginalized} represent the possible number of graphs with $p$ pairs of nodes and $m$ edges. 
 
 \section{Surprise}
-The intuition of Eq.~\ref{eq:subgraph_probability_marginalized} gets very close to the definition of Surprise given by Aldecoa and Marin~\cite{aldecoa2011}, giving to Surprise a clearer theoretical motivation. If the random subgraph that is drawn from the $G_{n,m}$ set has $m_\zeta=\sum_c m_c$ internal edges and $p_\zeta=\sum_c p_c$ pairs of edges, thus representing a whole clustering, then the two definitions are perfectly corresponding.
-
-For a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, exactly as in~\ref{eq:subgraph_probability_marginalized}.
-Here and in the rest of the work we dub \emph{Surprise} the following probability:
+The intuition of Eq.~\ref{eq:subgraph_probability_marginalized} gets very close to the definition of Surprise given by Aldecoa and Marin~\cite{aldecoa2011}, giving to Surprise a clearer theoretical motivation that to the best of our knowledge, did not appear in any other work. Hence, if we consider as the random subgraph that is drawn from the $G_{n,m}$ set, one with at least $m_\zeta=\sum_c m_c$ internal edges and $p_\zeta=\sum_c p_c$ pairs of edges, then such subgraph represents a whole clustering. In this case, the definition given in Eq.~\ref{eq:subgraph_probability_marginalized} and the definition given in~\cite{aldecoa2011} are perfectly equivalent. Indeed, for a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, exactly as in~\ref{eq:subgraph_probability_marginalized}.
+Here and in the rest of the work, we dub \emph{Surprise} the following probability:
 \begin{equation}\label{eq:surprise}
-S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}} 
-%= 1- \sum_{i = 0}^{m_\zeta} \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}}.
+S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}}
 \end{equation}
 
 Surprise computes the probability to (surprisingly) observe at least as many internal edges as within the proposed partition in a uniform random graph.
 As mentioned, model in Eq.~\ref{eq:surprise}  corresponds to an urn model without reinsertion, where $S$ is the probability of extracting at least $m_\zeta$ white balls out of $m$ trials from an urn containing $p_\zeta$ white balls and $p-p_\zeta$ black balls.
 Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions with respect to $S$ are those with the highest number of intracluster edges and the smallest number of intracluster pairs. 
 
-Differently from Modularity, $S(\zeta)=1$ both for the partition where every node is in a separated community ($C=n$,$p_\zeta=0$,$m_\zeta=0$) and for the partition that entails all nodes into a single group ($C=1$,$p_\zeta=p$,$m_\zeta=m$) as is evident from its formulation in terms of urn model. Indeed, as Newman's Modularity is zero when $C=1$, it is different than zero in the case $C=n$. In this sense Surprise is a more meaningful quality function as both the extremal partitions are uninteresting.
+Differently from Modularity, $S(\zeta)=1$ both for the partition where every node is in a separated community ($|C|=n$,$p_\zeta=0$,$m_\zeta=0$) and for the partition that entails all nodes into a single group ($|C|=1$,$p_\zeta=p$,$m_\zeta=m$) as is evident from its formulation in terms of urn model. Indeed, as Newman's Modularity is zero when $C=1$, it is different than zero in the case $C=n$. In this sense Surprise is a more meaningful quality function as both the extremal partitions are uninteresting, yielding zero Surprise.
 
-It should be noted that due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is equivalent with respect to optimum solutions, where higher values correspond to better clustering.
+It should be noted that due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is totally equivalent with respect to optimum solutions, where higher values correspond to better clustering.
 Different authors~\cite{arnauVMarsS2005,fleck2014} refer to $S$ as Surprise, whereas others~\cite{aldecoa2011,aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of~\cite{fleck2014} where Surprise is indicated as $S$ defined in Eq.~\ref{eq:surprise} and indicate $\hat{S}$ where needed.
 
 \subsection{General properties of Surprise}
@@ -106,31 +103,30 @@ S(m_\zeta+1,p_\zeta)<S(m_\zeta+1,p_\zeta+1)<S(m_\zeta,p_\zeta)<S(m_\zeta,p_\zeta
 This property leads us to the observation that Surprise $S$ is a monotonically decreasing function (increasing $\hat{S}$) of $m_\zeta$ and monotonically increasing function (decreasing $\hat{S}$) of $p_\zeta$ in the convex interval $\mathcal{L}$.
 Moreover, from Figure~\ref{fig:surprisebehaviour} follows that optimal solutions with respect to $S$ are Pareto-optimal with respect to maximizing $m_\zeta$ and minimizing $p_\zeta$.
 In other words, a partition that is optimum with respect to Surprise is such that no further increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has higher $\hat{S}$.
-
-% \begin{figure}[htb!]
-% \centering
-% \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
-% \def \S {1};
-% \def \W {11};
-% \def \H {7};
-% \node[anchor=south west, inner sep=0mm] at (0,0) { \includegraphics[width=\W cm]{images/plot_surprise_pareto.pdf}};
-% \node[anchor=south] at (\W /2,\H +0.25) {$\hat{S}=-\log_{10}(S(m_\zeta,p_\zeta$, $m=10$,$p=15$))};
-% %\draw[help lines,xstep=1.0,ystep=1.0] (0,0) grid (\W,\H);
-% \foreach \x in {1,...,\W } {\node [anchor=north] at (\x-0.5,0) {$\x$}; }
-% \node[anchor=north] at (\W/2,-0.5){$p_\zeta$};
-% \foreach \y in {1,...,\H} {\node [anchor=east] at (0 ,\y-0.5) {$\y$}; }
-% \node[anchor=east] at (-0.5,\H/2){$m_\zeta$};
-% %\node[rectangle,fill=black!10,draw=black,rounded corners=0.1cm] at (\W+1.5,\H-0.5) {$m_{\zeta},p_\zeta \not \subset \mathcal{L}$};
-% \end{tikzpicture}
-% \caption{Pareto optimality of Surprise (here $\hat{S}$ is represented) on a trivial graph with $n=6$ nodes and $m=7$ edges. No increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has higher $\hat{S}$. Here Surprise is optimal for $m_\zeta=6,p_\zeta=6$.}
-% \label{fig:pareto_optimality_surprise}
-% \end{figure}
-% \todo[inline]{CONTROLLARE FIGURA PROBABILMENTE SBAGLIATA PERCHE MZETA>M!!!}
-
-The Pareto optimality of optimum Surprise partitions, implies that introducing a perturbation of $m_\zeta$ and $p_\zeta$ leads to a change in Surprise such that it monotonically decreases only if $\delta m_\zeta > \delta p_\zeta$, precisely:
+The Pareto optimality of optimum Surprise partitions, implies that a perturbation of $\delta m_\zeta, \delta p_\zeta$ leads to a change in Surprise such that it monotonically decreases if and only if $\delta m_\zeta > \delta p_\zeta$, precisely:
 \begin{equation}\label{eq:resolution_limit_condition}
-S(m_\zeta + \delta_{m_\zeta}, p_\zeta + \delta_{p_\zeta}) < S(m_\zeta,p_\zeta) \iff \delta_{m_\zeta} \geq \delta_{p_\zeta}
+S(m_\zeta + \delta_{m_\zeta}, p_\zeta + \delta_{p_\zeta}) < S(m_\zeta,p_\zeta) \iff \delta_{m_\zeta} \geq \delta_{p_\zeta}.
 \end{equation}
+
+%% \begin{figure}[htb!]
+%% \centering
+%% \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
+%% \def \S {1};
+%% \def \W {11};
+%% \def \H {7};
+%% \node[anchor=south west, inner sep=0mm] at (0,0) { \includegraphics[width=\W cm]{images/plot_surprise_pareto.pdf}};
+%% \node[anchor=south] at (\W /2,\H +0.25) {$\hat{S}=-\log_{10}(S(m_\zeta,p_\zeta$, $m=10$,$p=15$))};
+%% %\draw[help lines,xstep=1.0,ystep=1.0] (0,0) grid (\W,\H);
+%% \foreach \x in {1,...,\W } {\node [anchor=north] at (\x-0.5,0) {$\x$}; }
+%% \node[anchor=north] at (\W/2,-0.5){$p_\zeta$};
+%% \foreach \y in {1,...,\H} {\node [anchor=east] at (0 ,\y-0.5) {$\y$}; }
+%% \node[anchor=east] at (-0.5,\H/2){$m_\zeta$};
+%% %\node[rectangle,fill=black!10,draw=black,rounded corners=0.1cm] at (\W+1.5,\H-0.5) {$m_{\zeta},p_\zeta \not \subset \mathcal{L}$};
+%% \end{tikzpicture}
+%% \caption{Pareto optimality of Surprise (here $\hat{S}$ is represented) on a trivial graph with $n=6$ nodes and $m=7$ edges. No increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has higher $\hat{S}$. Here Surprise is optimal for $m_\zeta=6,p_\zeta=6$.}
+%% \label{fig:pareto_optimality_surprise}
+%% \end{figure}
+%% \todo[inline]{CONTROLLARE FIGURA PROBABILMENTE SBAGLIATA PERCHE MZETA>M!!!}
 
 The result in Eq.\ref{eq:resolution_limit_condition} is of great help in designing optimization algorithms as every move that increase the intracluster edges more than intracluster pairs is good, while moves that increase intracluster pairs more than intracluster edges must be ignored, therefore sparing time for the computation of Surprise. Additionally, Eq.~\ref{eq:resolution_limit_condition} is useful when analyzing the onset of the resolution limit for different models.
 In the next sections we will show to what extent Surprise is affected by the resolution limit for Surprise, to show with convincing theoretical arguments that $S$ is nearly resolution-limit-free in Traag's sense~\cite{traag2015}.
@@ -162,8 +158,7 @@ Indeed, $\Delta \hat{S}$ was always positive and grew monotonically with increas
 Hence, the two cliques $G_1$ and $G_2$ were always resolved by Surprise as separate communities independently of the network size, and also in the presence of some ``fuzziness'', i.e. when $m_{12}>1$ and the two cliques were connected by more than one edge.
 In order to assess whether this behavior reflects a general property of Surprise, or is incidental to this particular example, we have also studied a generalization of Fortunato and Barthelemy's model.
 
-A consequence of the definition of a resolution limit free in Traag's sense, is that such method will never depend on the size of the network to merge cliques in a graph comprising $r$ cliques of $n_r$ nodes connected in a ring structure as in Figure~\ref{fig:traag_ring_of_cliques}.
-
+A consequence of the definition of a resolution limit free in Traag's sense, is that such method will never depend on the size of the network to merge cliques in a graph comprising $r$ cliques of $n_r$ nodes connected in a ring structure as in Figure~\ref{fig:traag_ring_of_cliques} (often called the ``ring of cliques'' model).
 This observation prompted us to explore the behavior of $\hat{S}$ in the ring of cliques model graph, as an extension of Fortunato and Barthelemy's model.
 Interestingly, given its two-variables formulation, Surprise optimization can be seen as a multiobjective optimization problem where one seeks to minimize the intracluster pairs while maximizing the number of intracluster edges.
 With increasing graph size, the computational problem of calculating $\hat{S}$ for every possible partition becomes rapidly intractable (maximization of $S$ is NP hard)~\cite{fleck2014}.
@@ -177,7 +172,7 @@ Hence, to delineate the Pareto frontier in the $(m_\zeta,p_\zeta)$ space, we nee
 \quad \mathcal{X}_{ik} + \mathcal{X}_{ki} - \mathcal{X}_{ij} \leq 1 \nonumber \\
 \sum_{\{i,j\} \in E} \mathcal{X}_{ij}=h \nonumber
 \end{align}
-where $\mathcal{X}_{ij}$ are a set of $\binom{n}{2}$ binary variables corresponding to vertex pairs, with the interpretation that $\mathcal{X}_{ij}=1$ if vertex $i$ and vertex $j$ are in the same community. The objective function $\sum_{ij}\mathcal{X}_{ij}$ measures the number of intracluster pairs $p_\zeta$, while the number of intracluster edges $m_\zeta=\sum_{ij \in E} \mathcal{X}_{ij}$ was set equal to a fixed $h \in [0,m]$. The remaining constraints are necessary in order to ensure transitivity, i.e. if nodes $i$ and $j$ are in the same community, nodes $i$ and $k$ are in the same community, then nodes $j$ and $k$ share the same community too. 
+where $\mathcal{X}_{ij}$, equivalent to $\delta(\sigma_i, \sigma_j)$, are a set of $\binom{n}{2}$ binary variables corresponding to vertex pairs, with the interpretation that $\mathcal{X}_{ij}=1$ if vertex $i$ and vertex $j$ are in the same community. The alternative objective function $\sum_{ij}\mathcal{X}_{ij}$ measures the number of intracluster pairs $p_\zeta$, while the number of intracluster edges $m_\zeta=\sum_{ij \in E} \mathcal{X}_{ij}$ was set equal to a fixed $h \in [0,m]$. The remaining constraints are necessary in order to ensure transitivity, i.e. if nodes $i$ and $j$ are in the same community, nodes $i$ and $k$ are in the same community, then nodes $j$ and $k$ share the same community too. 
 Figure~\ref{fig:ring_cliques_pareto} shows the Pareto frontier for a ring of cliques where we independently varied the number of cliques $r$ and the number of nodes $n$ in every clique\footnote{Linear programs were solved using the Python interfaces of Gurobi 5.7.3 on Linux (Gurobi Optimizer Version 5.7, Gurobi Optimization, Inc., Houston, Texas, United States).}.
 As $\hat{S}$ reaches its minimum (zero) both in the case where all nodes are separated communities ($p_\zeta=0$) or when a single community entails all nodes ($p_\zeta=p$), Figure~\ref{fig:ring_cliques_surprise} shows monotonically increasing Surprise along the frontier with increasing $p_\zeta$ up to the Surprise optimum, indicated by black circles in the Pareto front of Figure~\ref{fig:ring_cliques_pareto}, whereas the corresponding partition identified each clique as a separate community.
 Importantly, in the range of parameters we have investigated, Surprise optimization never merged cliques in the ring of cliques, independently of the size of the graph, and behaved as a Traag's resolution-limit free method.
@@ -192,7 +187,7 @@ Importantly, in the range of parameters we have investigated, Surprise optimizat
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.8\textwidth]{images/ring_cliques_surprise.pdf}
-\caption{Surprise $\hat{S}$ for a ring of cliques graph at different levels of $p_\zeta$ for corresponding solutions at fixed $m_\zeta$.}
+\caption{Surprise $\hat{S}$ for a ring of cliques graph at different levels of $p_\zeta$ for corresponding solutions at fixed $m_\zeta$. The peak of $\hat{S} $is always reached at $p_\zeta$ when the modules entail single cliques separately.}
 \label{fig:ring_cliques_surprise}
 \end{figure}
 
@@ -214,8 +209,8 @@ We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we em
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Statistical test}\label{sec:surprisefishertest}
-Surprise considers the problem of community detection as the one of making the intracluster density as different as possible from the global density in statistical terms. In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis $H_0$ that the intracluster density is the same as the graph density.
+\subsection{Surprise is a statistical test}\label{sec:surprisefishertest}
+Surprise considers the problem of community detection as the one of making the intracluster density as further as possible from the global density in statistical terms. In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis $H_0$ that the intracluster density is the same as the graph density.
 It turns indeed out that this problem has an equivalent description in statistics, where one seeks to maximize the \emph{odds-ratio} of the $2 \times 2$ contingency table defined in Table~\ref{tab:contingency_table}.
 
 The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can therefore be used regardless of the sample characteristics. A simpler $\chi^2$ statistic can be used when the elements of the contingency table are large enough, although only an approximation of the \emph{p}-value can be obtained.
@@ -258,9 +253,9 @@ An union-find data structure is used to hold the community structure throughout 
 At the beginning, each community consists only of one vertex.
 Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community.
 This step is repeated for all edges and the final community structure is returned in the disjoint-set.
-
 FAGSO finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
-The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Octave} is available at \url{https://github.com/carlonicolini/fagso}.
+
+The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Octave} is freely available at \url{https://github.com/carlonicolini/fagso}.
 
 \begin{Algorithm}[htb!]
 \input{include/misc/fagso.tex}
@@ -268,26 +263,25 @@ The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Oct
 \label{alg:fagso}
 \end{Algorithm}
 
-\begin{figure}
+\begin{figure}[htb!]
 \centering
 \includegraphics[width=0.8\textwidth]{images/fagso.pdf}
 \caption{FAGSO algorithm steps illustrated. Firstly, Jaccard indices are computed. In box A., every node is associated to a separate community and FAGSO evaluates whether to merge nodes $d$ and $f$ in the same community as the edge they form has the highest Jaccard index. Since this merge results in an increased value of Surprise, $d$ and $f$ are merged in box B. then FAGSO proceeds to evaluate the merge of nodes $a$ and $b$ as their Jaccard index is the second greatest. FAGSO merges the two nodes in a second community and proceeds updating the Surprise value and analyzing the subsequent merges in boxes D to F, until no moves are available and FAGSO terminates with the community structure in box G.}
 \label{fig:fagso_working}
 \end{figure}
 
-\subsection{Performance of FAGSO on benchmark networks}
-In order to understand the performance of FAGSO, we benchmarked it on some benchmark networks. We have chosen to use the LFR model networks, as they 
-\todo{INSERIRE PARTE BENCHMARK PACO SEMPLICE}
+\subsection{Benchmarking FAGSO}
 
-\bigbreak
-%\section*{Introduction}
-\lettrine{A}{s} described and illustrated in the previous chapter, a fundamental limitation of Surprise lies in its definition in terms of discrete probability and binomial coefficients that make it applicable only to binary networks, i.e. graphs with edge values $1$ or $0$.
+
+\section{From binary to weighted networks}
+As described and illustrated in the previous chapter, a fundamental limitation of Surprise lies in its definition in terms of discrete probability and binomial coefficients that make it applicable only to binary networks, i.e. graphs with edge values $1$ or $0$.
 This represents a substantial drawback, for it requires binarization of brain connectivity networks, thus discarding potentially important information contained in the edge weight distribution.
 Moreover, different binarization procedures may lead to different network representations for the same connectivity dataset.
 Therefore, an extension of Surprise to weighted networks would be highly desirable, and would provide a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
 
-Capitalizing on recent development in the field of statistical physics of complex networks~\cite{traag2015}, in this chapter we describe and demonstrate the use of Asymptotical Surprise, a weighted counterpart to Surprise, in the study of the modular structure of weighted networks.
-Moreover, we propose a new algorithm, dubbed PACO (PArtitioning Cost Optimization) for the maximization of Asymptotical Surprise, that has its roots in the previously described FAGSO algorithm.
+
+Capitalizing on recent development in the field of statistical physics of complex networks~\cite{traag2015}, we describe and demonstrate the use of Asymptotical Surprise, a weighted counterpart to Surprise, in the study of the modular structure of weighted networks.
+Moreover, we propose a new algorithm, dubbed PACO (PArtitioning Cost Optimization) for the direct maximization of Asymptotical Surprise, that has its roots in the previously described FAGSO algorithm.
 
 Since there is no ground-truth structure for brain functional connectivity networks, we have assessed the performance of this novel approach on synthetic networks with a planted modular structures, and compared it to some of the leading graph partitioning methods.
 Importantly, we demonstrate our approach in networks  derived from synthetic data that mimic different structures, levels of noise and variability, such as those observed in functional connectivity experimental data.
@@ -300,7 +294,7 @@ Finally, we apply Asymptotical Surprise to weighted functional connectivity netw
 As introduced in the previous sections, Surprise~\cite{aldecoa2011,aldecoa2013} is a quality measure of the partition of a binary network that has its roots in probability theory.
 For a given partition $\zeta$, Surprise represents the probability that a graph drawn uniformly at random from the set of all graphs with $n$ nodes, $p=\binom{n}{2}$ pairs and $m$ edges has at least as many intra-cluster edges as $G$. Intuitively the lower the probability the better the partition.  For binary networks, Surprise can be computed within the discrete probability theory of urn models as shown in Equation~\ref{eq:surprise}.
 
-In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution. We introduce  $q=m_\zeta/m$ and $\left<q \right>=p_\zeta/p$ as the observed and expected fraction of intracluster edges. By only taking into account the dominant term of the sum in Eq.~\ref{eq:surprise} (the one with $i=m_\zeta$), we obtain with some manipulations an approximate expression for the logarithmic Surprise\footnote{If not specified, since here we use natural base logarithms.}:
+In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution. We introduce  $q=m_\zeta/m$ and $\left<q \right>=p_\zeta/p$ as the observed and expected fraction of intracluster edges. By only taking into account the dominant term of the sum in Eq.~\ref{eq:surprise} (the one with $i=m_\zeta$), after some manipulations we get an approximate expression for the logarithmic Surprise\footnote{If not specified, starting from here we use natural base logarithms.}:
 \begin{equation}\label{eq:surprise_dominant}
 \log(S) \approx \log \left( \frac{\binom{\left<q\right> p}{m_\zeta} \binom{(1-\left<q\right>)p}{m(1-q)}}{\binom{p}{m}} \right)
 \end{equation}
@@ -308,30 +302,33 @@ which corresponds to the probability of observing exactly $m_\zeta$ internal lin
 \begin{equation}
 \log \binom{n}{k} \approx k \log \left( \frac{n}{k} \right)
 \end{equation}
-we can write this last dominant term~\ref{eq:surprise_dominant} as:
+we can write the dominant term~\ref{eq:surprise_dominant} as:
 \begin{equation}
 \log(S) = - \log \left(\frac{m}{p}\right)^{-m} \left[ \left(\frac{\left< q\right>}{q}\right)^q \left(\frac{1-\left< q\right>}{1-q}\right)^{1-q} \right]^{m}
 \end{equation}
-Discarding the term $(m/p)^{-m}$, independent of the partition, we obtain an asymptotic expansion of Surprise that reads:
+The term $(m/p)^{-m}$ is independent of the partition so we can discard it. Hence, the asymptotic expansion of Surprise reads:
 \begin{equation}
 \log(S) = -m \left[ q \log \frac{\left<q\right>}{q} + (1-q)\log \frac{1-\left<q\right>}{1-q} \right]
 \end{equation}
 Interestingly, this last equation corresponds to the binary Kullback-Leibler divergence $m D_{KL}(q \| \left< q \right>)$, which is interpretable as the distance between the two probability distributions $q$ and $\left<q\right>$, or more precisely, as the information lost (in nats since we are using natural base logarithms) when we encode the distribution $q$ with the distribution $\left< q\right>$. 
-Thus, in the limit of large networks, Surprise $\hat{S}$ can be approximated by a binomial distribution: this observation led to definition of Asymptotical Surprise $\mathcal{S}_a$~\cite{traag2015}:
+Thus, in the limit of large networks, Surprise $\hat{S}$ can be approximated by a binomial distribution. This observation led to definition of Asymptotical Surprise $\mathcal{S}_a$~\cite{traag2015}:
 \begin{equation}\label{eq:asymptoticalsurprise}
 \mathcal{S}_a = m D_{\textrm{KL}}\left( q \| \left< q \right> \right)
 \end{equation}
 where the binary Kullback-Leibler divergence~\cite{kullback1951} is $$D_{\textrm{KL}}(x\|| y) = x \log \left(\frac{x}{y} \right) + (1-x)\log \left (\frac{1-x}{1-y} \right).$$
 
-In the framework of information theory~\cite{cover2006}, Asymptotical Surprise represents the Kullback-Leibler divergence between the observed and expected fraction of intra-cluster edges; it encodes the information lost when the prior distribution $\left <q \right >$ is used to approximate the posterior distribution $q$. Kullback-Leibler divergence is a quasi-distance on probability distributions as it is always non-negative, non-symmetric and zero only when $q=\left< q \right>$, like binary Surprise.
+In the framework of information theory~\cite{cover2006}, Asymptotical Surprise represents the Kullback-Leibler divergence between the observed and expected fraction of intra-cluster edges; it encodes the information lost when the prior distribution $\left <q \right >$ is used to approximate the posterior distribution $q$. Kullback-Leibler divergence is a quasi-distance on probability distributions as it is always non-negative, non-symmetric and zero only when $q=\left< q \right>$, exactly like binary Surprise.
 
-Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks ~\cite{traag2015}. Nicely, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density consider edge weights. This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, seamlessly permitting the need of sparsification procedures prior to the community detection, as shown in~\cite{nicolini2017}. A property of Kullback-Leibler divergence that is extremely useful when analyzing the landscape of the quality function Asymptotical Surprise is its \emph{convexity}. A convex quality function warranties a landscape with a global optimum and no degeneracy.
+Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks~\cite{traag2015}. As a side effect of its definition in terms of information-theoretic quantity, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density now consider edge weights.
+This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, seamlessly permitting to avoid the need of binarization procedures prior to the community detection, as shown in~\cite{nicolini2017}.
 
-Numerically Asymptotical Surprise approximates very well Surprise already for networks with more than 50 nodes, as shown in Figure~\ref{fig:asymptotical_surprise_comparison}.
+Given its information-theoretic formulation, Asymptotical Surprise cleary features \emph{convexity}, a property that is more difficult to assess for binary Surprise. Optimization of convex functions is typically simpler due to some regularities featured by such functions and the availability of practical algorithms. Furthermore a convex function warranties a landscape with a global optimum and no degeneracy, a property that is extremely important for community detection.
+
+Yet, numerical evalaution of Asymptotical Surprise is much faster than binary Surprise, furthermore it approximates very well Surprise already for networks with more than 50 nodes, as shown in Figure~\ref{fig:asymptotical_surprise_comparison}.
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/asymptotical_surprise_comparison.pdf}
+\includegraphics[width=1\textwidth]{images/asymptotical_surprise_comparison.pdf}
 \caption{Approximation of binary Surprise with a binomial formulation and the Asymptotical formulation based on the Kullback-Leibler divergence. In the inset, the approximation ratio of binomial and Asymptotical Surprise to hypergeometric Surprise tends to 1 for graphs larger than 50 nodes. Adapted from~\cite{traag2015}.}
 \label{fig:asymptotical_surprise_comparison}
 \end{figure}
@@ -354,8 +351,50 @@ The function \textsc{Paco} takes as input a graph G and returns the nodes commun
 
 \input{include/misc/paco.tex}
 
-The running time of PACO is linear in the number of nodes and quadratic in the average degree of the network, as shown 
+\subsection{Computational running time analysis}
+We applied PACO on a full-resolution voxelwise connectivity matrix with 51,653 nodes and almost 2 million edges. PACO took 14 minutes for a single repetition on a server with Intel Xeon E5-2643@ 3.40 Ghz CPU and 256 GB ram.
+We estimated that 2000 repetitions of PACO would take approximately 2.5 weeks on this server. We also tried to run PACO on a standard office PC with 16 GB memory and an Intel Core i7: it took almost 40 minutes. It’s important to notice that the running time of PACO is mainly determined by the computation of Jaccard indexes in the initial step.
+The running time for this computation is in the order of $O(nd^2)$ where $n$ is the number of nodes and $d$ is the average degree of nodes. On a desktop workstation with a 2.5 GHz CPU, PACO runs in some tenths of seconds on a single repetition for a graph of around 600 nodes with a density close to 10\%, typical of brain networks. A small benchmark of PACO running times on a desktop workstation is shown in Figure~\ref{fig:paco_benchmark}, where we found optimal Surprise partitions of a LFR network with the parameters described in the text but increasing number of nodes.
 
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.5\textwidth]{images/paco_benchmark.pdf}
+\caption{Performance of PACO on a LFR network with parameters}
+\label{fig:paco_benchmark}
+\end{figure}
+
+\subsection{Best quality solution and number of repetitions}
+In order to get a better idea of how fast the PACO method converges to a maximum, we have plotted the optimal value of Asymptotical Surprise over the 10000 runs for one instance of the LFR network, and for the resting state data-set presented in the Manuscript (Figures~\ref{fig:paco_variability_lfr},\ref{fig:paco_variability_bullmore}).
+From these graphs, it appears that 2000 runs may be sufficient to reach stable community detection for the experimental data-set. A near-optimum value is reached earlier for the LFR network, but it should be noted that we have taken an instance of the synthetic network with no-noise added.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.5\textwidth]{images/paco_variability_nreps_lfr.png}
+\caption{Maximum value of Asymptotical Surprise with respect to number of repetitions on a LFR networks as described in the main text.}
+\label{fig:paco_variability_lfr}
+\end{figure}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.5\textwidth]{images/paco_variability_nreps_bullmore.png}
+\caption{Maximum value of Asymptotical Surprise with respect to number of repetitions on the resting state dataset described in the main text.}
+\label{fig:paco_variability_bullmore}
+\end{figure}
+
+\subsection{Influence of LFR parameters on community detection performance}
+Among the two most important parameters in the LFR benchmark are the topological and weights mixing coefficients. 
+The topological mixing coefficient $\mu_t$ is the average ratio of intra-cluster neighbors divided by the number of inter-cluster neighbors, as defined in~\cite{lancichinetti2008}. The weights mixing coefficient is defined as the average ratio of node intra-cluster strength and inter-cluster strength, as defined in~\cite{lancichinetti2009a}.
+We explored the effects of these parameters on the ability of PACO to retrieve the planted structure in the network.
+We set $\mu_t=\mu_w$, as setting $\mu_w$ greater than $\mu_t$ would introduce inconsistency in the relative number and weight of the edges, with intermodule edges carrying the largest weights.
+
+We analyzed the performance of Newman's Modularity, Infomap and PACO on LFR networks where we varied the topological and weights mixing coefficients.
+In Figure~\ref{fig:avgmutmuw} the performance of the three methods is comparable in terms of NMI, with a faster decay of NMI for InfoMap and Newman compared to PACO for large $\mu_t$.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.5\textwidth]{images/avg_nmi_allmethods_lfr_errorbars.pdf}
+\caption{NMI of the retreived vs planted partition of an LFR network as a function of $\mu_t=\mu_w$ for the three community detection methods}
+\label{fig:avgmutmuw}
+\end{figure}
 
 \subsection{Comparison of PACO and FAGSO}
 
@@ -369,22 +408,6 @@ This detail allows PACO to explore more finely the landscape of optimization as 
 
 \input{include/misc/pacofagso.tex}
 
-\section{Determination of the correct threshold: percolation analysis}
-Functional connectivity networks are typically obtained as similarity matrices of physiologicals time signals over different brain areas. The process of converting such similarity matrices into networks, described introductorily in the first chapter (Section~\ref{sec:complexnetworksciencebrain} , Figure\ref{fig:bullmore2009pipeline}) is not obvious. In most of the works, a threshold is chosen such that all the edge weights greater than a given value are kept, while other links, indicative of correlations due to noisy components are discarded. The network can then be binarized, by setting all setting all edge weights to 1. If this procedure may help yielding a better view on the underlying structure, represents an hot debate in the literaure.\todo{mettere citazione}.
-Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
-No well-accepted method to choose the \emph{correct} threshold to use, if any, has been adopted pragmatically in the brain networks literature and different scholars motivated their choice by different needs.\todo{mettere citazione}.
-Indeed, weak links may contain significant structural information, and procedures to identify the optimal tradeoff are the subject of active investigations\todo{mettere citazione}.
-As the final network density is of fundamental importance when performing community detection, the clustering outcome depends heavily on it.
-Hence, a completely data-driven thresholding procedure is needed, that helps in transforming a similarity matrix into a network. 
-
-Here, we explore the use of percolation analysis, a method grounded in statistical physics, to identify the optimal sparsification threshold for community detection in brain connectivity networks.
-Borrowing the ideas of statistical physics of granular systems~\todo{METTERECITAZIONE}, percolation is meant as a methodology to evaluate the topological connectedness in a weighted graph upon iterative removal of the weakest edges. This should enables data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
-Variants of this methods have been applied directly in different studies~\cite{gallos2012,bardella2016a,alexander-bloch2010}. 
-
-Here, by using synthetic networks endowed with a ground-truth modular structure and realistic topological features typical of human brain functional connectivity networks, we show that percolation analysis can be applied to identify the optimal sparsification threshold that maximizes information on the networks' community structure.
-We validate this approach using three different community detection methods widely applied to the analysis of brain connectivity networks: Newman's modularity, InfoMap and Asymptotical Surprise.
-Importantly, we test the effects of noise and data variability, which are critical factors to determine the optimal threshold.
-This data-driven method should prove particularly useful in the analysis of the community structure of brain networks in populations characterized by different connectivity strengths, such as patients and controls.
 
 
 \subsection{Synthetic benchmark networks}
@@ -394,8 +417,7 @@ The general idea is that, starting from an adjacency matrix with a given modular
 
 In practical terms, given an undirected weighted graph  $\mathbf{C} \in \mathbb{R}^{n\times n}$ whose community structure is known a-priori, we have calculated its nearest positive definite matrix~\cite{higham1988} and its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$. Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, we have generated correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$.
 
-Additionally, we have injected different levels of noise into $\mathbf{Y}$ prior to the computation of the correlation matrix. 
-Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
+Additionally, we have injected different levels of noise into $\mathbf{Y}$ prior to the computation of the correlation matrix. Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
 
 \begin{sidewaysfigure}
 \centering
@@ -406,7 +428,7 @@ Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
 
 We tested this idea on two different models of planted partition: a variant of the ring of cliques~\cite{fortunato2007} and the Lancichinetti-Fortunato-Radicchi (LFR) network~\cite{lancichinetti2008} (Figure \ref{fig:lfrringclique}, whose degree distribution and modular structure can be tuned to replicate topological features of real-world networks, including scale freeness~\cite{hagmann2008} and the presence of densely interconnected cores~\cite{vandenheuvel2011}.
 
-\begin{figure}[!ht]
+\begin{figure}[htb!]
 \includegraphics[width=1\textwidth]{images/lfrringclique.pdf}
 \caption{The two benchmark networks used in this study, laid out. (A) is a power-law ring of cliques, where cliques present different sizes sampled from a power-law distribution;
 (B) is the layout of an LFR network with parameters $N=600$, $\left< k \right>=12$,  $\max_k=50$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.
