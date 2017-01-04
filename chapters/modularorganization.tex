@@ -200,6 +200,8 @@ Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 Under this model a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
 Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible and loss functions that take into account the relative size of clusters are possible.
 
+\subsection{Infomap}
+Infomap is a method...
 
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it became the tool of election to inspect the community structure of networks.
@@ -273,7 +275,7 @@ In another attempt to better tolerate the resolution limit, scholars applied app
 Although this technique proved able to better tolerate the detrimental effect of the resolution limit, it only shifted the scale of the problem.
 After all, real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
 
-\subsection{Resolution-limit free quality functions and the Constant Potts Model}
+\subsection{Resolution-limit free quality functions}
 In an attempt to quantitatively characterize the resolution limit, Traag et al.~\cite{traag2011} proposed a rigorous definition of \emph{resolution-limit-free} graph partitioning.
 
 A quality function is resolution-limit-free if, given an optimal partition $\zeta$ of a graph $G$, any module $\zeta_i$ is also optimal for the graph induced by the nodes in $\zeta_i$.

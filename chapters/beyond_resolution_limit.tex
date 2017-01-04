@@ -242,7 +242,7 @@ Intercluster & $m-m_\zeta$ & $p-m-p_\zeta+m_\zeta$ & $p-p_\zeta$ \\
 \label{tab:contingency_table}
 \end{table}
 
-\section{Maximization of Surprise}\label{sec:max_surprise_fagso}
+\section{Maximization of Surprise: FAGSO}\label{sec:max_surprise_fagso}
 
 Community detection is a NP-hard problem, and heuristics have to be developed for the optimization of quality functions for relatively large networks. In their original paper, Aldecoa et al.~\cite{aldecoa2011} applied metaheuristics, involving the evaluation of Surprise for partitions resulting from seven different community detection methods, each of those maximizing different quality functions.
 Here, we describe direct maximization of Surprise by exploiting FAGSO~\cite{jiang2014}, an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree~\cite{leiserson2001}.
@@ -334,7 +334,7 @@ Yet, numerical evalaution of Asymptotical Surprise is much faster than binary Su
 \end{figure}
 
 
-\subsection{Maximization of Asymptotical Surprise}
+\subsection{Maximization of Asymptotical Surprise: PACO}
 Finding the optimal partition of a graph is an NP-hard problem~\cite{fortunato2010} and practical implementations of community detection rely on heuristic approaches that enable finding nearly-optimal solutions in a reasonable computation time.
 
 Here we introduce a powerful and general method for the optimization of Asymptotical Surprise dubbed PACO (PArtitioning Cost Optimization). PACO is a non-deterministic agglomerative algorithm based on FAGSO (described in chapter~\ref{sec:max_surprise_fagso}) and, like the Louvain method, has an element of randomness that enables a more efficient exploration of the partition landscape.
