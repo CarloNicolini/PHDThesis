@@ -1,0 +1,46 @@
+\begin{table}
+\centering
+\begin{tabular}{ccccc}
+& & \textbf{Coactivation} & \\
+\hline 
+\textbf{NMI} &Modularity & Surprise & Infomap & RB $\gamma=1.75$ \\
+\hline
+Modularity 			& \textbf{1.00} & 0.61 & 0.56 & 0.61 \\
+Surprise 			& 0.61 & \textbf{1.00} & 0.54 & 0.62 \\
+Infomap 			& 0.56 & 0.54 & \textbf{1.00} & 0.59 \\
+RB $\gamma=1.75$ 	& 0.59 & 0.61 & 0.59 & \textbf{1.00} \\ \hline 
+\end{tabular}
+\caption{Normalized Mutual Information between partitions of the coactivation network with Newman's Modularity, Infomap, Reichardt and Bornholdt and Surprise.
+We used the Fagso algorithm for Surprise maximization, the \texttt{igraph} implementation of Infomap, the Brain Connectivity Toolbox implementation for RB (\texttt{community\_louvain.m} function) and \texttt{modularity\_und.m} for Modularity.
+For each method the best solution over 100 repetitions was used to calculate NMI.}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{ccccc}
+& & \textbf{Resting State} & \\
+\hline 
+\textbf{NMI} &Modularity & Surprise & Infomap & RB $\gamma=1.75$ \\
+\hline
+Modularity & \textbf{1.00} & 0.52 &  0.70 & 0.66 \\
+Surprise & 0.52 & \textbf{1.00} & 0.53 & 0.58 \\
+Infomap & 0.70 & 0.53 & \textbf{1.00} & 0.68 \\
+RB $\gamma=1.75$ & 0.66 & 0.58 & 0.68 & \textbf{1.00} \\ \hline 
+\end{tabular}
+\caption{Normalized Mutual Information between partitions of the Resting state network with Newman's Modularity, Infomap, Reichardt and Bornholdt and Surprise.
+We used the Fagso algorithm for Surprise maximization, the \texttt{igraph} implementation of Infomap, the Brain Connectivity Toolbox implementation for RB (\texttt{community\_louvain.m} function) and \texttt{modularity\_und.m} for Modularity.
+For each method the best solution over 100 repetitions was used to calculate NMI.}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{lccccc}
+& &\textbf{Coactivation}	&	&	&\\
+\hline
+&\textbf{NMI}&	Surprise &	Infomap&	RB $\gamma=1.75$\\ \hline
+\textbf{RS} &Surprise& 0.59&0.40&0.52\\
+	&Infomap & 0.54&0.44&0.51\\
+	&RB $\gamma=1.75$ &0.59&0.41&0.53\\ \hline 
+\end{tabular}
+\caption{Normalized Mutual Information between Resting State (RS) and Coactivation (Coact) partitions. Infomap and RB methods are repeated 100 times and partitions with the highest quality are used. NMIs are approximated to second significant digit.}
+\end{table}
