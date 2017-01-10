@@ -1,3 +1,59 @@
+\subsection{Ground truth synthetic fMRI networks}
+We tested the idea of section~\ref{sec:syntheticfmri} on two different models of planted partition: a variant of the ring of cliques~\cite{fortunato2007} and the Lancichinetti-Fortunato-Radicchi (LFR) network~\cite{lancichinetti2008} (Figure \ref{fig:lfrringclique}), whose degree distribution and modular structure can be tuned to replicate topological features of real-world networks, including scale freeness~\cite{hagmann2008} and the presence of densely interconnected cores~\cite{vandenheuvel2011}.
+
+\begin{figure}[htb!]
+\includegraphics[width=1\textwidth]{images/lfrringclique.pdf}
+\caption{The two benchmark networks used in this study, laid out. (A) is a power-law ring of cliques, where cliques present different sizes sampled from a power-law distribution;
+(B) is the layout of an LFR network with parameters $N=600$, $\left< k \right>=12$,  $\max_k=50$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.
+The layout of (B) was generated with the graph-tool library~\cite{peixoto_graph_tool_2014}.}
+\label{fig:lfrringclique}
+\end{figure}
+
+One important finding in~\cite{nicolini2016} is that brain networks are organized in modules with heterogeneous size distributions.
+We implemented this property in our two types of benchmark networks.
+For the first test, we generated a ring of cliques with $300$ nodes, and sizes of the cliques sampled from a power-law with exponent $\tau_c=2$, minimum and maximum clique size respectively $\min_c=5$, $\max_c=50$ (see also Supplementary Materials S4).
+For each subject of the sample, we synthesized $150$ time-points for each node using the \texttt{neuRosim R} package~\cite{neurosim2011}. We set the baseline value of all the time series to $100$~\cite{welvaert2013}.
+
+Finally, we correlated the original synthetic time series $\mathbf{X}$ by multiplication with the matrix $\mathbf{L}$, obtained the correlated time series $\mathbf{Y}$ and added Rician noise~\cite{gudbjartsson1995} to $\mathbf{Y}$ independently for each area. The simulated data $\mathbf{Y}$ did not include slow drift components, simulated physiological noise, nor spatial noise. The average SNR was defined as $\textsc{SNR}=\bar{S}/\sigma_N$ where $\bar{S}$ is the average magnitude of the signal and $\sigma_N$ is the standard deviation of the noise~\cite{kruger2011}.
+
+In order to be more exhaustive and extend the validity of results, we repeated the same procedure on weighted LFR networks with $N=600$ nodes, sampling nodes degree from a power-law with exponent $\tau_d=2$, average degree $\left<k\right>=12$ and maximum degree $\max_k=50$.
+We set the topological and weights mixing coefficients, i.e. the average fraction of intra-cluster and inter-cluster degree and strengths, to $\mu_t=0.1$ and $\mu_w=0.1$, respectively. Planted community sizes ranged from $5$ to $50$ nodes and were sampled from a power law with exponent $\tau_c=1$. In the Supplementary Information we have extended this analysis to a wider range of network parameters.
+
+Group-level correlation matrices were computed by Fisher-transforming and averaging individual instances of the above matrices. Sparsification was obtained by removing edges with weights below the most stringent threshold that maintained the network connectedness, a procedure known as  percolation analysis~\cite{gallos2012,bardella2016a,alexander-bloch2010}. This approach measures the size of the largest connected component of the network upon iterative removal of the weakest edges and enables data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
+
+
+\subsection{Comparative community detection methods}
+The community structure of the resulting weighted sparsified matrices was detected by Asymptotical Surprise optimized with PACO and compared against two widely used methods, Infomap~\cite{rosvall2008} and Newman's Modularity~\cite{blondel2008,newman2006}, that  are affected by the resolution limit, albeit to different extents. 
+In Newman's Modularity, the size of the smallest detectable cluster is of the order of the square root of the number of edges in the entire network~\cite{fortunato2007}. Infomap has a limit that depends on the overall number of inter-cluster edges~\cite{kawamoto2015}.
+
+These two methods are based on different principles to detect the community structure of a graph.
+Newman's Modularity finds the optimal partition by maximizing intra-cluster edge-density against that of a configuration model~\cite{newman2006}. Optimization of this fitness function is typically performed using the Louvain method, a greedy agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. Here we used the Louvain implementation available in the Brain Connectivity toolbox~\cite{rubinov2010}. 
+The idea behind Infomap is the minimization of the description length~\cite{rissanen1978} of a random walker defined on the network through a set of heuristics. For this study we used the Infomap implementation available in the \texttt{igraph-0.7.1} package~\cite{igraph2006}.
+
+For all methods, including PACO, we launched $10,000$ independent runs, and picked the membership corresponding to the partition with the best value of the fitness function, the maximum for Modularity and Asymptotical Surprise, the minimum for Infomap.
+
+Degeneracy of nearly-optimal solutions, whereby similar values of the fitness function around its maximum correspond to substantially different partitions, has been observed for Newman's Modularity~\cite{good2009}. A consensus approach has been suggested in~\cite{lancichinetti2012} as a means to mitigate the degeneracy problem, yielding a stable ``average'' solution over a large set of partitions. In order to ascertain whether Surprise and Asymptotical Surprise suffer from a similar shortcoming we have performed degeneracy analysis for these fitness functions, as described in section~\ref{sec:degeneracy}.
+In short, we sampled partitions from a benchmark network consisting in 24 cliques of five nodes, connected by a single link to form a ring-like structure.
+We sampled the configuration space of partitions through a Montecarlo procedure and annotated its corresponding values of quality function for each partition. We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA). In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function. Whereas a large plateau of solutions with similar values of maximum Modularity is observed (~\ref{fig:degeneracylandscape}A, consistent with ~\cite{good2009}, Asymptotical Surprise and Surprise display a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracylandscape}B and \ref{fig:degeneracylandscape}C. Hence, degeneracy of nearly-optimal solutions does not appear to severely affect Surprise or Asymptotical Surprise, and a consensus approach is not deemed necessary for these functions.
+This analysis supports our choice to select the solution with the highest value of the fitness function.
+
+Our implementation of PACO as well as the code to generate benchmark LFR networks was written in \texttt{C++} with bindings in MATLAB\textsuperscript{\textregistered}, Octave, Python. PACO is available at \url{goo.gl/vpaggl}. The MATLAB\textsuperscript{\textregistered} wrapper of the LFR software for weighted non-overlapping networks generation is freely available at: \newline \url{github.com/carlonicolini/lfrwmx}.
+
+
+\subsection{Measures of partition quality}
+For each method, we analyzed the level of agreement of the detected community structure against the planted one in terms of Normalized Mutual Information (NMI)~\cite{danon2005}.
+Additionally, we used two different coefficients of similarity between partitions: Sensitivity and Specificity. 
+To this end, we quantified the confusion matrix $\mathbf{C}$ between the detected and planted modules. Each element $C_{ij}$ is the number of nodes in the planted community $i$ that appear in the detected community $j$.
+For each planted community we scored as true positives (TP) the nodes correctly identified as belonging to the ground-truth community, and as false positives (FP) the nodes wrongly assigned to a community; similarly false negatives (FN) were nodes wrongly classified in different communities and true negatives (TN) the nodes correctly classified as out of the community.
+Sensitivity, defined as $TP/(TP+FN)$, decreases with increasing number of False Negatives. Specificity instead is defined as $TN/(TN+FP)$ and decreases when many nodes are wrongly assigned in the same community.
+Additionally, we computed Accuracy and Matthew Correlation Coefficient. Accuracy (Acc) and Matthew Correlation Coefficient (MCC) are defined on the basis of the confusion matrix as:
+\begin{align*}
+\textrm{Acc}=\frac{(TP+TN)}{TP+FP+TN+FN} \qquad \textrm{MCC}=\frac{(TP\times TN-FP\times FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+\end{align*}
+Accuracy takes in account the proportion of correctly classified samples and can present relatively high values even in the case of poorly performing detection methods when the classes have very different size.
+The Matthew Correlation Coefficient  takes into account true and false positives and negatives. It's a balanced coefficient, to use especially when classes are very imbalanced.
+
+
 
 \section{Results}
 \section{Human resting state network}

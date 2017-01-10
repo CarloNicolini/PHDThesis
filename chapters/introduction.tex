@@ -578,14 +578,37 @@ $\langle k\rangle $ &Desidered average degree.\\
 \label{tab:lfrparams}
 \end{figure}
 
-The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods.
+The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods. Wrappers for Matlab, Octave and Python of the code to generate LFR weighted networks, is freely available at\url{https://github.com/carlonicolini/lfrwmx}.
 
 % \subsection{Power law ring of cliques}
 % The modified ring of clique network as indicated in the main text is composed by a ring structure of cliques whose sizes are randomly sampled from a power-law distribution with exponent $\tau_c=1$. 
 % The power-law distribution of sizes of cliques in this benchmark is consistent with the heterogeneous size of modules observed in brain connectivity using the binary version of Surprise. An example realization of the benchmark network is shown in Figure \ref{fig:ring_of_clique_powerlaw}.
 % \input{include/powerlaw_ring_clique.tex}
 
-%%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%5
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Synthetic fMRI benchmark networks}\label{sec:syntheticfmri}
+Here we introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested, as shown in~\cite{nicolini2017}.
+
+The general idea is that, starting from an adjacency matrix with a given modular structure, one can generate time-courses for each of the nodes whose pairwise correlations reproduce the edge structure of the original matrix.
+Noise can be added to the time-courses, and the resulting correlation matrix will provide a noisy representation of the original one. This procedure can be repeated multiple times to produce different datasets that represent different ``subjects'' in the study.
+
+In practical terms, given an undirected weighted graph represented by the correlation matrix $\mathbf{C} \in \mathbb{R}^{n\times n}$ of $n$ time signals whose community structure is known a-priori, one calculates the nearest positive definite matrix~\cite{higham1988} and its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$. Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, one then generates correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$.
+Additionally, one can inject different levels of noise into $\mathbf{Y}$ prior to the computation of the correlation matrix. Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
+
+\begin{sidewaysfigure}
+\centering
+\includegraphics[height=0.39\textheight]{images/flowchart.pdf}
+\caption{Flowchart of the generation and analysis of the synthetic datasets. In A the network with a pre-defined community structure is generated. The adjacency matrix is then processed in block B to obtain the nearest positive definite matrix for the Cholesky decomposition. This enables the generation of node-wise time-courses into which different levels of noise can be injected. The procedure is repeated multiple times to generate different instances (mimicking different subjects in the sample). Finally, correlation matrices are calculated for each instance (block C), and Fisher transformed to calculate the average adjacency matrix for analysis by community detection algorithms (block D). Lastly, resulting partitions are compared with the original, planted one in terms of NMI.}
+\label{fig:flowchart}
+\end{sidewaysfigure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%
 \subsection{Comparing community structure in networks}
 Some benchmark networks come with an annotated community structure representing the ground-truth assignment of nodes into communities, the annotations being made by experts in the field, like for example the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
 Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth community.
@@ -675,3 +698,4 @@ Hence, a completely data-driven thresholding procedure is needed, that helps in 
 Here, we explore the use of percolation analysis, a method grounded in statistical physics, to identify the optimal sparsification threshold for community detection in brain connectivity networks. The percolation threshold corresponds to the point where the largest connected component of the network starts breaking apart. A threshold just below this point is the one that maximizes the information extracted by subsequent application of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies. 
 
 The most common choice when comparing networks from different groups, is to adopt a fixed threshold that keeps the same number of edges in the two groups. This does not take in account the particularities of the analyzed group and datasets. Percolation analysis should enable data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations. It is indeed important to stress that the distribution of the weight as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror these information. To this end, it has been demonstrated, especially in patient group such as in schizophrenia, autism or alcoholism, that the brain presents weaker connectivity than in health control persons~\cite{alexander-bloch2010}.
+
