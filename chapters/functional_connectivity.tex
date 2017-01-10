@@ -28,21 +28,21 @@ This analysis, shown in Figure~\ref{fig:figure_8_percolation_analysis}, revealed
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.5\linewidth]{images/figure_8_percolation_analysis_compressed.pdf}
+\includegraphics[width=0.7\linewidth]{images/figure_8_percolation_analysis_compressed.pdf}
 \caption{Percolation analysis for the coactivation matrix (A) and resting state matrix (B).}
 \label{fig:figure_8_percolation_analysis}
 \end{figure}
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1\linewidth]{images/resting_state_study_threshold.pdf}
+\includegraphics[width=0.7\linewidth]{images/resting_state_study_threshold.pdf}
 \caption{Different Resting State networks were generated varying the binarization threshold in a range that changed the number of edges up to the 15th quantile of the edge weight distribution. This corresponds to threshold ranges of 0.015-0.03 for the co-activation network, and 0.60-0.62 for the resting state network. The resulting networks were partitioned by Susrprise maximization. The value of Surprise, the Normalized Mutual Information between the resulting optimal partitions, the number of edges and the number of communities are reported in panel A, B, C and D, respectively.}
 \label{fig:figure_9_rs_threshold_study}
 \end{figure}
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1\linewidth]{images/coactivation_study_threshold.pdf}
+\includegraphics[width=0.7\linewidth]{images/coactivation_study_threshold.pdf}
 \caption{Different coactivation networks were generated varying the binarization threshold in a range that changed the number of edges up to the 15th quantile of the edge weight distribution. This corresponds to threshold ranges of 0.015-0.03 for the co-activation network, and 0.60-62 for the resting state network. The resulting networks were partitioned by Susrprise maximization. The value of Surprise, the Normalized Mutual Information between the resulting optimal partitions, the number of edges and the number of communities are reported in panel A, B, C and D, respectively.}
 \label{fig:figure_10_rs_threshold_study}
 \end{figure}
@@ -63,9 +63,9 @@ The partitions obtained by Surprise maximization for the two networks are shown 
 These modules are delimited by blue lines that show the wide distribution in size of the components, ranging from communities with 119 nodes and 4586 edges down to singletons.
 The size distributions of the modules are different for the two networks, with a more rapid drop and a fatter tail in the coactivation network compared with the resting state network.
 
-The complete list of communities, with anatomical labels and stereotaxic coordinates for all nodes~\cite{laird2010,lancaster2007,tzourio2002}, as well as the density and number of nodes of each community found by Modularity and Surprise optimization, are reported in a tabular form in the Supplementary Materials (Table S1-S4).
+The complete list of communities, with anatomical labels and stereotaxic coordinates for all nodes~\cite{laird2010,lancaster2007,tzourio2002}, as well as the density and number of nodes of each community found by Modularity and Surprise optimization, are reported in tabular form in the appendix (Tables~\ref{tab:densities_tables_mod_coact},~\ref{tab:densities_tables_modularity_rs},~\ref{tab:densities_tables_surprise_coact},~\ref{tab:densities_tables_surprise_rs}).
 
-Analysis by Surprise suggests that the modular structure of resting state functional connectivity brain networks comprises modules of very different sizes, in sharp contrast with previous studies that have used resolution-limited functions like Newman's Modularity (see~\cite{meunier2010} for a review). To emphasize this point, we have also partitioned the coactivation and resting state networks using Infomap~\cite{rosvall2008} and a multiscale version of Modularity with an adjustable resolution parameter~\cite{reichardt2006} provided by the Brain Connectivity Toolbox~\cite{rubinov2010}. Interestingly, increasing the resolution parameter results in a larger number of smaller communities that are however characterized by a relatively homogenous size distribution, a result of the intrinsic scale built into these methods (Figure~\ref). Additionally, we have made a quantitative comparison between the partitions obtained by Surprise, Infomap and the Reichardt and Bornholdt's method~\cite{reichardt2006} by calculating the Normalized Mutual Information between the resulting community structures (Tables S6 and S7 in the Supplementary Material). Despite the fact that these methods retrieve a few more modules that Newman's Modularity, they fail to capture the heterogeneous distribution of clusters revealed by Surprise. 
+Analysis by Surprise suggests that the modular structure of resting state functional connectivity brain networks comprises modules of very different sizes, in sharp contrast with previous studies that have used resolution-limited functions like Newman's Modularity (see~\cite{meunier2010} for a review). To emphasize this point, we have also partitioned the coactivation and resting state networks using Infomap~\cite{rosvall2008} and a multiscale version of Modularity with an adjustable resolution parameter~\cite{reichardt2006} provided by the Brain Connectivity Toolbox~\cite{rubinov2010}. Interestingly, increasing the resolution parameter results in a larger number of smaller communities that are however characterized by a relatively homogenous size distribution, a result of the intrinsic scale built into these methods (Figure~\ref). Additionally, we have made a quantitative comparison between the partitions obtained by Surprise, Infomap and the Reichardt and Bornholdt's method~\cite{reichardt2006} by calculating the Normalized Mutual Information between the resulting community structures (Tables~\ref{tab:}). Despite the fact that these methods retrieve a few more modules that Newman's Modularity, they fail to capture the heterogeneous distribution of clusters revealed by Surprise. 
 
 In order to assess the significance in neurofunctional terms of the finer partitions obtained by Surprise, we show the node distribution as an overlay of the MNI brain atlas template for the 10 largest modules of the resting state network in Figure \ref{fig:figure_4_resting_state_communities}. The communities highlighted by Surprise show a correspondence with some well known functional networks previously identified by multivariate analysis (e.g. Independent Component Analysis) of functional MRI data~\cite{raichle2001,salvador2005,damoiseaux2006,deluca2006}, and with well defined, segregated anatomical or functional districts.
 
@@ -90,6 +90,7 @@ In order to assess the significance in neurofunctional terms of the finer partit
 \label{fig:figure_11_gamma_1_75_rs_coact}
 \end{figure}
 
+\input{include/all_nmi.tex}
 
 The largest communities of the resting state network correspond to the primary sensorimotor cortex~\cite{biswal1995}, primary visual and extra-striate visual network, fronto-parietal lateralized networks~\cite{smith2009} as well as the so-called default mode network (DMN)~\cite{raichle2001,fransson2006}.
 The attentional frontoparietal networks (FPAN)~\cite{beckmann2005} were detected as two separate, lateralized subnetworks, in agreement with~\cite{deluca2006} although other studies have identified a single, bilateral FPAN~\cite{markett2014}.
@@ -117,7 +118,7 @@ Figures \ref{fig:figure_6_ga_rs_coact}A and \ref{fig:figure_6_ga_rs_coact}B show
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.5\linewidth]{images/figure_6_ga_rs_coact.pdf}
-\caption{Classification of representative nodes according to their intra- and intermodule connections for the resting state (A) and coactivation (B) networks. Empty circles and full circles indicate the position of each node in the Guimera' and Amaral’s plot after partition by Modularity or Surprise, respectively. An overall increase in the participation coefficient, a measure of the intermodule connectivity, is observed for the Surprise partition relative to the Modularity partition. To avoid cluttering of the graph, we only reported those nodes with a degree higher than the average within a Standard Deviation, and whose classification is different in the two partitions. The abbreviations of the brain regions corresponding to the nodes are reported in the Supplementary material, Table S5.}
+\caption{Classification of representative nodes according to their intra- and intermodule connections for the resting state (A) and coactivation (B) networks. Empty circles and full circles indicate the position of each node in the Guimera' and Amaral’s plot after partition by Modularity or Surprise, respectively. An overall increase in the participation coefficient, a measure of the intermodule connectivity, is observed for the Surprise partition relative to the Modularity partition. To avoid cluttering of the graph, we only reported those nodes with a degree higher than the average within a Standard Deviation, and whose classification is different in the two partitions. The abbreviations of the brain regions corresponding to the nodes are reported in the appendix, Table~\ref{tab:abbreviations}.}
 \label{fig:figure_6_ga_rs_coact}
 \end{figure}
 

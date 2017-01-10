@@ -440,14 +440,7 @@ P(G)={p}_{ER}^{m}(1-p_{\textrm{ER}})^{\binom{n}{2}-m}
 Differently from the $G(n,m)$ model, because of the Bernoulli distribution of edges, this graph model is also called \emph{Bernoulli random graph} or \emph{Poissonian random graph} and generally intended as \emph{the} random graph.
 
 As every graph obtained from the Erd\H{o}s-Rényi model is a sample from a probability space, a description in terms of ensemble averages is more appropriate.
-In the ER model, the expected number of edges in such a graph is the average over $\binom{n}{2}$ independent coin tosses with probability $p_{\textrm{ER}}$:
-\begin{equation}
-\langle  m  \rangle = \binom{n}{2}p_{\textrm{ER}}
-\end{equation}
-and the expected degree $\langle  k \rangle $ is the same for every node
-\begin{equation}
-\langle  k \rangle = p_{\textrm{ER}}(n-1).
-\end{equation}
+In the ER model, the expected number of edges in such a graph is the average over $\binom{n}{2}$ independent coin tosses with probability $p_{\textrm{ER}}$: $\langle  m  \rangle = \binom{n}{2}p_{\textrm{ER}}$ and the expected degree $\langle  k \rangle = p_{\textrm{ER}}(n-1)$ is the same for every node.
 The probability that a node $i$, chosen at random, has degree $k$ is called the \emph{degree distribution}. In general terms, such probability is expressed as:
 \begin{equation}
 \Pr(k) = \frac{\langle  |\{ i \| k_i=k \}| \rangle }{n}.
@@ -458,7 +451,7 @@ In the ER model, a given node is connected with probability $p_{\textrm{ER}}$ to
 \end{equation}
 a binomial distribution that can be approximated to a Poisson distribution for large $n$:
 \begin{equation}
-\Pr(k) \approx \frac{(n p_{\textrm{ER}})^k e^{-n p_{\textrm{ER}}} }{k!}.
+\Pr(k) \approx \frac{(n \, p_{\textrm{ER}})^k e^{-n \, p_{\textrm{ER}}} }{k!}.
 \end{equation}
 \bigbreak
 In generalizing the concepts of random networks models, one can define every simple graph on $n$ nodes as the output of a random process where each edge $(i,j) $ is sampled with a probability $\Pr(i,j)_{ \boldsymbol \theta}$ with $\boldsymbol \theta$ a vector of hyperparameters. In the simplest case of the ER graph, this generative model is an uniform probability distribution with $\boldsymbol \theta=p_{\textrm{ER}}$ as every pair of nodes is linked by an edge with constant probability:
