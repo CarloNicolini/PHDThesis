@@ -1,28 +1,33 @@
 \documentclass[a4paper,twoside]{book}
+
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage[english]{babel}
+\usepackage[left=4cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
-%\usepackage[sc]{mathpazo} % Use the Palatino font
-%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{appendix}
+\usepackage{caption}
+\usepackage{clrscode}
+\usepackage{float} % to create the new float named Algorithm
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{float} % to create the new float named Algorithm
-%\usepackage{clrscode}
-\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
-\usepackage{tikz}
-\usetikzlibrary{fit}
-\usepackage{tikzscale}
-\usepackage{appendix}
+\usepackage{hyphenat}
+\usepackage{lettrine}
 \usepackage{longtable}
-\usepackage{tkz-graph}
-\usepackage{tabularx}
-\usepackage{caption}
-\usepackage{subcaption}
 \usepackage{microtype}
+\usepackage{rotating}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{tikzscale}
+\usepackage{tikz}
+\usepackage{tkz-graph}
+\usepackage{fancyhdr}
+\usetikzlibrary{fit}
 
 \newfloat{Algorithm}{tbp}{lop}
-\linespread{1.12} % Line spacing - Palatino needs more space between lines
+\PassOptionsToPackage{hyphens}{url}
 
 \definecolor{halfgray}{gray}{0.55}
-
-
+\definecolor{halfgray}{gray}{0.55}
+\linespread{1.12} % Line spacing - Palatino needs more space between lines

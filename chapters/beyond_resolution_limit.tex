@@ -1,5 +1,3 @@
-\bigbreak
-
 \lettrine{I}{n} the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
 We explored the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
 Additionally, the question whether 
@@ -9,8 +7,7 @@ Surprise maximization in brain co-activation and functional connectivity resting
 Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure. 
 In this chapter we will introduce Surprise from its theoretical foundations and discuss its properties in details. Finally, an explicitly made algorithm for Surprise optimization in binary graphs is presented, with a comparison of its performance on benchmark networks.
 
-\section{Binary networks}
-\subsection{A probabilistic interpretation of community detection}\label{sec:probability_clustering}
+\section{Probabilistic approach to clustering in binary networks}\label{sec:probability_clustering}
 As previously described, no spin-glass based additive quality function, including Newman's Modularity, is by any means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
 In other terms, no spin-glass based quality function is telling us the level of statistical confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
 
@@ -50,7 +47,7 @@ Differently from Modularity, $S(\zeta)=1$ both for the partition where every nod
 It should be noted that due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is totally equivalent with respect to optimum solutions, where higher values correspond to better clustering.
 Different authors~\cite{arnauVMarsS2005,fleck2014} refer to $S$ as Surprise, whereas others~\cite{aldecoa2011,aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of~\cite{fleck2014} where Surprise is indicated as $S$ defined in Eq.~\ref{eq:surprise} and indicate $\hat{S}$ where needed.
 
-\subsection{General properties of Surprise}
+\subsection{General properties}
 As noted by~\cite{fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ is depending only on the number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely $S:=S(m_\zeta,p_\zeta)$.
 In estabilishing the domain of validity of $(m,p,m_\zeta,p_\zeta)$ the urn model is of help. A valid clustering $\zeta$ of mutually disjoint communities automatically satisfies intuitive but important requirements:
 \begin{obs}
@@ -134,7 +131,7 @@ In the next sections we will show to what extent Surprise is affected by the res
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Surprise is a statistical test}\label{sec:surprisefishertest}
+\subsection{Statistical test interpretation}\label{sec:surprisefishertest}
 Surprise considers the problem of community detection as the one of making the intracluster density as further as possible from the global density in statistical terms. In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis $H_0$ that the intracluster density is the same as the graph density.
 It turns indeed out that this problem has an equivalent description in statistics, where one seeks to maximize the \emph{odds-ratio} of the $2 \times 2$ contingency table defined in Table~\ref{tab:contingency_table}.
 
@@ -274,8 +271,6 @@ The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Oct
 \label{fig:fagso_working}
 \end{figure}
 
-\subsection{Benchmarking FAGSO}
-
 
 \section{From binary to weighted networks}
 As described and illustrated in the previous chapter, a fundamental limitation of Surprise lies in its definition in terms of discrete probability and binomial coefficients that make it applicable only to binary networks, i.e. graphs with edge values $1$ or $0$.
@@ -338,7 +333,7 @@ Yet, numerical evalaution of Asymptotical Surprise is much faster than binary Su
 \end{figure}
 
 
-\subsection{Maximization of Asymptotical Surprise: PACO}
+\section{Maximization of Asymptotical Surprise: PACO}
 Finding the optimal partition of a graph is an NP-hard problem~\cite{fortunato2010} and practical implementations of community detection rely on heuristic approaches that enable finding nearly-optimal solutions in a reasonable computation time.
 
 Here we introduce a powerful and general method for the optimization of Asymptotical Surprise dubbed PACO (PArtitioning Cost Optimization). PACO is a non-deterministic agglomerative algorithm based on FAGSO (described in chapter~\ref{sec:max_surprise_fagso}) and, like the Louvain method, has an element of randomness that enables a more efficient exploration of the partition landscape.
@@ -355,7 +350,7 @@ The function \textsc{Paco} takes as input a graph G and returns the nodes commun
 
 \input{include/misc/paco.tex}
 
-\subsection{Computational running time analysis}
+\subsection{Running time analysis}
 We applied PACO on a full-resolution voxelwise connectivity matrix with 51,653 nodes and almost 2 million edges. PACO took 14 minutes for a single repetition on a server with Intel Xeon E5-2643@ 3.40 Ghz CPU and 256 GB ram.
 We estimated that 2000 repetitions of PACO would take approximately 2.5 weeks on this server. We also tried to run PACO on a standard office PC with 16 GB memory and an Intel Core i7: it took almost 40 minutes. It’s important to notice that the running time of PACO is mainly determined by the computation of Jaccard indexes in the initial step.
 The running time for this computation is in the order of $O(nd^2)$ where $n$ is the number of nodes and $d$ is the average degree of nodes. On a desktop workstation with a 2.5 GHz CPU, PACO runs in some tenths of seconds on a single repetition for a graph of around 600 nodes with a density close to 10\%, typical of brain networks. A small benchmark of PACO running times on a desktop workstation is shown in Figure~\ref{fig:paco_benchmark}, where we found optimal Surprise partitions of a LFR network with the parameters described in the text but increasing number of nodes.
@@ -367,7 +362,7 @@ The running time for this computation is in the order of $O(nd^2)$ where $n$ is 
 \label{fig:paco_benchmark}
 \end{figure}
 
-\subsection{Best quality solution and number of repetitions}
+\subsection{Repeatability}
 In order to get a better idea of how fast the PACO method converges to a maximum, we have plotted the optimal value of Asymptotical Surprise over the 10000 runs for one instance of the LFR network, and for the resting state data-set presented in the Manuscript (Figures~\ref{fig:paco_variability_lfr},\ref{fig:paco_variability_bullmore}).
 From these graphs, it appears that 2000 runs may be sufficient to reach stable community detection for the experimental data-set. A near-optimum value is reached earlier for the LFR network, but it should be noted that we have taken an instance of the synthetic network with no-noise added.
 
@@ -395,12 +390,12 @@ In Figure~\ref{fig:avgmutmuw} the performance of the three methods is comparable
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.5\textwidth]{images/avg_nmi_allmethods_lfr_errorbars.pdf}
+\includegraphics[width=0.75\textwidth]{images/avg_nmi_allmethods_lfr_errorbars.pdf}
 \caption{NMI of the retreived vs planted partition of an LFR network as a function of $\mu_t=\mu_w$ for the three community detection methods}
 \label{fig:avgmutmuw}
 \end{figure}
 
-\subsection{Comparison of PACO and FAGSO}
+\section{Comparison of PACO and FAGSO}
 
 FAGSO is an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree and is described in~\cite{nicolini2016}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation. At the beginning, each community consists only of one vertex. Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set. This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
 

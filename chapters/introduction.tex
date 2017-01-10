@@ -373,8 +373,8 @@ It is indeed more and more recognized~\cite{tononi1994,tononi1998,deco2015} that
 The network communities and hubs support this segregation-integration balance. Recently, experiments in which computational dynamical processes are simulated over the topology of the whole-brain networks~\cite{deco2015} have shed light on the role of communities in shaping the cortical activity. Indeed it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs (and the rich clubs) are deputed to convey that information over the whole brain.
 
 
-\subsection{Nodal roles}
-Every node in a network is characterized by its role in relation to other nodes. Given a clustering $\zeta$, some nodes act as bridges between two or more communities, having neighbors in one or other module. Other nodes instead share the majority of neighbors inside their same community.
+\subsection{Nodal roles and hubs classification}
+Every node in a network is characterized by its role in relation to other nodes. Once a clustering $\zeta$ is imposed on a graph, some nodes act as bridges between two or more communities, having neighbors in one or other module. Other nodes instead share the majority of neighbors inside their same community.
 To investigate differences in nodal roles as determined by different community detection methods, it's usual to attribute each node two parameters~\cite{guimera2005}.
 The first, dubbed \emph{participation coefficient}, indicated by $P_i$ and included in the range $[0,1]$ reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} 
 \begin{equation}\label{eq:participationcoeff}
@@ -588,24 +588,6 @@ The LFR model is of great importance as it served as a benchmark test for commun
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Synthetic fMRI benchmark networks}\label{sec:syntheticfmri}
-Here we introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested, as shown in~\cite{nicolini2017}.
-
-The general idea is that, starting from an adjacency matrix with a given modular structure, one can generate time-courses for each of the nodes whose pairwise correlations reproduce the edge structure of the original matrix.
-Noise can be added to the time-courses, and the resulting correlation matrix will provide a noisy representation of the original one. This procedure can be repeated multiple times to produce different datasets that represent different ``subjects'' in the study.
-
-In practical terms, given an undirected weighted graph represented by the correlation matrix $\mathbf{C} \in \mathbb{R}^{n\times n}$ of $n$ time signals whose community structure is known a-priori, one calculates the nearest positive definite matrix~\cite{higham1988} and its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$. Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, one then generates correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$.
-Additionally, one can inject different levels of noise into $\mathbf{Y}$ prior to the computation of the correlation matrix. Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
-
-\begin{sidewaysfigure}
-\centering
-\includegraphics[height=0.39\textheight]{images/flowchart.pdf}
-\caption{Flowchart of the generation and analysis of the synthetic datasets. In A the network with a pre-defined community structure is generated. The adjacency matrix is then processed in block B to obtain the nearest positive definite matrix for the Cholesky decomposition. This enables the generation of node-wise time-courses into which different levels of noise can be injected. The procedure is repeated multiple times to generate different instances (mimicking different subjects in the sample). Finally, correlation matrices are calculated for each instance (block C), and Fisher transformed to calculate the average adjacency matrix for analysis by community detection algorithms (block D). Lastly, resulting partitions are compared with the original, planted one in terms of NMI.}
-\label{fig:flowchart}
-\end{sidewaysfigure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 
 %%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%
@@ -683,7 +665,7 @@ It's worth noting that the majority of the aforementioned metrics do not take in
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% PERCOLATION ANALYSIS %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Percolation analysis}
+\subsection{Percolation analysis}\label{sec:percolation_analysis}
 Functional connectivity networks are typically obtained as similarity matrices of physiological time signals over different brain areas. The process of converting such similarity matrices into networks, described in the previous chapters is not obvious.
 In most of the works, a threshold is chosen such that all the edge weights greater than a given value are kept, while other links, indicative of correlations due to possibly noisy components are discarded.
 Sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable. However, weak links may also contain significant structural information, and procedures to identify the optimal tradeoff are the subject of active.
