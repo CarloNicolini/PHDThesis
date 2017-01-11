@@ -463,11 +463,11 @@ Recently, experiments in which computational dynamical processes are simulated o
 Indeed it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs (and the rich clubs) are deputed to convey that information over the whole brain.
 
 
-\subsection{Nodal roles and hubs classification}
+\subsection{Cartographic classification of nodes}
 Every node in a network is characterized by its role in relation to other nodes.
 Once a clustering $\zeta$ is imposed on a graph, some nodes act as bridges between two or more communities, having neighbors in one or other module.
 Other nodes instead share the majority of neighbors inside their same community.
-To investigate differences in nodal roles as determined by different community detection methods, it's usual to attribute each node two parameters~\cite{guimera2005}.
+To investigate differences in nodal roles as determined by different community detection methods, Guimera and Amaral~\cite{guimera2005} introduced a cartographic characterization of nodes that has two parameters.
 The first, dubbed \emph{participation coefficient}, indicated by $P_i$ and included in the range $[0,1]$ reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} 
 \begin{equation}\label{eq:participationcoeff}
 P_i = 1 - \sum_c \left( \frac{k_{ic}}{k_i} \right)^2
@@ -480,9 +480,8 @@ z_i = \frac{k_i - \langle  k_{c_i} \rangle }{\sigma_{k_{c_i}}}
 where $k_i$ is the node degree,  $\langle  k_{c_i} \rangle $ is the average degree of nodes in the same module $c$ of node $i$ and $\sigma_{k_{c_i}}$ the standard deviation of the degree of nodes in the same module $c$ of node $i$.
 
 Hub classification is critical for the interpretation of the roles played by the highly connected nodes within the network structure.
-The Guimera and Amaral~\cite{guimera2005} classification scheme, specifies for every node its participation coefficient and within-module degree z-score, lying the nodes over a 2D cartesian space, divided into seven regions as shown in Figure~\ref{fig:gagraph}.
+The Guimera and Amaral~\cite{guimera2005} classification scheme places on a two dimensional plane participation coefficient and within-module degree z-score of every node. Different regions of the two dimensional plane are divided empirically into seven regions as shown in Figure~\ref{fig:gagraph}.
 Depending on the specific cut-off values of participation coefficient and intra-modular connectivity, the nodes are defined as ultra-peripheral (region R1), peripheral (region R2), connector non-hubs (region R3), kinless non-hubs (region R4), provincial hubs (region R5), connector hubs (region R6) and kinless hubs (region R7).
-
 
 Naturally, connector hubs are of great importance for communication between modules (Figure~\ref{fig:brain_network_communities}).
 Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
