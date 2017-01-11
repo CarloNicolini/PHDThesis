@@ -20,7 +20,7 @@ Further, meta-analytic studies of both the cat~\cite{scannell1995} and macaque~\
 Unfortunately though, until recently, most of the brain network studies in animal models, were based on anatomical connectivity measured by means of post-mortem inspections. While in the past, histological staining was the most adopted methodology to inspect the wiring of white matter in the animal brain, the last few decades have seen the rising of fluorescence based tract-tracing, that evolved to a level where single axons can be traced with unprecedented precision~\cite{oh2014}. Not only methods to investigate the structural connectivity have greatly evolved, but also new cellular resolution recording systems, like light-sheet microscopy~\cite{ahrens2013}, real-time in-vivo two-photon cortical imaging~\cite{dombeck2010,leinweber2014} and spike time series recordings on multielectrode arrays~\cite{shimono2015} take part in the quest to shed light on the relation between functional networks and their underlying anatomical substrate.
 
 %%% PARTE FUNZIONALE %%%
-Most of the scholars believe indeed that functional communication between brain regions is very likely to be at the basis of complex cognitive processes.
+Most of the scholars agree indeed that functional communication between brain regions is very likely to be at the basis of complex cognitive processes.
 Hence, examining functional connectivity in the human brain may provide new insights in its organization.
 In humans, non-invasive studies of the brain community structure largely reflect the analytical methodologies adopted in animals.
 In both contexts, functional connectivity is suggested to describe the relationship between neuronal activity patterns of anatomically separated regions that reflect the level of information exchange between them.
@@ -30,19 +30,19 @@ Only two decades after the invention of fMRI, it was indeed observed that it was
 Animals instead like mice or rats are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates.
 The time courses of the BOLD signals form a pattern of spontaneous and synchronous oscillations, strongly correlated between anatomically separated, possibly remote regions of the brain.
 
-An active exchange of information between neural populations is thought to be at the hearth of the rs-fMRI signal. The local increase of metabolic demand for oxygenated blood to fuel the neuronal activity increments the vascular flow, favoring the consumption of oxygen from the neurons. Such metabolic cascade results in the change of the magnetic properties of hemoglobin from the oxygenated to deoxygenated hemoglobin, the source of MRI signal. Other confounds such as the influence of the cardiac and respiratory rhythms on the rs-fMRI oscillations have been ruled out by a number of studies~\cite{cordes2000,cordes2001}.
+An active exchange of information between neural populations is thought to be at the hearth of the rs-fMRI signal. The local increase of metabolic demand for oxygenated blood to fuel the neuronal activity increments the vascular flow, favoring the consumption of oxygen from the neurons. Such metabolic cascade results in the change of the magnetic properties of hemoglobin that transitions from oxygenated to deoxygenated state, yielding local magnetic susceptibility variations measured by MRI. Other possible confounds of the rs-fMRI signal, such as the influence of the cardiac and respiratory rhythms on the rs-fMRI oscillations have been ruled out by a number of studies~\cite{cordes2000,cordes2001}.
 Finally, the rs-fMRI signal has been unambiguously marked as the signal of neural activity with a study that positively correlates spontaneous fMRI fluctuations to the electrophysiological recordings of neural spiking~\cite{shmuel2002}. All these experimental evidences makes rs-fMRI oscillations a robust measure to examine functional connections between brain regions on a whole-brain scale.
 
 The structure of the correlations can be quantified by a multitude of different approaches. 
 Multivariate methods to detect clusters have indeed been readily applied to brain functional networks.
 In general, they showed that the human brain is functionally organized into a hierarchy of clusters of interconnected regions and that the boundaries of such modules reflect specific aspects of cognitive and behavioral aspects.
 Differently from structural networks, since functional networks do not measure physical relations with associated metabolic or material cost, they may feature long-distance connections.
-Indeed many of the observed functional communities are spread over large parts of the cortex, with some of them anatomically disconnected.
+Actually many of the observed functional communities are spread over large parts of the cortex, with some of them anatomically disconnected.
 In particular the so-called default-mode network, as well as the fronto-parietal control network, dorsal and ventral attentional networks are made up of spatially remote components~\cite{power2011}.
 
 The evidence of modules in functional networks is based on their robustness and consistency within a variety of MRI protocols, different analysis methods, and MRI scanners.
 The most prominent modules are identified by multivariate methods such as Independent Component Analysis\footnote{Independent Component Analysis or ICA is a computational technique for identifying hidden statistically independent sources from multivariate data. In its basic form, ICA decomposes a 2D data matrix (e.g. time vs voxels) into separate components that have distinct characteristics.}~\cite{beckmann2012,calhoun2001}, Probabilistic Independent Component Analysis~\cite{beckmann2004,beckmann2005} and different forms of data clustering~\cite{cordes2002,lee2012}.
-More specifically, the majority of analysis techniques are concordant in identifying a set of robust functionally linked regions, or communities in resting state networks.
+The majority of analysis techniques are concordant in identifying a set of robust functionally linked regions, or \emph{communities} in resting state networks.
 Such communities, roughly highlighted as colored ellipses in Figure~\ref{fig:vandenheuvelnetworks} span the primary somatosensory network, the primary visual and extra-striate network, a network consisting of bilateral temporal/insular areas and anterior cingulate cortex regions, left and right lateralized networks consisting of superior parietal and superior frontal regions (often reported as one single network) and the so-called default-mode network spanning precuneus, medial frontal, inferior parietal cortical regions and medial temporal lobe.
 
 \begin{figure}[!ht]
@@ -59,18 +59,19 @@ Subcortical communities have also been identified with rs-fMRI. With appropriate
 
 The evidence of modules in functional brain networks has been explained as the possible basis of a large variety of processes. By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{baddeley2003}.
 Interestingly modules of functional brain networks are non-static as recent studies found that they tend to become less and less modular with aging~\cite{meunier2009a}. In all respects, the experimental evidence of the modular organization is a powerful and robust marker against which to measure the health of the brain. 
-Shortly, there are a number of reasons, why the brain is organized as a modular system, from the reduced metabolic cost, to the evolutionary advantage of evolving locally optimal substructures.
+There are a number of reasons, why the brain is organized as a modular system, from the reduced metabolic cost, to the evolutionary advantage of evolving locally optimal substructures.
 Thus, modularity is not only a biologically plausible but it is probably necessary to maintain the rich repertoire of cognitive tasks that our brain engages in every day of our life.
 
-Despite the biological evidence of modularity in brain networks, the number modules returned by clustering methods is often chosen in advance, based on the experience of the researcher, even if some complex approaches are available~\cite{still2004}. Further, the size of the returned clusters has never been analyzed in details, especially when graph-theoretical methods were applied.
+Despite the biological evidence of modularity in brain networks, the number modules returned by clustering methods is often chosen in advance, based on the experience of the researcher, even if some complex approaches are available~\cite{still2004}. Further, to my knowledge the size distribution of the returned clusters has never been analyzed in details, especially when graph-theoretical methods were applied.
 This is the case of one of the most fortunate and widely adopted method, Newman's Modularity~\cite{newman2006}.
-Despite its popularity and merits, Newman's approach presents some important limitations. Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}. As a consequence, even unambiguously defined modules, like complete sub-graphs or cliques, may be unduly merged into larger communities when they are too small compared to the size of the network. Subsequent work by various groups has shown that the resolution limit is quite pervasive~\cite{lancichinetti2009,traag2011,squartini2015,lancichinetti2011,kawamoto2015}, and affects, to a different extent, many other methods, including Reichardt and Bornholdt’s~\cite{reichardt2006}, Arenas and Gomez'~\cite{arenas2008}, Ronhovde and Nussinov's~\cite{ronhovde2009}, Rosvall and Bergstrom's (\emph{Infomap})~\cite{rosvall2008,kawamoto2015} and others.
+Despite its popularity and merits, Newman's approach presents some important limitations. Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
+As a consequence, even unambiguously defined modules, like complete sub-graphs or cliques, may be unduly merged into larger communities when they are too small compared to the size of the network. Subsequent work by various groups has shown that the resolution limit is quite pervasive~\cite{lancichinetti2009,traag2011,squartini2015,lancichinetti2011,kawamoto2015}, and affects, to a different extent, many other methods, including Reichardt and Bornholdt’s~\cite{reichardt2006}, Arenas and Gomez'~\cite{arenas2008}, Ronhovde and Nussinov's~\cite{ronhovde2009}, Rosvall and Bergstrom's (\emph{Infomap})~\cite{rosvall2008,kawamoto2015} and others.
 
 Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}. However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter. Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
 However, real-world networks are characterized by the coexistence of clusters of very different sizes, and no single parameter can adapt to the variety of network topologies observed in nature.
 Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 
-In the following sections we are going to illustrate the current graph-theoretical approaches for community detection in networks, to discuss the theory of community detection, and end evidentiating the practical problems of Modularity maximization.
+In the following sections we are going to illustrate the current graph-theoretical approaches for community detection in networks and to discuss the theory of community detection, highlighting the practical problems of Modularity maximization.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -202,8 +203,8 @@ Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 Under this model a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
 Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible and loss functions that take into account the relative size of clusters are possible.
 
-\subsection{Infomap}
-Infomap is a method...
+\subsection{Beyond Modularity: Infomap}
+Infomap is a method that has its bases\todo{descrivere brevemente infomap}
 
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it became the tool of election to inspect the community structure of networks.
@@ -258,7 +259,7 @@ An even more striking example of how the resolution limit affects Modularity is 
 If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs.
 Yet extending the number of cliques, Modularity may merge cliques into groups of three, fours etc.
 
-\subsection{Resolution parameter}
+\subsection{Resolution parameter}\label{sec:resolution_parameter}
 Different authors proposed solutions that try to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
 
 In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
@@ -277,7 +278,7 @@ In another attempt to better tolerate the resolution limit, scholars applied app
 Although this technique proved able to better tolerate the detrimental effect of the resolution limit, it only shifted the scale of the problem.
 After all, real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
 
-\subsection{Resolution-limit free quality functions}
+\subsection{Resolution-limit free quality functions}\label{sec:resolution_limit_free_quality_functions}
 In an attempt to quantitatively characterize the resolution limit, Traag et al.~\cite{traag2011} proposed a rigorous definition of \emph{resolution-limit-free} graph partitioning.
 
 A quality function is resolution-limit-free if, given an optimal partition $\zeta$ of a graph $G$, any module $\zeta_i$ is also optimal for the graph induced by the nodes in $\zeta_i$.
@@ -293,7 +294,7 @@ that once reworked in an additive quality function, results in the form of Eq.~\
 \begin{equation}\label{eq:cpm_ermodel}
 Q^{\textrm{CPM}} = \sum \limits_c^{|C|} \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
 \end{equation}
-In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives; indeed it acts as the inner and outer edge density threshold.
+In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives acting as the inner and outer threshold of edge density.
 Hence, in the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{CPM}$ exceeds the inter-community density $m_{r,s}/(2n_r n_s)$.
 
 Unfortunately, the operation of tuning the resolution parameter, both in the CPM model as well as in other similar models, is difficult and no largely accepted method exists, making all the models based on a resolution parameter, scarcely used in practical applications.
@@ -301,12 +302,12 @@ Unfortunately, the operation of tuning the resolution parameter, both in the CPM
 
 \subsection{Effects of resolution limit}
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest. Indeed, there are some functional processes in the brain that are thought to be better represented as anatomically localized like the first stages of sensory processing, while others are seen as more globally integrated processing system, in particular attentional processes~\cite{alnaes2015}.
-Hence, we may expect the brain modular structure to comprise heterogeneously distributed communities.
-Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear.
+Hence, we may expect the brain modular structure to comprise communities of heterogeneous dimensions.
+Whether the relatively uniform modular structure of brain connectivity, highlighted by Newman's Modularity and other community detection methods in many studies, reflects the true architecture of the brain organization or is the result of the resolution limit is still unclear~\cite{nicolini2016}.
 Hierarchical approaches have shown that large modules can be further subdivided, indicating that connectivity networks show structure at different spatial scales~\cite{meunier2009}.
 However, these findings do not provide information on the optimal partition of the network, i.e. the optimal cut through the dendrogram representing connectivity at the different scales.
 
-Thus, the resolution limit is a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature. The limitation on the number of detected modules in brain networks is evident in studies where typically four or five communities of the same size are detected in humans, as in Crossley et al.~\cite{crossley2013a}, Meunier et al.~\cite{meunier2009a,meunier2010}, Fair et al.~\cite{fair2009} or also in mouse models~\cite{schwarz2008}. To this end, an optimization method that does not suffer from the resolution limit would be needed.
+Thus, the resolution limit is a critical shortcoming for the study of brain networks and likely influenced many studies in the literature. The limitation on the number of detected modules in brain networks is evident in studies where typically four or five communities of the same size are detected in humans, as in Crossley et al.~\cite{crossley2013a}, Meunier et al.~\cite{meunier2009a,meunier2010}, Fair et al.~\cite{fair2009} or also in mouse models~\cite{schwarz2008}. To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
 It's also very important to stress that comparing the Modularity value $Q^N$ across different networks obtained in different studies, with possibly a different number of nodes or different densities is an erroneous practice although $Q^N$ is normalized in the range $[0,1]$. As shown by a number of studies~\cite{good2009,kehagias2013,radicchi2010}, even in graphs which do have a natural community structure, high modularity values can be achieved by partitions which do not respect this natural structure. Hence, the Modularity value is only a numerical indication of the current status of optimization of the detected community structure on a specific graph and should never be confronted across different networks.
 
@@ -341,7 +342,7 @@ A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whe
 \label{fig:degeneracylandscape}
 \end{figure}
 
-Any quality function suffering degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while instead of in the case of the existence of a distinct global optimum, a sharper peak should be exhibited.
+Any quality function suffering degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while in the case of the existence of a distinct global optimum, a sharper peak should be exhibited.
 We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behavior and uniqueness of the optimum solution.
 
 \section{Alternative approaches to Modularity}
@@ -384,7 +385,7 @@ A naive application of Newman's Modularity to such correlation matrix results in
 \begin{equation}
 Q^N= \frac{1}{C_{\textrm{norm}}} \sum \limits_{ij} \left[ C_{ij} - \langle C_{ij} \rangle \right] \delta(\sigma_i,\sigma_j) = \left[ C_{ij} - \frac{k_i k_j}{C_{\textrm{norm}}} \right] \delta(\sigma_i,\sigma_j)
 \end{equation}
-where $k_i=\sum_{j=1}^n C_{ij}$. Unfortunately though, this last term is biased as, expanding the terms $k_i$ one obtains:
+where $k_i=\sum_{j=1}^n C_{ij}$. Unfortunately though, this last term is biased because expanding the terms $k_i$ one obtains:
 \begin{equation}
 k_i =\sum_{j=1}^n C_{ij}= \sum_{j=1}^n \textrm{Cov}(X_i,X_j) = \sum_{j=1}^n \textrm{Cov}(X_i,X_{tot})
 \end{equation}
@@ -394,3 +395,26 @@ where $X_{tot}=\sum_{j=1}^n x_j$ has zero mean but non unit variance, and the co
 \end{equation}
 Such badly-adapted configuration model does not give more importance to pairs of strongly correlated time series but rather to pairs of time series whose direct correlation $C_{ij}$ is larger than the common signal $X_{tot}$.
 The null model proposed by MacMahon and Garlaschelli redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed and only terms that retain true correlations are maintained.
+
+\section{Quality function optimization: the Louvain method}
+Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
+This algorithm has become extremely popular in recent years because it is fast, allowing to analyze huge networks with billions of edges and produces significant partitions~\cite{lancichinetti2009}.  The optimization method is divided in two phases applied recursively as depicted in Figure~\ref{fig:louvain_method}. The first phase is the optimization phase which looks for a locally optimal partition by considering only individual vertex swaps. As in many other greedy algorithms, the community partition is initialized with a single node per community and as many communities as nodes in the input network. Then, based on the chosen cost function, individual nodes are removed from their current community and swapped to the neighboring community which produces the largest positive gain of the cost function.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.6\textwidth]{images/louvain_method.pdf}
+\caption{Optimization and aggregation steps with the Louvain method. Figure taken from~\cite{browet2014}.}
+\label{fig:louvain_method}
+\end{figure}
+
+\subsection{Spectral optimization}
+Another (and earlier) method to optimize Modularity is the spectral Modularity by Newman. Given the form of Modularity as in Eq.~\ref{eq:newmanmodularityspinglass}, one calls the modularity matrix the quantity $\mathbf{B}=A_{ij} - k_i k_j/2m$. From it, it's possible to obtain an equivalent linear algebra formulation of Modularity that reads:
+\begin{equation}\label{eq:newman_spectral}
+Q^N = \frac{1}{4m} \mathbf{s}^T \mathbf{B} \mathbf{s}
+\end{equation}
+where $\mathbf{s}$ is a numerical vector that considers a division of the network in two communities, with values $s_i=+1$ if vertex $i$ belongs to group 1 and $s_i=-1$ if vertex $i$ belongs to group 2. With some manipulations~\cite{newman2006,newman2010book}, the Modularity maximization is turned into an symmetric eigenvalue problem of the form
+\begin{equation}
+\mathbf{B} \mathbf{s} = \beta \mathbf{s}.
+\end{equation}
+The group assignment of each node is obtained as the signs of the eigenvector $\mathbf{s}$ corresponding to the greatest eigenvalue $\beta$. Finally, by repeatedly subdividing the network, the optimal Modularity assignment is recovered~\cite{newman2006,newman2010book}.
+
