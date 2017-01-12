@@ -227,6 +227,7 @@ Importantly, in the range of parameters we have investigated, Surprise optimizat
 While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
 Nonetheless, the size of the graphs we have explored numerically is quite typical of brain-connectivity networks and we feel encouraged to apply Surprise maximization to the study of the community structure of the brain.
 
+\subsection{Degeneracy of Surprise}\label{sec:degeneracy_surprise}
 Curiously, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in Section~\ref{sec:degeneracy}.
 This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
 We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}.
@@ -279,18 +280,17 @@ This represents a substantial drawback, for it requires binarization of brain co
 Moreover, different binarization procedures may lead to different network representations for the same connectivity dataset.
 Therefore, an extension of Surprise to weighted networks would be highly desirable, and would provide a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
 
+% Capitalizing on recent development in the field of statistical physics of complex networks~\cite{traag2015}, we describe and demonstrate the use of Asymptotical Surprise, a weighted counterpart to Surprise, in the study of the modular structure of weighted networks.
+% Moreover, we propose a new algorithm, dubbed PACO (PArtitioning Cost Optimization) for the direct maximization of Asymptotical Surprise, that has its roots in the previously described FAGSO algorithm.
 
-Capitalizing on recent development in the field of statistical physics of complex networks~\cite{traag2015}, we describe and demonstrate the use of Asymptotical Surprise, a weighted counterpart to Surprise, in the study of the modular structure of weighted networks.
-Moreover, we propose a new algorithm, dubbed PACO (PArtitioning Cost Optimization) for the direct maximization of Asymptotical Surprise, that has its roots in the previously described FAGSO algorithm.
+% Since there is no ground-truth structure for brain functional connectivity networks, we have assessed the performance of this novel approach on synthetic networks with a planted modular structures, and compared it to some of the leading graph partitioning methods.
+% Importantly, we demonstrate our approach in networks  derived from synthetic data that mimic different structures, levels of noise and variability, such as those observed in functional connectivity experimental data.
+% Indeed, improved resolution afforded by Asymptotical Surprise may imply increased vulnerability to spurious modules resulting from noisy correlations.
+% It is therefore important to assess the benefits of increased resolution against the limitations arising from intrinsic data variability. 
 
-Since there is no ground-truth structure for brain functional connectivity networks, we have assessed the performance of this novel approach on synthetic networks with a planted modular structures, and compared it to some of the leading graph partitioning methods.
-Importantly, we demonstrate our approach in networks  derived from synthetic data that mimic different structures, levels of noise and variability, such as those observed in functional connectivity experimental data.
-Indeed, improved resolution afforded by Asymptotical Surprise may imply increased vulnerability to spurious modules resulting from noisy correlations.
-It is therefore important to assess the benefits of increased resolution against the limitations arising from intrinsic data variability. 
+% Finally, we apply Asymptotical Surprise to weighted functional connectivity networks from resting state fMRI data, revealing a heterogeneous, multiscale community structure. We show that the finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise leads to substantial differences in the identification of connector hubs compared to other community detection methods.
 
-Finally, we apply Asymptotical Surprise to weighted functional connectivity networks from resting state fMRI data, revealing a heterogeneous, multiscale community structure. We show that the finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise leads to substantial differences in the identification of connector hubs compared to other community detection methods.
-
-\section{Asymptotical Surprise}
+\subsection{Asymptotical Surprise}
 As introduced in the previous sections, Surprise~\cite{aldecoa2011,aldecoa2013} is a quality measure of the partition of a binary network that has its roots in probability theory.
 For a given partition $\zeta$, Surprise represents the probability that a graph drawn uniformly at random from the set of all graphs with $n$ nodes, $p=\binom{n}{2}$ pairs and $m$ edges has at least as many intra-cluster edges as $G$. Intuitively the lower the probability the better the partition.  For binary networks, Surprise can be computed within the discrete probability theory of urn models as shown in Equation~\ref{eq:surprise}.
 
@@ -333,6 +333,19 @@ Yet, numerical evalaution of Asymptotical Surprise is much faster than binary Su
 \label{fig:asymptotical_surprise_comparison}
 \end{figure}
 
+\subsubsection{Degeneracy of Asymptotical Surprise}\label{sec:degeneracy_asymptotical_surprise}
+Degeneracy of nearly-optimal solutions, whereby similar values of the fitness function around its maximum correspond to substantially different partitions, has been observed for Newman's Modularity~\cite{good2009}. A consensus approach has been suggested in~\cite{lancichinetti2012} as a means to mitigate the degeneracy problem, yielding a stable ``average'' solution over a large set of partitions. In order to ascertain whether Surprise and Asymptotical Surprise suffer from a similar shortcoming we have performed degeneracy analysis for these fitness functions following~\cite{good2009}.
+In short, we sampled partitions from a benchmark network consisting in 24 cliques of five nodes, connected by a single link to form a ring-like structure.
+We sampled the configuration space of partitions through a Montecarlo procedure and annotated its corresponding values of quality function for each partition.
+We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
+In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function. Whereas a large plateau of solutions with similar values of maximum Modularity is observed (~\ref{fig:degeneracylandscape}A, consistent with ~\cite{good2009}, Asymptotical Surprise and Surprise display a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracylandscape}B and \ref{fig:degeneracylandscape}C.
+\todo{fixare questa parte, ripetizioni di frasi in giro. commenti immagine non consistenti.}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{images/filtered_asymp_surp_ring_cliques_5_24_200.png}
+\caption{Degeneracy landscape of Asymptotical Surprise on a ring of clique model.}
+\label{fig:degeneracy_asymptotical_surprise}
+\end{figure}
 
 \section{Maximization of Asymptotical Surprise: PACO}
 Finding the optimal partition of a graph is an NP-hard problem~\cite{fortunato2010} and practical implementations of community detection rely on heuristic approaches that enable finding nearly-optimal solutions in a reasonable computation time.

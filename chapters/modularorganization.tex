@@ -123,7 +123,7 @@ Among the additive quality functions that show up in the form of~\ref{eq:rbsping
 
 \subsection{Newman-Girvan Modularity}\label{sec:newman_modularity}
 Newman-Girvan Modularity (or simply Modularity)~\cite{newman2006}, denoted here and for the rest of the work by $Q^N$, is based on the idea that a network obtained by randomly reshuffling the original graph edges while keeping the same degrees sequence, should not display any community structure. 
-An important consequence of such randomization is that any stub in this null model, dubbed ``configuration model'' is equally likely to be connected to any other~\cite{newman2010networks}. Thus, in absence of correlations, the probability that two nodes are connected is expressed by:
+An important consequence of such randomization is that any stub in this null model, dubbed ``configuration model'' is equally likely to be connected to any other~\cite{newman2010book}. Thus, in absence of correlations, the probability that two nodes are connected is expressed by:
 \begin{equation}\label{eq:configuration_model}
 P_{ij} = \frac{k_i k_j}{2m}
 \end{equation}
@@ -396,7 +396,7 @@ where $X_{tot}=\sum_{j=1}^n x_j$ has zero mean but non unit variance, and the co
 Such badly-adapted configuration model does not give more importance to pairs of strongly correlated time series but rather to pairs of time series whose direct correlation $C_{ij}$ is larger than the common signal $X_{tot}$.
 The null model proposed by MacMahon and Garlaschelli redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed and only terms that retain true correlations are maintained.
 
-\section{Quality function optimization: the Louvain method}
+\section{Quality function optimization: the Louvain method}\label{sec:louvain_method}
 Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
 This algorithm has become extremely popular in recent years because it is fast, allowing to analyze huge networks with billions of edges and produces significant partitions~\cite{lancichinetti2009}.  The optimization method is divided in two phases applied recursively as depicted in Figure~\ref{fig:louvain_method}. The first phase is the optimization phase which looks for a locally optimal partition by considering only individual vertex swaps. As in many other greedy algorithms, the community partition is initialized with a single node per community and as many communities as nodes in the input network. Then, based on the chosen cost function, individual nodes are removed from their current community and swapped to the neighboring community which produces the largest positive gain of the cost function.
 
