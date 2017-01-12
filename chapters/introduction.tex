@@ -28,8 +28,8 @@
 %%%%%%%%% INTRO GENERALE COMPLEX NETWORKS
 %\section{Complex networks science and the brain}\label{sec:complexnetworksciencebrain}
 
-%\section{The ascendancy of network neuroscience}
-\lettrine{S}{}tarting from 19th century’s neuron doctrine, we know that the brain is an incredibly complex system of intercommunicating elements, the neurons, intertwined with other cells that support neuronal activity.
+\section{The ascendancy of network neuroscience}
+Starting from 19th century’s neuron doctrine, we know that the brain is an incredibly complex system of intercommunicating elements, the neurons, intertwined with other cells that support neuronal activity.
 
 The dynamical processes running on the biological substrate of neurons are the basis of information processing that gives rise to cognitive and psychological processes, from the perception of the external environment to the representation of mental states and emotions.
 Neuroscience tackles the investigation of the brain, the most complex organ in nature, at different scales.
@@ -708,14 +708,13 @@ $\langle k\rangle $ &Desidered average degree.\\
 \label{tab:lfrparams}
 \end{figure}
 
-The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods.
-Wrappers for Matlab, Octave and Python of the code to generate LFR weighted networks, is freely available at~\url{https://github.com/carlonicolini/lfrwmx}.
+The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods. The original c++ code to generate LFR weighted networks is available at~\url{https://sites.google.com/site/santofortunato/package3.tar.gz}. The bindings of such code written for Matlab, Octave and Python are freely available at~\url{https://github.com/carlonicolini/lfrwmx}.
 
 % \subsection{Power law ring of cliques}
 % The modified ring of clique network as indicated in the main text is composed by a ring structure of cliques whose sizes are randomly sampled from a power-law distribution with exponent $\tau_c=1$.
 
 % The power-law distribution of sizes of cliques in this benchmark is consistent with the heterogeneous size of modules observed in brain connectivity using the binary version of Surprise.
-An example realization of the benchmark network is shown in Figure \ref{fig:ring_of_clique_powerlaw}.
+% An example realization of the benchmark network is shown in Figure \ref{fig:ring_of_clique_powerlaw}.
 % \input{include/powerlaw_ring_clique.tex}
 
 
@@ -724,43 +723,47 @@ An example realization of the benchmark network is shown in Figure \ref{fig:ring
 
 
 %%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%
-\subsection{Comparing community structure in networks}
+\section{Comparing community structure in networks}
 Some benchmark networks come with an annotated community structure representing the ground-truth assignment of nodes into communities, the annotations being made by experts in the field, like for example the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
 Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth community.
-As the number of community detection methods increased over the years, also a quantitative way to assess their performance was requested.
+As the number of community detection methods increased over the years, also a quantitative way to assess their performance was needed.
 
 A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past.
 They are used to provide quantitatively a number that tells how two partitions are similar.
 Typically the result is normalized in the $[0,1]$ range, being towards $1$ for very similar clusterings and toward $0$ when mostly dissimilar.
 These metrics are adopted especially in the benchmarking of community detection methods when the specific outcome of some algorithm is compared with a ground truth partition, usually, a-priori determined.
 
-The most well-grounded and performing metrics for the comparison of two community structures are rooted in information theory\cite{cover2006}.
-The \emph{Normalized Mutual Information}~\cite{danon2005} and the \emph{Variation of Information}~\cite{meila2007} are the most widely used, despite it has been recently found that both of them suffer of systematic errors due to the finite size of the network \cite{zhang2015a}.
+The most well-grounded and performing metrics for the comparison of two community structures are rooted in information theory~\cite{cover2006}.
+The \emph{Normalized Mutual Information}~\cite{danon2005} and the \emph{Variation of Information}~\cite{meila2007} are the most widely used, despite it was recently found that both of them suffer of systematic errors due to the finite size of the network~\cite{zhang2015a}.
 In the rest of the discussions, we ignore the limitation of finite size effects, by only working with relatively large networks.
 
 Normalized Mutual Information (NMI) assumes that the clustering comparison is a problem of message decoding.
 Implicit in this is the idea that if two partitions are similar, inferring one partition from the other needs very little information.
-
-
 Let us consider two generic partitions of a graph denoted by their clusterings $\zeta^x,\zeta^y$ with $c_x$ and $c_y$ communities respectively: $\zeta^x=\{\zeta^x_1,\ldots,\zeta^x_{c_x}\}$ and $\zeta^y=\{\zeta^y_1,\ldots,\zeta^y_{c_y}\}$.
 The number of nodes in the $i$-th community of $\zeta^x$ is $n_i :=|\zeta^x_i|$ and the number of nodes in the $j$-th community of $\zeta^y$ is $n_j:=|\zeta^y_j|$.
 The two communities share a number of nodes $n_{ij}=| \zeta^x_i \cap \zeta^y_j|$.
 Let us also consider the community assignments $\boldsymbol\sigma^x_i$ and $\boldsymbol\sigma^y_i$ for partitions $\zeta^x$ and $\zeta^y$ respectively; we treat the labels as values of two random variables $X$ and $Y$ with joint distribution $P(x,y)=P(X=x, Y=y) = n_{xy}/n$, which implies that $P(x)=P(X=x)=n_x^X/n$ and $P(y)=P(Y=y)=n_y^Y/n$.
-The \emph{mutual information} between the two clusterings $\zeta^x,\zeta^y$ is then defined as 
-\begin{equation}I(X,Y)=H(X) - H(X|Y)
-\end{equation}
-where $H(X)=-\sum_x p(x) \log p(x)$ is the Shannon entropy of $X$~\cite{cover2006}.
+
+The \emph{mutual information} between the two clusterings $\zeta^x,\zeta^y$ is then defined as $I(X,Y)=H(X) - H(X|Y)$ where $H(X)=-\sum_x p(x) \log p(x)$ is the Shannon entropy of $X$~\cite{cover2006}.
 The mutual information itself is not very useful, because hierarchically splitting the clusters in $\zeta^x$ would produce no change in the prior $H(X|Y)$ and partitions with different hierarchies of the same clusters, would go unnoticed.
 This observation led Danon~\cite{danon2005} to introduce normalized mutual information for clustering comparison as: 
 \begin{equation}\label{eq:nmi}
-\textrm{NMI}(X,Y) = \frac{2I(X,Y)}{H(X)+H(Y)}
-\end{equation}
-Explicitly, NMI is defined on top of the confusion matrix as:
-\begin{equation}\label{eq:nmiexplicit}
-\textrm{NMI} = \dfrac{2\sum \limits_{i=1}^{c_x} \sum \limits_{j=1}^{c_y} \frac{n_{ij}}{n} \log\left( \frac{n_{ij}n}{n_i n_j} \right)} {\left(-\sum \limits_{k=1}^{c_x} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right) + \left(-\sum \limits_{k=1}^{c_y} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right)}
+\textrm{NMI}(X,Y) = \frac{2I(X,Y)}{H(X)+H(Y)} = \dfrac{2\sum \limits_{i=1}^{c_x} \sum \limits_{j=1}^{c_y} \frac{n_{ij}}{n} \log\left( \frac{n_{ij}n}{n_i n_j} \right)} {\left(-\sum \limits_{k=1}^{c_x} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right) + \left(-\sum \limits_{k=1}^{c_y} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right)}.
 \end{equation}
 
-\begin{figure}
+Meila~\cite{meila2007} proposed another measure based on entropy, Variation of Information (VI), shown in Figure~\ref{fig:venn_diagram}.
+VI measures how much knowing the cluster assignment for an item in clustering $X$ reduces the uncertainty about the item's cluster in clustering $Y$.
+It's defined as:
+\begin{equation}\label{eq:vi}
+\textrm{VI}(X,Y) = H(X|Y) + H(Y|X)
+\end{equation}
+and it has the desirable property that, being a proper distance, it defines a metric on the space of the partitions.
+Variation of information is also a local measure, i.e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
+As noted by Karrer \cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range.
+Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
+It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding the overall similarity to summarize it in a single scalar.
+
+\begin{figure}[htb!]
 \centering
 \begin{tikzpicture}
     \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (-1.1cm,0cm) (CL) {$H(X|Y)$};
@@ -781,29 +784,13 @@ Explicitly, NMI is defined on top of the confusion matrix as:
 The two circles are the entropies of variables $X$ and $Y$.
 The mutual information $H(X;Y)$ is the intersection of the information in $X$ with the information in $Y$.
 The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y)$ because $I(X;Y)$ is counted twice.}
+\label{fig:venn_diagram}
 \end{figure}
 
-Meila proposed another measure based on entropy, Variation of Information (VI)~\cite{meila2007}.
-VI measures how much knowing the cluster assignment for an item in clustering $X$ reduces the uncertainty about the item's cluster in clustering $Y$.
-Is defined as:
-\begin{equation}\label{eq:vi}
-\textrm{VI}(X,Y) = H(X|Y) + H(Y|X)
-\end{equation}
-and it has the desirable property that, being a proper distance, it defines a metric on the space of the partitions.
-Variation of information is also a local measure, i.
-e.
-the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
-As noted by Karrer \cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range.
-
-Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
-
-It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding the overall similarity to summarize it in a single scalar.
-
+\todo{spiegare confusion matrix TP,FP etc}
 % It is possible though to study partitioning on a community-wise basis by explicitly enumerating all the similarity between groups of nodes of two different partitions.
-
 % Let's assume we have two different clusterings $\zeta^x,\zeta^y$ obtained from two different runs of some non-deterministic community detection algorithm.
-For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zeta_1|$,$1\leq j \leq |\zeta_2|$ then the cluster homogeneity is defined as:
-
+%For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zeta_1|$,$1\leq j \leq |\zeta_2|$ then the cluster homogeneity is defined as:
 % \begin{align}
 % \Pr(\textrm{overlap}) = \frac{\binom{|c_j|}{|c_i \cap c_j|}\binom{N-|c_j|}{|c_i|-|c_i \cap c_j|}}{\binom{N}{|c_i|}}
 % \end{align}
@@ -813,7 +800,7 @@ For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% PERCOLATION ANALYSIS %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Percolation analysis}\label{sec:percolation_analysis}
+\section{Percolation analysis}\label{sec:percolation_analysis}
 Functional connectivity networks are typically obtained as similarity matrices of physiological time signals over different brain areas.
 The process of converting such similarity matrices into graphs, described in the previous chapters is not obvious.
 In most of the works, a threshold is chosen such that all the edge weights greater than a given value are kept, while other links, indicative of correlations due to possibly noisy components are discarded.

@@ -1,4 +1,4 @@
-\lettrine{I}{n} the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
+In the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
 We explored the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
 
 To this end, we will show that Surprise\index{Surprise}, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
@@ -227,7 +227,7 @@ Importantly, in the range of parameters we have investigated, Surprise optimizat
 While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
 Nonetheless, the size of the graphs we have explored numerically is quite typical of brain-connectivity networks and we feel encouraged to apply Surprise maximization to the study of the community structure of the brain.
 
-\subsection{Degeneracy of Surprise}\label{sec:degeneracy_surprise}
+\section{Degeneracy of Surprise}\label{sec:degeneracy_surprise}
 Curiously, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in Section~\ref{sec:degeneracy}.
 This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
 We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}.
@@ -274,25 +274,16 @@ The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Oct
 \end{figure}
 
 
-\section{From binary to weighted networks}
+\section{From binary to weighted networks: Asymptotical Surprise}
 As described and illustrated in the previous chapter, a fundamental limitation of Surprise lies in its definition in terms of discrete probability and binomial coefficients that make it applicable only to binary networks, i.e. graphs with edge values $1$ or $0$.
 This represents a substantial drawback, for it requires binarization of brain connectivity networks, thus discarding potentially important information contained in the edge weight distribution.
 Moreover, different binarization procedures may lead to different network representations for the same connectivity dataset.
 Therefore, an extension of Surprise to weighted networks would be highly desirable, and would provide a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
 
-% Capitalizing on recent development in the field of statistical physics of complex networks~\cite{traag2015}, we describe and demonstrate the use of Asymptotical Surprise, a weighted counterpart to Surprise, in the study of the modular structure of weighted networks.
-% Moreover, we propose a new algorithm, dubbed PACO (PArtitioning Cost Optimization) for the direct maximization of Asymptotical Surprise, that has its roots in the previously described FAGSO algorithm.
-
-% Since there is no ground-truth structure for brain functional connectivity networks, we have assessed the performance of this novel approach on synthetic networks with a planted modular structures, and compared it to some of the leading graph partitioning methods.
-% Importantly, we demonstrate our approach in networks  derived from synthetic data that mimic different structures, levels of noise and variability, such as those observed in functional connectivity experimental data.
-% Indeed, improved resolution afforded by Asymptotical Surprise may imply increased vulnerability to spurious modules resulting from noisy correlations.
-% It is therefore important to assess the benefits of increased resolution against the limitations arising from intrinsic data variability. 
-
-% Finally, we apply Asymptotical Surprise to weighted functional connectivity networks from resting state fMRI data, revealing a heterogeneous, multiscale community structure. We show that the finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise leads to substantial differences in the identification of connector hubs compared to other community detection methods.
-
-\subsection{Asymptotical Surprise}
 As introduced in the previous sections, Surprise~\cite{aldecoa2011,aldecoa2013} is a quality measure of the partition of a binary network that has its roots in probability theory.
-For a given partition $\zeta$, Surprise represents the probability that a graph drawn uniformly at random from the set of all graphs with $n$ nodes, $p=\binom{n}{2}$ pairs and $m$ edges has at least as many intra-cluster edges as $G$. Intuitively the lower the probability the better the partition.  For binary networks, Surprise can be computed within the discrete probability theory of urn models as shown in Equation~\ref{eq:surprise}.
+For a given partition $\zeta$, Surprise represents the probability that a graph drawn uniformly at random from the set of all graphs with $n$ nodes, $p=\binom{n}{2}$ pairs and $m$ edges has at least as many intra-cluster edges as $G$.
+Intuitively the lower the probability the better the partition.
+For binary networks, Surprise can be computed within the discrete probability theory of urn models as shown in Equation~\ref{eq:surprise}.
 
 In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution. We introduce  $q=m_\zeta/m$ and $\left<q \right>=p_\zeta/p$ as the observed and expected fraction of intracluster edges. By only taking into account the dominant term of the sum in Eq.~\ref{eq:surprise} (the one with $i=m_\zeta$), after some manipulations we get an approximate expression for the logarithmic Surprise\footnote{If not specified, starting from here we use natural base logarithms.}:
 \begin{equation}\label{eq:surprise_dominant}
@@ -338,7 +329,7 @@ Degeneracy of nearly-optimal solutions, whereby similar values of the fitness fu
 In short, we sampled partitions from a benchmark network consisting in 24 cliques of five nodes, connected by a single link to form a ring-like structure.
 We sampled the configuration space of partitions through a Montecarlo procedure and annotated its corresponding values of quality function for each partition.
 We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
-In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function. Whereas a large plateau of solutions with similar values of maximum Modularity is observed (~\ref{fig:degeneracylandscape}A, consistent with ~\cite{good2009}, Asymptotical Surprise and Surprise display a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracylandscape}B and \ref{fig:degeneracylandscape}C.
+In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function. Whereas a large plateau of solutions with similar values of maximum Modularity is observed (Figure~\ref{fig:degeneracylandscape}A), consistent with~\cite{good2009}, Asymptotical Surprise and Surprise display a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracylandscape}B and \ref{fig:degeneracylandscape}C.
 \todo{fixare questa parte, ripetizioni di frasi in giro. commenti immagine non consistenti.}
 \begin{figure}[htb!]
 \centering
@@ -364,7 +355,7 @@ The function \textsc{Paco} takes as input a graph G and returns the nodes commun
 
 \input{include/misc/paco.tex}
 
-\subsection{Running time analysis}
+\subsection{Running time analysis of PACO}
 We applied PACO on a full-resolution voxelwise connectivity matrix with 51,653 nodes and almost 2 million edges. PACO took 14 minutes for a single repetition on a server with Intel Xeon E5-2643@ 3.40 Ghz CPU and 256 GB ram.
 We estimated that 2000 repetitions of PACO would take approximately 2.5 weeks on this server. We also tried to run PACO on a standard office PC with 16 GB memory and an Intel Core i7: it took almost 40 minutes. It’s important to notice that the running time of PACO is mainly determined by the computation of Jaccard indexes in the initial step.
 The running time for this computation is in the order of $O(nd^2)$ where $n$ is the number of nodes and $d$ is the average degree of nodes. On a desktop workstation with a 2.5 GHz CPU, PACO runs in some tenths of seconds on a single repetition for a graph of around 600 nodes with a density close to 10\%, typical of brain networks. A small benchmark of PACO running times on a desktop workstation is shown in Figure~\ref{fig:paco_benchmark}, where we found optimal Surprise partitions of a LFR network with the parameters described in the text but increasing number of nodes.
@@ -376,24 +367,18 @@ The running time for this computation is in the order of $O(nd^2)$ where $n$ is 
 \label{fig:paco_benchmark}
 \end{figure}
 
-\subsection{Repeatability}
-In order to get a better idea of how fast the PACO method converges to a maximum, we have plotted the optimal value of Asymptotical Surprise over the 10000 runs for one instance of the LFR network, and for the resting state data-set presented in the Manuscript (Figures~\ref{fig:paco_variability_lfr},\ref{fig:paco_variability_bullmore}).
+\subsection{Reproducibility of PACO optimal solutions}
+In order to get a better idea of how fast the PACO method converges to a maximum, we have plotted the optimal value of Asymptotical Surprise over the 10000 runs for one instance of the LFR network, and for the resting state data-set presented in the Manuscript (Figures~\ref{fig:paco_variability}).
 From these graphs, it appears that 2000 runs may be sufficient to reach stable community detection for the experimental data-set. A near-optimum value is reached earlier for the LFR network, but it should be noted that we have taken an instance of the synthetic network with no-noise added.
 
-\begin{figure}[htb!]
+\noindent\begin{figure}[htb!]
 \centering
-\includegraphics[width=0.5\textwidth]{images/paco_variability_nreps_lfr.png}
-\caption{Maximum value of Asymptotical Surprise with respect to number of repetitions on a LFR networks as described in the main text.}
-\label{fig:paco_variability_lfr}
-\end{figure}
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=0.5\textwidth]{images/paco_variability_nreps_bullmore.png}
-\caption{Maximum value of Asymptotical Surprise with respect to number of repetitions on the resting state dataset described in the main text.}
-\label{fig:paco_variability_bullmore}
+\includegraphics[width=0.45\textwidth]{images/paco_variability_nreps_lfr.png}\includegraphics[width=0.45\textwidth]{images/paco_variability_nreps_bullmore.png}
+\caption{Maximum value of Asymptotical Surprise with respect to number of repetitions on a LFR networks (left panel) and on a resting state network as in~\cite{crossley2013}.}
+\label{fig:paco_variability}
 \end{figure}
 
-\subsection{Influence of LFR parameters on community detection performance}
+\subsection{Benchmarking PACO}
 Among the two most important parameters in the LFR benchmark are the topological and weights mixing coefficients. 
 The topological mixing coefficient $\mu_t$ is the average ratio of intra-cluster neighbors divided by the number of inter-cluster neighbors, as defined in~\cite{lancichinetti2008}. The weights mixing coefficient is defined as the average ratio of node intra-cluster strength and inter-cluster strength, as defined in~\cite{lancichinetti2009a}.
 We explored the effects of these parameters on the ability of PACO to retrieve the planted structure in the network.
@@ -404,13 +389,12 @@ In Figure~\ref{fig:avgmutmuw} the performance of the three methods is comparable
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.75\textwidth]{images/avg_nmi_allmethods_lfr_errorbars.pdf}
-\caption{NMI of the retreived vs planted partition of an LFR network as a function of $\mu_t=\mu_w$ for the three community detection methods}
+\includegraphics[width=0.65\textwidth]{images/avg_nmi_allmethods_lfr_errorbars.pdf}
+\caption{NMI of the retrieved vs planted partition of an LFR network as a function of $\mu_t=\mu_w$ for the three community detection methods.}
 \label{fig:avgmutmuw}
 \end{figure}
 
 \section{Comparison of PACO and FAGSO}
-
 FAGSO is an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree and is described in~\cite{nicolini2016}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation. At the beginning, each community consists only of one vertex. Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set. This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
 
 PACO and FAGSO are based on the same idea of greedy agglomeration of edges that leads to increment in Surprise, but the implementation of the agglomeration step is different.
