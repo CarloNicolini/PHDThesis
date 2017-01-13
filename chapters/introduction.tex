@@ -34,18 +34,18 @@ Starting from 19th century’s neuron doctrine, we know that the brain is an inc
 The dynamical processes running on the biological substrate of neurons are the basis of information processing that gives rise to cognitive and psychological processes, from the perception of the external environment to the representation of mental states and emotions.
 Neuroscience tackles the investigation of the brain, the most complex organ in nature, at different scales.
 The molecular and cellular neuroscience is interested at the finest level of working of the nervous system cells.
-At this scale, molecular biology and genetics are the tools of investigation, as the interest is mainly addressed to very small populations of neurons.
+At this scale, molecular biology and genetics are used to address the study of very small populations of neurons.
 
-A larger number of neurons though need a more comprehensive view to identifying diseases and pathological states.
-This view must shift from the microscopic level to the so-called system neuroscience, that deals with highly connected networks of neurons, dubbed neuronal circuits.
+At larger scales, hundreds or thousands of neurons are involved and a more comprehensive view to identifying diseases and pathological states is needed.
+The view must shift from the microscopic level to the so-called system neuroscience, that deals with highly connected networks of neurons, dubbed neuronal circuits.
 
-System neuroscience studies how these large-scale circuits form and evolve during the life of the organism, how they produce basic processes like reflexes, motor coordination, circadian rhythms and, ultimately, how they give rise to overt behavioral and different internal neural states like motivation, emotions, and cognition.
-The extension of systems neuroscience from the study of small groups of neurons to the whole brain hence requires radically different computational and experimental tools.
+System neuroscience studies how these large-scale circuits form and evolve during the development, how they produce basic processes like reflexes, motor coordination, circadian rhythms and, ultimately, how they give rise to overt behavioral and different internal states like motivation, emotions, and cognition.
+Hence, and extension of system neuroscience from the study of small groups of neurons to the whole brain requires radically different tools, both computational and experimental.
 Very small scale neuronal circuits that can be studied by mathematically accurate models are formed by several hundred neurons.
-The typical size of the smallest identified functional units, the cortical columns, is around hundred thousand neurons and at that level, many hypotheses are required to approximately reproduce the electrical and chemical activity of neurons, at the point that a comprehensive differential equations model of cortical columns is still lacking.
+The typical size of the smallest identified functional unit, the cortical column, is around hundred thousand neurons and, already at that level, many hypotheses are required to approximately reproduce the electrical and chemical activity of neurons, at the point that a comprehensive differential equations model of cortical columns is still lacking.
 
-Yet, a large-scale understanding of the incredibly complicated network of all the neurons in the human brain, the \emph{human connectome}, remains an idealistic (and hotly debated) target to be reached in the future.
-This scientific, technological and cultural challenge is named after the term \emph{connectomics}.
+Yet, a large-scale understanding of the incredibly complicated network of all the neurons in the human brain, the \emph{human connectome}, probably remains an idealistic target to be reached in the future.
+This scientific, technological and cultural challenge is named after the term \emph{connectomics}, a word coined at the beginning of this decade by Giulio Tononi and Olaf Sporns.
 Its most ambitious aim is to map all the connections in the brain at different scales of resolution, deep down to the synaptic level.
 Whether this will help to answer some of the deepest questions about the human brain, it is not entirely known and still a topic of hot debate in the scientific community.
 
@@ -54,35 +54,32 @@ These non-invasive methods of analysis of brain functions include neuroimaging t
 Among these modalities, MRI has emerged as a dominant non-invasive imaging method because it enables the investigation of both brain structure and function with a good compromise in terms of spatial and temporal resolution.
 
 At the morphological level, MRI provides a comprehensive view of the brain, as it can identify the white matter fiber pathways connecting gray matter regions otherwise impossible to obtain in-vivo.
-The pattern of white matter fibers is often called \emph{structural connectivity} as it relates to the morphological features of the brain connections.
+The pattern of white matter fibers is often named after the term \emph{structural connectivity} as it relates to the morphological features of the brain connections.
 Structural networks correspond to a pattern of anatomical connections, summarizing synaptic links between neurons or projections among brain regions.
-Using a metaphor from the computer world, structural connectivity represents the electrical wiring of the different parts of a microprocessor.
-Although useful, the wiring diagram of the brain (or structural connectivity) is only a starting point for making hypotheses about the brain at work; indeed it cannot reveal how neurons behave in real-time, nor does it account for the yet unknown regulatory mechanisms that neurons exert on each other.
-Unfortunately, such dynamics are and remain partially unpredictable, despite many notable and useful attempts~\cite{deco2008}, as also the synaptic weights are changing dynamically due to different amounts of neurotransmitter available.
+Borrowing ideas from the electronics, structural connectivity may be meant as the electrical wiring of the different parts of a microprocessor.
+Although useful, the wiring diagram of the brain is only a starting point for making hypotheses about the brain at work; indeed it cannot reveal how neurons behave in real-time, nor does it account for the yet unknown regulatory mechanisms that neurons exert on each other.
+Unfortunately, such dynamics are and remain partially unpredictable, despite many notable and useful attempts~\cite{deco2008}, as also the synaptic weights are changing dynamically due to different amounts of neurotransmitters available.
 
 Since its inception, the evolution of technologies in MRI, lead to functional MRI (fMRI), a way to spatially map temporal changes of oxygenated blood concentration in the whole brain, the so-called BOLD signal.
-This tool helped scientists to unveil another pattern of connectivity that exists in the brain, not physical like structural connectivity, but nonetheless crucial as a hallmark of the underlying physiological dynamics of the brain at work.
-The term \emph{functional connectivity} names the pattern of temporal fluctuations of neuronal activities from different brain regions that give rise to changes in blood oxygenation dynamics.
+%Throughout the years, fMRI helped neuroscientists and neurologists to enrich the knowledge of the fundamental aspects of the normal brain functional organization, but as every technique also has its limitations~\cite{logothetis2008}.
+This tool helped scientists to unveil another pattern of connectivity that exists in the brain. \emph{Functional connectivity} examines functional associations between temporal fluctuations of neuronal activities from different brain regions. Specifically fMRI functional connectivity focuses on the underlying physiological dynamics giving rise to changes in blood oxygenation.
 
 Considered over the large scale, functional connectivity is descriptive of the temporal metabolic demands of large groups of cortical and subcortical structures, a quantity strictly related to the electrical activity of neurons, and yields precious information about the brain not only on its surface but also in other deeper regions, otherwise difficult to reach.
 In contrast with structural connectivity, functional connectivity results from estimates of statistical dependencies between neuronal or regional time courses.
-The temporal course of functional networks is also less stable than structural networks, which are stable over long time scales, they are indeed highly variable as they exhibit spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
+The temporal course of functional networks is also less stable than structural networks, which are stable over long time scales. Their temporal evolution is indeed highly variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
 
-Throughout the years, fMRI helped neuroscientists and neurologists to enrich the knowledge of the fundamental aspects of the normal brain functional organization, but as every technique also has its limitations~\cite{logothetis2008}.
-Activations maps have been estimated for almost every kind of cognitive task and collected in publicly available datasets, like the BrainMap database~\cite{fox2002}.
+Activation maps have been estimated for almost every kind of cognitive task and collected in publicly available datasets, like the BrainMap database~\cite{fox2002}.
 Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
 
 Although conceptually simpler than activations studies, even more interesting is the discovery that when a person is cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{raichle2001,gusnard2001}.
 Interestingly such background activity, dubbed resting-state connectivity, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands.
-The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be typically observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
-The structure of such temporal correlations define a network of spatially remote but similar patterns of signal.
+The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
+The structure of such temporal correlations define a network of spatially remote but similar patterns of signal. Interestingly, these networks are altered in neuropsychiatric diseases such as autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}. The extent of these alterations is an hallmark for possible diagnoses of brain disease.
 
-These networks, consisting in highly correlated subsets of brain regions, are altered in neuropsychiatric diseases such as autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}.
+Among the many methods that are available to detect such pathological alterations, one of the most important is the possibility to quantify the modifications of the resting state networks in the abnormal brain using the theoretical framework of complex networks science~\cite{sporns2000,sporns2002,sporns2004,bullmore2009,stam2014}.
 
-Among the many methods that are available to detect such pathological alterations, one of the most important is the possibility to quantify the extent of alteration of the resting state networks in the abnormal brain using the theoretical framework of complex networks science~\cite{sporns2000,sporns2002,sporns2004,bullmore2009,stam2014}.
-
-Complex network science offers the best tools to assess the topology and organization of brain connectivity networks, as well as powerful means to establish, in a completely data-driven manner, diagnoses of common neurological diseases and additionally design lines of intervention and prevention~\cite{bullmore2009,stam2014,crossley2014}.
-Under this light, the brain is seen as a network whose elements are the brain regions at different scales, interconnected by a number of links, describing the strength of inter-regional coordination.
+Complex network science offers the best tools to assess the topology and organization of brain connectivity networks, as well as powerful means to establish, in a completely data-driven manner, diagnoses of common neurological diseases offering the possibility to design lines of intervention and prevention~\cite{bullmore2009,stam2014,crossley2014}.
+In the framework of complex networks science, the brain is seen as a system whose fundamental units are the brain regions at different scales, interconnected by a number of links, describing the strength of inter-regional coordination.
 
 %%%%%%%%%%%%%%%%%%%% RIPRESO DA INTRODUZIONE
 The methods of network theory date back to the problem of K{\"o}nigsberg bridges, in 1735, when the famous mathematician Leonhard Euler was faced with the problem of finding a path through the city that would cross all the seven bridges just once.
@@ -111,21 +108,20 @@ Adapted from~\cite{bullmore2009}.}
 \label{fig:bullmore2009pipeline}
 \end{figure}
 
-
 The ascendancy of the network neuroscience in the last decade is driven by the evidence that almost independently from how the networks links are defined, brain networks share some common tracts at many spatial and temporal scales.
 
 Among these findings we can mention for example, that they exhibit the \emph{small-world} property~\cite{watts1998,sporns2002,sporns2004a}, in other words, most nodes in a graph can be reached from any other node in just a few hops.
 To mention the importance of such topological network traits, for example, small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance is likely to be related to how efficiently our brain integrates information between multiple brain regions.
 
-Other measures have been correlated with phenotypic and structural traits.
-\emph{Rich-clubs} are subset of high degree nodes who are very \emph{rich} in connections and form a communication backbone that, is hypothesized, might be valuable in supporting high-level and more cognitively advanced forms of information processing~\cite{collin2014}.
+Other measures have been correlated with phenotypical and structural traits.
+\emph{Rich-clubs} are subset of highly connected nodes who are very \emph{rich} in connections and form a communication backbone that, is hypothesized, might be valuable in supporting high-level and more cognitively advanced forms of information processing~\cite{collin2014}.
 Moreover, it's thought that the presence of a rich club increases the diversity of the functional repertoire over and above the effects produced by scale-free type topology alone~\cite{senden2014}.
 Forms of rich-club organization have been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,dereus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex.
 Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication.
 
 Abnormal rich-club connectivity is hypothesized to be related to familial vulnerability for schizophrenia~\cite{collin2014impaired}.
 From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{kandel2013}.
-Contrarily, primary sensory cortices have low topological centrality and degree, therefore damage to primary sensory areas only affect them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008}.
+Contrarily, primary sensory cortices have low topological centrality and degree. Damage to primary sensory areas only affects them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008}.
 
 More generally, network neuroscience has matured the ability not only to map alterations at the level of structural or functional connectome but recently it started predicting and generating hypotheses about underlying pathophysiological mechanisms of disease.
 Clinically useful predictions are now being made on the basis of network indicators, viewed as biomarkers of brain alterations~\cite{fornito2015}.
