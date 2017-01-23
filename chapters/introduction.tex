@@ -713,10 +713,26 @@ The LFR model is of great importance as it served as a benchmark test for commun
 % An example realization of the benchmark network is shown in Figure \ref{fig:ring_of_clique_powerlaw}.
 % \input{include/powerlaw_ring_clique.tex}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\subsection{Synthetic resting state networks}
+Here we introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested.
+
+The general idea is that, starting from an adjacency matrix with a given modular structure, we can generate time-courses for each of the nodes whose pairwise correlations reproduce the edge structure of the original matrix. Noise can be added to the time-courses, and the resulting correlation matrix will provide a noisy representation of the original one. This procedure can be repeated multiple times to produce different datasets that represent different "subjects" in the study.
+
+In practical terms, given an undirected weighted graph  $\mathbf{C} \in \mathbb{R}^{n\times n}$ whose community structure is known a-priori, we have calculated its nearest positive definite matrix~\cite{Higham1988} and its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$. Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, we have generated correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$. Additionally, we have injected different levels of noise into $\mathbf{Y}$ prior to the computation of the correlation matrix. 
+\footnote{Since the covariance matrix of a zero-mean, unit-variance random variable $X$ is given by $\mathbb{E}(XX^T)$, it's easy to verify that $\mathbb{E}(YY^T)=\mathbb{E}(LX)(LX)^T=\mathbb{E}(LX)X^T L^T=L\mathbb{E}(XX^T)L^T=L^T\mathbf{I}L=C$} 
+Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
+
+We tested this idea on two different models of planted partition: a variant of the ring of cliques~\cite{fortunato2007} and the Lancichinetti-Fortunato-Radicchi (LFR) network~\cite{lancichinetti2008} (Figure \ref{fig:lfrringclique}, whose degree distribution and modular structure can be tuned to replicate topological features of real-world networks, including scale freeness~\cite{hagmann2008} and the presence of densely interconnected cores~\cite{vandenheuvel2011}.
+
+\begin{sidewaysfigure}[htb!]
+\centering
+\includegraphics[height=0.39\textheight]{images/flowchart.pdf}
+\caption{Flowchart of the generation and analysis of the synthetic datasets. In A the network with a pre-defined community structure is generated. The adjacency matrix is then processed in block B to obtain the nearest positive definite matrix for the Cholesky decomposition. This enables the generation of node-wise time-courses into which different levels of noise can be injected. The procedure is repeated multiple times to generate different instances (mimicking different subjects in the sample). Finally, correlation matrices are calculated for each instance (block C), and Fisher transformed to calculate the average adjacency matrix for analysis by community detection algorithms (block D). Lastly, resulting partitions are compared with the original, planted one in terms of NMI.}
+\label{fig:flowchart}
+\end{sidewaysfigure}
 
 %%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%
 \section{Comparing community structure in networks}
@@ -783,15 +799,20 @@ The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y
 \label{fig:venn_diagram}
 \end{figure}
 
-\todo{spiegare confusion matrix TP,FP etc}
-% It is possible though to study partitioning on a community-wise basis by explicitly enumerating all the similarity between groups of nodes of two different partitions.
-% Let's assume we have two different clusterings $\zeta^x,\zeta^y$ obtained from two different runs of some non-deterministic community detection algorithm.
-%For two communities $c_i \in \zeta_1, c_j \in \zeta_2$, with $1\leq i \leq |\zeta_1|$,$1\leq j \leq |\zeta_2|$ then the cluster homogeneity is defined as:
-% \begin{align}
-% \Pr(\textrm{overlap}) = \frac{\binom{|c_j|}{|c_i \cap c_j|}\binom{N-|c_j|}{|c_i|-|c_i \cap c_j|}}{\binom{N}{|c_i|}}
-% \end{align}
-% %
-% \todo{fix discorso cluster homogeneity}
+
+It is also possible to quantify the confusion matrix $\mathbf{C}$ between the detected and planted modules.
+Each element $C_{ij}$ is the number of nodes in the planted community-$i$ that appear in the detected community-$j$.
+For each planted community one scores as true positives (TP) the nodes correctly identified as belonging to the ground-truth community, and as false positives (FP) the nodes wrongly assigned to a community; similarly false negatives (FN) are nodes wrongly classified in different communities and true negatives (TN) the nodes correctly classified as out of the community. Sensitivity, defined as $TP/(TP+FN)$, decreases with increasing number of False Negatives. Specificity instead is defined as $TN/(TN+FP)$ and decreases when many nodes are wrongly assigned in the same community. 
+
+Accuracy (Acc) and Matthew Correlation Coefficient (MCC) are defined on the basis of the confusion matrix as:
+\begin{align*}
+\textrm{Acc}=\frac{(TP+TN)}{TP+FP+TN+FN} \qquad \textrm{MCC}=\frac{(TP\times TN-FP\times FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+\end{align*}
+where TP, TN, FP, FN are the number of true positives, true negatives, false positives and false negatives identified in the detected partition with respect to the planted partition.
+
+Accuracy takes in account the proportion of correctly classified samples and can present relatively high values even in the case of poorly performing detection methods when the classes have very different size.
+The Matthew Correlation Coefficient  takes into account true and false positives and negatives. It's a balanced coefficient, to use especially when classes are very imbalanced.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% PERCOLATION ANALYSIS %%%%%%%%%%%%%%%%%%%%
