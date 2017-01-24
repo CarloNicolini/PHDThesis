@@ -74,28 +74,33 @@ Their temporal evolution is indeed variable as it exhibits spontaneous changes d
 
 %Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
 When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}. Interestingly, this background activity dubbed resting-state connectivity, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands. The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
-The structure of such temporal correlations define a network of spatially remote but similar patterns of signal. Interestingly, these networks are altered in neuropsychiatric diseases such as autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}. The extent of these alterations is an hallmark for possible diagnoses of brain disease.
+The structure of temporal correlations defines a network over spatially remote,  intersecting brain regions\todo{CHIARIRE CON ANGELO QUESTA CORREZIONE}. 
+Interestingly, these networks are altered in neuropsychiatric diseases such as autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}.
+The extent of these alterations may be an hallmark for possible diagnoses of brain disease.
 
-Among the many methods that are available to detect such pathological alterations, one of the most important is the possibility to quantify the modifications of the resting state networks in the abnormal brain using the theoretical framework of complex networks science~\cite{sporns2000,sporns2002,sporns2004,bullmore2009,stam2014}.
+%Among the many methods that are available to detect such pathological alterations, one of the most important is the possibility to quantify the modifications of the resting state networks in the abnormal brain using the theoretical framework of complex networks science~\cite{sporns2000,sporns2002,sporns2004,bullmore2009,stam2014}.
 
-Complex network science offers the best tools to assess the topology and organization of brain connectivity networks, as well as powerful means to establish, in a completely data-driven manner, diagnoses of common neurological diseases offering the possibility to design lines of intervention and prevention~\cite{bullmore2009,stam2014,crossley2014}.
-In the framework of complex networks science, the brain is seen as a system whose fundamental units are the brain regions at different scales, interconnected by a number of links, describing the strength of inter-regional coordination.
+
+Complex network science provides a framework to study the structure of functional connectivity networks and to assess alterations induced by pathological conditions~\cite{bullmore2009,stam2014,crossley2014}.
+
+%Complex network science offers the best tools to assess the topology and organization of brain connectivity networks, as well as powerful means to establish, in a completely data-driven manner, diagnoses of common neurological diseases offering the possibility to design lines of intervention and prevention.
+%In the framework of complex networks science, the brain is seen as a system whose fundamental units are the brain regions at different scales, interconnected by a number of links, describing the strength of inter-regional coordination.
 
 %%%%%%%%%%%%%%%%%%%% RIPRESO DA INTRODUZIONE
 The methods of network theory date back to the problem of K{\"o}nigsberg bridges, in 1735, when the famous mathematician Leonhard Euler was faced with the problem of finding a path through the city that would cross all the seven bridges just once.
-Since then a large amount of knowledge has been accumulated on networks, in what is nowadays known as graph-theory.
-In totally general settings, simple graphs are usually defined as a set of nodes, entities representative of some object, connected by a set of links, denoting the strength of the relation between pairs of nodes.
-Graphs can be used to represent any type of relation between interacting elements and the idea that graph-theory can be applied to brain networks has been pioneered starting from the middle nineties of the twentieth century, defining a new specialization of systems biology, dubbed \emph{network neuroscience}.
+The knowledge accumulated since then forms the basis of modern graph theory.
+In totally general settings, simple graphs are usually defined as a set of nodes,  connected by a set of links, denoting the strength of the relation between pairs of nodes.
+Graphs can be used to represent any type of relation between interacting elements and the idea that graph-theory can be applied to brain networks has been pioneered starting from the middle nineties defining a new specialization of systems biology, dubbed \emph{network neuroscience}.
 
-The network neuroscience relies upon the treatment of the brain as a graph, whose nodes are indicative of particular brain regions connected by links displaying the strength of their mutual interactions.
+The network neuroscience relies upon the treatment of the brain as a graph, whose nodes are indicative of particular brain regions connected by links representing  the strength of their mutual interactions.
 The classical general pipeline for the definition of a brain graph is given in Figure~\ref{fig:bullmore2009pipeline}.
 In this framework, the modeling of the brain in terms of graphs starts from the definition of its nodes~\cite{stanley2013}.
-These can be defined as electroencephalography or multi-array electrodes or as anatomically defined regions of histological, MRI or diffusion tensor imaging data~\cite{vandenheuvel2010}.
-A clear delineation of network nodes is one of the first steps in the whole pipeline of the graph-theoretical analyses and is highly important for the subsequent statistics resulting from the data~\cite{stanley2013}.
+These can be defined as anatomically or functionally defined regions~\cite{vandenheuvel2010}.
+A clear delineation of network nodes is one of the first steps in the whole pipeline of the graph-theoretical analyses and is highly important for the subsequent analyses~\cite{stanley2013}.
 The second step in the definition of a brain network is an estimate of the continuous association between nodes: the links of the graph indeed measure the interregional coordination or similarity between nodes~\cite{pereda2005a}.
-To be more specific in the case of fMRI studies of resting state functional connectivity, link weights are defined as interregional temporal correlations in the fluctuations of the BOLD signals, and the resulting graph can be represented by a square matrix (adjacency matrix) where the strongest correlations indicate the presence of a link between any two specific areas.
-In other applications like Diffusion Tensor Imaging, a technique that is able to show the effective directions of nervous fibers traits in the brain, one can see the links as directly proportional to the number of white matter tracts connecting any two regions.
-In addition, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{evans2013,he2007}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a}, pharmacological challenges~\cite{schwarz2007,schwarz2008} or spectral coherence of EEG electrical time-courses.
+To be more specific, in the case of fMRI studies of resting state functional connectivity, link weights are defined as interregional temporal correlations in the fluctuations of the BOLD signals, and the resulting graph can be represented by a square matrix (adjacency matrix) where the strongest correlations indicate the presence of a link between any two specific areas.
+In other applications, like Diffusion Tensor Imaging, a technique that is able to show the effective directions of nervous fibers traits in the brain, one can define links whose strength is directly proportional to the number of white matter tracts connecting any two regions.
+In addition, brain networks have also been defined on the basis of inter-subject anatomical covariance~\cite{evans2013,he2007}, co-activation of different brain regions across individuals subjected to experimental tasks~\cite{crossley2013a}, pharmacological challenges~\cite{schwarz2007,schwarz2008} or spectral coherence of EEG electrical time-courses~\cite{pereda2005a}.
 All of these networks are ``weighted'' by definition, i.e.
 their links are associated with real numbers representing a measure of the strength of pairwise interactions between nodes.
 
@@ -108,22 +113,22 @@ Adapted from~\cite{bullmore2009}.}
 \label{fig:bullmore2009pipeline}
 \end{figure}
 
-The ascendancy of the network neuroscience in the last decade is driven by the evidence that almost independently from how the networks links are defined, brain networks share some common tracts at many spatial and temporal scales.
+The rise of the network neuroscience in the last decade has been driven by the evidence that almost independently from how the networks links are defined, brain networks share some common features at many spatial and temporal scales.
 
-Among these findings we can mention for example, that they exhibit the \emph{small-world} property~\cite{watts1998,sporns2002,sporns2004a}, in other words, most nodes in a graph can be reached from any other node in just a few hops.
-To mention the importance of such topological network traits, for example, small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance is likely to be related to how efficiently our brain integrates information between multiple brain regions.
+For example, they exhibit the \emph{small-world} property~\cite{watts1998,sporns2002,sporns2004a}, whereby most nodes in a graph can be reached from any other node in just a few hops.
+Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance may be related to how efficiently our brain integrates information between multiple brain regions.
 
-Other measures have been correlated with phenotypical and structural traits.
-\emph{Rich-clubs} are subset of highly connected nodes who are very \emph{rich} in connections and form a communication backbone that, is hypothesized, might be valuable in supporting high-level and more cognitively advanced forms of information processing~\cite{collin2014}.
-Moreover, it's thought that the presence of a rich club increases the diversity of the functional repertoire over and above the effects produced by scale-free type topology alone~\cite{senden2014}.
+Other measures have been correlated with phenotypical and structural characteristics.
+\emph{Rich-clubs} are subsets of highly connected nodes who are also highly connected to each other, forming a communication backbone. It has been hypothesized, that rich clubs might be valuable in supporting high-level and more cognitively advanced forms of information processing~\cite{collin2014}.
+Moreover, it's thought that the presence of a rich club increases the diversity of the functional repertoire over and above the effects produced by scale-freeness alone~\cite{senden2014}, a property of a network of being self-similar at different scales.
 Forms of rich-club organization have been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,dereus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex.
 Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication.
 
-Abnormal rich-club connectivity is hypothesized to be related to familial vulnerability for schizophrenia~\cite{collin2014impaired}.
-From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{kandel2013}.
-Contrarily, primary sensory cortices have low topological centrality and degree. Damage to primary sensory areas only affects them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008}.
+From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{sporns2007,power2013,kandel2013}\todo{INFORMARE ANGELO DI QUESTA CITAZIONE}.
+Contrarily, primary sensory cortices have low topological centrality and degree. Damage to primary sensory areas only affects them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008,ball2014}.
+Abnormal rich-club connectivity is hypothesized to be related to familial vulnerability for schizophrenia~\cite{collin2014impaired} and other diseases as well.
 
-More generally, network neuroscience has matured the ability not only to map alterations at the level of structural or functional connectome but recently it started predicting and generating hypotheses about underlying pathophysiological mechanisms of disease.
+More generally, network neuroscience has matured the ability to map alterations at the level of structural or functional connectome and may be useful for predicting and generating hypotheses about underlying pathophysiological mechanisms of disease.
 Clinically useful predictions are now being made on the basis of network indicators, viewed as biomarkers of brain alterations~\cite{fornito2015}.
 Hence, if only a systematic biological study of the nervous system can detail the etiology of neurological diseases, their observable symptoms often result in a partial or total reorganization of the functional and structural architecture of the brain.
 To this end, the definition and validation of actual data-driven biomarkers based on the graph-theoretical observations of the effects of brain diseases is, ultimately, a highly desirable target to reach within the next years.
