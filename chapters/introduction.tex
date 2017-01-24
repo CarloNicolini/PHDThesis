@@ -28,26 +28,26 @@
 %%%%%%%%% INTRO GENERALE COMPLEX NETWORKS
 %\section{Complex networks science and the brain}\label{sec:complexnetworksciencebrain}
 
-\section{The ascendancy of network neuroscience}
-Starting from 19th century’s neuron doctrine, we know that the brain is an incredibly complex system of intercommunicating elements, the neurons, intertwined with other cells that support neuronal activity.
+\section{The rise of network neuroscience}
+Starting from 19th century’s neuron doctrine, the brain is described as an incredibly complex system of intercommunicating elements, the neurons, intertwined with other cells that support neuronal activity.
 
 The dynamical processes running on the biological substrate of neurons are the basis of information processing that gives rise to cognitive and psychological processes, from the perception of the external environment to the representation of mental states and emotions.
 Neuroscience tackles the investigation of the brain, the most complex organ in nature, at different scales.
-The molecular and cellular neuroscience is interested at the finest level of working of the nervous system cells.
+Molecular and cellular neuroscience focus on the finest level of workings of the nervous system cells.
 At this scale, molecular biology and genetics are used to address the study of very small populations of neurons.
 
-At larger scales, hundreds or thousands of neurons are involved and a more comprehensive view to identifying diseases and pathological states is needed.
-The view must shift from the microscopic level to the so-called system neuroscience, that deals with highly connected networks of neurons, dubbed neuronal circuits.
+At larger scales, hundreds or thousands of neurons are involved and a more comprehensive approach is needed.
+The view must shift from the microscopic level to the so-called systems neuroscience, which deals with widespread networks of neurons, dubbed neuronal circuits.
 
-System neuroscience studies how these large-scale circuits form and evolve during the development, how they produce basic processes like reflexes, motor coordination, circadian rhythms and, ultimately, how they give rise to overt behavioral and different internal states like motivation, emotions, and cognition.
-Hence, and extension of system neuroscience from the study of small groups of neurons to the whole brain requires radically different tools, both computational and experimental.
-Very small scale neuronal circuits that can be studied by mathematically accurate models are formed by several hundred neurons.
+System neuroscience studies how these large-scale circuits form and evolve during  development, how they produce basic processes like reflexes, motor coordination, circadian rhythms and, ultimately, how they give rise to behavioral and different internal states like motivation, emotions, and cognition.
+Hence, an extension of system neuroscience from the study of small groups of neurons to the whole brain requires radically different tools, both computational and experimental.
+Very small scale neuronal circuits can be studied by mathematically accurate models.
 The typical size of the smallest identified functional unit, the cortical column, is around hundred thousand neurons and, already at that level, many hypotheses are required to approximately reproduce the electrical and chemical activity of neurons, at the point that a comprehensive differential equations model of cortical columns is still lacking.
 
-Yet, a large-scale understanding of the incredibly complicated network of all the neurons in the human brain, the \emph{human connectome}, probably remains an idealistic target to be reached in the future.
-This scientific, technological and cultural challenge is named after the term \emph{connectomics}, a word coined at the beginning of this decade by Giulio Tononi and Olaf Sporns.
+Yet, a large-scale understanding of the incredibly complicated network of all the neurons in the human brain, the \emph{human connectome}, remains a challenging target to be reached in the future\todo{REF}.
+This scientific, technological and cultural challenge is named after the term \emph{connectomics}, a word coined at the beginning of this decade by Giulio Tononi and Olaf Sporns\todo{REF}.
 Its most ambitious aim is to map all the connections in the brain at different scales of resolution, deep down to the synaptic level.
-Whether this will help to answer some of the deepest questions about the human brain, it is not entirely known and still a topic of hot debate in the scientific community.
+Whether this will help answer some of the deepest questions about the human brain, it is not entirely known and still a topic of hot debate in the scientific community.
 
 The science of brain connectivity takes advantage of well-consolidated technologies for looking at the brain at work.
 These non-invasive methods of analysis of brain functions include neuroimaging techniques like magnetic resonance imaging (MRI), electroencephalography (EEG) and transcranial magnetic stimulation (TMS).
@@ -55,25 +55,24 @@ Among these modalities, MRI has emerged as a dominant non-invasive imaging metho
 
 At the morphological level, MRI provides a comprehensive view of the brain, as it can identify the white matter fiber pathways connecting gray matter regions otherwise impossible to obtain in-vivo.
 The pattern of white matter fibers is often named after the term \emph{structural connectivity} as it relates to the morphological features of the brain connections.
-Structural networks correspond to a pattern of anatomical connections, summarizing synaptic links between neurons or projections among brain regions.
-Borrowing ideas from the electronics, structural connectivity may be meant as the electrical wiring of the different parts of a microprocessor.
+Structural networks correspond to a pattern of anatomical connections, summarizing bundles of axons connecting different brain regions.
+Borrowing ideas from the electronics, structural connectivity may be interpreted as the electrical wiring of the different parts of a processor.
 Although useful, the wiring diagram of the brain is only a starting point for making hypotheses about the brain at work; indeed it cannot reveal how neurons behave in real-time, nor does it account for the yet unknown regulatory mechanisms that neurons exert on each other.
-Unfortunately, such dynamics are and remain partially unpredictable, despite many notable and useful attempts~\cite{deco2008}, as also the synaptic weights are changing dynamically due to different amounts of neurotransmitters available.
+Unfortunately, such dynamics are and remain partially unpredictable, despite many notable and useful attempts~\cite{deco2008}, as also the synaptic weights are changing dynamically due to synaptic plasticity.
 
-Since its inception, the evolution of technologies in MRI, lead to functional MRI (fMRI), a way to spatially map temporal changes of oxygenated blood concentration in the whole brain, the so-called BOLD signal.
+The discovery of the BOLD effect in the 90's by Ogawa~\cite{ogawa1990}, lead to functional MRI, a method to spatially map activity in the whole brain.
+Considered over the large scale, the BOLD response is descriptive of the temporal metabolic demands of large groups of cortical and subcortical structures, a quantity strictly related to the electrical activity of neurons~\cite{logothetis2001}.
+Activation maps have been estimated for almost every kind of cognitive task and collected in publicly available datasets, like the BrainMap database~\cite{fox2002}\todo{ALTRI DATABASE?}.
+This tool helped scientists to unveil another pattern of connectivity that exists in the brain. \emph{Functional connectivity} examines functional associations between temporal fluctuations of neuronal activities from different brain regions~\cite{biswal1995}. %Specifically fMRI functional connectivity focuses on the underlying physiological dynamics giving rise to changes in blood oxygenation.
+%Since its inception, the evolution of technologies in MRI, lead to functional MRI (fMRI), a way to spatially map temporal changes of oxygenated blood concentration in the whole brain, the so-called BOLD signal.
 %Throughout the years, fMRI helped neuroscientists and neurologists to enrich the knowledge of the fundamental aspects of the normal brain functional organization, but as every technique also has its limitations~\cite{logothetis2008}.
-This tool helped scientists to unveil another pattern of connectivity that exists in the brain. \emph{Functional connectivity} examines functional associations between temporal fluctuations of neuronal activities from different brain regions. Specifically fMRI functional connectivity focuses on the underlying physiological dynamics giving rise to changes in blood oxygenation.
+% and yields precious information about the brain not only on its surface but also in other deeper regions, otherwise difficult to reach.
+In contrast to structural connectivity, functional connectivity results from estimates of statistical dependencies between neuronal or regional time courses.
+Functional networks may vary over time, unlike structural networks which are stable over long time scales\todo{REF}.
+Their temporal evolution is indeed variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
 
-Considered over the large scale, functional connectivity is descriptive of the temporal metabolic demands of large groups of cortical and subcortical structures, a quantity strictly related to the electrical activity of neurons, and yields precious information about the brain not only on its surface but also in other deeper regions, otherwise difficult to reach.
-In contrast with structural connectivity, functional connectivity results from estimates of statistical dependencies between neuronal or regional time courses.
-The temporal course of functional networks is also less stable than structural networks, which are stable over long time scales. Their temporal evolution is indeed highly variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
-
-Activation maps have been estimated for almost every kind of cognitive task and collected in publicly available datasets, like the BrainMap database~\cite{fox2002}.
-Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
-
-Although conceptually simpler than activations studies, even more interesting is the discovery that when a person is cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{raichle2001,gusnard2001}.
-Interestingly such background activity, dubbed resting-state connectivity, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands.
-The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
+%Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
+When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}. Interestingly, this background activity dubbed resting-state connectivity, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands. The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
 The structure of such temporal correlations define a network of spatially remote but similar patterns of signal. Interestingly, these networks are altered in neuropsychiatric diseases such as autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}. The extent of these alterations is an hallmark for possible diagnoses of brain disease.
 
 Among the many methods that are available to detect such pathological alterations, one of the most important is the possibility to quantify the modifications of the resting state networks in the abnormal brain using the theoretical framework of complex networks science~\cite{sporns2000,sporns2002,sporns2004,bullmore2009,stam2014}.
