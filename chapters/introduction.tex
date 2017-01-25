@@ -129,31 +129,31 @@ Contrarily, primary sensory cortices have low topological centrality and degree.
 Abnormal rich-club connectivity is hypothesized to be related to familial vulnerability for schizophrenia~\cite{collin2014impaired} and other diseases as well.
 
 More generally, network neuroscience has matured the ability to map alterations at the level of structural or functional connectome and may be useful for predicting and generating hypotheses about underlying pathophysiological mechanisms of disease.
-Clinically useful predictions are now being made on the basis of network indicators, viewed as biomarkers of brain alterations~\cite{fornito2015}.
-Hence, if only a systematic biological study of the nervous system can detail the etiology of neurological diseases, their observable symptoms often result in a partial or total reorganization of the functional and structural architecture of the brain.
-To this end, the definition and validation of actual data-driven biomarkers based on the graph-theoretical observations of the effects of brain diseases is, ultimately, a highly desirable target to reach within the next years.
-
+%Clinically useful predictions are now being made on the basis of network indicators, viewed as biomarkers of brain alterations~\cite{fornito2015}.
+%Hence, if only a systematic biological study of the nervous system can detail the etiology of neurological diseases, their observable symptoms often result in a partial or total reorganization of the functional and structural architecture of the brain.
+To this end, the definition and validation of data-driven biomarkers based on graph-theoretical observations of the effects of brain diseases is a highly desirable objective.
 
 \section{Brain networks at the mesoscale}
-Among the many properties that graphs in general exhibit and that are arguments of further analysis \emph{per se}, one of the most directly observable is that very often nodes group together forming some kind of \emph{clusters}, resulting in a particular mesoscopic structure.
+Many natural and artificial networks display a modular organization, i.e. nodes group together in some kind of \emph{clusters}, resulting in a particular mesoscopic structure.
+
 At this level of mesoscale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph.
-When the mesoscopic structure tends to group nodes with similar properties, the mesoscale structure is called \emph{assortative}.
+When the structure tends to group nodes with similar properties, the mesoscale structure is called \emph{assortative}.
 Graphs with an assortative structure consist of tightly connected groups of nodes that are themselves loosely connected with other groups.
 These groups are therefore dubbed as \emph{communities}.
 
-The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on the topic, as proven by the large review of Fortunato~\cite{fortunato2010}.
-The problem of detecting the communities, \emph{community detection} or \emph{graph-partitioning} in the computer-science jargon, is of big theoretical and practical importance.
-From the theoretic point of view, communities in networks are representative of the generative probabilistic model underlying the formation of links~\cite{karrer2011} and tell much about the statistical properties of the networks.
+The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on the topic, as reviewed Fortunato~\cite{fortunato2010}.
+The problem of detecting the communities, \emph{community detection} or \emph{graph-partitioning} in the computer-science jargon, is of theoretical and practical importance.
+From the theoretic point of view, communities are representative of the generative probabilistic model underlying the formation of links~\cite{karrer2011} and tell much about the statistical properties of networks.
 On the other side, practical applications of community detection are fundamental not only in neuroscience but also in sociology, computer science, biology and many other fields.
 Modules derive from a decomposition of the network into subcomponents that are internally strongly coupled but externally only weakly coupled.
-The property of a system of being modular, as already noted by Nobel prize laureate Herbert Simon, or \emph{near-decomposability}, helps any system to resist external insults by separating different functions into topologically distinct part of the system.
-Near decomposability is in many respects an hallmark of complexity in natural systems~\cite{simon1991}.
+The property of a system of being modular, as already noted by Nobel prize laureate Herbert Simon, or \emph{nearly-decomposable}~\cite{simon1991}, helps any system to resist external insults by separating different functions into topologically distinct part of the system.
+Near decomposability is in many respects a hallmark of complexity in natural system~s\cite{simon1991}.
 
-Strong experimental evidence shows that the nervous system in animals and humans, from the neuronal level up to macroscopic levels, displays an organization that favors the exchange of information over a communication backbone supported by well-connected areas, the hubs of the network~\cite{dereus2013a}, responsible in turn for sending information to local processors, the communities~\cite{vandenheuvel2013a}.
+Strong experimental evidence shows that the nervous system in animals and humans, from the neuronal level up to macroscopic levels, displays an organization that favors the exchange of information over a communication backbone supported by well-connected areas, the connector hubs of the network~\cite{dereus2013a}, responsible in turn for sending information to local processors, the communities~\cite{vandenheuvel2013a}.
 The functional brain network of humans and other animals, consists of connected subnetworks (or modules) associated with cognitive functions, of vital importance for the daily life and the interaction in the environment.
 Additionally, such modular organization is exhibited hierarchically at different scales, with modules inside modules, a construction that is thought to confer robustness and adaptability to the network~\cite{meunier2010}.
 
-
+\todo{Inserire frase su interplay between functional segregation and integration}
 \begin{figure}[htb!]
 \centering
 \hfill\includegraphics[height=0.25\textwidth]{images/brain_network_basics.pdf}\hfill
@@ -162,27 +162,27 @@ Additionally, such modular organization is exhibited hierarchically at different
 Adapted from~\cite{sporns2016}.}
 \label{fig:brain_network_communities}
 \end{figure}
-
+\todo{Inserire frase su potential reorganization of modular organization in brain disease}
 
 %This kind of structure implies that modules of heterogeneous size are present at the same time in the brain networks and that an efficient method to detect the presence of large and small modules at the same time together is in order.
 
 %
 
-Among the network level changes observed in the diseased brain, the alteration of the hierarchical and modular structure of both structural and functional brain connectivity is the most recognizable.
+%Among the network level changes observed in the diseased brain, the alteration of the hierarchical and modular structure of both structural and functional brain connectivity is the most recognizable.
 
-Using the tools of complex network science, the evaluation of functional alterations in the modular structure of FC networks is cast to the problem of community detection in graphs, i.e.
+Using the tools of complex network science, the evaluation of the modular structure of FC networks is cast to the problem of community detection in graphs, i.e.
 the problem of identifying independent groups of brain regions that exhibit strong interconnection between each other but that are weakly connected to other modules.
-With the graph partitioned into smaller groups (or communities) of functionally connected modules, it is simpler to quantify the effect of the disease on the partitioning, as well as the areas involved in such reorganization and the role of the single nodes inside their modules.
+%% COMMENTATO DA ANGELO
+% With the graph partitioned into smaller groups (or communities) of functionally connected modules, it is simpler to quantify the effect of the disease on the partitioning, as well as the areas involved in such reorganization and the role of the single nodes inside their modules.
 Indeed, an important factor when considering the effects of external perturbations on brain functioning is the degeneracy (or redundancy) of network nodes across their modules.
 Areas that are buried inside a dense module have high degeneracy, as removal of a vertex is unlikely to affect the communications between the others.
-Generally speaking, poorer prognoses are registered when the interested area of the insult has low degeneracy, i.e.
-only that area is deputed to a particular region such that no other area may compensate.
+% COMMENTATO Generally speaking, poorer prognoses are registered when the interested area of the insult has low degeneracy, i.e. only that area is deputed to a particular region such that no other area may compensate.
 Severe impairments of neurocognitive functions are associated with damages to highly central nodes, as depicted qualitatively in Figure~\ref{fig:prognosis_centrality}.
 
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.75\textwidth]{images/prognosis.pdf}
-\caption{Hypothetical relation between centrality of node subjected to an pathological insult, its degeneracy and the expected functional impairment.}
+\caption{Hypothetical relation between centrality of node subjected to an pathological insult, its degeneracy and the expected functional impairment. Adapted from~\cite{fornito2015}.}
 \label{fig:prognosis_centrality}
 \end{figure}
 
@@ -191,20 +191,23 @@ Several methods have been proposed to resolve the community structure of complex
 Many of these methods involve the definition of a fitness function that assigns positive or negative scores to edges connecting nodes within or outside the same community, and heuristics to find the optimal partition of the network that maximizes this fitness function.
 Among all the methods, the most popular approach is Newman's ``Modularity maximization'' and variations thereof~\cite{newman2006}.
 Following the first demonstration by~\cite{schwarz2008}, partitioning of brain networks using Newman's Modularity has been widely applied to assess the brain modular structure.
-Despite its wide usage and merits, Newman's Modularity is characterized by some important limitations as it may fail to detect modules whose size is heteregenous, resulting in a few, relatively uniform modules of almost the same dimension. Such quite general behaviuor, not unique to Newman's approach, is pervasive and is dubbed as \emph{resolution-limit}~\cite{fortunato2007}.
+Despite its wide usage and merits, Newman's Modularity is characterized by some important limitations as it may fail to detect modules smaller than a certain scale determined by the network size, resulting in a few, relatively uniform modules of almost the same dimension.
+This general behaviour, not unique to Newman's approach, is pervasive in community detection and is dubbed as \emph{resolution-limit}~\cite{fortunato2007}.
 
-The problems and drawbacks resulting from the resolution limit passed largely unnoticed in the neuroscience literature of the last years as most scientists used Newman's Modularity.
-Such barrier has its roots in the theoretical foundations of community detection and practically implies that the detection of brain modules smaller than a scale determined by the size of the total network is very difficult, or in the worst case, even impossible.
+% COMMENTATO DA ANGELO The problems and drawbacks resulting from the resolution limit passed largely unnoticed in the neuroscience literature of the last years as most scientists used Newman's Modularity.
+% COMMENTATO DA ANGELO This barrier has its roots in the theoretical foundations of community detection and practically implies that the detection of brain modules smaller than a scale determined by the size of the total network is very difficult, or in the worst case, even impossible.
 As a consequence, even unambiguously defined modules, like almost complete sub-graphs or even cliques\footnote{Graphs where all nodes to connect to all nodes}, may be unduly merged into larger communities when they are too small compared to the size of the network.
-This limit hampers the ability to detect small-scale structures of functionally correlated brain areas and, last, to notice alterations in connectivity between subjects or groups of subjects.
-Such limit is therefore of impediment to an implementation of a clinical-level biomarker of brain disease.
+This limit hampers the ability to detect small-scale structures of functionally correlated brain areas and to notice alterations in connectivity between subjects or groups of subjects. Hence, it may have prevented detection of alterations in the modular structure of brain connectivity in patients affected by various neuropsychiatric disorders
+% Such limit is therefore of impediment to an implementation of a clinical-level biomarker of brain disease.
 Hence, the resolution limit represents a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
-Moreover, it has been shown that an adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}.
-Adjustment of the resolution parameter is an attempt to balance these two biases, but multi-resolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}.
+% TROPPO SPECIFICO A QUESTO LIVELLO
+%Moreover, it has been shown that an adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multi-resolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}.
 
-In the present work I'll try to highlight a fruitful approach that has been valuable in detecting communities in brain networks beyond the resolution limit. The following sections of this introductory chapter guide the reader into the complex networks science, by first giving an overview of the mathematical terminology and the methodological concepts that build it.
-In the second chapter~\ref{chap:modularorganization}, the experimental evidence of the modular structure of brain connectivity is introduced, together with the methods of election to disentagle such complex system. In particular, sections~\ref{sec:resolutionlimit} and~\ref{sec:degeneracy} introduce the problem of the resolution limit and degeneracy of Newman Modularity, two of the central concepts of this work.
-A new approach dubbed Surprise, that overcomes the limitations imposed by the resolution limit and degeneracy, is proposed in the chapter~\ref{chap:beyondresolutionlimit}, with mathematical analyses and detailing each and every aspect of it. Together with Surprise, its weighted counterpart dubbed Asymptotical Surprise is discussed throughout the chapter~\ref{chap:beyondresolutionlimit}.
+\todo{COMPLETATO DESCRIZIONE CAPITOLI, FORSE TROPPI PASSIVI}
+In the present work I have developed an approach that has been valuable in detecting communities in brain networks beyond the resolution limit. The following sections of this introductory chapter guide the reader into the complex networks science, by first giving an overview of the mathematical terminology and methodological concepts.
+In the second chapter, the experimental evidence of the modular structure of brain connectivity is introduced, together with the methods to disentangle the mesoscopic structure of complex systems. In particular, sections~\ref{sec:resolutionlimit} and~\ref{sec:degeneracy} introduce the problem of the resolution limit and degeneracy of Newman Modularity.
+A new approach dubbed Surprise, that overcomes the limitations imposed by the resolution limit and degeneracy, is described in the chapter~\ref{chap:beyondresolutionlimit}. Throughout chapter~\ref{chap:beyondresolutionlimit}, the problems imposed by the resolution limit and degeneracy are analysed for Surprise and its weighted counterpart, Asymptotical Surprise. The characteristics of the two methods are discussed, together with an efficient algorithm aimed at their optimization.
+The application of Surprise and Asymptotical Surprise to functional connectivity networks constitutes the hearth of chapter~\ref{chap:beyondresolutionlimitfunctionalconnectivity}, whereby the implications of a resolution limit free analysis of the functional modules are explored. Firstly, application of Surprise revealed the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods. An approach for the creation of realistic benchmark resting state networks is then examined. On the ground structure provided by those networks, Asymptotical Surprise is validated and shown to outperform current resolution-limited methods. The finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise is shown to lead to substantial differences in the identification of connector hubs compared to other community detection methods.
 
 %This introductory chapter presents the framework of complex network science as applied to brain functional connectivity and analyzes the implications of the resolution limit in real-world networks.
 % The brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
