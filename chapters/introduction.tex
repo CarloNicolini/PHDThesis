@@ -69,8 +69,10 @@ Activation maps have been estimated for almost every kind of cognitive task and 
 %Throughout the years, fMRI helped neuroscientists and neurologists to enrich the knowledge of the fundamental aspects of the normal brain functional organization, but as every technique also has its limitations~\cite{logothetis2008}.
 % and yields precious information about the brain not only on its surface but also in other deeper regions, otherwise difficult to reach.
 In contrast to structural connectivity, functional connectivity results from estimates of statistical dependencies between neuronal or regional time courses.
-Functional networks may vary over time, unlike structural networks which are stable over long time scales\todo{REF}.
-Their temporal evolution is indeed variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
+Functional networks may vary over time, unlike structural networks which are stable over long time scales. For instance, eletrical patterns of cortical activity may rearrange over time-scales of milliseconds, in contrast to structural changes like the nervous system development or processes of learning and aging, that evolve over days or months.
+Furthermore, the temporal evolution of functional networks is variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
+%Importantly, functional connectivity does not express any causal effects between brain regions, as it's only informative of their statistical dependence.
+
 
 %Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
 When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}. Interestingly, this background activity dubbed resting-state connectivity, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands. The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
@@ -135,13 +137,12 @@ To this end, the definition and validation of data-driven biomarkers based on gr
 
 \section{Brain networks at the mesoscale}
 Many natural and artificial networks display a modular organization, i.e. nodes group together in some kind of \emph{clusters}, resulting in a particular mesoscopic structure.
-
 At this level of mesoscale organization, the topological properties of nodes are more dependent on their neighborhood than on the rest of the graph.
 When the structure tends to group nodes with similar properties, the mesoscale structure is called \emph{assortative}.
 Graphs with an assortative structure consist of tightly connected groups of nodes that are themselves loosely connected with other groups.
 These groups are therefore dubbed as \emph{communities}.
 
-The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on the topic, as reviewed Fortunato~\cite{fortunato2010}.
+The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on the topic, as reviewed in~\cite{fortunato2010}.
 The problem of detecting the communities, \emph{community detection} or \emph{graph-partitioning} in the computer-science jargon, is of theoretical and practical importance.
 From the theoretic point of view, communities are representative of the generative probabilistic model underlying the formation of links~\cite{karrer2011} and tell much about the statistical properties of networks.
 On the other side, practical applications of community detection are fundamental not only in neuroscience but also in sociology, computer science, biology and many other fields.
@@ -149,11 +150,15 @@ Modules derive from a decomposition of the network into subcomponents that are i
 The property of a system of being modular, as already noted by Nobel prize laureate Herbert Simon, or \emph{nearly-decomposable}~\cite{simon1991}, helps any system to resist external insults by separating different functions into topologically distinct part of the system.
 Near decomposability is in many respects a hallmark of complexity in natural system~s\cite{simon1991}.
 
-Strong experimental evidence shows that the nervous system in animals and humans, from the neuronal level up to macroscopic levels, displays an organization that favors the exchange of information over a communication backbone supported by well-connected areas, the connector hubs of the network~\cite{dereus2013a}, responsible in turn for sending information to local processors, the communities~\cite{vandenheuvel2013a}.
-The functional brain network of humans and other animals, consists of connected subnetworks (or modules) associated with cognitive functions, of vital importance for the daily life and the interaction in the environment.
-Additionally, such modular organization is exhibited hierarchically at different scales, with modules inside modules, a construction that is thought to confer robustness and adaptability to the network~\cite{meunier2010}.
+Strong experimental evidence shows that the nervous system in animals and humans, from the neuronal level up to macroscopic scale, displays an organization that favors the exchange of information over a communication backbone supported by well-connected areas, the connector hubs of the network~\cite{dereus2013a}, responsible in turn for sending information to local processors, the communities or modules~\cite{vandenheuvel2013a}.
+Functional brain networks of humans and other animals, consist of connected subnetworks (or modules) associated with cognitive functions, of vital importance for the daily life and the interaction in the environment.
+The modular organization is exhibited hierarchically at different scales, with modules inside modules. Within this architecture information flows from lower level sensory cortices to higher multimodal and associative cortices~\cite{kandel2013}, a construction that confers robustness and adaptability to the network~\cite{meunier2010}.
 
-\todo{Inserire frase su interplay between functional segregation and integration}
+Functional segregation is evident at multiple scales in the brain, from the neuronal networks to macroscopic anatomically defined regions.
+From the functional point of view, segregation is meant as the statistical dependence of processing elements within the same region. Integration is instead realized through synchronization processes that increase the statistical dependence between functional modules, a mechanism required to access widely distributed resources, needed for a coherent behaviour.
+
+
+
 \begin{figure}[htb!]
 \centering
 \hfill\includegraphics[height=0.25\textwidth]{images/brain_network_basics.pdf}\hfill
@@ -177,14 +182,14 @@ the problem of identifying independent groups of brain regions that exhibit stro
 Indeed, an important factor when considering the effects of external perturbations on brain functioning is the degeneracy (or redundancy) of network nodes across their modules.
 Areas that are buried inside a dense module have high degeneracy, as removal of a vertex is unlikely to affect the communications between the others.
 % COMMENTATO Generally speaking, poorer prognoses are registered when the interested area of the insult has low degeneracy, i.e. only that area is deputed to a particular region such that no other area may compensate.
-Severe impairments of neurocognitive functions are associated with damages to highly central nodes, as depicted qualitatively in Figure~\ref{fig:prognosis_centrality}.
+%Severe impairments of neurocognitive functions are associated with damages to highly central nodes, as depicted qualitatively in Figure~\ref{fig:prognosis_centrality}.
 
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=0.75\textwidth]{images/prognosis.pdf}
-\caption{Hypothetical relation between centrality of node subjected to an pathological insult, its degeneracy and the expected functional impairment. Adapted from~\cite{fornito2015}.}
-\label{fig:prognosis_centrality}
-\end{figure}
+% \begin{figure}[htb!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{images/prognosis.pdf}
+% \caption{Hypothetical relation between centrality of node subjected to an pathological insult, its degeneracy and the expected functional impairment. Adapted from~\cite{fornito2015}.}
+% \label{fig:prognosis_centrality}
+% \end{figure}
 
 %%%%%%%%%%%% PARTE COMMUNITY DETECTION %%%%%%%%%%%%%%%%%%%%
 Several methods have been proposed to resolve the community structure of complex networks~\cite{fortunato2010,lancichinetti2009,fortunato2016}.
