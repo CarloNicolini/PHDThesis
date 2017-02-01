@@ -1,10 +1,23 @@
-Functional magnetic resonance imaging is the most used tool to map functional properties of the human brain connections. Within the mathematical framework of graph theory, the functional connectome can be modeled as a complex network showing peculiar properties.
-Among them, one of the most important is the organization in functional modules reflecting an integration-segregation balance of information processing typical of normal brain functioning.
-Such modular and hierachical organization is investigated with graph partitioning methods based on the maximization of global fitness functions. The most widely adopted method, dubbed Newman's Modularity, suffers from a resolution limit, as it fails to detect modules that are smaller than a scale determined by the size of the entire network.
-Here I explore the effects of this limitation on the study of brain connectivity networks both from a theoretical and a practical perspective.
-I demonstrate that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
-Hence, I will show that Surprise, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
-Surprise maximization in brain co-activation and functional connectivity resting state networks reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
-Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure.
+Functional brain connectivity as measured by magnetic resonance imaging, is defined as temporal correlation between spatially remote neurophysiological events and is expressed as deviation from statistical independence across events in distributed neuronal groups and areas.
+Complex networks theory offers a framework for the analysis of functional connectivity.
+Within this approach the brain is represented as a graph comprising N nodes connected by M edges.
+The nodes typically correspond to brain regions and the edges to measures of inter-regional interaction.
 
-Moreover we demonstrate
+Functionally connected networks encompass the entire brain as a consequence of the high level of integration of brain function.
+However, cohesive clusters of tightly connected nodes can be found within the widespread functional connectivity network, representing functionally segregated modules of brain regions strongly related to each other.
+
+A number of graph theoretical methods have been proposed to analyze the modular structure of these networks.
+The most widely used metric is Newman's Modularity, which identifies modules within which links are more abundant than expected on the basis of a random network.
+However, Modularity is limited in its ability to detect relatively small communities, a problem known as ``resolution limit''.
+As a consequence, unambiguously identifiable modules, like complete sub-graphs, may be unduly merged into larger communities when they are too small compared to the size of the network.
+This limit, first demonstrated for Newman's Modularity, is quite general and affects, to a different extent, all methods that seek to identify the community structure of a network through the optimization of a global quality function.
+Hence, the resolution limit may represent a critical shortcoming for the study of brain networks, and is likely to have affected many of the studies reported in the literature.
+
+In this work I pioneer the use of two quality functions rooted in probability theory that aim at overcoming the resolution limit: Surprise and its weighted counterpart Asymptotical Surprise.
+I propose a specific heuristic for their optimization, showing that the resulting optimal partitioning can highlight anatomically and functionally plausible modules from brain connectivity datasets, both for binary and weighted networks. 
+I apply this novel approach to the partitionining of two different human brain networks that have been extensively characterized in the literature, to address the resolution-limit issue in the study of the brain modular structure.
+Surprise maximization in human resting state networks reveals the presence of a rich structure of modules with heterogeneous size distribution undetectable by current methods. Moreover, Surprise leads to different, more accurate classification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure.
+In synthetic networks, Asymptotical Surprise shows high sensitivity and specificity in the detection of ground-truth structures, particularly in the presence of noise and variability such as those observed in experimental functional MRI data.
+
+In short, Surprise and Asymptotical represent a promising alternative to current methods, and demonstrate the presence of functional modules of very different sizes in resting state networks.
+This calls for a revisitation of some of the current models of brain modular organization.
