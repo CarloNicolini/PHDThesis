@@ -73,10 +73,9 @@ Functional networks may vary over time, unlike structural networks which are sta
 Furthermore, the temporal evolution of functional networks is variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
 %Importantly, functional connectivity does not express any causal effects between brain regions, as it's only informative of their statistical dependence.
 
-
 %Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
 When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}. Interestingly, this background activity dubbed resting-state connectivity, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands. The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
-The structure of temporal correlations defines a network over spatially remote,  intersecting brain regions\todo{CHIARIRE CON ANGELO QUESTA CORREZIONE}. 
+The structure of temporal correlations defines a network over spatially remote,  intersecting brain regions. 
 Interestingly, these networks are altered in neuropsychiatric diseases such as autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}.
 The extent of these alterations may be an hallmark for possible diagnoses of brain disease.
 
@@ -126,7 +125,7 @@ Moreover, it's thought that the presence of a rich club increases the diversity 
 Forms of rich-club organization have been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,dereus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex.
 Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication.
 
-From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{sporns2007,power2013,kandel2013}\todo{INFORMARE ANGELO DI QUESTA CITAZIONE}.
+From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{sporns2007,power2013,kandel2013}.
 Contrarily, primary sensory cortices have low topological centrality and degree. Damage to primary sensory areas only affects them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008,ball2014}.
 Abnormal rich-club connectivity is hypothesized to be related to familial vulnerability for schizophrenia~\cite{collin2014impaired} and other diseases as well.
 
@@ -152,35 +151,30 @@ Near decomposability is in many respects a hallmark of complexity in natural sys
 
 Strong experimental evidence shows that the nervous system in animals and humans, from the neuronal level up to macroscopic scale, displays an organization that favors the exchange of information over a communication backbone supported by well-connected areas, the connector hubs of the network~\cite{dereus2013a}, responsible in turn for sending information to local processors, the communities or modules~\cite{vandenheuvel2013a}.
 Functional brain networks of humans and other animals, consist of connected subnetworks (or modules) associated with cognitive functions, of vital importance for the daily life and the interaction in the environment.
-The modular organization is exhibited hierarchically at different scales, with modules inside modules. Within this architecture information flows from lower level sensory cortices to higher multimodal and associative cortices~\cite{kandel2013}, a construction that confers robustness and adaptability to the network~\cite{meunier2010}.
-
-Functional segregation is evident at multiple scales in the brain, from the neuronal networks to macroscopic anatomically defined regions.
-From the functional point of view, segregation is meant as the statistical dependence of processing elements within the same region. Integration is instead realized through synchronization processes that increase the statistical dependence between functional modules, a mechanism required to access widely distributed resources, needed for a coherent behaviour.
-
-
+The modular organization is exhibited hierarchically at different scales, with modules inside modules. Within this architecture that confers robustness and adaptability to the network~\cite{meunier2010}, information flows from lower level sensory cortices to higher multimodal and associative cortices~\cite{kandel2013}, thus being refined and filtered in its content at multiple stages of elaboration.
+The specialized stages of neural information processing are the regions of \emph{functional segregation}, a common feature at multiple scales in the brain, from the neuronal networks to macroscopic anatomically defined regions.
+From the functional point of view, segregation is meant as the statistical dependence of processing elements within the same region.
+\emph{Functional integration} is instead typically realized through synchronization processes that increase the statistical dependence between functional modules, a mechanism required to access widely distributed resources, needed for a coherent behaviour.
 
 \begin{figure}[htb!]
 \centering
 \hfill\includegraphics[height=0.25\textwidth]{images/brain_network_basics.pdf}\hfill
 \includegraphics[height=0.25\textwidth]{images/brain_network_communities.pdf}\hfill
-\caption{Meaning of communities, hubs and connectors of a brain network, depicted in an artistic view.
-Adapted from~\cite{sporns2016}.}
+\caption{Meaning of communities, hubs and connectors of a brain network, depicted in an artistic view. Adapted from~\cite{sporns2016}.}
 \label{fig:brain_network_communities}
 \end{figure}
-\todo{Inserire frase su potential reorganization of modular organization in brain disease}
+
+When this subtle balance between functional integration and segregation is altered, like in pathological states or external insults, the brain responds in an adaptive manner, in order to maintain homeostasis, where possible. The mechanisms of homeostatis adopted are compensation, degeneracy and redundancy~\cite{fornito2015}. Through compensation, extra neural resources are recruited to maintain normal function. Neural degeneracy and redundancy~\cite{tononi1999} are meant here as the ability of distinct elements to carry out the same function. When hit by pathological alterations or external insults, the brain may resort to these homeostatic mechanisms, with the result of a partial or total reorganization of its modular, hierarchical structure.
 
 %This kind of structure implies that modules of heterogeneous size are present at the same time in the brain networks and that an efficient method to detect the presence of large and small modules at the same time together is in order.
 
-%
-
-%Among the network level changes observed in the diseased brain, the alteration of the hierarchical and modular structure of both structural and functional brain connectivity is the most recognizable.
-
 Using the tools of complex network science, the evaluation of the modular structure of FC networks is cast to the problem of community detection in graphs, i.e.
 the problem of identifying independent groups of brain regions that exhibit strong interconnection between each other but that are weakly connected to other modules.
+
 %% COMMENTATO DA ANGELO
 % With the graph partitioned into smaller groups (or communities) of functionally connected modules, it is simpler to quantify the effect of the disease on the partitioning, as well as the areas involved in such reorganization and the role of the single nodes inside their modules.
-Indeed, an important factor when considering the effects of external perturbations on brain functioning is the degeneracy (or redundancy) of network nodes across their modules.
-Areas that are buried inside a dense module have high degeneracy, as removal of a vertex is unlikely to affect the communications between the others.
+% Indeed, an important factor when considering the effects of external perturbations on brain functioning is the degeneracy (or redundancy) of network nodes across their modules.
+% Areas that are buried inside a dense module have high degeneracy, as removal of a vertex is unlikely to affect the communications between the others.
 % COMMENTATO Generally speaking, poorer prognoses are registered when the interested area of the insult has low degeneracy, i.e. only that area is deputed to a particular region such that no other area may compensate.
 %Severe impairments of neurocognitive functions are associated with damages to highly central nodes, as depicted qualitatively in Figure~\ref{fig:prognosis_centrality}.
 
@@ -694,7 +688,7 @@ The generated network is \emph{multipartite}.
 The LFR model has a number of other parameters that control all the network parameters with great precision~\cite{lancichinetti2008,lancichinetti2009a}, described in Figure~\ref{tab:lfrparams}.
 \begin{figure}[htb!]\centering
 \begin{footnotesize}
-\noindent\begin{minipage}[b!]{0.48\textwidth}
+\noindent\begin{minipage}[b!]{0.46\textwidth}
 \begin{tabular}{l|p{1\textwidth}}
 \hline
 $\tau_d \geq 1$ & Power-law exponent of nodes degrees.\\
@@ -742,7 +736,7 @@ We tested this idea on two different models of planted partition: a variant of t
 
 \begin{sidewaysfigure}[htb!]
 \centering
-\includegraphics[height=0.39\textheight]{images/flowchart.pdf}
+\includegraphics[height=0.25\textheight]{images/flowchart.pdf}
 \caption{Flowchart of the generation and analysis of the synthetic datasets. In A the network with a pre-defined community structure is generated. The adjacency matrix is then processed in block B to obtain the nearest positive definite matrix for the Cholesky decomposition. This enables the generation of node-wise time-courses into which different levels of noise can be injected. The procedure is repeated multiple times to generate different instances (mimicking different subjects in the sample). Finally, correlation matrices are calculated for each instance (block C), and Fisher transformed to calculate the average adjacency matrix for analysis by community detection algorithms (block D). Lastly, resulting partitions are compared with the original, planted one in terms of NMI.}
 \label{fig:flowchart}
 \end{sidewaysfigure}
