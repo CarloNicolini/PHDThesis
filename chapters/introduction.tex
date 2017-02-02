@@ -265,28 +265,24 @@ If the direction of the links is important, the graph is called \emph{directed},
 {\textbf (b)} is a simple weighted undirected graph, {\textbf (c)} is an unweighted loopy multigraph, {\textbf (d)} is a simple directed graph.}
 \end{figure}
 
-\noindent\textbullet \,The adjacency matrix $\mathbf{A}=\{A_{ij}\} \in \{0,1\}^{n \times n}$ of a binary (undirected) graph is a square $n\times n$ symmetric matrix with elements $A_{ij}=1$ when an edge exists between vertex $i$ and $j$ and $0$ otherwise.
+\noindent\textbullet \,The adjacency matrix $\mathbf{A}=\{A_{ij}\} \in \{0,1\}^{n \times n}$ of a binary undirected graph is a square $n\times n$ symmetric matrix with elements $A_{ij}=1$ if an edge exists between vertex $i$ and $j$ and $0$ otherwise.
 
 \noindent\textbullet \,An \emph{edge-weighted graph} (also called weighted graph) $G=(V,E,\omega)$ is a graph that has a set of weights $\omega$ on the links (Figure~\ref{fig:simple_weighted_graph}).
 Although not true in general, we consider only weighted undirected graphs with symmetrical real adjacency matrix, meaning that if an edge exists between node $i$ and $j$ the weight from $i$ to $j$ is the same as the weight from $j$ to $i$: $\omega_{ij}=\omega_{ji}$.
 The weighted adjacency matrix,  indicated as $\mathbf{W}=\{ \omega_{ij} \} \in \mathbb{R}^{n\times n}$ is a real, square $n \times n$ symmetric matrix.
 
-\noindent\textbullet \,The simplest property of the graph, once defined nodes and edges, is the \emph{density} $\rho$.
-It is defined on a simple graph as the ratio of the number of edges over all possible edges:
+\noindent\textbullet \,The \emph{density} of a simple graph $\rho$ is defined as the ratio of the actual number of edges over all possible edges:
 \begin{equation}
 \rho = \frac{m}{\binom{n}{2}} = \frac{2m}{n(n-1)}.
 \end{equation}
 \noindent\textbullet \,A \emph{dense} graph is a graph where almost every possible pair of nodes is connected with an edge.
-Conversely, a graph is termed \emph{sparse} if the density is low, meaning that also the adjacency matrix is sparse and the number of edges has the order of magnitude of the number nodes $m ~\approx \mathcal{O}(n)$.
+Conversely, a graph is termed \emph{sparse} if the density is low, meaning that also the adjacency matrix is sparse and the number of edges is in the order of magnitude of the number of nodes $m ~\approx \mathcal{O}(n)$.
 
 \noindent\textbullet \,The number of edges incident to a node in a simple graph is called \emph{degree}, denoted as $k_i$.
-Every half edge incident to a node is called \emph{stub}.
-To a vertex with degree $k_i$ then are associated $k_i$ stubs.
+Every half edge incident to a node is called \emph{stub}. A vertex of degree $k_i$ has therefore $k_i$ incident stubs.
 
 \noindent\textbullet \,On simple weighted graphs, the sum of weights of the edges incident to a vertex $i$ is called \emph{strength} and is denoted as $s_i$.
-
-In matrix terms, degree and strength are the sums over rows of the adjacency matrix $d_i=s_i=\sum_{j=1}^n A_{ij}$.
-It must be noted that degree and strength are equal on binary graphs but different for weighted graphs.
+Degree and strength are the sums over rows of the adjacency matrix $d_i=s_i=\sum_{j=1}^n A_{ij}$, they are equal for binary graphs, but different for weighted graphs.
 
 \noindent\textbullet \,The \emph{degree sequence} $\{k_i\}$ $\forall i=1,\ldots,n$ is the sequence  of the degrees of the nodes, with these numbers put in ascending order, and repetitions if needed.
 By the \emph{handshaking lemma}~\cite{leiserson2001}, the sum of all node degrees is equal to twice the number of links:
@@ -358,7 +354,7 @@ A \emph{tree graph} is a graph with no cycles and exactly $n-1$ edges.
 In other words, $\mathcal{G}$ is an induced subgraph of $G$ if it has the most edges that appear in $G$ over the same vertex set.
 If $\mathcal{G}$ is chosen based on a vertex subset $S$ of $V(G)$, then $\mathcal{G}$ can be written as $G[S]$ and is said to be induced by $S$.
 
-\noindent\textbullet \,A simple graph is said \emph{connected} if there exist a path between any pair of nodes.
+\noindent\textbullet \,A simple graph is said \emph{connected} if there exists a path between any pair of nodes.
 If the graph itself is not connected, then it is formed by a set of connected subgraphs, also called \emph{weakly connected components}.
 
 
@@ -368,7 +364,6 @@ Grouping nodes according to some criterion of similarity between them is the bas
 
 \noindent\textbullet \,A set of mutually disjoint, induced subgraphs that covers all the nodes is called a \emph{clustering}.
 A clustering $\zeta = \{\zeta_c\}$ of $G$ is a partitioning of the set $V$ into $C$ disjoint sets of nodes, $\zeta_c \subseteq V$, which we call \emph{modules} or \emph{communities}, interchangeably.
-
 Each module is a node-induced subgraph $\mathcal{G}:=(V[\zeta_c],E[\zeta_c])$, also indicated as $G[\zeta_c]$.
 
 \noindent\textbullet \,We denote the number of nodes of the module $G[\zeta_c]$ with $n_c$, the number of edges with $m_c$ and the total number of pairs of nodes with $p_c=\binom{n_c}{2}$.
@@ -427,81 +422,74 @@ For convenience of notation we will denote without loss of generality $K_{\textr
 The word \emph{community} applied to complex networks originated in sociology as groups of people tend naturally to form groups: family, friends, acquaintances.
 Social communities then can be thought as subgroups of people knowing each other more probably than with other external people.
 
-The problem of community definitions, although intuitive at first sight, is multifaceted and ambiguous as no universally accepted definition of network community exist as some degree of arbitrariness and common sense is required, a feature that is difficult to describe quantitatively.
+The problem of quantitatively defining a community, although intuitive at first sight, is multifaceted and ambiguous. No universally accepted definition of network community exists and some degree of arbitrariness or common sense is required, a feature that is difficult to describe quantitatively.
+Importantly, the identification of communities is possible only for relatively sparse graphs. On dense graphs indeed, the community detection problem requires different tools, closer to those of data clustering, with different concepts and definitions.
 
-Importantly, the identification of communities is possible for sparse graphs.
-On dense graphs, the community detection problem requires different tools, close to those of data clustering, with different concepts and definitions.
-
-Among all the notions of communities, two different families can be identified.
-The \emph{local definition} involve that a community is viewed as a separate entry, an autonomous module: the community is studied as isolated from the graph as a whole.
-This definition implies that the corresponding communities are mostly maximal subgraphs, subsets of nodes that cannot be enlarged with the addition of new nodes or edges without altering the very same property upon which they are defined.
+In the attempt of making the concept of community quantitative, two classes of definitions can be provided: local and global.
+The \emph{local definitions} involve that a community is viewed as a separate entry, an autonomous module: the community is studied as isolated from the graph as a whole.
+These definitions implies that the corresponding communities are mostly maximal subgraphs, subsets of nodes that cannot be enlarged with the addition of new nodes or edges without altering the very same property upon which they are defined.
 The most important local criterion for communities definition are the \emph{complete-mutuality}, the \emph{reachability}, the comparison of vertex degree and \emph{internal-external cohesion}~\cite{wasserman1994,alba1973}.
-Complete mutuality means that the identified community is a clique as every node is mutually connected with all the others, while reachability implies that there exist a path between every pair of nodes in the community.
-Finally, the internal- external cohesion concept is equivalently represented by the Radicchi's definitions of \emph{strong communities}~\cite{radicchi2004}.
-
-For a community $\mathcal{G}$ to be defined in \emph{strong} sense, every node in the community must exhibit a larger internal degree than external degree.
-The concept is made quantitative in the following definition (Eq.~\ref{eq:strongcommunities}):
+Complete mutuality means that the identified community is a clique where every node is mutually connected with all the others, while reachability implies that there exist a path between every pair of nodes in the community.
+The internal- external cohesion principle is equivalently represented by the Radicchi's definitions of \emph{strong communities}~\cite{radicchi2004}: for a community $\mathcal{G}$ to be defined in \emph{strong} sense, every node in the community must exhibit a larger internal degree than external degree. This concept is quantified by the following definition:
 \begin{equation}\label{eq:strongcommunities}
 \forall i \in V[ \mathcal{G} ] \qquad k_{\textrm{int}}(i) > k_{\textrm{ext}}(i).
 \end{equation}
-The strong community criterion is extremely stringent and most real-world networks do not exhibit such property, even the simplest.
+The strong community criterion is extremely stringent and most real-world networks, even the simplest, do not exhibit such property.
 It is possible though to weaken this constraint, asking that \emph{on average} the internal degree is greater than the external degree.
- Upon this idea the concept of \emph{weak communities} is built (Eq.~\ref{eq:communityweak}):
+Upon this idea the concept of \emph{weak communities} is built (Eq.~\ref{eq:communityweak}):
 \begin{equation}\label{eq:communityweak}
 \sum \limits_{i \in V[\mathcal{G}]} k_{\textrm{int}}(i) > \sum \limits_{i \in V[\mathcal{G}]} k_{\textrm{ext}}(i)
 \end{equation}
-Finding strong communities is more difficult than finding weak communities and most algorithms fail in this job, as most of them have their own concept of community.
+Finding strong communities is more difficult than finding weak communities and most algorithms fail in this job, as most of them encoded upon their own concept of community.
 Nonetheless these two last definitions are almost universally accepted and give a precise idea of the meaning of community.
 Additionally, the weak criterion of community is the basis of the planted-partition model~\cite{condon2000} and its later modifications~\cite{lancichinetti2008} that we'll encounter in the next sections.
 
-
-The \emph{global definition} are based on an interpretation of the network as a whole, whose communities are an essential part of it, which cannot be taken apart without destroying its connectivity.
+The \emph{global definitions} are based on an interpretation of the network as a whole, whose communities are an essential part of it.
 Most of the global criteria of communities encompass global properties of the graph that are used by an algorithm to deliver a modular decomposition.
-In this sense the global definitions are always indirect, often based on \emph{null models} or for example on dynamical processes on the network (random walkers~\cite{pons2006} or more complex processes such those described by the map equation Infomap~\cite{rosvall2008}).
+In this sense the global definitions are always indirect, often based on \emph{null models} or stationary properties of dynamical processes such as random walkers~\cite{pons2006,rosvall2008}.
 
 Apart from global or local definitions of communities is the indication that multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,schwarz2007} such as ICA or other multivariate methods.
 This empirical evidence, shown not only in humans but also in higher vertebrates like cats~\cite{scannell1995} and macaques~\cite{felleman1991}, suggests that to some extent the high-level functional organization is based on the balance of two competing principles of segregation and integration.
-The nervous system is obviously shaped by this balance as the need of fast information processing is satisfied by small-scale neuronal circuits, typically at the first stages of sensory input processing (e.g.
-the very localized functional area of visual processing V1 or the primary motor cortices), while at larger scale the cortex works in concert connecting all the segregated areas in a larger, widely distributed complex network.
-It is indeed more and more recognized~\cite{tononi1994,tononi1998,deco2015} that complex behaviors arise thanks to the dynamical interplay of the integrated and segregated actions of different regions of the brain.
+The nervous system is obviously shaped by this balance as the need of fast information processing is satisfied by small-scale neuronal circuits, typically at the first stages of sensory input processing.
+Typical examples are the very localized functional area of visual processing V1 or the primary motor cortices. At larger scale the cortex works in concert, connecting all the segregated areas in a larger, widely distributed complex network.
+It is indeed more and more recognized~\cite{tononi1994,tononi1998,deco2015} that complex behaviours arise thanks to the dynamical interplay of the integrated and segregated actions of different regions of the brain.
 
-The network communities and hubs support this segregation-integration balance.
-Recently, experiments in which computational dynamical processes are simulated over the topology of the whole-brain networks~\cite{deco2015} have shed light on the role of communities in shaping the cortical activity.
-Indeed it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs (and the rich clubs) are deputed to convey that information over the whole brain.
+The network communities and hubs support this delicate balance between segregation and integration.
+Recently, experiments in which computational dynamical processes are simulated over the topology of whole-brain networks have shed light on the role of communities in shaping the cortical activity~\cite{deco2015}. Importantly, it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs (and the rich clubs) are deputed to convey that information over the whole brain.
 
+Assessing the role of nodes within a community is an important task that depends on the community assignment. To this end one can  cartographic classification of nodal roles that describes if a node connects two communities or is buried inside its own community in of help.
 
 \subsection{Cartographic classification of nodes}
 Every node in a network is characterized by its role in relation to other nodes.
-Once a clustering $\zeta$ is imposed on a graph, some nodes act as bridges between two or more communities, having neighbors in one or other module.
-Other nodes instead share the majority of neighbors inside their same community.
-To investigate differences in nodal roles as determined by different community detection methods, Guimera and Amaral~\cite{guimera2005} introduced a cartographic characterization of nodes that has two parameters.
-The first, dubbed \emph{participation coefficient}, indicated by $P_i$ and included in the range $[0,1]$ reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} 
+Once a clustering $\zeta$ is imposed on a graph, some nodes may act as bridges between two or more communities, having neighbours in one or other module, others instead may share the majority of neighbours inside their same community, being more central to their module.
+
+To investigate differences in nodal roles as determined by different community detection methods, Guimera and Amaral~\cite{guimera2005} introduced a cartographic characterization of nodes based on two parameters.
+The first, dubbed \emph{participation coefficient}, indicated by $P_i$ and included in the range $[0,1]$ reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} as:
 \begin{equation}\label{eq:participationcoeff}
-P_i = 1 - \sum_c \left( \frac{k_{ic}}{k_i} \right)^2
+P_i = 1 - \sum_c \left( \frac{k_{ic}}{k_i} \right)^2,
 \end{equation}
 where $k_{ic}$ is the number of links of node $i$ to nodes in module $c$ and $k_i$ is the total degree of node $i$.
-Converselely, the second parameter dubbed \emph{within-module degree}, indicated by $z_i$,  reflects the degree of connectivity of a node to node in its same community, and is defined as: 
+Converselely, the second parameter dubbed \emph{within-module degree score}, indicated by $z_i$,  reflects the degree of connectivity of a node to the nodes in its same community, and is defined as: 
 \begin{equation}\label{eq:withinmoduledegree}
-z_i = \frac{k_i - \langle  k_{c_i} \rangle }{\sigma_{k_{c_i}}}
+z_i = \frac{k_i - \langle  k_{c_i} \rangle }{\sigma_{k_{c_i}}},
 \end{equation}
-where $k_i$ is the node degree,  $\langle  k_{c_i} \rangle $ is the average degree of nodes in the same module $c$ of node $i$ and $\sigma_{k_{c_i}}$ the standard deviation of the degree of nodes in the same module $c$ of node $i$.
+where $\langle  k_{c_i} \rangle $ is the average degree of nodes in the same module $c$ of node $i$ and $\sigma_{k_{c_i}}$ is the standard deviation of degrees of nodes in module $c$.
 
-Hub classification is critical for the interpretation of the roles played by the highly connected nodes within the network structure.
-The Guimera and Amaral~\cite{guimera2005} classification scheme places on a two dimensional plane participation coefficient and within-module degree z-score of every node. Different regions of the two dimensional plane are divided empirically into seven regions as shown in Figure~\ref{fig:gagraph}.
+Hubs classification is critical for the interpretation of the roles played by the highly connected nodes within the network structure.
+The Guimera and Amaral~\cite{guimera2005} classification scheme places participation coefficient and within-module degree z-score of every node on a two dimensional plane.
+Different regions of the two dimensional plane are divided empirically into seven regions as shown in Figure~\ref{fig:gagraph}.
 Depending on the specific cut-off values of participation coefficient and intra-modular connectivity, the nodes are defined as ultra-peripheral (region R1), peripheral (region R2), connector non-hubs (region R3), kinless non-hubs (region R4), provincial hubs (region R5), connector hubs (region R6) and kinless hubs (region R7).
-
 Naturally, connector hubs are of great importance for communication between modules (Figure~\ref{fig:brain_network_communities}).
 Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
-In the context of brain networks, these hubs are responsible for the integration of the different modules into a cohesive structure and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
-In contrast, provincial hubs are more importantly involved in functional specialization and local processing, therefore damage to these areas should yield really specific clinical deficits, whereas damage to connector hubs results in complex and pervasive neurological dysfunctions.
 
+In the context of brain networks, these hubs are responsible for the integration of the different modules into a cohesive structure and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
+In contrast, provincial hubs are more importantly involved in functional specialization and local processing, therefore damage to these areas may yield specific clinical deficits, whereas damage to connector hubs results in complex and pervasive neurological dysfunctions.
 
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.75\textwidth]{images/guimera_amaral_coact_q.pdf}
 \caption{Guimera and Amaral classification scheme for the modular structure induced by Modularity maximization of a co-activation network as obtained from~\cite{crossley2013a}.
-Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of the seven different regions, assigning it its role.
-Nodes total degree is color coded with colors fro yellow to red, as shown in the legend.}
+Each node is indicated by specific coordinates $(P_i,z_i)$ and occupies one of the seven different regions. Nodal degrees are color-coded from yellow to red, as shown in the legend.}
 \label{fig:gagraph}
 \end{figure}
 
@@ -522,7 +510,7 @@ Adapted from~\cite{fornito2015}.}
 
 \subsection{Models of random graphs}\label{sec:models_random_graph}
 A large effort of network science is devoted to the description of the generative processes that lead to the networks observed in real-world settings.
-The ability to understand such generative models is of primary importance in many fields, as it enables researchers to make predictions about the behavior of the system under exam and to compare systems, gaining knowledge.
+The ability to understand such generative models is of primary importance in many fields, as it enables researchers to make predictions about the behaviour of the system under exam and to compare systems, gaining knowledge.
 In general, a random graph is a model network in which some specific set of parameters take fixed values, but the network is random in other respects.
 The theory of random graphs studies the intersection between graph theory and probability theory.
 %In the first part of the twentieth century, mathematicians developed advanced theories of random graphs as they needed to compare the properties of real-world networks against random null hypotheses.
@@ -531,58 +519,51 @@ It is usual to describe a random graph by a sequence of steps to construct it. T
 
 %Given the unavailability of computer simulations at that time, the simplest model dates back to 1959 and is due to Erd\H{o}s and Rényi~\cite{erdos1959}.
 In the Erd\H{o}s-Rényi model (also called $G_{n,m}$ model, the sample space $\Omega$ is the set of all graphs having $n$ nodes and $m$ edges.
-One of the simplest models is the random network generated by selecting exactly $m$ edges from the possible $\binom{n}{2}$ edges and placing them at random over the nodes pairs.
-This model, displaying the fixed constraint of edge number, is mathematically known as $G(n,m)$ or \emph{Gilbert} random graph.
+One of the simplest models is the random network generated by selecting exactly $m$ edges from the set of all possible edges and placing them at random over the nodes pairs.
+This model, with the fixed constraint of edge number, is mathematically known as $G(n,m)$ or \emph{Gilbert} random graph.
 In probabilistic terms, the $G(n,m)$ graph is equivalent to say that the network is sampled choosing uniformly from the set $\Omega$ of all $\binom{\binom{n}{2}}{m}$ possible graphs.
 Intuitively then it is possible to assign a probability score to each instance of a random graph model.
 In the $G(n,m)$, each instance is equiprobable.
 
 Strictly speaking, a random graph model is better defined as an ensemble of networks, therefore as a probability distribution $\mathcal{P}(\Omega)$ over the space of all graphs $G$.
-The Gilbert random graph model is then associated with a probability distribution sharply peaked in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges, and zero otherwise.
+The Gilbert random graph model is associated with a probability distribution sharply peaked in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges, and zero otherwise.
 Although some properties of the $G(n,m)$ models are easy to compute, like the mean number of edges (trivial), others are more complicated because of the hard constraint imposed on edges number.
 
 A way more useful random graph model is instead due to Erd\H{o}s and Rényi~\cite{erdos1959}.
-
-To solve the analytical computation problems on the $G(n,m)$ model, the Erd\H{o}s-Rényi model introduces a parameter $p_{\textrm{ER}}$ that specifies the probability of an edge to exist given two nodes, rather than picking exactly $m$ edges.
+To solve the analytical computation problems on the $G(n,m)$ model, the Erd\H{o}s-Rényi model introduces a parameter $p_{\textrm{er}}$ that specifies the probability for an edge to exist given two nodes, rather than picking exactly $m$ edges.
 Technically the $G(n,p)$ random graph model or \emph{Erd\H{o}s and Rényi} (ER) model, is the ensemble of simple graphs with $n$ nodes in which each simple graph $G$ of $m$ edges appears with probability
 \begin{equation}
-P(G)={p}_{ER}^{m}(1-p_{\textrm{ER}})^{\binom{n}{2}-m}
+P(G)={p}_{\textrm{er}}^{m}(1-p_{\textrm{er}})^{\binom{n}{2}-m}
 \end{equation}
 Differently from the $G(n,m)$ model, because of the Bernoulli distribution of edges, this graph model is also called \emph{Bernoulli random graph} or \emph{Poissonian random graph} and generally intended as \emph{the} random graph.
 
 As every graph obtained from the Erd\H{o}s-Rényi model is a sample from a probability space, a description in terms of ensemble averages is more appropriate.
-In the ER model, the expected number of edges in such a graph is the average over $\binom{n}{2}$ independent coin tosses with probability $p_{\textrm{ER}}$: $\langle  m  \rangle = \binom{n}{2}p_{\textrm{ER}}$ and the expected degree $\langle  k \rangle = p_{\textrm{ER}}(n-1)$ is the same for every node.
+In the ER model, the expected number of edges in such a graph is the average over $\binom{n}{2}$ independent coin tosses with probability $p_{\textrm{er}}$, namely $\langle  m  \rangle = \binom{n}{2}p_{\textrm{er}}$ and the expected degree $\langle  k \rangle = p_{\textrm{er}}(n-1)$ is the same for every node.
 The probability that a node $i$, chosen at random, has degree $k$ is called the \emph{degree distribution}.
 In general terms, such probability is expressed as:
 \begin{equation}
 \Pr(k) = \frac{\langle  |\{ i \| k_i=k \}| \rangle }{n}.
 \end{equation}
-In the ER model, a given node is connected with probability $p_{\textrm{ER}}$ to each of the other $n-1$ nodes.
+In the ER model, a given node is connected with probability $p_{\textrm{er}}$ to each of the other $n-1$ nodes.
 Hence, the probability of being connected to a particular $k$ other nodes and not to any of the others is $p^k(1-p)^{n-1-k}$, but since there are $\binom{n-1}{k}$ ways to choose those $k$ other nodes, hence the total probability of being connected to exactly $k$ others is:
 \begin{equation}
-\Pr(k) = \binom{n-1}{k}p_{\textrm{ER}}^k(1-p_{\textrm{ER}})^{n-1-k}
+\Pr(k) = \binom{n-1}{k}p_{\textrm{er}}^k(1-p_{\textrm{er}})^{n-1-k}
 \end{equation}
 a binomial distribution that can be approximated to a Poisson distribution for large $n$:
 \begin{equation}
-\Pr(k) \approx \frac{(n \, p_{\textrm{ER}})^k e^{-n \, p_{\textrm{ER}}} }{k!}.
+\Pr(k) \approx \frac{(n \, p_{\textrm{er}})^k e^{-n \, p_{\textrm{er}}} }{k!}.
 \end{equation}
 \bigbreak
 In generalizing the concepts of random networks models, one can define every simple graph on $n$ nodes as the output of a random process where each edge $(i,j) $ is sampled with a probability $\Pr(i,j)_{ \boldsymbol \theta}$ with $\boldsymbol \theta$ a vector of hyperparameters.
-In the simplest case of the ER graph, this generative model is an uniform probability distribution with $\boldsymbol \theta=p_{\textrm{ER}}$ as every pair of nodes is linked by an edge with constant probability:
-\begin{equation}
-\Pr({i,j})_{p_{\textrm{ER}}} = p_{\textrm{ER}}.
-\end{equation}
+In the simplest case of the ER graph, this generative model is an uniform probability distribution with $\boldsymbol \theta=p_{\textrm{er}}$ as every pair of nodes is linked by an edge with constant probability.
 
-Importantly, both the ER and Gilbert models should not show any modular structure as every substructure that appears is an effect of random fluctuations due to finite sampling effects.
-We will see, though, in the following chapters that still some algorithms find communities in ER graphs.
-
-The ER model, although very useful as it makes analytical calculation of almost all network properties really easy, does not realistically represent empirical networks.
+Importantly, both the ER and Gilbert models should not exhibit any modular structure as every substructure that appears is an effect of random fluctuations due to finite sampling effects. Nonetheless, some algorithms may find communities in ER graphs, due to overfitting~\cite{guimera2004}.
+Additionally, the ER model does not realistically represent empirical networks, even if it is very useful to simplify analytical calculation of network properties.
 Its Poissonian degree distribution (Figure~\ref{fig:deg_dist_poisson_er}) is far from the degree distributions seen in most of the real-world networks.
-In fact, the empirical behavior of the degree distribution of real networks is one of the main reasons why they attracted so much interest from the scientific community.
+In fact, the empirical behaviour of the degree distribution of real networks is one of the main reasons why they attracted so much interest from the scientific community.
 
 The world-wide-web, as well as the connectome of the worm \emph{C.
-Elegans}\footnote{\emph{Caenorbiditis elegans}, a small nematode worm, famous as the first living organism whose connectome has been completely mapped.} and many other examples, shows that the degree distribution is not centered around a mean value as predicted by ER model.
-
+Elegans}\footnote{\emph{Caenorbiditis elegans}, a small nematode worm, famous as the first living organism whose connectome has been completely mapped.} and many other examples, shows that the degree distribution of complex networks is not centered around a mean value, as predicted by ER model, instead highly connected nodes exist within a bulk of low connected nodes and the degree distribution is not decaying exponentially, thus producing the observed phenomenon of \emph{heavy tails}.
 
 \begin{figure}
 \centering
@@ -599,8 +580,8 @@ Adapted from~\cite{estrada2011}.}
 \label{fig:deg_dist_poisson_er}
 \end{figure}
 
-Instead, in real networks, highly connected nodes exist within a bulk of low connected nodes and the degree distribution is not decaying exponentially, thus producing the observed phenomenon of \emph{heavy tails}.
-Indeed, many networks display a degree distribution that follows a \emph{power-law} form
+
+Many networks display a degree distribution that follows a \emph{power-law} form
 \begin{equation}
 \Pr(k) \propto k^{-\gamma}
 \end{equation}
