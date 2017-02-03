@@ -589,11 +589,11 @@ Therefore, the functional form of the power-law remain unchanged.
 
 Hence, in understanding the limitation of the Erd\H{o}s-Rényi model, researchers developed a multitude of generative models of graphs that tried to better model properties like the heavy-tails saw in power-laws or also the \emph{small-worldness} phenomenon, i.e.
 the observation that most nodes in a network are reachable from every other in a small number of hops.
-To keep in account the features of empirical networks, other models of networks have been developed like the models of Watts-Strogatz~\cite{watts1998} model and Barabasi-Albert~\cite{barabasi1999}.
+To keep into account the features of empirical networks, other models of networks have been developed like the models of Watts-Strogatz~\cite{watts1998} model and Barabasi-Albert~\cite{barabasi1999}.
 
 For example, in the Watts-Strogatz model a graph with groups of densely connected nodes is generated as follows:
 \begin{enumerate}
-\item Construct a ring with $n$ nodes and connect each node to the $l$ nearest nodes ($l/2$ on each side of the ring).
+\item Construct a ring with $n$ nodes and connect each node to the $l$ nearest nodes ($l/2$ nodes on each side of the ring).
 \item Choose a node $i$ and the edge $e$ that connects $i$ to its nearest neighbor in a clockwise manner.
 \item With probability $p_r$ replace the edge $e$ by the edge that connects $i$ to a node taken at random according to a uniform distribution over the entire ring.
 \item Repeat the steps 2 and 3 for each node in clockwise manner.
@@ -608,18 +608,18 @@ Then at each step, one adds a new node and connect it to a fixed number $(\leq n
 The probability that the new node will be connected to a node $i$ is then proportional to $k_i^{p_s}$,  where $p_s$ is a parameter called the \emph{scaling exponent}.
 That algorithm generates graphs in which the frequency of nodes with degree $k$ is asymptotically proportional to ${k}^{-3}$.
 This power relationship between frequencies and degrees indicates that this model accounts for the power-law distribution of degrees seen in many real networks.
-Although very well studied, both models are still lacking a strong community structure and more complex models have been studied by the network science community.
+Although very well studied, both models are still lacking a strong community structure and more complex models have been studied to explicitly embed modules.
 
 \subsection{Stochastic block models}
 None of the previously reported generative models explicitly accounts for the modular structure.
 The modules often observed in the ER model are due to statistical fluctuations.
-The BA model, too, does not take into account a block structure, when generating a power-law network and clusters in BA model are due to local structures around nodes with high degree.
+The BA model, too, does not take into account a block structure, when generating a power-law network and clusters in the BA model are due to local structures around nodes with high degree.
 To overcome these limitations, a variable encoding the block structure must be taken into account explicitly.
 
 The most commonly used generative model for random modular networks is called the stochastic block model (SBM)~\cite{holland1983}, which generalizes the Erd\H{o}s-Rényi random graph by giving each pair of nodes a connection probability depending only on their module affiliation $\boldsymbol \sigma$.
 The SBM model tends to produce graphs containing communities, subsets characterized by being connected with one another with specific edge densities.
 
-A stochastic block model for undirected graphs is defined by three variables: the number of nodes $n$, the set of communities in form of a membership vector $\boldsymbol \sigma$ and a symmetric square matrix  $\mathbf{B} \in \mathbb{R}^{|C| \times |C|}$ of edge probabilities between modules.
+A stochastic block model for undirected graphs is defined by three variables: the number of nodes $n$, the set of communities (represented by a membership vector $\boldsymbol \sigma$) and a symmetric square matrix  $\mathbf{B} \in \mathbb{R}^{|C| \times |C|}$ of edge probabilities between modules.
 In the case the matrix $\mathbf{B}$ is constant, the SBM recovers exactly the ER model.
 
 In the case the matrix $\mathbf{B}$ takes only two different values, a model known as the \emph{planted partition model}, each pair of nodes in the same block are connected with probability $\mathbf{B}_{ij}=p_{in}$ and pairs of nodes in different modules are linked with probability $\mathbf{B}_{ij}=p_{out}$, as shown in Figure~\ref{fig:planted_peixoto}.
