@@ -167,40 +167,42 @@ A global criterion for the definition of communities in networks can be thought 
 A \emph{quality function} is a function $\mathcal{Q}$ that given a clustering of a graph $\zeta$ returns a scalar number. Usually one identifies ``good'' clusterings with high scores of the quality function and ``bad'' clusterings with low scores. In this sense, it is possible to rank partitions from bad to good, although is important to stress that the definition of good or bad clusterings is an \emph{ill-posed problem} as every quality function puts emphasis on some features and perhaps not on others. 
 Here and in the following sections, it must be stressed that the concept of quality function and community detection methods are separate as the first is a way to assess the goodness of a partition while the second relies on the definition of a quality function to design efficient algorithms and heuristics to find such good partitions.
 
-One of the most important properties of a quality function is when it can be expressed as a sum over communities.
-Such quality functions are dubbed \emph{additive}: for a generic function of a cluster, or subgraph, $f(\zeta_i)$, an additive quality function specify the goodness of a clustering as the sum of $f$ over the distinct communities as follows:
+One of the most important properties of a quality function is additivity, i.e. its expression as a sum of terms each pertaining to a single community.
+For a generic function of a cluster, or subgraph, $f(\zeta_i)$, an additive quality function specify the goodness of a clustering as the sum of $f$ over the distinct communities as follows:
 \begin{equation}\label{eq:additive_quality}
 \mathcal{Q} = \sum \limits_{\zeta_c \in \zeta} f(\zeta_c).
 \end{equation}
-The majority of quality functions are additive, even if this requirement is not fundamental.
-In the next section, we explore the properties of some of the most important additive quality functions that emerged from the literature of this decade.
+The majority of quality functions are additive, even if this requirement is not strictly required.
+In the next section, we explore the properties of some of the most important additive quality functions that emerged from the literature in this decade.
 
 \subsection{Spin glass based quality functions}
-The simplest requirement of a quality function is to put emphasis on intracluster edges and penalize intercluster edges.
-In this terms, local optima of the quality function should correspond to partitions where the communities emerge as dense areas in the network loosely connected among them. A framework grounded in statistical mechanics for the definition of suitable quality functions for community detection that meet these requirements has been introduced by Reichardt and Bornholdt (RB)~\cite{reichardt2006}.
+The simplest formulation of a quality function is one that puts emphasis on intracluster edges and penalizes intercluster edges.
+In this terms, local optima of the quality function should correspond to partitions where the communities emerge as dense areas in the network loosely connected among them.
+A framework grounded in statistical mechanics for the definition of suitable quality functions for community detection that meet these requirements has been introduced by Reichardt and Bornholdt (RB)~\cite{reichardt2006}.
 
 In the RB model the problem of community detection is cast in terms of finding the \emph{ground state} of a spin glass, a model describing the behavior of large sets of interacting microscopic magnets.
-Actually, the properties of spin glass models are subject of extremely intensive research in the last decades as their applications range from matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader to cover the details of the model in other more specialized resources~\cite{mezard1990}.
+Actually, the properties of spin glass models are subject of intensive research in the last decades as their applications range from condensed matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader for the details of the model to more specialized books~\cite{mezard1990}.
 
 A spin glass model is based on the definition of an Hamiltonian, a multi-variable scalar function that describes the total energy of the physical system with the configuration of its internal components.
 In our case, the internal components of the system are the nodes. The configuration of the system is then expressed by the community affiliation vector $\boldsymbol\sigma$, meaning that node $i$ stays in the community $\sigma_i$.
-The Hamiltonian used by Reichardt and Bornholdt (RB) counts four different contributions. The first two contributions act at intracluster level, positively weighing intracluster edges and negatively weighing intracluster non-edges with coefficients $a_{ij}$ and $b_{ij}$ respectively. The third and fourth contributions work on intercluster edges and non-edges, weighing them with factors $c_{ij}$ and $d_{ij}$. The general form of the RB model is then expressed by the following Hamiltonian:
+The Hamiltonian used by Reichardt and Bornholdt (RB) includes four different contributions. The first two contributions act at intracluster level, positively weighing intracluster edges and negatively weighing intracluster non-edges with coefficients $a_{ij}$ and $b_{ij}$ respectively. The third and fourth contributions work on intercluster edges and non-edges, weighing them with factors $c_{ij}$ and $d_{ij}$. The general form of the RB model is then expressed by the following Hamiltonian:
 \begin{align}\label{eq:hamiltonianspinglass}
 \mathcal{H}^{\textrm{RB}}(\boldsymbol \sigma) = - \sum_{(i,j)\in V^2} & \left[ a_{ij} A_{ij} - b_{ij}(1-A_{ij}) \right] \delta(\sigma_i,\sigma_j) + \nonumber \\ &  \left[ (c_{ij} A_{ij} - d_{ij}(1-A_{ij}) \right] (1-\delta(\sigma_i,\sigma_j)),
 \end{align}
 with the convention that lowest energy states correspond to best community assignments.
-Rearranging Eq.\ref{eq:hamiltonianspinglass} and discarding the terms independent of the partition into a constant $H_0$, one then gets a simpler expression for $\mathcal{H}^{\textrm{RB}}(\sigma)$:
+Rearranging Eq.\ref{eq:hamiltonianspinglass} and collecting the terms independent of the partition into a constant $H_0$, one then gets a simpler expression for $\mathcal{H}^{\textrm{RB}}(\sigma)$:
 \begin{equation}\label{eq:rbspinglass}
 \mathcal{H}^{\textrm{RB}}(\boldsymbol \sigma) = -H_0 - \sum \limits_{(i,j)\in V^2} \left[ \alpha_{ij} A_{ij} - \beta_{ij} \right] \delta(\sigma_i,\sigma_j),
 \end{equation}
-where the two parameters $\alpha_{ij}=a_{ij}+b_{ij}+c_{ij}+d_{ij}$ and $\beta_{ij}=b_{ij}+d_{ij}$ depend on the \emph{null model} one would like to compare with, i.e. the probability that an edge exists between $i$ and $j$ after random edge rewiring. Hence, a null model provides a mean to compare a specific set of features of a graph, with its randomized version that should specifically lack those features.
+where the two parameters $\alpha_{ij}=a_{ij}+b_{ij}+c_{ij}+d_{ij}$ and $\beta_{ij}=b_{ij}+d_{ij}$ depend on the \emph{null model}, i.e. the probability that an edge exists between $i$ and $j$ after random edge rewiring. Hence, a null model provides a mean to compare a specific set of features of a graph, with its randomized version that should specifically lack those features.
 
-It's possible to express any quality function in the form of Eq.~\ref{eq:rbspinglass} as an additive quality function by setting $\alpha_{ij}=1$, $H_0=0$ and moving the summation indexes over the communities rather than over the pairs of nodes, as the sum is only over intracluster edges. The resulting Hamiltonian, expressed here as $\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma)$, then reads:
+% It's possible to express any additive quality function in the form of Eq.~\ref{eq:rbspinglass} as an additive quality function by setting $\alpha_{ij}=1$, $H_0=0$ , as the sum is only over intracluster edges.
+Setting $\alpha_{ij}=1$, $H_0=0$ and moving the summation indexes over the communities rather than over the pairs of nodes, one can express the resulting Hamiltonian, as an additive quality function expressed here as $\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma)$, that reads:
 \begin{equation}\label{eq:rbspinglass2}
 \mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma) = -\sum_{(i,j) \in V^2} \left[ A_{ij} - \beta_{ij} \right] \delta(\sigma_i,\sigma_j) = - \sum \limits_{c}^C \left[ m_c - \left< m_c \right> \right].
 \end{equation}
 where $m_c=\sum_{ij}A_{ij}\delta(\sigma_i,c)\delta(c,\sigma_j)$ represents the number of links inside community labeled by $c$ and $\left <m_c \right >=\sum_{ij}\beta_{ij}\delta(\sigma_i,c)\delta(c,\sigma_j)$ is the expected number of links in community $c$ as prescribed by the null model $\beta_{ij}$\footnote{Here and for the rest of the work, we set $P_{ij}:=\beta_{ij}$ for agreement with more conventional notation of null models}. 
-Among the additive quality functions that show up in the form of~\ref{eq:rbspinglass2}, the most important and popular is the \emph{Newman-Girvan's Modularity}.
+Among the additive quality functions that show up in the form of~\ref{eq:rbspinglass2}, the most important and popular is \emph{Newman-Girvan's Modularity}.
 
 \subsection{Newman-Girvan Modularity}\label{sec:newman_modularity}
 Newman-Girvan Modularity (or simply Modularity)~\cite{newman2006}, denoted here and for the rest of the work by $Q^N$, is based on the idea that a network obtained by randomly reshuffling the original graph edges while keeping the same degrees sequence, should not display any community structure. 
@@ -215,12 +217,12 @@ In terms of a spin glass model, Modularity measures the deviation from the obser
 \begin{equation}\label{eq:newmanmodularityspinglass}
 Q^N =  \frac{1}{2m} \sum_{ (i,j) \in V^2} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(\sigma_i,\sigma_j),
 \end{equation}
-whereby optimal partitions have high values of $Q^N$. As already done in Eq.~\ref{eq:rbspinglass2}, Modularity can alternatively be expressed, as sum over communities of the difference of two terms:
+whereby optimal partitions have high values of $Q^N$. As shown in Eq.~\ref{eq:rbspinglass2}, Modularity can be expressed as sum over communities of the difference of two terms:
 \begin{equation}\label{eq:newmanmodularity}
 Q^N = \sum_{c}^{|C|} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right].
 \end{equation}
 Modularity takes values in the range $[-0.5,1]$, then a good partition should have $Q^N$ values close to unity, identifying groups with much more internal connections than expected at random. In contrast, a bad partition with $Q^N$ close to zero should identify groups with no more internal connections than we expect at random.
-In the next sections, we will challenge this idea and show that this observation has led to false statements, as a general phenomenon dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models.
+In the next sections we will challenge this idea and show that this observation has led to false statements, as a general phenomenon, dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models.
 Specifically, in the case of Newman's Modularity, the resolution limit hampers its ability to detect modules smaller than a scale determined by the size of the graph.
 
 \subsection{The configuration model}\label{sec:configuration_model}
@@ -274,41 +276,45 @@ and plugging this null model into the RB model of Eq.~\ref{eq:rbspinglass2} we o
 \begin{equation}\label{eq:ermodularityrb}
 \mathcal{H}^{ER} = -\sum \limits_c^C \left[\frac{m_c}{m}  - p_{\textrm{ER}}\binom{n_c}{2} \right].
 \end{equation}
-As the most similar ER graph of a given graph is the one that matches its density, the probability parameter $p_{\textrm{ER}}$ must be set equal to the original empirical graph density $\rho$. The so-called ER Modularity is derived by plugging the graph density in Eq.\ref{eq:ermodularityrb} and inverting its sign: 
+As the most similar ER graph of a given graph is the one that matches its density, the probability parameter $p_{\textrm{ER}}$ must be set equal to the original empirical graph density $\rho$. The so-called ER Modularity is derived by plugging the graph density into Eq.\ref{eq:ermodularityrb} and inverting its sign: 
 \begin{equation}
 Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 \end{equation}
-Under this model a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
+Under this model, a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
 Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible and loss functions that take into account the relative size of clusters are possible.
 
-\subsection{Beyond Modularity: Infomap}
-Infomap is a method that has its bases\todo{descrivere brevemente infomap}
+\todo{TOLTO INFOMAP, NON LO METTO}
+% \subsection{Beyond Modularity: Infomap}
+% Infomap is a method that has its bases\todo{descrivere brevemente infomap}
 
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it became the tool of election to inspect the community structure of networks.
-On one side, the wide use of Modularity, led many researchers to gain interest in complex networks, with results in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics}, just to mention a few, but on the other side, it offered a fallacious view on the community detection problem.
+On one side, the wide use of Modularity led many researchers to gain interest in complex networks, with applications in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics}, just to mention a few. On the other hand, it offered a fallacious view on the community detection problem.
 Indeed, although simple in many sense, Modularity optimization was hiding a problem that heavily limits its use in real world networks.
 
 In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thorough analysis of Modularity.
-Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the number of edges. They dubbed this general phenomenon \emph{resolution limit}.
+Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the total number of edges. They dubbed this general phenomenon \emph{resolution limit}.
 To illustrate what is meant by the resolution limit, here we follow the example of Fortunato and Barthelemy, with some obvious notational change.
 
 Let us consider a toy network, $G=(V, E)$ that is composed of three subnetworks, as shown in~\ref{fig:figure_1_barthelemy}A.
-The first subnetwork, a subgraph $G_0$ with $n_0$ nodes and $m_0$ edges is connected to two cliques, $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively. The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:figure_1_barthelemy}.
-While $G_1$ and $G_2$, are complete subgraphs and are expected to be modules by construction, $G_0$ may consist of many communities. Maximum Modularity partitions then, should identify $G_1$ and $G_2$ as communities, independently from $G_0$.
-To be more specific, let the partition where the two cliques are separated be denoted by $A$, with Modularity value $Q_A$. On the other hand, the partition where the two cliques are merged into a single community is denoted by $B$, with Modularity value $Q_B$.
+The first subnetwork, a subgraph $G_0$ with $n_0$ nodes and $m_0$ edges is connected to two cliques, $G_1$ and $G_2$ by $m_{01}$ and $m_{02}$ links respectively.
+The two cliques are also connected by a number of $m_{12}$ links as shown in Figure~\ref{fig:figure_1_barthelemy}.
+While $G_1$ and $G_2$, are complete subgraphs and modules by construction, $G_0$ may consist of many communities.
+Maximum Modularity partitions then, should identify $G_1$ and $G_2$ as communities, independently from $G_0$.
+To be more specific, let the partition where the two cliques are separated be denoted by $A$, with Modularity value $Q_A$.
+On the other hand, the partition where the two cliques are merged into a single community is denoted by $B$, with Modularity value $Q_B$.
 To ease the calculations, we indicate the number of links $m_{12}$ as functions of $m_1$ and $m_2$, such that $m_{12}=a_{1}$, $m_1=a_2 m_2$, $m_{01}=b_1 m_1$ and $m_{02}=b_2 m_2$ with $a_1,a_2,b_1,b_2 \geq 0$.
 
 As Modularity is a sum over the modules, and the module $G_0$ has the same Modularity $Q_0$ in both partitions, we are interested in studying the difference $\Delta Q = Q_{A} - Q_{B}$. After some simple algebraic manipulations it results:
 \begin{equation} \label{eq:resolution_limit_delta}
 \Delta Q = \frac{2 m a_1 m_1 - (a_1+b_1+2)(a_2+b_2+2)m_1 m_2}{2m^2}
 \end{equation}
-Specifically, we want to check when $\Delta Q > 0$, i.e. when the partition $A$ has a higher Modularity than partition $B$. This condition is verified as long as
+Specifically, we want to find the conditions whereby $\Delta Q > 0$, i.e. when the partition $A$ has a higher Modularity than partition $B$. This inequality is verified as long as
 \begin{equation}
 m_2 < \frac{2m a_1}{(a_1+b_1+2)(a_2+b_2+2)}.
 \end{equation}
-In the case where $a_1=a_2=0$, there are no links between $G_1$ and $G_2$ and the condition is satisfied. When instead the two subgraphs are connected ($m_{12} \neq 0$), it happens that at some values of $m_1$ and $m_2$, the partition where the two modules are merged is preferred, i.e. $\Delta Q <0$. This means that when maximizing $Q^N$ on a network, is possible to miss some important structures, if they are too small.
-More specifically, if the two modules have the same size and one sets $a_1=a_2=b_1=b_2=1/m$, is easy to check that Eq.~\ref{eq:resolution_limit_delta} is not satisfied if the number of links in the modules $m_c$, is lower than the square root of the total number of links in the network:
+In the case where $a_1=a_2=0$, there are no links between $G_1$ and $G_2$ and the condition is satisfied. When the two subgraphs are connected ($m_{12} \neq 0$), it happens that at some values of $m_1$ and $m_2$ the partition where the two modules are merged is preferred, i.e. $\Delta Q <0$. This means that when maximizing $Q^N$ on a network, is possible to miss some important structures, if they are too small.
+More specifically, if the two modules have the same size and one sets $a_1=a_2=b_1=b_2=1/m$, is easy to verify that Eq.~\ref{eq:resolution_limit_delta} is not satisfied if the number of links in the modules $m_c$, is lower than the square root of the total number of links in the network:
 \begin{equation}
 m_c < \sqrt{\frac{m}{2}}.
 \end{equation}
@@ -326,16 +332,15 @@ The module $G_0$ was defined as a clique of variable size with a number of edges
 The onset of the resolution limit occurs when $\Delta Q$ changes sign and becomes negative for increasing values of $m_0$.
 For $m_{12}=1$, i.e. when the two cliques $G_1$ ad $G_2$ were connected by only one edge (red curve), $Q$ showed this sign inversion for $m_0 \approx 200$ (Figure \ref{fig:figure_1_barthelemy}B).
 With an increasing number of intercluster edges $m_{12}$, the resolution limit appeared for smaller and smaller values of $m_0$, eventually leading to $\Delta Q$ values that were always negative, i.e. the two cliques $G_1$ and $G_2$ were always merged by Modularity optimization.
-An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links, as shown in Figure~\ref{fig:traag_ring_of_cliques}. 
-
+An even more striking example of how the resolution limit affects Modularity is when looking at the optimal partition of a synthetic lattice graph, known as ``ring of cliques'', a network made out of identical cliques, connected in a ring-like structure by single links, as shown in Figure~\ref{fig:traag_ring_of_cliques}. In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest as to keep the network connected.
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
-\caption{In this toy network, the intracommunity density is the highest possible, while the intercommunity density is the lowest to keep the network connected. The correct community structure is clearly the one on left (A), but Modularity values is higher for the partition on the right (B), where pairs of cliques coalesce into separated communities.}
+\caption{The ring of cliques toy model. The left panel (A) shows the ground truth partition with maximal intracluster density and minimal intercluster density. The right panel (B) shows the maximum Modularity partition, whereby cliques are coalesced in pairs.}
 \label{fig:traag_ring_of_cliques}
 \end{figure}
 If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs.
-Yet extending the number of cliques, Modularity may merge cliques into groups of three, fours etc.
+Yet, extending the number of cliques, Modularity may merge cliques into groups of three, fours etc.
 
 \subsection{Resolution parameter}\label{sec:resolution_parameter}
 Different authors proposed solutions that try to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
@@ -368,14 +373,14 @@ The \emph{Constant Potts Model} (CPM) identifies community as subset of nodes wh
 \begin{equation}\label{eq:cpm_hamiltonian}
 H(\sigma)^{\textrm{CPM}} = - \sum \limits_{(i,j) \in V^2} \left[ a_{ij} - \rho \gamma_{\textrm{CPM}} \right] \delta(\sigma_i,\sigma_j),
 \end{equation}
-that once reworked in an additive quality function, results in the form of Eq.~\ref{eq:cpm_hamiltonian} 
+that once reworked in an additive quality function, results in the form of Eq.~\ref{eq:cpm_ermodel}
 \begin{equation}\label{eq:cpm_ermodel}
 Q^{\textrm{CPM}} = \sum \limits_c^{|C|} \left[m_c - \gamma_{\textrm{CPM}} n_c^2 \right] 
 \end{equation}
 In other words, the model tries to maximize the number of internal edges while at the same time keeping relatively small communities. The parameter $\gamma_{\textrm{CPM}}$ balances these two imperatives acting as the inner and outer threshold of edge density.
 Hence, in the CPM settings is better to split two communities $r$ and $s$ if $\gamma_{CPM}$ exceeds the inter-community density $m_{r,s}/(2n_r n_s)$.
 
-Unfortunately, the operation of tuning the resolution parameter, both in the CPM model as well as in other similar models, is difficult and no largely accepted method exists, making all the models based on a resolution parameter, scarcely used in practical applications.
+Unfortunately, the operation of tuning the resolution parameter, both in the CPM model as well as in other similar models, is difficult and no widely accepted method exists, making all the models based on a resolution parameter, scarcely used in practical applications.
 
 
 \subsection{Effects of resolution limit}
@@ -389,8 +394,9 @@ Thus, the resolution limit is a critical shortcoming for the study of brain netw
 The limitation on the number of detected modules in brain networks is evident in studies where typically four or five communities of the same size are detected in humans, as in Crossley et al.~\cite{crossley2013a}, Meunier et al.~\cite{meunier2009a,meunier2010}, Fair et al.~\cite{fair2009} or also in mouse models~\cite{schwarz2008}.
 To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
-It's also very important to stress that comparing the Modularity value $Q^N$ across different networks obtained in different studies, with possibly a different number of nodes or different densities is an erroneous practice although $Q^N$ is normalized in the range $[0,1]$. As shown by a number of studies~\cite{good2009,kehagias2013,radicchi2010}, even in graphs which do have a natural community structure, high modularity values can be achieved by partitions which do not respect this natural structure. Hence, the Modularity value is only a numerical indication of the current status of optimization of the detected community structure on a specific graph and should never be confronted across different networks.
-
+It's also very important to stress that comparing the Modularity value $Q^N$ across different networks obtained in different studies, with possibly a different number of nodes or different densities, is an erroneous practice.
+As shown by a number of studies~\cite{good2009,kehagias2013,radicchi2010}, even in graphs which do have a natural community structure, high modularity values can be achieved by partitions which do not respect this natural structure.
+Hence, the Modularity value is only a numerical indication of the current status of optimization of the detected community structure on a specific graph and should never be confronted across different networks.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%
@@ -408,12 +414,13 @@ As a matter of example, the variation in Modularity for merging a pair of adjace
 \Delta Q = \frac{1}{r\left(\binom{n_r}{2}+1\right)}-2r^{-2}
 \end{equation}
 where $r$ is the number of cliques and $n_r$ the number of nodes in each clique.
-In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring_clique} tends to a small negative value, indicating that a solution where the cliques are merged, may have a Modularity very close to the optimum. Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
+In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring_clique} tends to a small negative value, indicating that a solution where the cliques are merged, may have a Modularity very close to the optimum.
+Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
 
-To make this argument more intuitive, we extrapolated a visually appealing form of the complex landscape of partitions' Modularity for a ring of cliques network. We sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated the corresponding values of Modularity for every partition as in~\cite{good2009}.
-We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
+To make this argument more intuitive, I extrapolated a visually interpretable form of the complex landscape of partitions' Modularity for a ring of cliques network. I sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated the corresponding values of Modularity for every partition as in~\cite{good2009}.
+I then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
 In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function.
-A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity stay in the same neighborhood.
+A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity lay in the same neighborhood.
 
 \begin{figure}[htb!]
 \centering
@@ -422,15 +429,21 @@ A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whe
 \label{fig:degeneracylandscape}
 \end{figure}
 
-Any quality function suffering degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while in the case of the existence of a distinct global optimum, a sharper peak should be exhibited.
-We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behaviour and uniqueness of the optimum solution.
+\textcolor{red}{Any quality function suffering from degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while in the case of the existence of a distinct global optimum, a sharper peak should be exhibited.
+We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behaviour and uniqueness of the optimum solution.}\todo{CHECK REPHRASE}
 
-The issue of degeneracy is not only affecting Newman's Modularity $Q^N$ but other quality functions as well.
-In this respect, it's clear that choosing the partition with the highest quality value isn't meaningful and a choice that considers all the good partitions at the plateau is desired. 
+Several approaches have been proposed to mitigate the problems that are apparent in Modularity. These include the use of multiple near-optimal solutions to avoid the pitfalls of degeneracy. Moreover a proper choice of the null model may help overcome the fundamental resolution limit.
+
+The issue of degeneracy affects Newman's Modularity $Q^N$ and other quality functions as well.
+In this respect, it's clear that choosing the partition with the highest quality value isn't meaningful and a choice that considers all the good partitions at the plateau may be more desirable. 
 An optimal partition of the network can then be expressed as a \emph{median} of the solutions over the optimal plateau.
-This approach, known as \emph{consensus clustering}, is advantageous to combine strengths and weakness of found partitions, whereby some local effects of noise during optimization are averaged over a large set of solutions.
-Such approach for consensus clustering is typically based on a meta-algorithm rather than a proper community detection method. Indeed, given a community detection method, consensus clustering forms an ensemble of optimal solutions from which an association matrix $\mathcal{A}$ is computed, where edges are proportional to the probability that two nodes are connected in the same community. 
-Consensus communities are then obtained clustering iteratively the thresholded association matrix. The choice of the threshold that makes the association matrix sparser~\cite{lancichinetti2012} is dictated by the properties of the chosen method of community detection itself. Typically with a smartly chosen threshold, consensus clustering converges in a few iterations. The pseudo-code illustrated in Alg.~\ref{alg:consensus_clustering} illustrates all the steps of consensus clustering.
+This approach, known as \emph{consensus clustering}, averages local effects of noise during optimization over a large set of solutions.
+Consensus clustering is typically based on a meta-algorithm rather than a proper community detection method.
+Indeed, given a community detection method, consensus clustering forms an ensemble of optimal solutions from which an association matrix $\mathcal{A}$ is computed, where edges are proportional to the probability that two nodes are connected in the same community. 
+Consensus communities are then obtained iteratively by clustering the thresholded association matrix.
+The choice of the threshold that makes the association matrix sparser~\cite{lancichinetti2012} is dictated by the properties of the chosen method of community detection itself.
+Typically with a judicious choice of the threshold, consensus clustering converges in a few iterations.
+The pseudo-code reported in Algorithm~\ref{alg:consensus_clustering} illustrates all the steps of consensus clustering.
 
 \begin{Algorithm}[htb!]
 \begin{codebox}
@@ -445,7 +458,7 @@ Consensus communities are then obtained clustering iteratively the thresholded a
 \label{alg:consensus_clustering}
 \end{Algorithm}
 
-Although useful to address the degeneracy issue, this approach keeps suffering the resolution limit, as the sub-optimal optimal solutions which the consensus partition is made of, are themselves resolution-limited.
+Although useful to address the degeneracy issue, this approach still suffers from the resolution limit, as the near-optimal optimal solutions which the consensus partition is made of, are resolution-limited per se.
 
 % \section{Alternative approaches to Modularity}
 % If the problems of Modularity are evident, researchers tried to mitigate them with alternative meta-approaches. The issue of degeneracy indeed, implicitly maintains that in the absence of a clearly optimal partition, many partitions should be used instead. Yet, the problem of the resolution limit that arises from an inadequate choice of the configuration model as the null hypothesis, can be tackled by a proper choice of the null model that keeps into account the sources of random noise directly from the time series which the correlation matrix is originated from. Here we briefly discuss these two potential solutions to the problems we have just introduced.
@@ -477,11 +490,12 @@ Although useful to address the degeneracy issue, this approach keeps suffering t
 % Such badly-adapted configuration model does not give more importance to pairs of strongly correlated time series but rather to pairs of time series whose direct correlation $C_{ij}$ is larger than the common signal $X_{tot}$.
 % The null model proposed by MacMahon and Garlaschelli redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed and only terms that retain true correlations are maintained.
 
-\section{Quality function optimization}
-\subsection{Louvain method}\label{sec:louvain_method}
-Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
-\todo{aggiungere louvain non deterministico}
-This algorithm has become extremely popular in recent years because it is fast, allowing to analyze huge networks with billions of edges and produces significant partitions~\cite{lancichinetti2009}.  The optimization method is divided in two phases applied recursively as depicted in Figure~\ref{fig:louvain_method}. The first phase is the optimization phase which looks for a locally optimal partition by considering only individual vertex swaps. As in many other greedy algorithms, the community partition is initialized with a single node per community and as many communities as nodes in the input network. Then, based on the chosen cost function, individual nodes are removed from their current community and swapped to the neighboring community which produces the largest positive gain of the cost function.
+\subsection{Modularity optimization: the Louvain method}\label{sec:louvain_method}
+Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy stochastic agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
+
+This algorithm has become extremely popular in recent years because it is fast, allowing to analyze huge networks with billions of edges~\cite{lancichinetti2009}.
+Due to its intrinsic stochastic nature, the Louvain method returns different near-optimal partitions every run and must be typically run thousands of times in order to identify the best solution.
+The optimization method is divided in two phases applied recursively as depicted in Figure~\ref{fig:louvain_method}. The first phase is the optimization phase which looks for a locally optimal partition by considering only individual vertex swaps. As in many other greedy algorithms, the community partition is initialized with a single node per community and as many communities as nodes in the input network. Then, based on the chosen cost function, individual nodes are removed from their current community and swapped to the neighboring community which produces the largest positive gain of the cost function.
 
 \begin{figure}[htb!]
 \centering
@@ -501,3 +515,7 @@ where $\mathbf{s}$ is a numerical vector that considers a division of the networ
 \end{equation}
 The group assignment of each node is obtained as the signs of the eigenvector $\mathbf{s}$ corresponding to the greatest eigenvalue $\beta$. Finally, by repeatedly subdividing the network, the optimal Modularity assignment is recovered~\cite{newman2006,newman2010book}.
 
+\section{Conclusions}
+The modular organization of brain functional connectivity networks has been investigated by a variety of methods and specifically by graph theoretical approaches. The rich repertoire of behavioural and cognitive aspects of everyday life is supported by integration of local processing that is reflected in the functional modules, as identified by a variety of protocols.
+Unfortunately Newman's Modularity, the most widely used graph-based method for community detection in FC networks is flawed as it cannot detect modules that are smaller than a certain scale, making impossible to ascertain important details of architectural structure.
+The two main drawbacks of Modularity have been introduced namely the resolution limit and its extreme degeneracy, together with analyses that specifically address their origin. In the following chapter I will illustrate how to overcome the limitations imposed by Newman's Modularity with an approach that has its roots in probability theory: Surprise.
