@@ -147,7 +147,7 @@ The problem of detecting the communities, \emph{community detection} or \emph{gr
 From the theoretic point of view, communities are representative of the generative probabilistic model underlying the formation of links~\cite{karrer2011} and tell much about the statistical properties of networks.
 On the other side, practical applications of community detection are fundamental not only in neuroscience but also in sociology, computer science, biology and many other fields.
 Modules derive from a decomposition of the network into subcomponents that are internally strongly coupled but externally only weakly coupled.
-The property of a system of being modular or \emph{nearly-decomposable}, as already noted by Nobel prize laureate Herbert Simon~\cite{simon1991}, helps any system to resist external perturbations by separating different functions into topologically distinct part of the system.
+The property of a system of being modular or \emph{nearly-decomposable}, as already noted by Nobel prize laureate Herbert Simon~\cite{simon1991,simon1995}, helps any system to resist external perturbations by separating different functions into topologically distinct part of the system.
 Near decomposability is in many respects a hallmark of complexity in natural systems~\cite{simon1991}.
 
 Strong experimental evidence shows that the nervous system in animals and humans, from the neuronal level up to macroscopic scale, displays an organization that favours the exchange of information over a communication backbone supported by well-connected areas, the connector hubs of the network~\cite{dereus2013a}, responsible in turn for sending information to local processors, identified as the communities or modules~\cite{vandenheuvel2013a}.
@@ -448,7 +448,7 @@ The \emph{global definitions} are based on an interpretation of the network as a
 Most of the global criteria of communities encompass global properties of the graph that are used by an algorithm to deliver a modular decomposition.
 In this sense the global definitions are always indirect, often based on \emph{null models} or stationary properties of dynamical processes such as random walkers~\cite{pons2006,rosvall2008}.
 
-Apart from global or local definitions of communities is the indication that multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,schwarz2007} such as ICA or other multivariate methods.
+Apart from global or local definitions of communities is the indication that multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,salvador2005,schwarz2007} such as ICA or other multivariate methods.
 This empirical evidence, shown not only in humans but also in higher vertebrates like cats~\cite{scannell1995} and macaques~\cite{felleman1991}, suggests that to some extent the high-level functional organization is based on the balance of two competing principles of segregation and integration.
 The nervous system is obviously shaped by this balance as the need of fast information processing is satisfied by small-scale neuronal circuits, typically at the first stages of sensory input processing.
 Typical examples are the very localized functional area of visual processing V1 or the primary motor cortices. At larger scale the cortex works in concert, connecting all the segregated areas in a larger, widely distributed complex network.
@@ -623,8 +623,8 @@ A stochastic block model for undirected graphs is defined by three variables: th
 In the case the matrix $\mathbf{B}$ is constant, the SBM recovers exactly the ER model.
 
 In the case the matrix $\mathbf{B}$ takes only two different values, a model known as the \emph{planted partition model}, each pair of nodes in the same block are connected with probability $\mathbf{B}_{ij}=p_{in}$ and pairs of nodes in different modules are linked with probability $\mathbf{B}_{ij}=p_{out}$, as shown in Figure~\ref{fig:planted_peixoto}.
-Specific edge probability in the planted partition model is simply described as $\Pr_{ij} = p_{in}\delta(\sigma_i,\sigma_j) + p_{in}\delta(\sigma_i,\sigma_j)$.
-In building the planted partition model, though one has to set in advance the number of modules $|C|$ (or blocks) and define an equal number of nodes in every module.
+Specific edge probability in the planted partition model is simply described as $\Pr_{ij} = p_{in}\delta(\sigma_i,\sigma_j) + p_{out}(1-\delta(\sigma_i,\sigma_j))$.
+In building the planted partition model, though one has to set in advance the number of modules $|C|$ (or blocks) and to define an equal number of nodes in every module.
 
 \begin{figure}[htb!]
 \centering
@@ -641,17 +641,20 @@ Although largely used, the planted-partition model has several drawbacks.
 Indeed, as a generalization of the ER model, each node has the same expected degree and all communities have the same size.
 While, these properties are of great help when performing analytical calculations, they also make it badly suited for practical applications, as degree homogeneity is seldom realized in real networks.
 
-To overcome the unrealistic settings of the planted partition model, the Lancichinetti\hyp{}Fortunato\hyp{}Radicchi (LFR) model, first described in~\cite{lancichinetti2008}, modified the planted partition model to exhibit power-law distribution of both node degrees and community size, with exponents $\tau_d$ and $\tau_c$ respectively, as observed in real networks.
+To overcome the unrealistic settings of the planted partition model, the Lancichinetti\hyp{}Fortunato\hyp{}Radicchi (LFR) model, first described in~\cite{lancichinetti2008}, modified the planted partition model to exhibit power-law distribution of both node degrees and community size, with tunable exponents $\tau_d$ and $\tau_c$ respectively, to respect what is observed in real networks.
 As each realization is accompanied by the membership affiliation vector $\boldsymbol \sigma$, the LFR model has been used primarily as a benchmark for evaluating the effectiveness of different community detection methods~\cite{fortunato2010,lancichinetti2009} at different levels of difficulty.
-It was further extended to be able to generate weighted networks with overlapping modules in~\cite{lancichinetti2009a}.
+Furthermore, the LFR model was extended to weighted networks with possibly overlapping modules in~\cite{lancichinetti2009a}.
 The major advantage of the LFR model is the tunable level of community mixing.
 Indeed, each node share a fraction $1-\mu_t$ of edges with nodes in its same community and a fraction $\mu_t$ with nodes in other communities: $0 \leq \mu_t \leq 1$ is dubbed the \emph{topological mixing parameter}.
-Additionally, given a degree sequence, taken by sampling the power law distribution with exponent $\tau_d$, on weighted networks a parameter $\beta$ is used to assign strength to each node: $s_i=k_i^\beta$ where the parameter $\mu_w$ is used to partition the node strength into an intra-community component proportional to $(1-\mu_w)$ and an inter-community component proportional to $\mu_w$: $s_i = (1-\mu_w)s_i^{(int)} + (\mu_w)s_i^{(ext)}$.
+Additionally on weighted networks, a parameter $\beta$ is used to assign strength to each node: $s_i=k_i^\beta$.
 This power-law form of node strengths is chosen to match observations on real graphs, as indicated by~\cite{barrat2004}.
+A weights-mixing coefficient $\mu_w$ is used to divide the node strength into two components, intra- and inter community, such that:
+$$s_i = (1-\mu_w)s_i^{(intra)} + (\mu_w)s_i^{(inter)}.$$
+
 The actual weights of the edges are then chosen to minimize the variance between the expected and the observed strengths by means of an iterative optimization step.
 Hence is possible to obtain a theoretical estimate of the average edge weights that reads:
 \begin{align}
-\langle  w^{int} \rangle &= \frac{(1-\mu_w)\langle  s\rangle }{(1-\mu_t)}\langle  k\rangle = \frac{(1-\mu_w)}{(1-\mu_t)}\langle  k \rangle ^{\beta-1} \\
+\langle  w^{int} \rangle &= \frac{(1-\mu_w)\langle  s\rangle }{(1-\mu_t)}\langle  k\rangle = \frac{(1-\mu_w)}{(1-\mu_t)}\langle  k \rangle ^{\beta-1}, \\
 \langle  w^{ext} \rangle &= \frac{(\mu_w)\langle  s\rangle }{(\mu_t)}\langle  k\rangle = \frac{(\mu_w)}{(\mu_t)}\langle  k \rangle ^{\beta-1}.
 \end{align}
 As for the planted partition model, where communities where defined as long as $p_{in}>p_{out}$, for the case of the LFR model, one asks that in order for communities to be such it must be that
@@ -659,19 +662,17 @@ As for the planted partition model, where communities where defined as long as $
 \langle  w^{int} \rangle \geq \langle  w^{ext} \rangle 
 \end{equation}
 resulting in the equivalent formulation $\mu_w  \geq \mu_t$.
-If this last condition is not met indeed each node would bring more weight about its connectivity on the edge weights rather than on its degree, that is why: most community detection algorithms working with weighted networks, thus would be informed of the large edge weights and are mislead considering the node as an hub even in the presence of just a few neighbors.
+If this last condition is not met each node would have a strength relatively higher than its degree, an unrealistic circumstance in real-networks, as highest degree nodes are typically nodes with high strength~\cite{barrat2004}.
 
-The modularity of the network is controlled primarily by the topological mixing coefficient.
-In the case $\mu_t$ is exactly zero, the network consists of isolated components and the stochastic block matrix is completely assortative (diagonal).
+The modularity of the LFR network is controlled primarily by the topological mixing coefficient.
+In the case $\mu_t$ is exactly zero, the network consists of isolated components and the stochastic block matrix is completely assortative or block-diagonal.
 Conversely, for $\mu_t=1$, the block matrix is null on the diagonal and completely disassortative, exhibiting no links inside communities and only links between them.
-The generated network is \emph{multipartite}.
-
-The LFR model has a number of other parameters that control all the network parameters with great precision~\cite{lancichinetti2008,lancichinetti2009a}, described in Figure~\ref{tab:lfrparams}.
+The LFR model has a number of other parameters that control all the network parameters with great precision~\cite{lancichinetti2008,lancichinetti2009a} as described in Figure~\ref{tab:lfrparams}.
 \begin{figure}[htb!]\centering
 \begin{footnotesize}
-\noindent\begin{minipage}[b!]{0.46\textwidth}
-\begin{tabular}{l|p{1\textwidth}}
-\hline
+\noindent\begin{minipage}[b!]{0.5\textwidth}
+\begin{tabular}{l p{1\textwidth}}
+%\hline
 $\tau_d \geq 1$ & Power-law exponent of nodes degrees.\\
 $\tau_c \geq 1$ & Power-law exponent of community size.\\
 $\beta \geq 1$  &Exponential parameter for strengths distribution.\\
@@ -681,7 +682,7 @@ $\max_c$  & Maximum number of nodes in each community.\\
 $\mu_t \in [0,1]$ & Topological mixing coefficient.\\
 $\mu_w \in [0,1]$ & Weights mixing coefficient.\\
 $\langle k\rangle $ &Desidered average degree.\\
-\hline
+%\hline
 \end{tabular}
 \end{minipage}\hfill
 \begin{minipage}[b!]{0.35\textwidth}\flushright
@@ -691,8 +692,8 @@ $\langle k\rangle $ &Desidered average degree.\\
 \caption{LFR parameters and a single instance with $n=600$, $\langle k \rangle =12$, $\tau_d=2$, $\tau_c=1$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.}
 \label{tab:lfrparams}
 \end{figure}
-
-The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods. The original c++ code to generate LFR weighted networks is available at~\url{https://sites.google.com/site/santofortunato/package3.tar.gz}. The bindings of such code written for Matlab, Octave and Python are freely available at~\url{https://github.com/carlonicolini/lfrwmx}.
+The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods. The original c++ code to generate LFR weighted networks is available at the Santo Fortunato's homepage~\url{https://sites.google.com/site/santofortunato/package3.tar.gz}.
+Bindings for \texttt{Matlab,Octave} and \texttt{Python} the Fortunato's code are freely available at~\url{https://github.com/carlonicolini/lfrwmx}.
 
 % \subsection{Power law ring of cliques}
 % The modified ring of clique network as indicated in the main text is composed by a ring structure of cliques whose sizes are randomly sampled from a power-law distribution with exponent $\tau_c=1$.
@@ -704,42 +705,43 @@ The LFR model is of great importance as it served as a benchmark test for commun
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Synthetic resting state networks}
-Here we introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested.
+\section{A synthetic model of a resting state network}
+Among the synthetic generative models for complex networks, no model tries to embed the typical circumstances that take place when measuring human brain resting state activity with fMRI.
+To this end, here I introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested~\cite{nicolini2017}.
 
 The general idea is that, starting from an adjacency matrix with a given modular structure, we can generate time-courses for each of the nodes whose pairwise correlations reproduce the edge structure of the original matrix. Noise can be added to the time-courses, and the resulting correlation matrix will provide a noisy representation of the original one. This procedure can be repeated multiple times to produce different datasets that represent different "subjects" in the study.
 
-In practical terms, given an undirected weighted graph  $\mathbf{C} \in \mathbb{R}^{n\times n}$ whose community structure is known a-priori, we have calculated its nearest positive definite matrix~\cite{Higham1988} and its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$. Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, we have generated correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$. Additionally, we have injected different levels of noise into $\mathbf{Y}$ prior to the computation of the correlation matrix. 
-\footnote{Since the covariance matrix of a zero-mean, unit-variance random variable $X$ is given by $\mathbb{E}(XX^T)$, it's easy to verify that $\mathbb{E}(YY^T)=\mathbb{E}(LX)(LX)^T=\mathbb{E}(LX)X^T L^T=L\mathbb{E}(XX^T)L^T=L^T\mathbf{I}L=C$} 
+In practical terms, given an undirected weighted graph  $\mathbf{C} \in \mathbb{R}^{n\times n}$ whose community structure is known a-priori, its nearest positive definite matrix~\cite{Higham1988} is obtained with its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$.
+Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, one can then generate correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$ \footnote{Since the covariance matrix of a zero-mean, unit-variance random variable $X$ is given by $\mathbb{E}(XX^T)$, it's easy to verify that $\mathbb{E}(YY^T)=\mathbb{E}(LX)(LX)^T=\mathbb{E}(LX)X^T L^T=L\mathbb{E}(XX^T)L^T=L^T\mathbf{I}L=C$}.
+Different levels of noise can then be injected into $\mathbf{Y}$ prior to the computation of the correlation matrix.
 Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
+As described in~\cite{nicolini2017} I tested this idea on two different models of planted partition: a variant of the ring of cliques~\cite{fortunato2007} and the Lancichinetti-Fortunato-Radicchi (LFR) network~\cite{lancichinetti2008}, whose degree distribution and modular structure can be tuned to replicate topological features of real-world networks, including scale freeness~\cite{hagmann2008} and the presence of densely interconnected cores~\cite{vandenheuvel2011}.
 
-We tested this idea on two different models of planted partition: a variant of the ring of cliques~\cite{fortunato2007} and the Lancichinetti-Fortunato-Radicchi (LFR) network~\cite{lancichinetti2008} (Figure \ref{fig:lfrringclique}, whose degree distribution and modular structure can be tuned to replicate topological features of real-world networks, including scale freeness~\cite{hagmann2008} and the presence of densely interconnected cores~\cite{vandenheuvel2011}.
-
-\begin{sidewaysfigure}[htb!]
+\begin{figure}[htb!]
 \centering
-\includegraphics[height=0.25\textheight]{images/flowchart.pdf}
+%\includegraphics[height=0.25\textheight]{images/flowchart.pdf}
+\includegraphics[width=\textwidth]{images/flowchart.pdf}
 \caption{Flowchart of the generation and analysis of the synthetic datasets. In A the network with a pre-defined community structure is generated. The adjacency matrix is then processed in block B to obtain the nearest positive definite matrix for the Cholesky decomposition. This enables the generation of node-wise time-courses into which different levels of noise can be injected. The procedure is repeated multiple times to generate different instances (mimicking different subjects in the sample). Finally, correlation matrices are calculated for each instance (block C), and Fisher transformed to calculate the average adjacency matrix for analysis by community detection algorithms (block D). Lastly, resulting partitions are compared with the original, planted one in terms of NMI.}
 \label{fig:flowchart}
-\end{sidewaysfigure}
+\end{figure}
 
 %%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%
 \section{Comparing community structure in networks}
-Some benchmark networks come with an annotated community structure representing the ground-truth assignment of nodes into communities, the annotations being made by experts in the field, like for example the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
-Moreover, generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, have a known ground-truth community.
 As the number of community detection methods increased over the years, also a quantitative way to assess their performance was needed.
+In generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, the community structure is determined a-priori. Conversely, community structures of real-world networks are often annotated by experts in the field, like for instance the karate club network of Zachary~\cite{zachary1977} and the political blog network~\cite{adamic2005}, as no a-priori structure was imposed to those graphs.
 
-A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past.
-They are used to provide quantitatively a number that tells how two partitions are similar.
+A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past~\cite{danon2005,vinh2010}.
+They are used to provide quantitatively a number that tells the extent of similarity between two partitions.
 Typically the result is normalized in the $[0,1]$ range, being towards $1$ for very similar clusterings and toward $0$ when mostly dissimilar.
-These metrics are adopted especially in the benchmarking of community detection methods when the specific outcome of some algorithm is compared with a ground truth partition, usually, a-priori determined.
+%These metrics are adopted especially in the benchmarking of community detection methods when the specific outcome of some algorithm is compared with a ground truth partition, usually, a-priori determined.
 
-The most well-grounded and performing metrics for the comparison of two community structures are rooted in information theory~\cite{cover2006}.
+The most well-grounded and performing metrics for the comparison of two community structures are rooted in information theory~\cite{danon2005,vinh2010,cover2006}.
 The \emph{Normalized Mutual Information}~\cite{danon2005} and the \emph{Variation of Information}~\cite{meila2007} are the most widely used, despite it was recently found that both of them suffer of systematic errors due to the finite size of the network~\cite{zhang2015a}.
 In the rest of the discussions, we ignore the limitation of finite size effects, by only working with relatively large networks.
 
 Normalized Mutual Information (NMI) assumes that the clustering comparison is a problem of message decoding.
-Implicit in this is the idea that if two partitions are similar, inferring one partition from the other needs very little information.
-Let us consider two generic partitions of a graph denoted by their clusterings $\zeta^x,\zeta^y$ with $c_x$ and $c_y$ communities respectively: $\zeta^x=\{\zeta^x_1,\ldots,\zeta^x_{c_x}\}$ and $\zeta^y=\{\zeta^y_1,\ldots,\zeta^y_{c_y}\}$.
+Implicit in this interpretation is the idea that if two partitions are similar, inferring one partition from the other needs very little information.
+Let us denote two generic partitions of the same graph by their clusterings $\zeta^x,\zeta^y$ with $c_x$ and $c_y$ communities respectively: $\zeta^x=\{\zeta^x_1,\ldots,\zeta^x_{c_x}\}$ and $\zeta^y=\{\zeta^y_1,\ldots,\zeta^y_{c_y}\}$.
 The number of nodes in the $i$-th community of $\zeta^x$ is $n_i :=|\zeta^x_i|$ and the number of nodes in the $j$-th community of $\zeta^y$ is $n_j:=|\zeta^y_j|$.
 The two communities share a number of nodes $n_{ij}=| \zeta^x_i \cap \zeta^y_j|$.
 Let us also consider the community assignments $\boldsymbol\sigma^x_i$ and $\boldsymbol\sigma^y_i$ for partitions $\zeta^x$ and $\zeta^y$ respectively; we treat the labels as values of two random variables $X$ and $Y$ with joint distribution $P(x,y)=P(X=x, Y=y) = n_{xy}/n$, which implies that $P(x)=P(X=x)=n_x^X/n$ and $P(y)=P(Y=y)=n_y^Y/n$.
@@ -751,82 +753,89 @@ This observation led Danon~\cite{danon2005} to introduce normalized mutual infor
 \textrm{NMI}(X,Y) = \frac{2I(X,Y)}{H(X)+H(Y)} = \dfrac{2\sum \limits_{i=1}^{c_x} \sum \limits_{j=1}^{c_y} \frac{n_{ij}}{n} \log\left( \frac{n_{ij}n}{n_i n_j} \right)} {\left(-\sum \limits_{k=1}^{c_x} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right) + \left(-\sum \limits_{k=1}^{c_y} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right)}.
 \end{equation}
 
-Meila~\cite{meila2007} proposed another measure based on entropy, Variation of Information (VI), shown in Figure~\ref{fig:venn_diagram}.
-VI measures how much knowing the cluster assignment for an item in clustering $X$ reduces the uncertainty about the item's cluster in clustering $Y$.
-It's defined as:
+Another measure based on entropy is Variation of Information (VI), proposed by Meila~\cite{meila2007}. VI measures how much knowing the cluster assignment for an item in clustering $X$ reduces the uncertainty about the item's cluster in clustering $Y$. It's defined as:
 \begin{equation}\label{eq:vi}
 \textrm{VI}(X,Y) = H(X|Y) + H(Y|X)
 \end{equation}
 and it has the desirable property that, being a proper distance, it defines a metric on the space of the partitions.
 Variation of information is also a local measure, i.e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
-As noted by Karrer \cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range.
+As noted by Karrer~\cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range.
 Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
-It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding the overall similarity to summarize it in a single scalar.
+%It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding the overall similarity to summarize it in a single scalar.
 
-\begin{figure}[htb!]
-\centering
-\begin{tikzpicture}
-    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (-1.1cm,0cm) (CL) {$H(X|Y)$};
-    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (1.1cm,0cm) (CR) {$H(Y|X)$};    
-    \node[rotate=90] at (0cm,0cm) (IXY) {$I(X;Y)$};
-    \node[] at (0cm,2cm) (HXY) {$H(X,Y)$};
-    \node[] at (-2.5cm,-2cm) (HX) {$H(X)$};
-    \node[] at (2.5cm,-2cm) (HY) {$H(Y)$};
-    \node[] at (0cm,-2cm) (VI) {$VI(X,Y)$};
-    \draw[->] (HX) -- (CL);
-    \draw[->] (HY) -- (CR);
-    \draw[->] (HXY) -- (CL);
-    \draw[->] (HXY) -- (CR);
-    \draw[->] (VI) -- (CL);
-    \draw[->] (VI) -- (CR);
-\end{tikzpicture}
-\caption{Venn diagram representation of the important quantities used to treat the clustering comparison problem in terms of information theory.
-The two circles are the entropies of variables $X$ and $Y$.
-The mutual information $H(X;Y)$ is the intersection of the information in $X$ with the information in $Y$.
-The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y)$ because $I(X;Y)$ is counted twice.}
-\label{fig:venn_diagram}
-\end{figure}
-
-
+% \begin{figure}[htb!]
+% \centering
+% \begin{tikzpicture}
+%     \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (-1.1cm,0cm) (CL) {$H(X|Y)$};
+%     \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (1.1cm,0cm) (CR) {$H(Y|X)$};    
+%     \node[rotate=90] at (0cm,0cm) (IXY) {$I(X;Y)$};
+%     \node[] at (0cm,2cm) (HXY) {$H(X,Y)$};
+%     \node[] at (-2.5cm,-2cm) (HX) {$H(X)$};
+%     \node[] at (2.5cm,-2cm) (HY) {$H(Y)$};
+%     \node[] at (0cm,-2cm) (VI) {$VI(X,Y)$};
+%     \draw[->] (HX) -- (CL);
+%     \draw[->] (HY) -- (CR);
+%     \draw[->] (HXY) -- (CL);
+%     \draw[->] (HXY) -- (CR);
+%     \draw[->] (VI) -- (CL);
+%     \draw[->] (VI) -- (CR);
+% \end{tikzpicture}
+% \caption{Venn diagram representation of the important quantities used to treat the clustering comparison problem in terms of information theory.
+% The two circles are the entropies of variables $X$ and $Y$.
+% The mutual information $H(X;Y)$ is the intersection of the information in $X$ with the information in $Y$.
+% The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y)$ because $I(X;Y)$ is counted twice.}
+% \label{fig:venn_diagram}
+% \end{figure}
+\subsection{Confusion matrix}
 It is also possible to quantify the confusion matrix $\mathbf{C}$ between the detected and planted modules.
-Each element $C_{ij}$ is the number of nodes in the planted community-$i$ that appear in the detected community-$j$.
+Each element $C_{ij}$ is the number of nodes in the planted community $i$ that appear in the detected community $j$.
 For each planted community one scores as true positives (TP) the nodes correctly identified as belonging to the ground-truth community, and as false positives (FP) the nodes wrongly assigned to a community; similarly false negatives (FN) are nodes wrongly classified in different communities and true negatives (TN) the nodes correctly classified as out of the community. Sensitivity, defined as $TP/(TP+FN)$, decreases with increasing number of False Negatives. Specificity instead is defined as $TN/(TN+FP)$ and decreases when many nodes are wrongly assigned in the same community. 
 
 Accuracy (Acc) and Matthew Correlation Coefficient (MCC) are defined on the basis of the confusion matrix as:
 \begin{align*}
-\textrm{Acc}=\frac{(TP+TN)}{TP+FP+TN+FN} \qquad \textrm{MCC}=\frac{(TP\times TN-FP\times FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+\textrm{Acc}=\frac{(TP+TN)}{TP+FP+TN+FN} \, \textrm{MCC}=\frac{(TP\times TN-FP\times FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
 \end{align*}
 where TP, TN, FP, FN are the number of true positives, true negatives, false positives and false negatives identified in the detected partition with respect to the planted partition.
-
-Accuracy takes in account the proportion of correctly classified samples and can present relatively high values even in the case of poorly performing detection methods when the classes have very different size.
+Accuracy takes into account the proportion of correctly classified samples and can present relatively high values even in the case of poorly performing detection methods when the classes have very different size.
 The Matthew Correlation Coefficient  takes into account true and false positives and negatives. It's a balanced coefficient, to use especially when classes are very imbalanced.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% PERCOLATION ANALYSIS %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Percolation analysis}\label{sec:percolation_analysis}
-Functional connectivity networks are typically obtained as similarity matrices of physiological time signals over different brain areas.
-The process of converting such similarity matrices into graphs, described in the previous chapters is not obvious.
-In most of the works, a threshold is chosen such that all the edge weights greater than a given value are kept, while other links, indicative of correlations due to possibly noisy components are discarded.
+\section{Thresholding}\label{sec:percolation_analysis}
+
 Sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable.
+However, weak links may also contain significant structural information, and procedures to identify the optimal tradeoff are the subject of active research.
 Indeed, weak links may contain significant structural information~\cite{thomas2011}, and procedures to identify the optimal trade-off are the subject of active investigations~\cite{zahoranszky-kohalmi2016a}.
 The network can then be binarized, by setting all edge weights to unity.
 Whether this sparsification procedure may help obtaining a better view on the underlying structure of networks, it represents an hot debate in the literature~\cite{rubinov2010,thomas2011}.
+
 Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
 No well-accepted method to choose the best threshold has been adopted pragmatically in the brain networks literature and different scholars motivated their choice by different needs~\cite{gallos2012,lee2011,scheinost2012}.
 
-As the final network density is of fundamental importance when performing community detection, the clustering outcome depends heavily on it.
-Hence, a completely data-driven thresholding procedure is needed, that helps in transforming a similarity matrix into a network.
-
-
-Percolation analysis, a method grounded in statistical physics, is suggested here as a method to identify the optimal sparsification threshold for community detection in brain connectivity networks.
-The percolation threshold corresponds to the point where the largest connected component of the network starts breaking apart.
-A threshold just below this point is the one that maximizes the information extracted by subsequent application of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies.
+Percolation analysis, a method originally grounded in statistical physics, was suggested by Gallos et al~\cite{gallos2012} to identify the optimal sparsification threshold for community detection in brain connectivity networks.
+Percolation is a model to describe phase transitions of connected subgraphs in random networks~\cite{callaway2000,goerdt2001}.
+For a random graph the size of largest connected component, initially zero should follow a phase transition at some threshold value, thus spanning the whole graph.
+Contrarily, brain networks exhibits multiple percolation thresholds, revealing a hierarchy of clusters.
+The jumps corresponding to percolation transitions are indicative of a non trivial correlations that constitute well defined modules of brain activity.
+Hence, the multiple percolation thresholds are representative of a set of weak ties that guarantee appropriate communication (in terms of information transfer) between functionally specialized modules.
+Following these observations, the definition of the optimal threshold is the one just below the destruction of the largest connected component.
+This choice maximizes the information extracted by subsequent application of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies.
 
 The most common choice when comparing networks from different groups, is to adopt a fixed threshold that keeps the same number of edges in the two groups.
-This does not take in account the particularities of the analyzed group and datasets.
+This does not take into account the particularities of the analyzed group and datasets.
+It is indeed important to stress that the distribution of the weights as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror these information.
+To this end, it has been demonstrated, especially in patient group such as in schizophrenia, that the brain presents weaker connectivity than in health control persons~\cite{alexander-bloch2010}.
 Percolation analysis should enable data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
-It is indeed important to stress that the distribution of the weight as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror these information.
-To this end, it has been demonstrated, especially in patient group such as in schizophrenia, autism or alcoholism, that the brain presents weaker connectivity than in health control persons~\cite{alexander-bloch2010}.
 
+% The Matlab function that I used to determine the level of threshold is available on \texttt{CommunityAlg} Matlab toolbox at \url{github.com/carlonicolini/communityalg}.
+% Functional connectivity networks are typically obtained as similarity matrices of physiological time signals over different brain areas.
+% The process of converting similarity matrices into graphs, described in the previous chapters is not obvious.
+% In most of the works, a threshold is chosen such that all the edge weights greater than a given value are kept, while other links, indicative of correlations due to possibly noisy components are discarded.
+
+% Sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable.
+% Indeed, weak links may contain significant structural information~\cite{thomas2011}, and procedures to identify the optimal trade-off are the subject of active investigations~\cite{zahoranszky-kohalmi2016a}.
+
+% As the final network density is of fundamental importance when performing community detection, the clustering outcome depends heavily on it.
+% Hence, a completely data-driven thresholding procedure is needed, that helps in transforming a similarity matrix into a network.
