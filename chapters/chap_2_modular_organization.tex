@@ -4,32 +4,30 @@
 \section{Modularity of brain networks}
 \todo{TUTTA QUESTA SEZIONE 1.1 FORSE ANDREBBE SPOSTATE NELL'INTRODUZIONE?}
 A systematic analysis of the structure of neural systems in different organisms points out that modularity is a factor that shapes neural networks from the small nematode worm \emph{Caenorhabditis Elegans} to the most complex human brain.
-Among the many advantages that a modular organization of the brain benefits, two are of greatest importance.
+Among the many advantages of a modular organization of the brain, two are of greatest importance.
 
-Firstly, the organization of a system into many compartments devoted to different roles is evolutionarily favored.
+Firstly, the organization of a system into many compartments devoted to different functions is evolutionarily favored.
 Indeed, keeping the system compartmentalized can limit the influence of external sources of perturbation, thus bounding the interdependence of biological processes going on in each unit.
-Computational studies have shown that a modular organization emerges spontaneously in complex brain networks, promoting flexibility to an ever-changing outside environment~\cite{kashtan2005,kashtan2007} and maximizing bidirectional information exchange between neural populations~\cite{yamaguti2015}.
-Functional and structural segregation have gradually emerged in response to the needs of a continuously changing external environment that forced organisms to quickly adapt and to develop modules apt to respond dynamically to the outside driving forces.
-Dynamics of emergence of modules and patterns have been observed in bacterial metabolic networks~\cite{kreimer2008} and interestingly in non-biological networks~\cite{bongard2011}.  %Just out of curiosity, in the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behavior is encoded as fitness function~\cite{bongard2011}.
+Computational studies have shown that a modular organization emerges spontaneously in complex brain networks, promoting flexibility to an ever-changing outside environment~\cite{kashtan2005,kashtan2007} and maximizing bidirectional information exchange between neural populations~\cite{yamaguti2015}. Driven by evolutionary forces, functional and structural segregation have gradually emerged in response to the needs of a continuously changing external environment that forced organisms to quickly adapt developing proper modules.
+Dynamics of emergence of modules and patterns have been observed in bacterial metabolic networks~\cite{kreimer2008} and interestingly in non-biological networks~\cite{bongard2011}. 
+By way of example, in the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behavior is encoded as fitness function~\cite{bongard2011}.
 
-The second benefit for modular brain networks resides in the increased resilience to sudden external perturbations.
-Local disruptive modification may only affect one module, whereas the others are preserved from the insult. Both for externally or internally generated fluctuations, a modular architecture thus prevents functional disruption of the network leading to the possible death of the organism.
-Altogether, the modular architecture of brain networks is of key importance for a healthy brain.
-
-\bigbreak
+The second benefit of modular brain networks resides in the increased resilience to sudden external perturbations.
+Local disruptive modification may only affect one module, whereas the others are preserved from the insult. In case of externally or internally generated fluctuations, a modular architecture prevents functional disruption of the network leading to the possible death of the organism.
+%Altogether, the modular architecture of brain networks is of key importance for a healthy brain.
 
 A more than twenty years long interdisciplinary effort led to the complete mapping of the connectome at synaptic level of the \emph{C.Elegans} worm.
 The nervous system of this simple organism consists of more than 300 neurons and several thousand electrical and chemical synapses.
-Since its reconstruction, many studies investigated it with graph-theoretical methods, in order to unveil its properties.
-The modular structure of this simple yet informative structural connectome has been consistently observed with a variety of methods and linked with its function~\cite{sporns2016} with great success.
-Many of the worm operations (movements, mating and eating reflexes) are indeed linked to distinct subgroups of neurons, functionally cooperating for the success of such activities.
+Since its reconstruction, many studies have investigated it with graph-theoretical methods, in order to unveil its properties.
+The modular structure of this simple yet informative structural connectome has been consistently observed with a variety of methods and linked its function~\cite{sporns2016}.
+Many of the worm operations (movements, mating and eating reflexes) are indeed linked to distinct subgroups of neurons, functionally cooperating for the success of these activities.
 
-Further, meta-analytic studies of both the cat~\cite{scannell1995} and macaque~\cite{felleman1991} suggest that cortico-cortical networks of these more evolved animals are modular with a limited number of (typically four) prominent clusters corresponding to the main functional division of the cortex: visual, auditory, fronto-limbic and somatosensory. 
+Further, meta-analytic studies of both the cat~\cite{scannell1995}, macaque~\cite{felleman1991} and rodents~\cite{schwarz2008} suggest that cortico-cortical networks of these more evolved animals are modular with a limited number of (typically four) prominent clusters corresponding to the main functional division of the cortex: visual, auditory, fronto-limbic and somatosensory. 
 
-Unfortunately though, until recently most of the studies in animal models, were based on anatomical connectivity measured by means of post-mortem inspections.
-While in the past, histological staining was the most adopted methodology to inspect the wiring of white matter in the animal brain, the last few decades have seen the rising of fluorescence based tract-tracing, that evolved to a level where single axons can be traced with unprecedented precision~\cite{oh2014}.
-Not only methods to investigate the structural connectivity have greatly evolved, but also new cellular resolution recording systems, like light-sheet microscopy~\cite{ahrens2013}, real time in-vivo two-photon cortical imaging~\cite{dombeck2010,leinweber2014} and spike time series recordings on multielectrode arrays~\cite{shimono2015}.
-All these techniques take part in the quest to shed light on the relation between functional networks and their underlying anatomical substrate.
+% Unfortunately, until recently most of the studies in animal models were based on anatomical connectivity measured by means of post-mortem inspections.
+% While in the past, histological staining was the most adopted methodology to inspect the wiring of white matter in the animal brain, the last few decades have seen the rising of fluorescence based tract-tracing, that evolved to a level where single axons can be traced with unprecedented precision~\cite{oh2014}.
+% Not only methods to investigate the structural connectivity have greatly evolved, but also new cellular resolution recording systems, like light-sheet microscopy~\cite{ahrens2013}, real time in-vivo two-photon cortical imaging~\cite{dombeck2010,leinweber2014} and spike time series recordings on multielectrode arrays~\cite{shimono2015}.
+% All these techniques take part in the quest to shed light on the relation between functional networks and their underlying anatomical substrate.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%% PARTE FUNZIONALE %%%%%%%%%%%%%%%%%%
@@ -44,13 +42,6 @@ In particular, only two decades after the invention of fMRI, it was observed tha
 During a typical resting state fMRI (rs-fMRI) session, volunteers are left in the scanner, instructed to relax and not to think anything in particular. 
 Animals instead like mice or rats are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates~\cite{jonckers2015}.
 The time courses of the BOLD signals form a pattern of spontaneous and synchronous oscillations, strongly correlate between anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}.
-
-An active exchange of information between neural populations is thought to be at the hearth of the rs-fMRI signal~\cite{logothetis2001}.
-The local increase of metabolic demand for oxygenated blood to fuel the neuronal activity increments the vascular flow, favoring the consumption of oxygen from the neurons. Such metabolic cascade results in the change of the magnetic properties of hemoglobin that transitions from oxygenated to deoxygenated state, yielding local magnetic susceptibility variations measured by MRI~\cite{ogawa1990}.
-Possible confounds of the rs-fMRI signal, such as the influence of the cardiac and respiratory rhythms on the rs-fMRI oscillations have been ruled out by a number of studies~\cite{cordes2000,cordes2001}.
-Finally, the rs-fMRI signal has been unambiguously marked as the signal of neural activity with studies that positively correlates spontaneous fMRI fluctuations to the electrophysiological recordings of neural spiking~\cite{logothetis2001,shmuel2002}.
-All these experimental evidences makes rs-fMRI oscillations a robust measure to examine functional connections between brain regions on a whole-brain scale.
-\todo{CONTROLLARE QUESTO PARAGRAFO QUI SOPRA REFERENZE IMPORTANTE}
 
 Multivariate methods to detect clusters have indeed been readily applied to brain functional networks measured from fMRI~\cite{fox2005,mckeown1998,schwarz2007,deluca2006,salvador2005}. Indeed, the complex structure of the spatially remote correlations can be quantified by a multitude of different approaches. 
 In general, they showed that the human brain is functionally organized into a hierarchy of clusters of interconnected regions and that the boundaries of such modules reflect specific aspects of cognitive and behavioral aspects~\cite{tomasi2012,alnaes2015,crossley2013a}.

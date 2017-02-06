@@ -62,14 +62,21 @@ Unfortunately, these dynamics are and remain partially unpredictable, despite ma
 
 The discovery of the BOLD effect in the 90's by Ogawa~\cite{ogawa1990}, led to functional MRI, a method to spatially map activity in the whole brain.
 Considered over the large scale, the BOLD response is descriptive of the temporal metabolic demands of large groups of cortical and subcortical structures, a quantity strictly related to the electrical activity of neurons~\cite{logothetis2001}.
-This tool helped scientists to unveil another pattern of connectivity that exists in the brain. \emph{Functional connectivity} examines functional associations between temporal fluctuations of neuronal activities from different brain regions~\cite{biswal1995}.
+Indeed an active exchange of information between neural populations is thought to be at the hearth of the BOLD fMRI signal~\cite{logothetis2001}.
+The local increase of metabolic demand for oxygenated blood to fuel the neuronal activity increments the vascular flow and favors the consumption of oxygen from neurons.
+This metabolic cascade results in the change of the magnetic properties of hemoglobin that transitions from oxygenated to deoxygenated state, yielding local magnetic susceptibility variations measured by MRI.
+Possible confounds of the fMRI signal, such as the influence of the cardiac and respiratory rhythms on the BOLD oscillations have been ruled out by a number of studies~\cite{cordes2000,cordes2001,logothethis2001,shmuel2002}.
+
+The tools offered by fMRI helped scientists to unveil another pattern of connectivity that exists in the brain.
+\emph{Functional connectivity} examines functional associations between temporal fluctuations of neuronal activities from different brain regions~\cite{biswal1995}.
 Activation maps have been estimated for almost every kind of cognitive task and collected in publicly available datasets, like the BrainMap database~\cite{fox2002}, the Neurovault repository~\cite{gorgolewski2015} and the UCLA multimodal connectivity database~\cite{brown2012}.
- %Specifically fMRI functional connectivity focuses on the underlying physiological dynamics giving rise to changes in blood oxygenation.
+%Specifically fMRI functional connectivity focuses on the underlying physiological dynamics giving rise to changes in blood oxygenation.
 %Since its inception, the evolution of technologies in MRI, lead to functional MRI (fMRI), a way to spatially map temporal changes of oxygenated blood concentration in the whole brain, the so-called BOLD signal.
 %Throughout the years, fMRI helped neuroscientists and neurologists to enrich the knowledge of the fundamental aspects of the normal brain functional organization, but as every technique also has its limitations~\cite{logothetis2008}.
 % and yields precious information about the brain not only on its surface but also in other deeper regions, otherwise difficult to reach.
 In contrast to structural connectivity, functional connectivity results from estimates of statistical dependencies between neuronal or regional time courses.
-Functional networks may vary over time, unlike structural networks which are stable over long time scales. For instance, electrical patterns of cortical activity may rearrange over time-scales of milliseconds, in contrast to structural ones, involved in processes like nervous system development, learning and aging.
+Functional networks may vary over time, unlike structural networks which are stable over long time scales.
+For instance, electrical patterns of cortical activity may rearrange over time-scales of milliseconds, in contrast to structural ones, involved in processes like nervous system development, learning and aging.
 Furthermore, the temporal evolution of functional networks is variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
 %Importantly, functional connectivity does not express any causal effects between brain regions, as it's only informative of their statistical dependence.
 
@@ -360,7 +367,7 @@ If the graph itself is not connected, then it is formed by a set of connected su
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Clustering}\label{sec:clustering}
-Grouping nodes according to some criterion of similarity between them is the basis of the formation of clusters in networks.
+Grouping nodes according to some criterion of similarity between them is the basis of the identification of clusters in networks.
 
 \noindent\textbullet \,A set of mutually disjoint, induced subgraphs that covers all the nodes is called a \emph{clustering}.
 A clustering $\zeta = \{\zeta_c\}$ of $G$ is a partitioning of the set $V$ into $C$ disjoint sets of nodes, $\zeta_c \subseteq V$, which we call \emph{modules} or \emph{communities}, interchangeably.
@@ -401,7 +408,7 @@ For convenience of notation we will denote without loss of generality $K_{\textr
 \label{fig:internaldegree}
 \end{figure}
 
-\noindent\textbullet \,The \emph{intracluster density} of the subgraph $\mathcal{G}$ is defined as the ratio of the intracommunity edges over the number of pairs 
+\noindent\textbullet \,The \emph{intracluster density} of the subgraph $\mathcal{G}$ is defined as the ratio of the intracommunity edges over the number of pairs of nodes
 \begin{equation}
 \rho_{\textrm{int}}(G)=\frac{m_c}{p_c} = \frac{2 m_c}{n_c(n_c-1)}.
 \end{equation}
@@ -419,15 +426,16 @@ For convenience of notation we will denote without loss of generality $K_{\textr
 \end{align}
 
 \subsection{Communities}\label{sec:communities}
-The word \emph{community} applied to complex networks originated in sociology as groups of people tend naturally to form groups: family, friends, acquaintances.
-Social communities then can be thought as subgroups of people knowing each other more probably than with other external people.
+The word \emph{community} applied to complex networks originated in sociology as people tend naturally to form groups: family, friends, acquaintances.
+Social communities then can be thought as subgroups of people connected to each other more strongly than with other external people.
 
-The problem of quantitatively defining a community, although intuitive at first sight, is multifaceted and ambiguous. No universally accepted definition of network community exists and some degree of arbitrariness or common sense is required, a feature that is difficult to describe quantitatively.
+The problem of quantitatively defining a community, although intuitive at first sight, is multifaceted and ambiguous.
+No universally accepted definition of network community exists and some degree of arbitrariness or common sense is required, a feature that is difficult to describe quantitatively.
 Importantly, the identification of communities is possible only for relatively sparse graphs. On dense graphs indeed, the community detection problem requires different tools, closer to those of data clustering, with different concepts and definitions.
 
 In the attempt of making the concept of community quantitative, two classes of definitions can be provided: local and global.
-The \emph{local definitions} involve that a community is viewed as a separate entry, an autonomous module: the community is studied as isolated from the graph as a whole.
-These definitions implies that the corresponding communities are mostly maximal subgraphs, subsets of nodes that cannot be enlarged with the addition of new nodes or edges without altering the very same property upon which they are defined.
+The \emph{local definitions} involve that a community is viewed as a separate entry or an autonomous module: the community is studied as isolated from the graph as a whole.
+These definitions implies that the corresponding communities are mostly maximal subgraphs, subsets of nodes that cannot be enlarged with the addition of new nodes or edges without altering the property upon which they are defined.
 The most important local criterion for communities definition are the \emph{complete-mutuality}, the \emph{reachability}, the comparison of vertex degree and \emph{internal-external cohesion}~\cite{wasserman1994,alba1973}.
 Complete mutuality means that the identified community is a clique where every node is mutually connected with all the others, while reachability implies that there exist a path between every pair of nodes in the community.
 The internal- external cohesion principle is equivalently represented by the Radicchi's definitions of \emph{strong communities}~\cite{radicchi2004}: for a community $\mathcal{G}$ to be defined in \emph{strong} sense, every node in the community must exhibit a larger internal degree than external degree. This concept is quantified by the following definition:
@@ -440,31 +448,33 @@ Upon this idea the concept of \emph{weak communities} is built (Eq.~\ref{eq:comm
 \begin{equation}\label{eq:communityweak}
 \sum \limits_{i \in V[\mathcal{G}]} k_{\textrm{int}}(i) > \sum \limits_{i \in V[\mathcal{G}]} k_{\textrm{ext}}(i)
 \end{equation}
-Finding strong communities is more difficult than finding weak communities and most algorithms fail in this job, as most of them encoded upon their own concept of community.
+Finding strong communities is more difficult than finding weak communities and most algorithms fail in this job. Most methods indeed encode their own concept of community.
 Nonetheless these two last definitions are almost universally accepted and give a precise idea of the meaning of community.
 Additionally, the weak criterion of community is the basis of the planted-partition model~\cite{condon2000} and its later modifications~\cite{lancichinetti2008} that we'll encounter in the next sections.
 
-The \emph{global definitions} are based on an interpretation of the network as a whole, whose communities are an essential part of it.
+\textcolor{red}{The \emph{global definitions} are based on an interpretation of the network as a whole, of which communities are an essential part that cannot be taken away without destroying its connectivity.}\todo{FIX}
+
 Most of the global criteria of communities encompass global properties of the graph that are used by an algorithm to deliver a modular decomposition.
 In this sense the global definitions are always indirect, often based on \emph{null models} or stationary properties of dynamical processes such as random walkers~\cite{pons2006,rosvall2008}.
 
-Apart from global or local definitions of communities is the indication that multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,salvador2005,schwarz2007} such as ICA or other multivariate methods.
-This empirical evidence, shown not only in humans but also in higher vertebrates like cats~\cite{scannell1995} and macaques~\cite{felleman1991}, suggests that to some extent the high-level functional organization is based on the balance of two competing principles of segregation and integration.
+Multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,salvador2005,schwarz2007} such as ICA or other multivariate methods.
+This empirical evidence, shown not only in humans but also in higher vertebrates as the cat~\cite{scannell1995} and macaque~\cite{felleman1991}, suggests that to some extent the high-level functional organization is based on the balance of two competing principles of segregation and integration.
 The nervous system is obviously shaped by this balance as the need of fast information processing is satisfied by small-scale neuronal circuits, typically at the first stages of sensory input processing.
 Typical examples are the very localized functional area of visual processing V1 or the primary motor cortices. At larger scale the cortex works in concert, connecting all the segregated areas in a larger, widely distributed complex network.
-It is indeed more and more recognized~\cite{tononi1994,tononi1998,deco2015} that complex behaviours arise thanks to the dynamical interplay of the integrated and segregated actions of different regions of the brain.
+It is indeed more and more recognized that complex behaviours arise thanks to the dynamical interplay of the integrated and segregated actions of different regions of the brain~\cite{tononi1994,tononi1998,deco2015}.
 
-The network communities and hubs support this delicate balance between segregation and integration.
-Recently, experiments in which computational dynamical processes are simulated over the topology of whole-brain networks have shed light on the role of communities in shaping the cortical activity~\cite{deco2015}. Importantly, it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs (and the rich clubs) are deputed to convey that information over the whole brain.
+Presence of communities within FC networks and hubs supports this integration- segregation concept.
+Recently, experiments in which computational dynamical processes are simulated over the topology of whole-brain networks have shed light on the role of communities in shaping the cortical activity~\cite{deco2015}.
+Importantly, it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs and rich clubs are deputed to convey that information over the whole brain.
 
 Assessing the role of nodes within a community is an important task that depends on the community assignment. To this end one can  cartographic classification of nodal roles that describes if a node connects two communities or is buried inside its own community in of help.
 
 \subsection{Cartographic classification of nodes}
 Every node in a network is characterized by its role in relation to other nodes.
-Once a clustering $\zeta$ is imposed on a graph, some nodes may act as bridges between two or more communities, having neighbours in one or other module, others instead may share the majority of neighbours inside their same community, being more central to their module.
+Once a clustering $\zeta$ is imposed on a graph, some nodes may act as bridges between two or more communities, having neighbours in one or the other module, others instead may share the majority of neighbours inside their same community, being more central to their module.
 
 To investigate differences in nodal roles as determined by different community detection methods, Guimera and Amaral~\cite{guimera2005} introduced a cartographic characterization of nodes based on two parameters.
-The first, dubbed \emph{participation coefficient}, indicated by $P_i$ and included in the range $[0,1]$ reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} as:
+The first, dubbed \emph{participation coefficient}, indicated by $P_i$ and comprised in the range $[0,1]$ reflects the extent to which a node is connected to nodes in other modules, and is defined in Eq~\ref{eq:participationcoeff} as:
 \begin{equation}\label{eq:participationcoeff}
 P_i = 1 - \sum_c \left( \frac{k_{ic}}{k_i} \right)^2,
 \end{equation}
@@ -482,8 +492,8 @@ Depending on the specific cut-off values of participation coefficient and intra-
 Naturally, connector hubs are of great importance for communication between modules (Figure~\ref{fig:brain_network_communities}).
 Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
 
-In the context of brain networks, these hubs are responsible for the integration of the different modules into a cohesive structure and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness.
-In contrast, provincial hubs are more importantly involved in functional specialization and local processing, therefore damage to these areas may yield specific clinical deficits, whereas damage to connector hubs results in complex and pervasive neurological dysfunctions.
+In the context of brain networks, these hubs are responsible for the integration of the different modules into a cohesive structure and are thought to be particularly vulnerable in the presence of brain insult or disease, as damage to these nodes is likely to disrupt network connectedness~\cite{stam2014,fornito2015,alexander-bloch2010}.
+In contrast, provincial hubs are more importantly involved in functional specialization and local processing; therefore damage to these areas may yield specific clinical deficits, whereas damage to connector hubs results in complex and pervasive neurological dysfunctions~\cite{stam2014,fornito2015}.
 
 \begin{figure}[htb!]
 \centering
@@ -527,7 +537,7 @@ In the $G(n,m)$, each instance is equiprobable.
 
 Strictly speaking, a random graph model is better defined as an ensemble of networks, therefore as a probability distribution $\mathcal{P}(\Omega)$ over the space of all graphs $G$.
 The Gilbert random graph model is associated with a probability distribution sharply peaked in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges, and zero otherwise.
-Although some properties of the $G(n,m)$ models are easy to compute, like the mean number of edges (trivial), others are more complicated because of the hard constraint imposed on edges number.
+Although some properties of the $G(n,m)$ models are easy to compute, like the mean number of edges (trivial), others are more complicated because of the hard constraint imposed on edge number.
 
 A way more useful random graph model is instead due to Erd\H{o}s and Rényi~\cite{erdos1959}.
 To solve the analytical computation problems on the $G(n,m)$ model, the Erd\H{o}s-Rényi model introduces a parameter $p_{\textrm{er}}$ that specifies the probability for an edge to exist given two nodes, rather than picking exactly $m$ edges.
@@ -657,12 +667,12 @@ Hence is possible to obtain a theoretical estimate of the average edge weights t
 \langle  w^{int} \rangle &= \frac{(1-\mu_w)\langle  s\rangle }{(1-\mu_t)}\langle  k\rangle = \frac{(1-\mu_w)}{(1-\mu_t)}\langle  k \rangle ^{\beta-1}, \\
 \langle  w^{ext} \rangle &= \frac{(\mu_w)\langle  s\rangle }{(\mu_t)}\langle  k\rangle = \frac{(\mu_w)}{(\mu_t)}\langle  k \rangle ^{\beta-1}.
 \end{align}
-As for the planted partition model, where communities where defined as long as $p_{in}>p_{out}$, for the case of the LFR model, one asks that in order for communities to be such it must be that
-\begin{equation}
+For the planted partition model, communities were defined as long as $p_{in}>p_{out}$. For the weighted LFR model instead the condition to have well defined communities is:
+\begin{equation}\label{eq:wintwextflr}
 \langle  w^{int} \rangle \geq \langle  w^{ext} \rangle 
 \end{equation}
 resulting in the equivalent formulation $\mu_w  \geq \mu_t$.
-If this last condition is not met each node would have a strength relatively higher than its degree, an unrealistic circumstance in real-networks, as highest degree nodes are typically nodes with high strength~\cite{barrat2004}.
+If condition~\ref{eq:wintwextflr} is not met, then each node has on average a strength relatively higher than its degree, an unrealistic circumstance in real-networks, as highest degree nodes are typically nodes with high strength~\cite{barrat2004}.
 
 The modularity of the LFR network is controlled primarily by the topological mixing coefficient.
 In the case $\mu_t$ is exactly zero, the network consists of isolated components and the stochastic block matrix is completely assortative or block-diagonal.
@@ -727,16 +737,17 @@ As described in~\cite{nicolini2017} I tested this idea on two different models o
 
 %%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%
 \section{Comparing community structure in networks}
-As the number of community detection methods increased over the years, also a quantitative way to assess their performance was needed.
-In generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, the community structure is determined a-priori. Conversely, community structures of real-world networks are often annotated by experts in the field, like for instance the karate club network of Zachary~\cite{zachary1977} and the political blog network~\cite{adamic2005}, as no a-priori structure was imposed to those graphs.
+As the number of community detection methods has increased over the years, a quantitative way to assess their performance is desirable.
+In generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, the community structure is determined a-priori.
+Conversely, community structures of real-world networks are often annotated by experts in the field, like for instance the karate club network of Zachary~\cite{zachary1977} and the political blog network~\cite{adamic2005}, as no a-priori structure was imposed to those graphs.
 
 A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past~\cite{danon2005,vinh2010}.
 They are used to provide quantitatively a number that tells the extent of similarity between two partitions.
-Typically the result is normalized in the $[0,1]$ range, being towards $1$ for very similar clusterings and toward $0$ when mostly dissimilar.
+Typically the result is normalized in the $[0,1]$ range, being close to $1$ for very similar clusterings and close to $0$ when mostly dissimilar.
 %These metrics are adopted especially in the benchmarking of community detection methods when the specific outcome of some algorithm is compared with a ground truth partition, usually, a-priori determined.
 
 The most well-grounded and performing metrics for the comparison of two community structures are rooted in information theory~\cite{danon2005,vinh2010,cover2006}.
-The \emph{Normalized Mutual Information}~\cite{danon2005} and the \emph{Variation of Information}~\cite{meila2007} are the most widely used, despite it was recently found that both of them suffer of systematic errors due to the finite size of the network~\cite{zhang2015a}.
+\emph{Normalized Mutual Information}~\cite{danon2005} and \emph{Variation of Information}~\cite{meila2007} are the most widely used, despite it was recently found that both of them suffer from systematic errors due to the finite size of the network~\cite{zhang2015a}.
 In the rest of the discussions, we ignore the limitation of finite size effects, by only working with relatively large networks.
 
 Normalized Mutual Information (NMI) assumes that the clustering comparison is a problem of message decoding.
@@ -752,40 +763,41 @@ This observation led Danon~\cite{danon2005} to introduce normalized mutual infor
 \begin{equation}\label{eq:nmi}
 \textrm{NMI}(X,Y) = \frac{2I(X,Y)}{H(X)+H(Y)} = \dfrac{2\sum \limits_{i=1}^{c_x} \sum \limits_{j=1}^{c_y} \frac{n_{ij}}{n} \log\left( \frac{n_{ij}n}{n_i n_j} \right)} {\left(-\sum \limits_{k=1}^{c_x} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right) + \left(-\sum \limits_{k=1}^{c_y} \frac{n_k}{n}\log\left(\frac{n_k}{n}\right) \right)}.
 \end{equation}
-
-Another measure based on entropy is Variation of Information (VI), proposed by Meila~\cite{meila2007}. VI measures how much knowing the cluster assignment for an item in clustering $X$ reduces the uncertainty about the item's cluster in clustering $Y$. It's defined as:
-\begin{equation}\label{eq:vi}
-\textrm{VI}(X,Y) = H(X|Y) + H(Y|X)
-\end{equation}
-and it has the desirable property that, being a proper distance, it defines a metric on the space of the partitions.
+Another measure based on entropy is Variation of Information (VI), proposed by Meila~\cite{meila2007}:
+\begin{align}\label{eq:vi}
+\textrm{VI}(X,Y) &= H(X) + H(Y) - 2I(X;Y)\nonumber \\ &= \left( H(X)-I(X;Y) \right) + \left( H(Y) - I(X;Y)\right)
+\end{align}
+Informally, VI weighs the contribution of two terms.
+The first term in brackets measures the amount of information about $X$ that one looses, while the second measures the amount of information about $Y$ that one gains when going from clustering $X$ to clustering $Y$. The situation is captured in Figure~\ref{fig:venn_diagram}.
+VI has the desirable property that, being a proper distance, it defines a metric on the space of the partitions.
 Variation of information is also a local measure, i.e. the similarity of partitions differing only in a small portion of a graph depends on the differences of the clusters in that region, and not on the partition of the rest of the graph.
 As noted by Karrer~\cite{karrer2008} VI is upper-bounded by a $\log(n)$ factor, so a simple normalization brings it in the $[0,1]$ range.
 Importantly, VI is zero for maximally equal partitions and $1$ for mostly dissimilar, inversely to NMI.
-%It's worth noting that the majority of the aforementioned metrics do not take in consideration comparison of pairs of communities between two partitions, but they insist on finding the overall similarity to summarize it in a single scalar.
 
-% \begin{figure}[htb!]
-% \centering
-% \begin{tikzpicture}
-%     \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (-1.1cm,0cm) (CL) {$H(X|Y)$};
-%     \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (1.1cm,0cm) (CR) {$H(Y|X)$};    
-%     \node[rotate=90] at (0cm,0cm) (IXY) {$I(X;Y)$};
-%     \node[] at (0cm,2cm) (HXY) {$H(X,Y)$};
-%     \node[] at (-2.5cm,-2cm) (HX) {$H(X)$};
-%     \node[] at (2.5cm,-2cm) (HY) {$H(Y)$};
-%     \node[] at (0cm,-2cm) (VI) {$VI(X,Y)$};
-%     \draw[->] (HX) -- (CL);
-%     \draw[->] (HY) -- (CR);
-%     \draw[->] (HXY) -- (CL);
-%     \draw[->] (HXY) -- (CR);
-%     \draw[->] (VI) -- (CL);
-%     \draw[->] (VI) -- (CR);
-% \end{tikzpicture}
-% \caption{Venn diagram representation of the important quantities used to treat the clustering comparison problem in terms of information theory.
-% The two circles are the entropies of variables $X$ and $Y$.
-% The mutual information $H(X;Y)$ is the intersection of the information in $X$ with the information in $Y$.
-% The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y)$ because $I(X;Y)$ is counted twice.}
-% \label{fig:venn_diagram}
-% \end{figure}
+\begin{figure}[htb!]
+\centering
+\begin{tikzpicture}
+    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (-1.1cm,0cm) (CL) {$H(X|Y)$};
+    \node[draw,circle,minimum size=3.2cm, inner sep=0cm] at (1.1cm,0cm) (CR) {$H(Y|X)$};    
+    \node[rotate=90] at (0cm,0cm) (IXY) {$I(X;Y)$};
+    \node[] at (0cm,2cm) (HXY) {$H(X,Y)$};
+    \node[] at (-2.5cm,-2cm) (HX) {$H(X)$};
+    \node[] at (2.5cm,-2cm) (HY) {$H(Y)$};
+    \node[] at (0cm,-2cm) (VI) {$VI(X,Y)$};
+    \draw[->] (HX) -- (CL);
+    \draw[->] (HY) -- (CR);
+    \draw[->] (HXY) -- (CL);
+    \draw[->] (HXY) -- (CR);
+    \draw[->] (VI) -- (CL);
+    \draw[->] (VI) -- (CR);
+\end{tikzpicture}
+\caption{Venn diagram representation of the important quantities used to treat the clustering comparison problem in terms of information theory.
+The two circles are the entropies of variables $X$ and $Y$.
+The mutual information $H(X;Y)$ is the intersection of the information in $X$ with the information in $Y$.
+The Variation of information is equal to $VI(X;Y)=H(X|Y)+H(Y|X)=H(X)+H(Y)-2I(X;Y)$ because $I(X;Y)$ is counted twice.}
+\label{fig:venn_diagram}
+\end{figure}
+
 \subsection{Confusion matrix}
 It is also possible to quantify the confusion matrix $\mathbf{C}$ between the detected and planted modules.
 Each element $C_{ij}$ is the number of nodes in the planted community $i$ that appear in the detected community $j$.
@@ -803,31 +815,38 @@ The Matthew Correlation Coefficient  takes into account true and false positives
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% PERCOLATION ANALYSIS %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Thresholding}\label{sec:percolation_analysis}
-
-Sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable.
-However, weak links may also contain significant structural information, and procedures to identify the optimal tradeoff are the subject of active research.
+\section{Thresholding and percolation analysis}
+\label{sec:percolation_analysis}
+In weighted networks, sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable.
 Indeed, weak links may contain significant structural information~\cite{thomas2011}, and procedures to identify the optimal trade-off are the subject of active investigations~\cite{zahoranszky-kohalmi2016a}.
-The network can then be binarized, by setting all edge weights to unity.
-Whether this sparsification procedure may help obtaining a better view on the underlying structure of networks, it represents an hot debate in the literature~\cite{rubinov2010,thomas2011}.
+After sparsification, the network can be binarized, by setting all edge weights to unity.
+Whether this procedure may help obtaining a better view on the underlying structure of networks, it represents an hot debate in the literature~\cite{rubinov2010,thomas2011}.
 
 Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
 No well-accepted method to choose the best threshold has been adopted pragmatically in the brain networks literature and different scholars motivated their choice by different needs~\cite{gallos2012,lee2011,scheinost2012}.
 
-Percolation analysis, a method originally grounded in statistical physics, was suggested by Gallos et al~\cite{gallos2012} to identify the optimal sparsification threshold for community detection in brain connectivity networks.
+Percolation analysis, a method originally grounded in statistical physics, was suggested by Gallos~\cite{gallos2012} to identify the optimal sparsification threshold for community detection in brain connectivity networks.
 Percolation is a model to describe phase transitions of connected subgraphs in random networks~\cite{callaway2000,goerdt2001}.
-For a random graph the size of largest connected component, initially zero should follow a phase transition at some threshold value, thus spanning the whole graph.
+In the ER random graph, the size of the largest connected component shows a sharp transition at some threshold value~\cite{callaway2000}.
 Contrarily, brain networks exhibits multiple percolation thresholds, revealing a hierarchy of clusters.
 The jumps corresponding to percolation transitions are indicative of a non trivial correlations that constitute well defined modules of brain activity.
 Hence, the multiple percolation thresholds are representative of a set of weak ties that guarantee appropriate communication (in terms of information transfer) between functionally specialized modules.
-Following these observations, the definition of the optimal threshold is the one just below the destruction of the largest connected component.
+Following these observations, the definition of the optimal threshold is the one just above the fragmentation of the largest connected component.
 This choice maximizes the information extracted by subsequent application of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies.
 
 The most common choice when comparing networks from different groups, is to adopt a fixed threshold that keeps the same number of edges in the two groups.
 This does not take into account the particularities of the analyzed group and datasets.
 It is indeed important to stress that the distribution of the weights as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror these information.
 To this end, it has been demonstrated, especially in patient group such as in schizophrenia, that the brain presents weaker connectivity than in health control persons~\cite{alexander-bloch2010}.
-Percolation analysis should enable data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
+For this reason, percolation analysis should enable data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.7\linewidth]{images/figure_8_percolation_analysis_compressed.pdf}
+\caption{Percolation analysis for two brain networks obtained from  coactivation matrix (A) and resting state matrix (B).}
+\label{fig:percolation_analysis}
+\end{figure}
+\todo{mettere un altra immagine.}
 
 % The Matlab function that I used to determine the level of threshold is available on \texttt{CommunityAlg} Matlab toolbox at \url{github.com/carlonicolini/communityalg}.
 % Functional connectivity networks are typically obtained as similarity matrices of physiological time signals over different brain areas.
