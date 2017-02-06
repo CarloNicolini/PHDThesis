@@ -24,4 +24,9 @@ Finale:
 Prime applicazioni ai pazienti, motivazioni di perchè usare Surprise su queste reti e applicazioni a schizo (breve motivazione della differenza aspettata) ed alcolisti.
 non però direttamente a livello clinico e un po' meno graph-theory. Review di Stam e Fornito.
 
+=====
+
+Discutere che sia per weighted che per binary c'è distro eterogenea e che van rivisti i ruoli degli hubs. Questa maggiore risoluzione può rivelare le differenze fra reti diverse fra due popolazioni fino ad oggi non rivelabile. nella schizofrenia riduzione modularità massima della rete, ma nessuno studio ha trovato una riorganizzazione. ipotesi è che maggiore risoluzione rivela differenze tecniche su pazienti.
+risultati preliminari osservano differenze non visibili usando modularity.
+figure 5.4,5.5,5.6
 
