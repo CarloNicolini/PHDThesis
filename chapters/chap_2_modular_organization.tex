@@ -2,87 +2,154 @@
 %%%%%%%%%%%%%%%%%%%%%%%% COMMUNITY DETECTION %%%%%%%%%%%%%%%%%%%%%%%%
 %\section{Community structure in the brain}
 \section{Modularity of brain networks}
-\todo{TUTTA QUESTA SEZIONE 1.1 FORSE ANDREBBE SPOSTATE NELL'INTRODUZIONE?}
-A systematic analysis of the structure of neural systems in different organisms points out that modularity is a factor that shapes neural networks from the small nematode worm \emph{Caenorhabditis Elegans} to the most complex human brain.
-Among the many advantages of a modular organization of the brain, two are of greatest importance.
+A systematic analysis of the structure of neural systems in different organisms points out that modularity is a factor that shapes neural networks from the small nematode worm \emph{Caenorhabditis Elegans} to the most complex human brain~\cite{towlson2013,park2013}. 
+Topological network analyses suggest indeed that modular and hierarchical structural networks are particularly well-suited for the functional integration of locally specialized neural operations that underlie cognition~\cite{sporns2004,sporns2004a,bullmore2012,meunier2010,bressler2010}.
+In this respect, brain function or cognition can be described as global integration of local integrators~\cite{park2013}.
 
-Firstly, the organization of a system into many compartments devoted to different functions is evolutionarily favored.
-Indeed, keeping the system compartmentalized can limit the influence of external sources of perturbation, thus bounding the interdependence of biological processes going on in each unit.
-Computational studies have shown that a modular organization emerges spontaneously in complex brain networks, promoting flexibility to an ever-changing outside environment~\cite{kashtan2005,kashtan2007} and maximizing bidirectional information exchange between neural populations~\cite{yamaguti2015}. Driven by evolutionary forces, functional and structural segregation have gradually emerged in response to the needs of a continuously changing external environment that forced organisms to quickly adapt developing proper modules.
-Dynamics of emergence of modules and patterns have been observed in bacterial metabolic networks~\cite{kreimer2008} and interestingly in non-biological networks~\cite{bongard2011}. 
-By way of example, in the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behavior is encoded as fitness function~\cite{bongard2011}.
+Among the many advantages of a modular organization of the brain, three are of greatest importance and strictly intertwined: adaptability, robustness and wiring cost economy.
+Firstly, from an evolutionary perspective, a modular architecture is highly adaptable to an ever changing environment and variable loads of cognitive demands.
+From generation to generation, modules that were already well-fit to the environmental conditions were selected and passed, while others were only slightly rewired through the natural selection mechanisms. This pressure, together with the imperative of a reduced wiring cost have crucial to select an architecture that converged to a construction of tightly connected sub-networks loosely connected to each others~\cite{clune2013}.
+Computational studies have shown that a modular organization emerges spontaneously in complex brain networks, promoting flexibility to an ever-changing outside environment~\cite{kashtan2005,kashtan2007} and maximizing bidirectional information exchange between neural populations~\cite{yamaguti2015}.
 
-The second benefit of modular brain networks resides in the increased resilience to sudden external perturbations.
-Local disruptive modification may only affect one module, whereas the others are preserved from the insult. In case of externally or internally generated fluctuations, a modular architecture prevents functional disruption of the network leading to the possible death of the organism.
-%Altogether, the modular architecture of brain networks is of key importance for a healthy brain.
+A second benefit of modularity is robustness as it facilitates evolvability and robust traits like the multiscale modular architecture are often selected by evolution~\cite{kitano2004,betzel2016}.
+Indeed, keeping a system compartmentalized can limit the influence of external sources of perturbation, thus bounding the interdependence of biological processes going on in each unit~\cite{kirschner1998}, and promoting greater resilience in the context of continuous genetic and developmental changes.
+In addition, swapping and rewiring maladaptive modules is less demanding that restructuring the whole system.
+A general problem in the acquisition of new skills is the phenomenon of catastrophic forgetting, by which newly acquired skills come at the expense of others~\cite{french1999}.
+In the case of neural networks it has been shown that a modular organization helps to avoid catastrophic forgetting of newly learned skills, whereby new skills are learned by slightly rewiring existing modules, rather than changing the overall organization~\cite{ellefsen2015}.
+Local disruptive modification may only affect one module, whereas the others are preserved from the insult~\cite{stam2014}.
+In case of externally or internally generated fluctuations, a modular architecture prevents functional disruption of the network leading to the possible death of the organism.
 
-A more than twenty years long interdisciplinary effort led to the complete mapping of the connectome at synaptic level of the \emph{C.Elegans} worm.
-The nervous system of this simple organism consists of more than 300 neurons and several thousand electrical and chemical synapses.
-Since its reconstruction, many studies have investigated it with graph-theoretical methods, in order to unveil its properties.
-The modular structure of this simple yet informative structural connectome has been consistently observed with a variety of methods and linked its function~\cite{sporns2016}.
-Many of the worm operations (movements, mating and eating reflexes) are indeed linked to distinct subgroups of neurons, functionally cooperating for the success of these activities.
+Thirdly, the spatial and metabolic constraints of neuronal wiring are factors that deeply shaped the brain architecture~\cite{bullmore2012,stam2012}. Computational and empirical studies converged on the result that a multiscale organization of modules inside modules is the one that satisfies the constraints imposed by minimization of energetic cost and spatial embedding~\cite{pan2007,bullmore2012,doucet2011,betzel2017,kaiser2006}.
+Here, wiring cost must not only be intended as the physical volume of axons and synapses but also be considered in terms of energetic demand for signal transmission, additional processing cost for noise correction over long distance signalling and sustenance of the necessary neuroglia that supports neuronal activities~\cite{bullmore2012}. In terms of wiring cost reduction, modular networks emerge naturally when minimizing the average path length and the total number of links, while maximizing robustness against perturbations in node activity.
+By way of example, in the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behaviour is encoded as fitness function~\cite{bongard2011}.
 
-Further, meta-analytic studies of both the cat~\cite{scannell1995}, macaque~\cite{felleman1991} and rodents~\cite{schwarz2008} suggest that cortico-cortical networks of these more evolved animals are modular with a limited number of (typically four) prominent clusters corresponding to the main functional division of the cortex: visual, auditory, fronto-limbic and somatosensory. 
+The modular architecture of functional connectivity in the brain is mostly investigated in humans by means of the spontaneous low-frequency fluctuations in the BOLD signal~\cite{biswal1995}, a technique that goes under the name of resting state fMRI (rs-fMRI).
+Application of this technique has allowed the identification of various subnetworks, or spatially distinct modes that demonstrate synchronous BOLD fluctuations at rest. These modes of spontaneous coupled oscillations are strongly correlated between anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}.
 
-% Unfortunately, until recently most of the studies in animal models were based on anatomical connectivity measured by means of post-mortem inspections.
-% While in the past, histological staining was the most adopted methodology to inspect the wiring of white matter in the animal brain, the last few decades have seen the rising of fluorescence based tract-tracing, that evolved to a level where single axons can be traced with unprecedented precision~\cite{oh2014}.
-% Not only methods to investigate the structural connectivity have greatly evolved, but also new cellular resolution recording systems, like light-sheet microscopy~\cite{ahrens2013}, real time in-vivo two-photon cortical imaging~\cite{dombeck2010,leinweber2014} and spike time series recordings on multielectrode arrays~\cite{shimono2015}.
-% All these techniques take part in the quest to shed light on the relation between functional networks and their underlying anatomical substrate.
+Various methods exist for analyzing resting-state data, including seed-based approaches~\cite{biswal1995,raichle2001}, independent component analysis~\cite{beckmann2005,damoiseaux2006} and graph-based methods~\cite{stam2007,bullmore2009}.
+The first method ever used was seed-based analysis~\cite{biswal1995}, which has been applied in numerous studies~\cite{raichle2001}.
+This method is based on the correlation of voxels within selected regions of interest, with the average BOLD signal from all other voxels in the brain.
+An accurate thresholding is then needed to identify voxels that are significantly correlated with the region of interest.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%% PARTE FUNZIONALE %%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Most of the scholars agree indeed that functional communication between brain regions is very likely to be at the basis of complex cognitive processes~\cite{bressler2010}.
-Hence, examining functional connectivity in the human brain may provide new insights in its organization.
-In humans, non-invasive studies of the brain community structure largely reflect the analytical methodologies adopted in animals.
-In both contexts though, functional connectivity is suggested to describe the relationship between neuronal activity patterns of anatomically separated regions that reflect the level of information exchange between them.
+Another widely used approach is the decomposition of the endogenous BOLD fluctuations by means of Independent Components Analysis, a technique that aims at maximizing statistical independence~\cite{calhoun2013} between time courses of single voxels and that can identify separate spatial modes~\cite{damoiseaux2006,beckmann2005}. Yet, ICA with its variants still relies on user experience to discern important components from noise~\cite{lee2013} (despite some notable attempts~\cite{thomas2002,tohka2008}) and like seed-based approaches, does not yield any information on the hierarchy of modes, if any.
+Additionally, significantly similar results can be obtained by ICA and seed-based approaches~\cite{rosazza2012}.
 
-Magnetic resonance imaging has proved useful for the investigation of functional connectivity in animals and humans, mainly because of its low invasiveness.
-In particular, only two decades after the invention of fMRI, it was observed that it was possible to observe the correlations of slightly varying spontaneous fluctuations of the BOLD signal at rest~\cite{biswal1995}. In the resting state, a subject is quietly awake and alert but does not engage in or attend to any specific cognitive or behavioral task.
-During a typical resting state fMRI (rs-fMRI) session, volunteers are left in the scanner, instructed to relax and not to think anything in particular. 
-Animals instead like mice or rats are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates~\cite{jonckers2015}.
-The time courses of the BOLD signals form a pattern of spontaneous and synchronous oscillations, strongly correlate between anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}.
-
-Multivariate methods to detect clusters have indeed been readily applied to brain functional networks measured from fMRI~\cite{fox2005,mckeown1998,schwarz2007,deluca2006,salvador2005}. Indeed, the complex structure of the spatially remote correlations can be quantified by a multitude of different approaches. 
-In general, they showed that the human brain is functionally organized into a hierarchy of clusters of interconnected regions and that the boundaries of such modules reflect specific aspects of cognitive and behavioral aspects~\cite{tomasi2012,alnaes2015,crossley2013a}.
-Differently from structural networks, since functional networks do not measure physical relations with associated metabolic or material cost, they may feature long-distance connections~\cite{dehaene1998,varela2001} and ever changing patterns.
-Actually many of the observed functional communities are spread over large parts of the cortex, with some of them anatomically disconnected.
-In particular the so-called default-mode network~\cite{raichle2001,fox2005}, as well as the frontoparietal control network, dorsal and ventral attentional networks are made up of spatially remote components~\cite{power2011}.
 
 The evidence of modules in functional networks is based on their robustness and consistency within a variety of MRI protocols, different analysis methods, and MRI scanners.
-The most prominent modules are identified by multivariate methods such as Independent Component Analysis\footnote{Independent Component Analysis or ICA is a computational technique for identifying hidden statistically independent sources from multivariate data. In its basic form, ICA decomposes a 2D data matrix (e.g. time vs voxels) into separate components that have distinct characteristics.}~\cite{beckmann2012,calhoun2001}, Probabilistic Independent Component Analysis~\cite{beckmann2004,beckmann2005} and different forms of data clustering~\cite{cordes2002,lee2012}.
-The majority of analysis techniques are concordant in identifying a set of robust functionally linked regions, or \emph{communities} in resting state networks.
-Such communities, roughly highlighted as colored ellipses in Figure~\ref{fig:vandenheuvelnetworks} span the primary somatosensory network, the primary visual and extra-striate network, a network consisting of bilateral temporal/insular areas and anterior cingulate cortex regions, left and right lateralized networks consisting of superior parietal and superior frontal regions (often reported as one single network) and the so-called default-mode network spanning precuneus, medial frontal, inferior parietal cortical regions and medial temporal lobe.
+One of the most fundamental distinct modes of synchronous oscillations is the so-called Default Mode Network, firstly identified by Raichle~\cite{raichle2001} with positron emission tomography and then confirmed by Greicius et al. using fMRI~\cite{greicius2003}.
+The Default Mode Network, or DMN, is a group of brain regions that seem to show higher levels of correlation when the brain is not involved in a particular cognitive or behavioural task. For this reason, is thought that there are two opposing concurrent large scale modes, one including the DMN, indicated as ``task-negative'' or ``intrinsic'' system, and the other comprising attentional and task evoked activities, called ``task-positive'' or ``extrinsic''.
+The Default Mode Network or DMN (Figure~\ref{fig:vandenheuvelnetworks}) is thought to be connected to high-level cognitive functions, given its specific traits of structural links to associative brain regions.
+Literature studies suggested that the DMN may support internal mental processing like mind-wandering or abstract thinking and planning of events in the future~\cite{gusnard2001,buckner2008}.
+Additionally, evidence has pointed to disruptions in the DMN with people with Alzheimer's disease~\cite{buckner2008}, autism spectrum disorders~\cite{washington2014} and schizophrenia~\cite{garrity2007}.
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=1.0\textwidth]{images/vandenheuvel_networks.pdf}
-\caption{Functional modules of the resting state brain, averaged over different studies and protocols, and visualized roughly on a brain template to indicate their anatomical position. Figure taken from~\cite{vandenheuvel2010}.}
-\label{fig:vandenheuvelnetworks}
-\end{figure}
+		% A number of other resting-state networks has been identified
 
-Apart from the networks for the primary sensory areas whose role is known as the first input stage of sensory processing~\cite{kandel2013}, other networks have different roles, many of which are partly speculative.
-As a matter of example, the default-mode network or DMN (Figure~\ref{fig:vandenheuvelnetworks}) is thought to be connected to high-level cognitive functions, given its specific traits of structural links to associative brain regions.
-Literature studies suggested that the DMN may support internal mental processing like mind-wandering or abstract thinking and planning of events in the future~\cite{gusnard2001,buckner2008}. Additionally, evidence has pointed to disruptions in the DMN with people with Alzheimer's disease~\cite{buckner2008}, autism spectrum disorders~\cite{washington2014} and schizophrenia~\cite{garrity2007}.
-Subcortical communities have also been identified with rs-fMRI.
-An appropriate ICA seeding, makes possible to observe functional modules located at the thalamus and hyppocampus~\cite{lee2012}.
+		%  Studies have hypothesized that there are
+		% 2 large opposing systems in the brain, one including the DMN and
+		% the other composed of attentional or task-based systems, such as
+		% somatosensory, visual, or attention RSNs. Terms used to refer to
+		% these systems include “task-positive” and “task-negative”4,12,13
+		% and “intrinsic” and “extrinsic.”14,15
+		% Several other RSNs have been identified. The somatosensory
+		% network, studied first by Biswal et al,1 includes primary and
+		% higher order motor and sensory areas (Fig 1B). The visual network
+		% is highly consistent across various studies and spans much of
+		% the occipital cortex (Fig 1C).2-6An auditory network consisting of
+
+
+		% Another popular approach is ICA,2,10 a mathematical technique
+		% that maximizes statistical independence among its components.
+		% For RS-fMRI data, ICA can be used to spatially identify distinct
+		% RSNs. Compared with seed-based methods, ICA has the advantage
+		% of requiring few a priori assumptions but does compel the
+		% user to manually select the important components and distinguish
+		% noise from physiologic signals. Some studies have aimed to
+		% automate this process and use ICA as a method for identifying
+		% noise within the BOLD signal.33-36 Despite the differences in the 2
+		% approaches, Rosazza et al37 showed that the results of seed-based
+		% analysis and ICA are significantly similar in a group of healthy
+		% subjects.
+		% Graph methods provide a distinct alternative to seed-based
+		% analyses and ICA.4,38-44 This approach views RSNs as a collection
+		% of nodes connected by edges. With RS-fMRI data, ROIs can be
+		% represented as nodes, and correlation between the ROIs, as the
+		% connectivity of the edges. Connectional characteristics of the
+		% graph can then be computed.44 Examples of measures of interest
+		% include the average path length, a measure of global connectedness,
+		% which is the average length of the shortest connection between
+		% all pairs of nodes.44 Another measure of interest is the clustering
+		% coefficient, which is related to the connectedness of
+		% neighboring nodes and reflects the presence of smaller subgraphs.44
+		% Using these techniques, several studies have demonstrated
+		% that the brain exhibits a small world topology. Small world
+		% topology, which was first described in social networks, allows each
+		% node to have a relatively low number of connections while still
+		% being connected to all other nodes with a short distance. This is
+		% achieved through the existence of hubs, which are critical nodes
+		% with large numbers of connections, that allow high levels of local
+		% connectivity.39,45 Small world networks have high clustering coefficients
+		% implying high levels of local connections (ie, cliques or
+		% groups) and an overall short distance between any 2 nodes, or a
+		% small average path length.40-42
+
 
 The evidence of modules in functional brain networks has been explained as the possible basis of a large variety of processes. By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{dehaene1998,baddeley2003}.
 Interestingly modules of functional brain networks are non-static as recent studies found that they tend to become less and less modular with aging~\cite{meunier2009a,song2014}. 
-Altogether, there are a number of reasons, why the brain is organized as a modular system, from the reduced wiring cost~\cite{kaiser2006,bassett2010}, to the evolutionary advantage of evolving locally optimal substructures~\cite{sporns2004}.
 In all respects, the experimental evidence of the modular organization is a powerful and robust marker against which to measure the health of the brain. 
 Thus, modularity is not only a biologically plausible feature but it is probably necessary to maintain the rich repertoire of cognitive tasks that our brain engages in every day of our life.
 
-Despite the biological evidence of modularity in brain networks, the number of modules returned by clustering methods is often chosen in advance, based on the experience of the researcher, even if some complex approaches are available~\cite{still2004}. Further, the size distribution of the returned clusters has never been analyzed in details, especially when graph-theoretical methods were applied.
-This is the case of one of the most fortunate and widely adopted method, Newman's Modularity~\cite{newman2006}.
-Despite its popularity and merits, Newman's approach presents some important limitations. Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
-As a consequence, even unambiguously defined modules, like complete sub-graphs or cliques, may be unduly merged into larger communities when they are too small compared to the size of the network. Subsequent work by various groups has shown that the resolution limit is quite pervasive~\cite{lancichinetti2009,traag2011,squartini2015,lancichinetti2011,kawamoto2015}, and affects, to a different extent, many other methods, including Reichardt and Bornholdt’s~\cite{reichardt2006}, Arenas and Gomez'~\cite{arenas2008}, Ronhovde and Nussinov's~\cite{ronhovde2009}, Rosvall and Bergstrom's (\emph{Infomap})~\cite{rosvall2008,kawamoto2015} and others.
+%%%%%%%%%
 
-Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}. However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter. Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
-However, real-world networks are characterized by the coexistence of clusters of very different sizes, and no single parameter can adapt to the variety of network topologies observed in nature.
-Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
+% % Unfortunately, until recently most of the studies in animal models were based on anatomical connectivity measured by means of post-mortem inspections.
+% % While in the past, histological staining was the most adopted methodology to inspect the wiring of white matter in the animal brain, the last few decades have seen the rising of fluorescence based tract-tracing, that evolved to a level where single axons can be traced with unprecedented precision~\cite{oh2014}.
+% % Not only methods to investigate the structural connectivity have greatly evolved, but also new cellular resolution recording systems, like light-sheet microscopy~\cite{ahrens2013}, real time in-vivo two-photon cortical imaging~\cite{dombeck2010,leinweber2014} and spike time series recordings on multielectrode arrays~\cite{shimono2015}.
+% % All these techniques take part in the quest to shed light on the relation between functional networks and their underlying anatomical substrate.
 
-In the following sections I'm going to illustrate the current graph-theoretical approaches for community detection in networks and to discuss the theory of community detection, highlighting the practical problems of Modularity maximization.
+% After the discovery of low frequency fluctuations of the BOLD signal of the brain at rest~\cite{biswal1995}, 
+% In humans, non-invasive studies of the brain community structure largely reflect the analytical methodologies adopted in animals.
+% In both contexts, functional connectivity is suggested to describe the relationship between neuronal activity patterns of anatomically separated regions that reflect the level of information exchange between them.
+% The decomposition of the endogenous fluctuations of the BOLD signal at rest by means of independent components analysis (ICA), showed a repertoire of \emph{spatial modes}, clusters of brain regions whose neural activity oscillates synchronously. These patterns of spontaneous coupled oscillations are strongly correlated between anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}. Additionally, these patterns of functional connections that derive from a modular architecture of the brain, are themselves modular. A submodule (or subnetwork), often called community in graph theory, comprises synchronously active voxels. The enduring and stable synchrony within those voxels is thought to reflect local integration processes
+
+% The time courses of the BOLD signals form a pattern of spontaneous and synchronous oscillations, strongly correlate between anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}.
+
+% In general, they showed that the human brain is functionally organized into a hierarchy of clusters of interconnected regions and that the boundaries of such modules reflect specific aspects of cognitive and behavioral aspects~\cite{tomasi2012,alnaes2015,crossley2013a}.
+% Differently from structural networks, since functional networks do not measure physical relations with associated metabolic or material cost, they may feature long-distance connections~\cite{dehaene1998,varela2001} and ever changing patterns.
+% Actually many of the observed functional communities are spread over large parts of the cortex, with some of them anatomically disconnected.
+% In particular the so-called default-mode network~\cite{raichle2001,fox2005}, as well as the frontoparietal control network, dorsal and ventral attentional networks are made up of spatially remote components~\cite{power2011}.
+
+% The evidence of modules in functional networks is based on their robustness and consistency within a variety of MRI protocols, different analysis methods, and MRI scanners.
+% The most prominent modules are identified by multivariate methods such as Independent Component Analysis\footnote{Independent Component Analysis or ICA is a computational technique for identifying hidden statistically independent sources from multivariate data. In its basic form, ICA decomposes a 2D data matrix (e.g. time vs voxels) into separate components that have distinct characteristics.}~\cite{beckmann2012,calhoun2001}, Probabilistic Independent Component Analysis~\cite{beckmann2004,beckmann2005} and different forms of data clustering~\cite{cordes2002,lee2012}.
+% The majority of analysis techniques are concordant in identifying a set of robust functionally linked regions, or \emph{communities} in resting state networks.
+% Such communities, roughly highlighted as colored ellipses in Figure~\ref{fig:vandenheuvelnetworks} span the primary somatosensory network, the primary visual and extra-striate network, a network consisting of bilateral temporal/insular areas and anterior cingulate cortex regions, left and right lateralized networks consisting of superior parietal and superior frontal regions (often reported as one single network) and the so-called default-mode network spanning precuneus, medial frontal, inferior parietal cortical regions and medial temporal lobe.
+
+% \begin{figure}[!ht]
+% \centering
+% \includegraphics[width=1.0\textwidth]{images/vandenheuvel_networks.pdf}
+% \caption{Functional modules of the resting state brain, averaged over different studies and protocols, and visualized roughly on a brain template to indicate their anatomical position. Figure taken from~\cite{vandenheuvel2010}.}
+% \label{fig:vandenheuvelnetworks}
+% \end{figure}
+
+% Apart from the networks for the primary sensory areas whose role is known as the first input stage of sensory processing~\cite{kandel2013}, other networks have different roles, many of which are partly speculative.
+% As a matter of example, the default-mode network or DMN (Figure~\ref{fig:vandenheuvelnetworks}) is thought to be connected to high-level cognitive functions, given its specific traits of structural links to associative brain regions.
+% Literature studies suggested that the DMN may support internal mental processing like mind-wandering or abstract thinking and planning of events in the future~\cite{gusnard2001,buckner2008}. Additionally, evidence has pointed to disruptions in the DMN with people with Alzheimer's disease~\cite{buckner2008}, autism spectrum disorders~\cite{washington2014} and schizophrenia~\cite{garrity2007}.
+% Subcortical communities have also been identified with rs-fMRI.
+% An appropriate ICA seeding, makes possible to observe functional modules located at the thalamus and hyppocampus~\cite{lee2012}.
+
+% The evidence of modules in functional brain networks has been explained as the possible basis of a large variety of processes. By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{dehaene1998,baddeley2003}.
+% Interestingly modules of functional brain networks are non-static as recent studies found that they tend to become less and less modular with aging~\cite{meunier2009a,song2014}. 
+% In all respects, the experimental evidence of the modular organization is a powerful and robust marker against which to measure the health of the brain. 
+% Thus, modularity is not only a biologically plausible feature but it is probably necessary to maintain the rich repertoire of cognitive tasks that our brain engages in every day of our life.
+
+% Despite the biological evidence of modularity in brain networks, the number of modules returned by clustering methods is often chosen in advance, based on the experience of the researcher, even if some complex approaches are available~\cite{still2004}. Further, the size distribution of the returned clusters has never been analyzed in details, especially when graph-theoretical methods were applied.
+% This is the case of one of the most fortunate and widely adopted method, Newman's Modularity~\cite{newman2006}.
+% Despite its popularity and merits, Newman's approach presents some important limitations. Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
+% As a consequence, even unambiguously defined modules, like complete sub-graphs or cliques, may be unduly merged into larger communities when they are too small compared to the size of the network. Subsequent work by various groups has shown that the resolution limit is quite pervasive~\cite{lancichinetti2009,traag2011,squartini2015,lancichinetti2011,kawamoto2015}, and affects, to a different extent, many other methods, including Reichardt and Bornholdt’s~\cite{reichardt2006}, Arenas and Gomez'~\cite{arenas2008}, Ronhovde and Nussinov's~\cite{ronhovde2009}, Rosvall and Bergstrom's (\emph{Infomap})~\cite{rosvall2008,kawamoto2015} and others.
+
+% Fixes have been proposed to circumvent the resolution limit, including the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011}. However, this requires prior knowledge of the expected size of the communities for the tuning of the resolution parameter. Moreover, it has been shown that an  adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multiresolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}. 
+% However, real-world networks are characterized by the coexistence of clusters of very different sizes, and no single parameter can adapt to the variety of network topologies observed in nature.
+% Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
+
+% In the following sections I'm going to illustrate the current graph-theoretical approaches for community detection in networks and to discuss the theory of community detection, highlighting the practical problems of Modularity maximization.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

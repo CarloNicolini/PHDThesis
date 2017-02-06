@@ -65,7 +65,7 @@ Considered over the large scale, the BOLD response is descriptive of the tempora
 Indeed an active exchange of information between neural populations is thought to be at the hearth of the BOLD fMRI signal~\cite{logothetis2001}.
 The local increase of metabolic demand for oxygenated blood to fuel the neuronal activity increments the vascular flow and favors the consumption of oxygen from neurons.
 This metabolic cascade results in the change of the magnetic properties of hemoglobin that transitions from oxygenated to deoxygenated state, yielding local magnetic susceptibility variations measured by MRI.
-Possible confounds of the fMRI signal, such as the influence of the cardiac and respiratory rhythms on the BOLD oscillations have been ruled out by a number of studies~\cite{cordes2000,cordes2001,logothethis2001,shmuel2002}.
+Possible confounds of the fMRI signal, such as the influence of the cardiac and respiratory rhythms on the BOLD oscillations have been ruled out by a number of studies~\cite{cordes2000,cordes2001,logothetis2001,shmuel2002}.
 
 The tools offered by fMRI helped scientists to unveil another pattern of connectivity that exists in the brain.
 \emph{Functional connectivity} examines functional associations between temporal fluctuations of neuronal activities from different brain regions~\cite{biswal1995}.
@@ -79,14 +79,16 @@ Functional networks may vary over time, unlike structural networks which are sta
 For instance, electrical patterns of cortical activity may rearrange over time-scales of milliseconds, in contrast to structural ones, involved in processes like nervous system development, learning and aging.
 Furthermore, the temporal evolution of functional networks is variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
 %Importantly, functional connectivity does not express any causal effects between brain regions, as it's only informative of their statistical dependence.
-
 %Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
-When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}.
+
+When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}. In the resting state, a subject is quietly awake and alert but does not engage in or attend to any specific cognitive or behavioral task.
 Interestingly, this background activity dubbed \emph{resting-state connectivity}, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands.
-The fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anaesthesia~\cite{martuzzi2010}.
-The structure of temporal correlations of the BOLD signals defines a network over spatially remote, intersecting brain regions. 
+During a typical resting state fMRI (rs-fMRI) session, volunteers are left in the MRI scanner, instructed to relax and not to think anything in particular.
+Animals instead like mice or rats are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates~\cite{jonckers2015}.
+In humans, the fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anaesthesia~\cite{martuzzi2010}.
+The structure of temporal correlations of the BOLD signals defines a network over spatially remote, intersecting brain regions.
 Interestingly, these networks are altered in neuropsychiatric diseases like autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}.
-The extent of these alterations may be an hallmark for possible diagnoses of brain disease.
+The extent of these alterations may be an hallmark for possible diagnoses of brain disease~\cite{stam2014,fornito2015}.
 
 Complex network science provides a framework to study the structure of functional connectivity networks and to assess alterations induced by pathological conditions~\cite{bullmore2009,stam2014,crossley2014,fornito2015}.
 %Among the many methods that are available to detect such pathological alterations, one of the most important is the possibility to quantify the modifications of the resting state networks in the abnormal brain using the theoretical framework of complex networks science~\cite{sporns2000,sporns2002,sporns2004,bullmore2009,stam2014}.
@@ -631,8 +633,7 @@ The SBM model tends to produce graphs containing communities, subsets characteri
 
 A stochastic block model for undirected graphs is defined by three variables: the number of nodes $n$, the set of communities (represented by a membership vector $\boldsymbol \sigma$) and a symmetric square matrix  $\mathbf{B} \in \mathbb{R}^{|C| \times |C|}$ of edge probabilities between modules.
 In the case the matrix $\mathbf{B}$ is constant, the SBM recovers exactly the ER model.
-
-In the case the matrix $\mathbf{B}$ takes only two different values, a model known as the \emph{planted partition model}, each pair of nodes in the same block are connected with probability $\mathbf{B}_{ij}=p_{in}$ and pairs of nodes in different modules are linked with probability $\mathbf{B}_{ij}=p_{out}$, as shown in Figure~\ref{fig:planted_peixoto}.
+If the matrix $\mathbf{B}$ takes only two different values, a model known as the \emph{planted partition model}, each pair of nodes in the same block are connected with probability $\mathbf{B}_{ij}=p_{in}$ and pairs of nodes in different modules are linked with probability $\mathbf{B}_{ij}=p_{out}$, as shown in Figure~\ref{fig:planted_peixoto}.
 Specific edge probability in the planted partition model is simply described as $\Pr_{ij} = p_{in}\delta(\sigma_i,\sigma_j) + p_{out}(1-\delta(\sigma_i,\sigma_j))$.
 In building the planted partition model, though one has to set in advance the number of modules $|C|$ (or blocks) and to define an equal number of nodes in every module.
 
