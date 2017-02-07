@@ -236,12 +236,6 @@ Although the configuration model is most frequently applied to \emph{simple grap
 The rewiring probability considers indeed that the stubs of nodes can be reconnected both to the same source vertex (self-loops) or added to already existing edges (multi-edges).
 Consider for example the set of matchings on six stubs that form a triangle graph as illustrated in Figure~\ref{fig:configuration_model_stubs}. The configuration model chooses each distinct edge stubs labeling with equal probability. However, not only the first eight distinct reshuffled labelings are possible under configuration model (Fig.\ref{fig:reshuffle_simple_graphs}) but many other distinct matchings producing non-simple networks as shown in Figure~\ref{fig:reshuffle_loopy_multigraphs}.
 
-%\todo{questo calcolo è sbagliato perchè considera } In fact, the number of possible sequences of node labels with prescribed degree sequence that can be generated under the hypotheses of the configuration model, namely the presence of self-loops and multi-edges, is indicated by $\Omega_{CM}$ and can be computed by means of combinatorial arguments as the multinomial distribution:
-% \begin{equation}\label{eq:cm_possible_rewirings}
-% \Omega_{CM} = \binom{2m}{k_1,\ldots,k_n} = \frac{(2m)!}{\prod_i^n k_i!}.
-% \end{equation}
-% For the small triangle graph, this number is already very large: 90 different re-wirings are possible!
-
 In practice, though, the fraction of edges involved in either self-loops or multi-edges is vanishingly small in the large $n$ limit, and thus we may generally ignore them without much impact. 
 Hence, the estimate of the probability of rewiring in Eq.~\ref{eq:configuration_model_probability} is only valid in large, sufficiently sparse graphs with a sufficiently bounded degree sequence.
 Under these hypotheses the expected number of edges between two vertices in the space of simple graphs is asymptotically the same as the expectation in the space of stub-labeled loopy multigraphs, i.e. the one previously introduced for the definition of Modularity: $\mathbb{E}_s[a_{ij} |k] \approx k_i k_j /(2m)$, where the subscript $s$ denotes the space of simple graphs.
@@ -263,6 +257,9 @@ Under these hypotheses the expected number of edges between two vertices in the 
 An approach that allows to get the right configuration model depending on the class of graph under exam, relies on the computational simulation of the correct rewiring probability by means of Markov Chain Monte Carlo algorithms, as proposed in~\cite{fosdick2016}.
 In the remaining paragraphs, although flawed, we'll use the classic configuration model from Eq.~\ref{eq:configuration_model_probability} to be adherent to most of the brain networks literature, justified also by the vanishing effects of self-loops in large sparse networks. Nonetheless, we will illustrate many of the problems that the noncritical use of Modularity with this null model has introduced.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% OTHER NULL MODELS FOR MODULARITY  %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Other null models for Modularity}
 Modularity identifies communities as the subset of nodes whose internal fraction of edges deviates from the null configuration model on the same subset with the term $m_c/m > (K_c/2m)^2$.
 Despite measuring deviation from a null model, Modularity does not take into account the statistical evidence associated with this deviation. For this reason, Modularity is not able to separate actual communities from those arising only from statistical fluctuations of the null model. Even worse, Modularity can find high-scoring partitions in fully random graphs~\cite{guimera2004} and in artificially built graphs with no community structure~\cite{kehagias2013}.
@@ -283,10 +280,10 @@ Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 Under this model, a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
 Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible and loss functions that take into account the relative size of clusters are possible.
 
-\todo{TOLTO INFOMAP, NON LO METTO}
-% \subsection{Beyond Modularity: Infomap}
-% Infomap is a method that has its bases\todo{descrivere brevemente infomap}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% RESOLUTION-LIMIT  %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it became the tool of election to inspect the community structure of networks.
 On one side, the wide use of Modularity led many researchers to gain interest in complex networks, with applications in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics}, just to mention a few. On the other hand, it offered a fallacious view on the community detection problem.
@@ -361,6 +358,9 @@ In another attempt to better tolerate the resolution limit, scholars applied app
 Although this technique proved able to better tolerate the detrimental effect of the resolution limit, it only shifted the scale of the problem.
 After all, real-world networks are characterized by the coexistence of clusters of very different sizes, therefore no single parameter can adapt to the variety of network topologies observed in nature.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% RESOLUTION-LIMIT FREE QUALITY FUNCTIONS %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Resolution-limit free quality functions}\label{sec:resolution_limit_free_quality_functions}
 In an attempt to quantitatively characterize the resolution limit, Traag et al.~\cite{traag2011} proposed a rigorous definition of \emph{resolution-limit-free} graph partitioning.
 
@@ -382,7 +382,9 @@ Hence, in the CPM settings is better to split two communities $r$ and $s$ if $\g
 
 Unfortunately, the operation of tuning the resolution parameter, both in the CPM model as well as in other similar models, is difficult and no widely accepted method exists, making all the models based on a resolution parameter, scarcely used in practical applications.
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EFFECTS OF RESOLUTION LIMIT %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Effects of resolution limit}
 In the context of brain networks, the resolution limit first highlighted by Fortunato and Barthelemy may be particularly critical for the analysis of brain connectivity networks, as it may unduly merge modules that are too small, therefore hampering the ability to highlight regions of functional segregation from the rest. Indeed, there are some functional processes in the brain that are thought to be better represented as anatomically localized like the first stages of sensory processing, while others are seen as more globally integrated processing system, in particular attentional processes~\cite{alnaes2015}.
 Hence, we may expect the brain modular structure to comprise communities of heterogeneous dimensions.
@@ -460,36 +462,9 @@ The pseudo-code reported in Algorithm~\ref{alg:consensus_clustering} illustrates
 
 Although useful to address the degeneracy issue, this approach still suffers from the resolution limit, as the near-optimal optimal solutions which the consensus partition is made of, are resolution-limited per se.
 
-% \section{Alternative approaches to Modularity}
-% If the problems of Modularity are evident, researchers tried to mitigate them with alternative meta-approaches. The issue of degeneracy indeed, implicitly maintains that in the absence of a clearly optimal partition, many partitions should be used instead. Yet, the problem of the resolution limit that arises from an inadequate choice of the configuration model as the null hypothesis, can be tackled by a proper choice of the null model that keeps into account the sources of random noise directly from the time series which the correlation matrix is originated from. Here we briefly discuss these two potential solutions to the problems we have just introduced.
-
-% \subsection{Consensus clustering}
-
-% \subsection{The bias of the null model for Modularity}
-% The null model of Modularity is not only is at the basis of the issues of resolution limit and degeneracy, but can be shown to be highly inadequate when used in brain networks based on estimates of Pearson correlation of BOLD time series.
-% As shown by MacMahon and Garlaschelli~\cite{macmahon2015}, indeed the configuration model introduces a systematic bias as it is not consistent with the definition of Pearson correlation.
-% Ideally, the modular structure in a full correlation matrix (a correlation matrix with all nonzero entries) should reflect a balance between positively and negatively correlated units. Correlation communities should be internally positively correlated while externally negatively correlated, but this does not happen when naively applying Modularity to correlation-based networks.
-% Such inadequacy results from a systematic bias that the configuration model introduces, here shortly explained.
-
-% Given $n$ time series $\mathbf{X}=\{ X_1, \ldots, X_n\}$ from the parcellation atlas, the Pearson correlation matrix is computed as
-% \begin{equation}
-% C_{ij} = \frac{\textrm{Cov}(X_i,X_j)}{\sqrt{\textrm{Var}(X_i)\textrm{Var}(X_j) }}.
-% \end{equation}
-% A naive application of Newman's Modularity to such correlation matrix results in:
-% \begin{equation}
-% Q^N= \frac{1}{C_{\textrm{norm}}} \sum \limits_{ij} \left[ C_{ij} - \langle C_{ij} \rangle \right] \delta(\sigma_i,\sigma_j) = \left[ C_{ij} - \frac{k_i k_j}{C_{\textrm{norm}}} \right] \delta(\sigma_i,\sigma_j)
-% \end{equation}
-% where $k_i=\sum_{j=1}^n C_{ij}$. Unfortunately though, this last term is biased because expanding the terms $k_i$ one obtains:
-% \begin{equation}
-% k_i =\sum_{j=1}^n C_{ij}= \sum_{j=1}^n \textrm{Cov}(X_i,X_j) = \sum_{j=1}^n \textrm{Cov}(X_i,X_{tot})
-% \end{equation}
-% where $X_{tot}=\sum_{j=1}^n x_j$ has zero mean but non unit variance, and the configuration model naively applied to correlation matrices becomes:
-% \begin{equation}
-% \frac{k_i k_j}{2m} = \textrm{Corr}(X_i,X_{tot})\textrm{Corr}(X_j,X_{tot})
-% \end{equation}
-% Such badly-adapted configuration model does not give more importance to pairs of strongly correlated time series but rather to pairs of time series whose direct correlation $C_{ij}$ is larger than the common signal $X_{tot}$.
-% The null model proposed by MacMahon and Garlaschelli redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed and only terms that retain true correlations are maintained.
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% MODULARITY OPTIMIZATION %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modularity optimization: the Louvain method}\label{sec:louvain_method}
 Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy stochastic agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
 
@@ -504,6 +479,9 @@ The optimization method is divided in two phases applied recursively as depicted
 \label{fig:louvain_method}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% SPECTRAL OPTIMIZATION %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Spectral optimization}
 Another (and earlier) method to optimize Modularity is the spectral Modularity by Newman. Given the form of Modularity as in Eq.~\ref{eq:newmanmodularityspinglass}, one calls the modularity matrix the quantity $\mathbf{B}=A_{ij} - k_i k_j/2m$. From it, it's possible to obtain an equivalent linear algebra formulation of Modularity that reads:
 \begin{equation}\label{eq:newman_spectral}
@@ -515,6 +493,9 @@ where $\mathbf{s}$ is a numerical vector that considers a division of the networ
 \end{equation}
 The group assignment of each node is obtained as the signs of the eigenvector $\mathbf{s}$ corresponding to the greatest eigenvalue $\beta$. Finally, by repeatedly subdividing the network, the optimal Modularity assignment is recovered~\cite{newman2006,newman2010book}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% CONCLUSIONS %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions}
 The modular organization of brain functional connectivity networks has been investigated by a variety of methods and specifically by graph theoretical approaches. The rich repertoire of behavioural and cognitive aspects of everyday life is supported by integration of local processing that is reflected in the functional modules, as identified by a variety of protocols.
 Unfortunately Newman's Modularity, the most widely used graph-based method for community detection in FC networks is flawed as it cannot detect modules that are smaller than a certain scale, making impossible to ascertain important details of architectural structure.

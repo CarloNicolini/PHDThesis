@@ -1,17 +1,15 @@
 Since the work of pioneers of neuropsychology, it has been observed that many neurological and psychiatric disorders can be described as dysconnectivity syndromes~\cite{catani2005}.
 The emergence of symptoms or functional impairment in these disorders can be related to the damage or abnormal integration of spatially distributed brain regions that would normally constitute a large-scale network subserving function.
-
 Abnormal patterns of brain functional connectivity have been consistently observed in patients affected by Schizophrenia (SZ) using functional MRI and other neuroimaging methods.
 Graph theoretical approaches have been applied to study defective interactions and modular organization in networks of distributed brain areas, perhaps a result of dysfunctional conscious integration in SZ.
 
 As shown in the previous chapters, current graph analysis methods suffer from a fundamental resolution limit, as they fail to detect modules that are smaller than a scale determined by the entire connectivity network.
-
-In this chapter, we apply Asymptotical Surprise optimization to study the modular organization of resting state functional connectivity networks in a large cohort of SZ patients, and in matched healthy controls.
-Leveraging these important methodological advances, we find evidence of substantial fragmentation and reorganization involving primary sensory, auditory and visual areas in SZ patients.
+In this chapter, I apply Asymptotical Surprise optimization to study the modular organization of resting state functional connectivity networks in a large cohort of SZ patients, and in matched healthy controls.
+Leveraging these important methodological advances, I'll show evidence of substantial fragmentation and reorganization involving primary sensory, auditory and visual areas in SZ patients.
 Conversely, frontal and prefrontal areas related with higher cognitive functions appear to be less affected, with changes involving mostly language-processing regions.
 Our findings support the hypothesis that cognitive deficits in SZ may be driven by impairments in basic perceptual processes that localize to primary sensory brain regions.
 
-\section{Schizophrenia and functional connectivity}
+\section{Functional connectivity in schizophrenia}
 Schizophrenia has been associated with aberrant functional connectivity as measured by neuroimaging methods in a number of studies~\cite{friston1995,bullmore1998,liang2006,liu2008,calhoun2009,alexander-bloch2010,alexander-bloch2012,alexander-bloch2013}.
 This growing evidence is in keeping with the disconnectivity hypothesis of Schizophrenia that posits that the core dysfunction of this disease may correspond to weakening of the functional interactions between specialized brain areas~\cite{ellison-wright2009,fornito2009,kubicki2005}, resulting in defective integration of activity in distributed networks and in cognitive disintegration~\cite{tononi2000}.
 Indeed, psychotic symptoms akin to those of schizophrenia, including hallucinations and delusions, are also observed in certain neurological disorders that involve disruption of corticocortical and corticosubcortical connections~\cite{hyde1992}.
@@ -20,144 +18,123 @@ Understanding the nature of connectivity alterations in SZ patients and their ef
 To this end, graph theoretical approaches have been proposed as a powerful framework to assess topological features of functional connectivity networks~\cite{bassett2006,bullmore2009,kaiser2011,stam2007}.
 Several alterations in graph-related metrics of resting state connectivity have been identified in schizophrenia patients, including reduction in global network efficiency~\cite{liu2008,bullmore2009,bassett2008}, small worldness~\cite{liu2008,anderson2013,yu2011} and rich-club organization of high-connectivity nodes~\cite{vandenheuvel2013}.
 
-
-%%%%
-Recently, graph analyses of resting state brain connectivity networks have been applied to study the brain modular organization, i.e.
-the presence of functionally segregated modules within large-scale, integrated functional connectivity networks\todo{Review on modularity methods as applied to brain networks}~\cite{salvador2005a}.
-
-Typically, these methods assess patterns of edges in the graph to identify clusters of nodes that are more densely connected, denoting stronger interactions among themselves than with the rest of the system.
-
 Hence, community detection methods enable investigation of the interplay between functional segregation and integration in the healthy and diseased brain, and provide a key to map the brain's modular organization.
-
 Moreover, modularity analyses make it possible to identify the brain connector hubs, i.e. the regions that are responsible for the integration of the activity of the modules, and to assess the effects of disease on these hubs~\cite{vandenheuvel2013a}.
 
 Several studies have assessed the modular structure of resting state functional connectivity networks derived from functional MRI in Schizophrenia patients compared to healthy controls~\cite{liu2008,alexander-bloch2010,lerman-sinkoff2016}.
 Disrupted modular organization and reduction in Modularity, a measure of segregation of functional modules within the network, was found in Childhood Onset Schizophrenia~\cite{alexander-bloch2010}.
 Reduced Modularity was associated with a proportional increase in inter-cluster edges and decrease in intra-cluster edges~\cite{alexander-bloch2012}.
-
 Lerman-Sinkoff et al.~\cite{lerman-sinkoff2016} reported similar community structures in adult schizophrenia patients and healthy subjects under stringent control of potential sources of imaging artifacts, with small but significant alterations of node community membership in specific networks.
 Yu et al.~\cite{yu2012} found reduced overall connectivity strength and a larger number of communities in the patients' group (6 in SZ subjects vs 5 in healthy controls).
 
 These pioneering investigations provide important indications that the modular organization of functional connectivity networks may be altered in patients affected by schizophrenia.
 However, graph theory as applied to the study of brain networks is still in its infancy, and several methodological and conceptual issues that are still open may have affected early studies.
 
-We have recently demonstrated~\cite{nicolini2016,nicolini2017} that the resolution limit severely hampers the ability to resolve the modular organization of human brain connectivity networks, and to capture their complex community structure.
+In the previous chapters I have shown that the resolution limit severely hampers the ability to resolve the modular organization of human brain connectivity networks, and to capture their complex community structure.
 This pervasive limit is likely to have biased previous studies in clinical populations, and may have prevented detection of differences in the organization of functional connectivity in patients and controls at a finer scale.
 Indeed, even though previous studies in SZ populations systematically report substantial reduction in functional connectivity strength and modularity compared to healthy controls, differences in the number, size and boundaries of functional modules appear to be inconsistent across studies and dependent on the specific clustering approach that was adopted.
 
 The deleterious effects of the resolution limit propagate to the evaluation of important topological parameters that depend on the network's community structure.
 These include within-module-degree and participation coefficient, parameters that enable the identification of highly-connected nodes, or hubs, responsible for the integration and efficient exchange of information between modules~\cite{bullmore2009}.
 
-Recently, we have shown that Surprise, a fitness function rooted in probability theory \cite{nicolini2016}, behaves as a resolution-limit free function for community detection.
-Extension of this method to weighted networks, dubbed Asymptotical Surprise, was validated in synthetic networks with ground-truth structures and in real world networks, revealing a heterogeneous modular organization of the human brain, with a wide distribution of clusters spanning multiple scales \cite{nicolini2017}.
-The improved resolution afforded by Surprise makes it possible to appreciate differences in the structures of networks from different groups that are undetectable by resolution limited methods~\cite{nicolini2016}, and has led to a refinement of the classification of brain hubs~ \cite{nicolini2017}.
-Here, capitalizing on these important methodological advances, we apply Asymptotical Surprise to resolve and compare the modular structures of resting state functional connectivity networks in two cohorts of 78 schizophrenia subjects and 91 controls.
-In contrast with previous studies, we find profound changes in the resting state brain connectivity structure of schizophrenia patients, with a substantial functional reorganization reflecting both fragmentation and merging of functional modules.
+Here, capitalizing on these important methodological advances discussed in the previous chapters, I apply Asymptotical Surprise to resolve and compare the modular structures of resting state functional connectivity networks in two cohorts of 78 schizophrenia subjects and 91 controls.
+
+In contrast with previous studies, I have found profound changes in the resting state brain connectivity structure of schizophrenia patients, with a substantial functional reorganization reflecting both fragmentation and merging of functional modules.
 Additionally, we investigate alterations in node-wise participation coefficients and the resulting rearrangement of brain integrative regions in patients.
-The ability to resolve these changes at a finer scale than previously possible sheds new light on the functional implications of aberrant functional connectivity in Schizophrenia.
+% The ability to resolve these changes at a finer scale than previously possible sheds new light on the functional implications of aberrant functional connectivity in Schizophrenia.
 
-\section{Results}
-\subsection{Global Functional connectivity parameters in Schizophrenia patients and healthy controls}
+% \section{Functional connectivity parameters in Schizophrenia patients and healthy controls}
+% To examine the difference in functional connectivity between the two populations, I computed group-level graphs, each consisting of 638 nodes fully connected by edges reflecting Pearson pairwise correlations between resting state fluctuations of the BOLD signals.
 
-To examine the difference in functional connectivity between the two populations, we computed group-level graphs, each consisting of 638 nodes fully connected by edges reflecting Pearson pairwise correlations between resting state fluctuations of the BOLD signals.
-Several critiques of correlation as a measure of functional connectivity have been proposed~\todo{REF}, but this definition is the most widely accepted choice, and we have adopted it to ensure comparability of our results with previous studies.
+% \begin{figure}
+% \centering
+% \includegraphics[width=1.0\textwidth]{images/schizo/schizo_fig_1.png}
+% \caption{$z$-value distribution of the adjacency matrix for both populations.}
+% \label{fig:ttest_schizo}
+% \end{figure}
+
+% Figure~\ref{fig:ttest_schizo} shows the edge-weight distribution for the two groups.
+% We observed a significant shift in the average z-score value of the matrix between the patient and the control (t-test $p\textrm{value} < 10^{-16}$).
+
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.4\textwidth]{images/schizo/schizo_fig_2a.jpg}
+% \includegraphics[width=0.4\textwidth]{images/schizo/schizo_fig_2b.jpg}
+% \caption{A. Degree of each nodes; B. Local efficiency value by nodes. The nodes of the left and on the right hemisphere are respectively on the right and on the left of the circle.}
+% \label{fig:schizo_degree}
+% \end{figure}
+
+% Figure~\ref{fig:schizo_degree} shows the distribution of node degree, a node-wise parameter that measures the number and strength of edges incident to each node.
+% A significant decrease of average node-degree was observed for the SCZ groups (green line) compared to the CON group (black line), with degree values of $25.73 \pm 13.04$ and $53.83 \pm 40.35$ respectively \todo{Statistical significance?}.
+
+% Additionally, we computed the global efficiency coefficient $E(G)$, i.e.
+% the inverse average path length connecting any two nodes, a measure of how efficiently information is exchanged across the network.
+% $E(G)$ was strongly reduced in the SZ group, with a value of $0.23$ versus $0.32$ for the control group, a further indication of reduced network integration in the patient.
+
+% Altogether, these analyses show reduction in functional connectivity in the Schizophrenia group, entirely consistent with previous reports~\cite{liu2008,alexander-bloch2010,lerman-sinkoff2016}.
+% Interestingly, though, local efficiency, defined as the efficiency of a node's local network of nearest neighbors when the node is removed, was similar for the two groups (Control= $0.67\pm0.09$, Patient= $0.68\pm0.09$).
+% Figure~\ref{fig:schizo_degree}B shows local efficiency for each node, with green and black lines denoting patients and controls, respectively.
+% The graph reveals only minor differences between the two populations, thus suggesting that network tolerance to node faults is generally preserved or even improved in patients compared to controls even if functional connectivity is substantially weaker~\cite{lynall2010}.
+% This has been observed in previous studies, and pointed to as a potential evolutionary advantage that may justify persistence of schizophrenia-related genes in the general population~\cite{lynall2010}, but its implications remain speculative.
+
+% In summary, all graph-related parameters measured in this study appear consistent with those reported in the literature for smaller groups or specific sub-populations of patients (e.g. childhood onset schizophrenics), thus corroborating the idea that the present data-set has global and node-wise functional connectivity features that are comparable to those of previous studies.
+% In the following, we investigate the effects of these scale-dependent differences in functional connectivity on the modular organization of functional connectivity in schizophrenia patients vs controls.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% MODULAR STRUCTURE OF FUNCTIONAL CONNECTIVITY IN SZ PATIENTS %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modular structure of functional connectivity in SZ patients}
+In order to determine the optimal modular partitions for our experimental groups beyond the resolution limit, I applied optimization of Asymptotical Surprise by PACO.
+Prior to community detection, the group level adjacency matrices were sparsified using a percolation analysis approach to remove weaker edges and reduce the effects of noise, thus maximizing information about the network's modular structure~\cite{nicolini2017,bardella2016a,gallos2012}, described in section~\ref{sec:percolation_analysis}.
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{images/schizo/schizo_fig_1.png}
-\caption{$z$-value distribution of the adjacency matrix for both populations.}
-\label{fig:ttest_schizo}
-\end{figure}
-
-Figure~\ref{fig:ttest_schizo} shows the edge-weight distribution for the two groups.
-We observed a significant shift in the average z-score value of the matrix between the patient and the control (t-test $p\textrm{value} < 10^{-16}$).
-
-\begin{figure}
-\centering
-\includegraphics[width=0.4\textwidth]{images/schizo/schizo_fig_2a.jpg}
-\includegraphics[width=0.4\textwidth]{images/schizo/schizo_fig_2b.jpg}
-\caption{A. Degree of each nodes; B. Local efficiency value by nodes. The nodes of the left and on the right hemisphere are respectively on the right and on the left of the circle.}
-\label{fig:schizo_degree}
-\end{figure}
-
-Figure~\ref{fig:schizo_degree} shows the distribution of node degree, a node-wise parameter that measures the number and strength of edges incident to each node.
-A significant decrease of average node-degree was observed for the SCZ groups (green line) compared to the CON group (black line), with degree values of $25.73 \pm 13.04$ and $53.83 \pm 40.35$ respectively \todo{Statistical significance?}.
-
-Additionally, we computed the global efficiency coefficient $E(G)$, i.e.
-the inverse average path length connecting any two nodes, a measure of how efficiently information is exchanged across the network.
-$E(G)$ was strongly reduced in the SZ group, with a value of $0.23$ versus $0.32$ for the control group, a further indication of reduced network integration in the patient.
-
-Altogether, these analyses show reduction in functional connectivity in the Schizophrenia group, entirely consistent with previous reports~\cite{liu2008,alexander-bloch2010,lerman-sinkoff2016}.
-Interestingly, though, local efficiency, defined as the efficiency of a node's local network of nearest neighbors when the node is removed, was similar for the two groups (Control= $0.67\pm0.09$, Patient= $0.68\pm0.09$).
-Figure~\ref{fig:schizo_degree}B shows local efficiency for each node, with green and black lines denoting patients and controls, respectively.
-The graph reveals only minor differences between the two populations, thus suggesting that network tolerance to node faults is generally preserved or even improved in patients compared to controls even if functional connectivity is substantially weaker~\cite{lynall2010}.
-This has been observed in previous studies, and pointed to as a potential evolutionary advantage that may justify persistence of schizophrenia-related genes in the general population~\cite{lynall2010}, but its implications remain speculative.
-
-In summary, all graph-related parameters measured in this study appear consistent with those reported in the literature for smaller groups or specific sub-populations of patients (e.g. childhood onset schizophrenics), thus corroborating the idea that the present data-set has global and node-wise functional connectivity features that are comparable to those of previous studies.
-In the following, we investigate the effects of these scale-dependent differences in functional connectivity on the modular organization of functional connectivity in schizophrenia patients vs controls.
-
-\subsection{Modular structure of functional connectivity in SZ patients.}
-In order to determine the optimal modular partitions for our experimental groups beyond the resolution limit, we applied optimization of Asymptotical Surprise by PACO.
-Prior to community detection, the group level adjacency matrices were sparsified using a percolation analysis approach to remove weaker edges and reduce the effects of noise, thus maximizing information about the network's modular structure~\cite{nicolini2017,bardella2016a,gallos2012}.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.25\textwidth]{images/schizo/schizo_fig_3a.png}
-\includegraphics[width=0.25\textwidth]{images/schizo/schizo_fig_3b.png}
-\includegraphics[width=0.25\textwidth]{images/schizo/schizo_fig_3c.png}
-\caption{}
+\includegraphics[width=0.32\textwidth]{images/schizo/schizo_fig_3a.png}
+\includegraphics[width=0.32\textwidth]{images/schizo/schizo_fig_3b.png}
+\includegraphics[width=0.32\textwidth]{images/schizo/schizo_fig_3c.png}
+\caption{Percolation analysis}
 \label{fig:schizo_percolation}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{images/schizo/schizo_fig_3.jpg}
-\caption{Asymptotical Surprise partitions for the two populations.}
-\label{fig:schizo_control_patients}
-\end{figure}
+\end{figure}\todo{VEDERE CAPTION}
 
 Figure~\ref{fig:schizo_control_patients} shows the group-level adjacency matrices, with the node indexes rearranged by module membership, for the control and schizophrenia groups.
 Disjoint clusters of nodes, or modules, are delineated by red lines.
-We found 41 communities in the control group, with module sizes ranging between \todo{???} and \todo{???} nodes.
+I found 44 communities in the control group, with module sizes ranging between 141 and 1 nodes.
 The optimal partition of the patients' group comprised 39 communities, and showed a less heterogeneous size distribution.
 The statistical significance of the difference in community structure was assessed using a recently proposed permutation approach~\cite{alexander-bloch2012}, resulting in a p-value of \todo{???}.
 The smaller number of modules in the schizophrenia group may appear somewhat counterintuitive, in the light of overall weaker functional connectivity strength in this group.
 However, while the largest modules appear to break up into smaller modules in patients, the tail of the distribution of community sizes is fatter in the schizophrenia group, thus indicating aggregation and reorganization of smaller modules.
-
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{images/schizo/schizo_fig_3.jpg}
+\caption{Asymptotical Surprise partitions for the two populations.}
+\label{fig:schizo_control_patients}
+\end{figure}
 To investigate this point further, we calculated the overlaps between modules in the optimal partitions for the two groups, shown in Figure~\ref{fig:schizo_figure4}.
-
+The lines and the columns of the matrix correspond to communities in the control and in the patients' group, respectively, ordered by size (with 1 indicating the largest community).
+The colored elements of the matrix indicate overlaps between communities in the two groups, and the number of common nodes.
+From this figure, it is apparent that schizophrenia subjects show a reorganization of modular structure beyond a simple fragmentation of the larger communities.
+By way of example, community 1 of the control group (first line) shows significant overlap with 3 communities of the SZ group, namely 1, 9, and 26. 
+However, community 9 of the patients' group also shares a substantial number of nodes with community 9 and 13 of the control group, indicating changes in membership that involve rearrangement of multiple modules. 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{images/schizo/schizo_fig_4.jpg}
-\caption{FIGURE 4.}
+\caption{Overlap between the two partitions. The colors represent the percentage of overlap, and the value: the number of nodes in common.}
 \label{fig:schizo_figure4}
 \end{figure}
 
-The lines and the columns of the matrix correspond to communities in the control and in the patients' group, respectively, ordered by size (with 1 indicating the largest community).
-
-The colored elements of the matrix indicate overlaps between communities in the two groups, and the number of common nodes.
-
-From this figure, it is apparent that schizophrenia subjects show a reorganization of modular structure beyond a simple fragmentation of the larger communities.
-
-By way of example, community 1 of the control group (first line) shows significant overlap with 3 communities of the SZ group, namely 1, 9, and 26. 
-However, community 9 of the patients' group also shares a substantial number of nodes with community 9 and 13 of the control group, indicating changes in membership that involve rearrangement of multiple modules. 
-
+Figure~\ref{fig:schizo_figure5} shows the distribution of functional modules in the two groups overlaid on an anatomical template.
+Note that the colors denoting the communities were chosen independently in the two groups to maximize contrast between adjacent modules.
+Differences in the modular structures of functional connectivity in the two groups are apparent, and involve complex reorganization of nodal membership across modules. 
+The main differences in modular organization between the two groups involve the sensorimotor, visual and auditory cortices.
+The large central module in the healthy controls' group (dark blue in Figure~\ref{fig:schizo_figure5}, community 1 in Figure~\ref{fig:schizo_figure4}) comprises somatosensory cortices and temporal auditory cortices, consistent with previous findings in healthy volunteers~\cite{javitt2015}.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{images/schizo/schizo_fig_5a.jpg}
 \includegraphics[width=0.5\textwidth]{images/schizo/schizo_fig_5b.jpg}
-\caption{FIGURE 5.}
+\caption{Maps representation of the communities for each group: A. healthy control, B. schizophrenia patient; please note that the colors of each community are random even across group.}
 \label{fig:schizo_figure5}
 \end{figure}
-
-%%%%
-Figure~\ref{fig:schizo_figure5} shows the distribution of functional modules in the two groups overlaid on an anatomical template.
-Note that the colors denoting the communities were chosen independently in the two groups to maximize contrast between adjacent modules.
-Differences in the modular structures of functional connectivity in the two groups are apparent, and involve complex reorganization of nodal membership across modules. 
-
-The main differences in modular organization between the two groups involve the sensorimotor, visual and auditory cortices.
-The large central module in the healthy controls' group (dark blue in Figure~\ref{fig:schizo_figure5}, community 1 in Figure~\ref{fig:schizo_figure4}) comprises somatosensory cortices and temporal auditory cortices, consistent with previous findings in healthy volunteers~\todo{CITE?}.
 
 In schizophrenia patients, this module breaks up into four different clusters of nodes.
 Similarly, the controls' large occipital module (light brown in Figure~\ref{fig:schizo_figure5}, community 2 in Figure~\ref{fig:schizo_figure4}) is split in the patients' group, with primary visual cortex standing as an independent community together with part of the inferior temporal lobe.
@@ -165,20 +142,20 @@ The more dorsal part of the occipital community includes part of the superior pa
 
 Substantial fragmentation and reorganization is also observed in the modular structure of the temporal cortex.
 In controls, we find well-delineated modules comprising the middle temporal gyrus and the inferior temporal gyrus, while the superior temporal gyrus is part of larger community that includes somatosensory cortices.
-In patients, the superior temporal gyrus is separated from the larger somatosensory community, and is split into two modules, anterior and posterior, respectively, that comprise also part of the supramarginal cortex. (Comm 2 SI)\todo{FIG}
-
-The middle temporal gyrus (Comm 7 SI) is split rostrocaudally into 4 different communities that include parts of the superior and inferior giri.
-The inferior gyrus is split in 2 modules, anterior and posterior, respectively.
+In patients, the superior temporal gyrus is separated from the larger somatosensory community, and is split into two modules, anterior and posterior, respectively, that comprise also part of the supramarginal cortex.
+The middle temporal gyrus is split rostrocaudally into 4 different communities that include parts of the superior and inferior giri.
+The inferior gyrus is split in ttwo modules, anterior and posterior, respectively.
 The anterior module includes part of the middle temporal gyrus, while the posterior one extends to visual cortices. 
 
 Interestingly, the angular gyrus and the supramarginal gyrus appear as separate modules in healthy controls, but in patients these areas are merged into a single community including the temporoparietal junction. 
-
-Finally, between-group differences in frontal lobe organization pertain particularly the language regions, with the Broca area forming an independent community in patients. The modular structure of other frontal and prefrontal areas is consistent in the two groups.
+Finally, between-group differences in frontal lobe organization pertain particularly the language regions, with the Broca area forming an independent community in patients.
+The modular structure of other frontal and prefrontal areas is consistent in the two groups.
 
 In summary, the modular structure of functional connectivity is substantially reorganized in SZ patients, with prominent differences involving primary sensory and sensorimotor areas, and language related areas. 
 
-%To facilitate visual inspection and interpretation of differences between the two groups, we show the 6 largest communities of the control group individually, and the overlapping communities in the patients' group (Fig S?-S? 9 in the Supplementary Information section)\todo{SUPPLEMENTARY?}.
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% PARTICIPATION COEFFICIENT ANALYSIS %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Participation coefficient analysis}
 Figure~\ref{fig:schizo_figure6} shows statistically significant voxelwise differences in participation coefficient, a measure of diversity in intermodular connections of individual nodes.
 Nodes characterized by high participation coefficients have many links pointing to different modules, and are thought to play an integrative role. 
@@ -248,41 +225,39 @@ The present approach may provide a novel and powerful tool to study alterations 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% PERCOLATION ANALYSIS %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Percolation Analysis}
-For community detection, procedures are often applied to remove the weaker edges in the network, thus sparsifying the network and reducing the effects of noise. Here, we have used percolation analysis derived from statistical physics \todo{(18, 38, 39)} to identify the optimal cut-off.
-This approach measures the size of the largest connected component of the network upon iterative removal of the weakest edges and enables data-driven determination of the optimal threshold that preserves network structure and connectedness while removing potentially spurious correlations.
+% \subsection{Percolation Analysis}
+% For community detection, procedures are often applied to remove the weaker edges in the network, thus sparsifying the network and reducing the effects of noise. Here, we have used percolation analysis derived from statistical physics \todo{(18, 38, 39)} to identify the optimal cut-off.
+% This approach measures the size of the largest connected component of the network upon iterative removal of the weakest edges and enables data-driven determination of the optimal threshold that preserves network structure and connectedness while removing potentially spurious correlations.
 
-To validate the use of percolation analysis to define the optimal sparsification threshold, we generated synthetic networks based on the Lancichinetti-Fortunato-Radicchi (LFR) algorithm~\cite{lancichinetti2008}.
-LFR networks provide model graphs that replicate the distribution of nodal degree observed in brain functional connectivity networks, and are endowed with a ground-truth modular structure against which the results of community detection algorithms can be assessed.
+% To validate the use of percolation analysis to define the optimal sparsification threshold, we generated synthetic networks based on the Lancichinetti-Fortunato-Radicchi (LFR) algorithm~\cite{lancichinetti2008}.
+% LFR networks provide model graphs that replicate the distribution of nodal degree observed in brain functional connectivity networks, and are endowed with a ground-truth modular structure against which the results of community detection algorithms can be assessed.
 
-The planted modules had sizes sampled from a power-law distribution to mimic the heterogeneous distribution of modules that is observed in functional connectivity networks~\cite{power2011,meunier2010}.
-Optimization of Asymptotical Surprise was applied to detect the community structure of the LFR networks after application of different thresholds.
+% The planted modules had sizes sampled from a power-law distribution to mimic the heterogeneous distribution of modules that is observed in functional connectivity networks~\cite{power2011,meunier2010}.
+% Optimization of Asymptotical Surprise was applied to detect the community structure of the LFR networks after application of different thresholds.
 
-The correspondence between the partition detected by Asymptotical Surprise and the ground-truth structure was assessed by calculating the Normalized Mutual Information (NMI), an information-theoretic measure of similarity.
-Moreover, we assessed Sensitivity and Specificity, defined on the basis of true and false positives or negatives in the assignment of node membership.
+% The correspondence between the partition detected by Asymptotical Surprise and the ground-truth structure was assessed by calculating the Normalized Mutual Information (NMI), an information-theoretic measure of similarity.
+% Moreover, we assessed Sensitivity and Specificity, defined on the basis of true and false positives or negatives in the assignment of node membership.
 
-The results of this analysis for 5 instances are shown in Figure~\ref{fig:schizo_percolation}.
+% The results of this analysis for 5 instances are shown in Figure~\ref{fig:schizo_percolation}.
 
-The shaded zone represents the average value of the optimal threshold determined by percolation analysis for representative LFR networks with a topological mixing coefficient $\mu_t=0.4$.
-A range of different values of µt was explored, and the results are reported in the Supplementary Information section\todo{SI?}.
-The graphs reveal that the threshold obtained by percolation analysis corresponds to the maximum value of NMI, thus maximizing the correspondence between the retrieved and ground-truth modular structure.
-Moreover, the percolation threshold falls in a range where both Specificity and Sensitivity are at their highest~\cite{zahoranszky-kohalmi2016a}, thus providing the best quality partition.
-Additionally, we have injected different levels of noise in the correlation structure of the LFR matrix to simulate the effects of data variability\todo{SI?}.
-Consistently with the idea that weaker edges are more vulnerable to the effects of data variability, and reduce the ability to recover the planted structure, we found that Asymptotical Surprise performed best with networks sparsified using percolation analysis.
+% The shaded zone represents the average value of the optimal threshold determined by percolation analysis for representative LFR networks with a topological mixing coefficient $\mu_t=0.4$.
+% A range of different values of µt was explored, and the results are reported in the Supplementary Information section\todo{SI?}.
+% The graphs reveal that the threshold obtained by percolation analysis corresponds to the maximum value of NMI, thus maximizing the correspondence between the retrieved and ground-truth modular structure.
+% Moreover, the percolation threshold falls in a range where both Specificity and Sensitivity are at their highest~\cite{zahoranszky-kohalmi2016a}, thus providing the best quality partition.
+% Additionally, we have injected different levels of noise in the correlation structure of the LFR matrix to simulate the effects of data variability\todo{SI?}.
+% Consistently with the idea that weaker edges are more vulnerable to the effects of data variability, and reduce the ability to recover the planted structure, we found that Asymptotical Surprise performed best with networks sparsified using percolation analysis.
 
-Alterations of the modular organization of functional connectivity should not be interpreted as a redefinition and remapping of functionally specialized areas, as identified in task-related functional MRI studies.
-Indeed, community detection in resting state functional connectivity networks assesses topology and strength of the interactions between functionally segregated regions.
+% Alterations of the modular organization of functional connectivity should not be interpreted as a redefinition and remapping of functionally specialized areas, as identified in task-related functional MRI studies.
+% Indeed, community detection in resting state functional connectivity networks assesses topology and strength of the interactions between functionally segregated regions.
 
 \section{Material and methods}
-\paragraph{Participants}
-
+\subsection{Participants}
 MRI data were downloaded for 78 people with schizophrenia strict (SCZ) (64 males, 14 females) and 91 healthy controls (CON) (65 males, 26 females) from the open COBRE database \url{http://fcon_1000.projects.nitrc.org/indi/retro/cobre.html}.
 Ranging ages going from 18 to 65 years in both group.
 All the subjects in the COBRE were screened and excluded if they had history of neurological disorder, history of mental retardation, history of severe head trauma with more than 5 minute loss of consciousness, history of substance abuse or dependence within the last 12 months.
 Ethical statements are contained in the original publication of this dataset.
 
-\paragraph{fMRI pre-processing}
-
+\subsection{fMRI pre-processing}
 Images were acquired with a Siemens MIND TRIO 3T scanner equipped for echo-planar imaging (EPI).
 Echo-planar imaging was used for resting state fMRI data collection with (Repetition Time) TR=2s, (Echo Time) TE=29ms, matrix size: 64x64, slices=33, voxel size=$3 \times 3 \times 4$ mm$^3$ (for more details see~\cite{cetin2014}). A total of 150 volumes of functional images were obtained for all the subjects except one (this subject was excluded from the present study). The data were pre-processed using SPM8 (Wellcome Trust Centre for Neuroimaging, London, UK).
 After discarding the four initial volumes, the remaining volumes were slice-timed, head-motion realigned and normalized to the standard MNI EPI template space (voxel-size re-sampled to $3 \times 3 \times 3$ mm$^3$).
@@ -290,8 +265,7 @@ Then, for each participant, 638 regional mean time series were computed by avera
 Finally, after regressing the movement parameters from each areas signal, we estimated the connectivity matrix by computing pairwise inter-regional correlation for each participation.
 In order to have a connectivity matrix by population, we Fisher-transformed individual correlation matrix and average them by group in order to get an adjacency matrix.
 
-\paragraph{Connectivity parameters of the networks}
-
+\subsection{Connectivity parameters of the networks}
 The general information of the network was evaluated thanks to different coefficients.
 Deduced from the adjacency matrix, we extracted the distribution of z-scores (corresponding to the weight of our network), the global and local efficiency as well as the degree of each nodes and their betweenness centrality. 
 
