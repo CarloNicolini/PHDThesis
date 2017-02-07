@@ -9,6 +9,9 @@ Moreover, I'll describe an algorithm for Surprise optimization in binary graphs 
 Surprise maximization in brain co-activation and functional connectivity resting state networks reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
 Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PROBABILISTIC APPROACH TO CLUSTERING IN BINARY NETWORKS %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Probabilistic approach to clustering in binary networks}\label{sec:probability_clustering}
 The spin-glass based additive qualitive functions described in the previous chapter, including Newman's Modularity, measure the deviation between the fraction of edges falling within modules and the null model. In any case though, they assess the statistical significance of this deviation.
 In other terms, no spin-glass based quality function is telling us the level of statistical confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
@@ -35,6 +38,9 @@ As the probability of observing $i$ or more internal edges, is given by the sum 
 
 In this last equation we are considering the probability of randomly drawing a subgraph with $m_c$ or more internal edges over the set of all random subgraphs with $n$ nodes and exactly $m$ edges as in the $G_{nm}$ model described in section~\ref{sec:models_random_graph}. Indeed, the denominator $\binom{p}{m}$ in Equation~\ref{eq:subgraph_probability_marginalized} represent the possible number of graphs with $p$ pairs of nodes and $m$ edges. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% SURPRISE %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Surprise}
 The intuition captured by Eq.~\ref{eq:subgraph_probability_marginalized} is very close to a quality function dubbed \emph{Surprise}, firstly introduced in a seminal paper by Aldecoa and Marin~\cite{aldecoa2011}.
 Yet, to the best of my knowledge, this clearer theoretical motivation did not appear in any other works.
@@ -101,6 +107,9 @@ Intercluster & $m-m_\zeta$ & $p-m-p_\zeta+m_\zeta$ & $p-p_\zeta$ \\
 \label{tab:contingency_table}
 \end{table}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% GENERAL PROPERTIES OF SURPRISE %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{General properties of Surprise}
 As noted by~\cite{fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ is depending only on the number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely $S:=S(m_\zeta,p_\zeta)$.
 In estabilishing the domain of validity of $(m,p,m_\zeta,p_\zeta)$ the urn model is of help. A valid clustering $\zeta$ of mutually disjoint communities automatically satisfies intuitive but important requirements:
@@ -146,7 +155,6 @@ The scheme in Figure~\ref{fig:surprisebehaviour} explicits the order relation be
 \end{figure}
 
 A fourth inequality $S(m_\zeta,p_\zeta+1)>S(m_\zeta+1,p_\zeta)$ is implicit by looking at the behaviour of $S(\zeta)$ for a given graph. 
-%\subsection{Pareto optimality}
 The scheme in Figure~\ref{fig:surprisebehaviour} allows to rank the values of Surprise in relation to changes in $m_\zeta$ and $p_\zeta$.
 It's to easy verify that $S$ satisfies the following strict order relation:
 \begin{equation}\label{eq:surpriseorderrelation}
@@ -183,9 +191,8 @@ S(m_\zeta + \delta_{m_\zeta}, p_\zeta + \delta_{p_\zeta}) < S(m_\zeta,p_\zeta) \
 The result in Eq.\ref{eq:resolution_limit_condition} is of great help in designing optimization algorithms as every move that increase the intracluster edges more than intracluster pairs is good, while moves that increase intracluster pairs more than intracluster edges must be ignored, therefore sparing time for the computation of Surprise. Additionally, Eq.~\ref{eq:resolution_limit_condition} is useful when analyzing the onset of the resolution limit for different models.
 In the next sections we will show to what extent Surprise is affected by the resolution limit for Surprise, to show with convincing theoretical arguments that $S$ is nearly resolution-limit-free in Traag's sense~\cite{traag2015}.
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% RESOLUTION LIMIT AND SURPRISE %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Resolution limit and Surprise}
 Unfortunately, the resolution limit is an intrinsic feature of many quality functions, and there appears to be a ``narrow scope to resolution-limit-free methods''~\cite{traag2015}.
@@ -234,17 +241,18 @@ Importantly, in the range of parameters we have investigated, Surprise optimizat
 \caption{Pareto front for a ring of cliques graph. Optimal solutions with respect to Surprise are indicated as small black dots. Adapted from Nicolini and Bifone~\cite{nicolini2016}.}
 \label{fig:ring_cliques_pareto}
 \end{figure}
-
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.8\textwidth]{images/ring_cliques_surprise.pdf}
 \caption{Surprise $\hat{S}$ for a ring of cliques graph at different levels of $p_\zeta$ for corresponding solutions at fixed $m_\zeta$. The peak of $\hat{S} $is always reached at $p_\zeta$ when the modules entail single cliques separately. Adapted from Nicolini and Bifone~\cite{nicolini2016}.}
 \label{fig:ring_cliques_surprise}
 \end{figure}
-
 While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
 Nonetheless, the size of the graphs explored numerically is quite typical of brain-connectivity networks and I feel encouraged to apply Surprise maximization to the study of the community structure of the brain.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% DEGENERACY OF SURPRISE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Degeneracy of Surprise}\label{sec:degeneracy_surprise}
 Interestingly, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in Section~\ref{sec:degeneracy}.
 This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
@@ -259,10 +267,8 @@ We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we em
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% MAXIMIZATION OF SURPRISE: FAGSO %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \section{Maximization of Surprise: FAGSO}\label{sec:max_surprise_fagso}
 
 Community detection is a NP-hard problem, and heuristics have to be developed for the optimization of quality functions for relatively large networks. In their original paper, Aldecoa et al.~\cite{aldecoa2011} applied metaheuristics, involving the evaluation of Surprise for partitions resulting from seven different community detection methods, each of those maximizing different quality functions.
@@ -275,15 +281,12 @@ At the beginning, each community consists only of one vertex.
 Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community.
 This step is repeated for all edges and the final community structure is returned in the disjoint-set.
 FAGSO finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
-
 The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Octave} is freely available at \url{https://github.com/carlonicolini/fagso}.
-
 \begin{Algorithm}[htb!]
 \input{include/misc/fagso.tex}
 \caption{Pseudocode of FAGSO, with description of the implementation of union-find data structure.}
 \label{alg:fagso}
 \end{Algorithm}
-
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.8\textwidth]{images/fagso.pdf}
@@ -291,28 +294,16 @@ The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Oct
 \label{fig:fagso_working}
 \end{figure}
 
-
-
-% \section{Comparison of PACO and FAGSO}
-% FAGSO is an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree and is described in~\cite{nicolini2016}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation. At the beginning, each community consists only of one vertex. Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set. This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
-
-% PACO and FAGSO are based on the same idea of greedy agglomeration of edges that leads to increment in Surprise, but the implementation of the agglomeration step is different.
-% In the box A of Figure~\ref{fig:pacofagso} both the algorithms are considering whether to merge nodes from edge $d-g$ into the same community or not.
-% FAGSO consider the operation of merging nodes $d,g$ in the same community by joining red and blue communities together in one larger module and proceeds if this leads to higher Surprise.
-% PACO instead works at node level, considering whether to randomly move node $g$ in the red community (Box C) or node $d$ in the blue community (Box D). PACO chooses between the two options the one that leads to the highest increment in Surprise.
-% This detail allows PACO to explore more finely the landscape of optimization as it has more run to run variability. Additionally the internal implementation of PACO is faster as it stores the community structure as an array of integers representing the node affiliations, while FAGSO was storing the community structure as a set of nodes for every community.
-
-% \input{include/misc/pacofagso.tex}
-
-This chapter explores the effects of the resolution limit on the study of real brain connectivity networks.
-We demonstrate that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
-We show that Surprise in binary networks and Asymptotical Surprise in weighted networks do not suffer from these limitations.
-Surprise maximization in brain co-activation and functional connectivity resting state networks reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods. Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure.
-
-
-\section{Surprise optimization on functional connectivity networks}\label{sec:surprise_optimization_fc_networks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% SURPRISE OPTIMIZATION ON FUNCTIONAL CONNECTIVITY NETWORKS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Surprise optimization on functional connectivity networks}
+\label{sec:surprise_optimization_fc_networks}
 We assessed the performance of Surprise maximization by means of FAGSO in the detection of the community structure of two benchmark brain networks. All coordinate data and functional metadata were taken from the BrainMap database~\cite{fox2002,laird2005}, processed by Crossley et al.~\cite{crossley2013a} and made available to the scientific community as reference networks through the public Brain Connectivity Toolbox~\cite{rubinov2010}. We used BrainNetViewer as a tool for the visualization of the communities on brain templates~\cite{xia2013}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% RESTING STATE DATASET %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Resting state dataset}\label{sec:restingstatedataset}
 The first network represents the coactivation of brain regions as obtained from a meta-analysis of 1641 task-related fMRI or PET studies~\cite{crossley2013a}.
 Meta-analyses have been useful in estimating the frequency with which two brain regions are consistently activated across different tasks and are an indication of the behavior of the brain during activity.
@@ -355,6 +346,9 @@ This analysis, shown in Figure~\ref{fig:figure_8_percolation_analysis}, revealed
 \label{fig:figure_10_rs_threshold_study}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% COMMUNITY DETECTION RESULTS BY FAGSO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Community detection results by FAGSO}
 Figure \ref{fig:figure_3_communities_rs_coact_mod_surp} shows a direct comparison of the partitions obtained by Modularity and by Surprise maximization for the coactivation and resting state networks. The four panels display the adjacency matrices of the two networks, with their vertices rearranged by their module membership.
 
@@ -419,6 +413,9 @@ Conversely, other communities were split in the resting state but not in the coa
 While the resting state and coactivation networks appeared to possess virtually identical modular structures under Newman's analysis, they showed functionally and anatomically relevant differences when analyzed by Surprise maximization, with a Normalized Mutual Information between the partitions of the two networks of 0.5922. Indeed, Modularity tends to assign small communities to larger structures even when they correspond to tightly-knit modules, thus concealing differences in the graphs' modular structures that involve aggregation or disaggregation of smaller clusters. It is conceivable that the detrimental effects arising from the resolution limit may have affected previous studies comparing different populations~\cite{meunier2010}.
 Surprise may offer a sharper tool to detect alterations of brain connectivity induced, for example, by psychiatric or neurological conditions, thus enabling the exploration of novel markers of brain disease.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% HUBS CLASSIFICATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Hubs classification}
 Besides the exploration of functional and anatomical segregation, understanding the modular structure of brain networks is critical for the interpretation and classification of the roles played by the nodes within the network structure~\cite{sporns2007}. Highly connected nodes, or hub nodes, are particularly important for their topological centrality, and function as integrators. Hubs that primarily connect to nodes within the same module are dubbed ``provincial hubs'', and nodes that connect different modules are referred to as ``connector hubs''. The former are thought to be responsible for the formation and stability of the modules, while the latter ensure integration of the activity of the different modules. Obviously, interpretation of the hub's role relies on the correct identification of the optimal network partition, and may be strongly affected by the resolution limit.
 
@@ -462,8 +459,11 @@ In summary, partition by Surprise maximization results in very different distrib
 \label{fig:figure_8_ga_rs_precuneus}
 \end{figure}
 
-\subsection{Limitations of binary Surprise}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% LIMITATIONS OF BINARY SURPRISE %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Limitations of binary Surprise}
 A potential limitation of Surprise is related to its definition in terms of discrete probability distributions. This makes Surprise suited for the study of binarized networks. While the topological backbones of the networks we have investigated appear quite robust against removal of lowest-weight edges and binarization, as shown by our percolation and stability analyses (Figures~\ref{fig:figure_8_percolation_analysis},~\ref{fig:figure_9_rs_threshold_study},~\ref{fig:figure_10_rs_threshold_study}), the application of its weighted counterpart, Asymptotical Surprise, will help overcome the need of binarization.
 
 The superior resolution afforded by Surprise may make it more vulnerable than other methods to noise and experimental errors. Indeed, occasional misassignment of nodes due to noise-induced changes in edge distribution are likely to affect small modules, comprising only a few nodes, more than large ones. Hence, experimental uncertainty also limits resolution, and a resolution-limit-free method would not necessarily improve the quality of the partition in a scenario dominated by noise. 
@@ -488,3 +488,17 @@ Nevertheless, we observed homotopic correspondence in the community structure, a
 
 A final and important point we should highlight is that Surprise maximization, in the implementation we have used here, does not allow for overlapping communities. Other methods have been applied to investigate this aspect in brain networks~\cite{palla2005,ahn2010}. However, a recent comparative analysis of graph partitioning algorithms on a variety of benchmark networks~\cite{lancichinetti2009} has shown that these methods are also prone to merging overlapping communities, with relatively modest performance in recovering heterogeneous cluster distributions planted in model networks.
 Despite these potential limitations, the resolution-limit-free behavior of Surprise makes it an excellent tool to explore and to overcome the effects of the resolution limit in the modular structure of brain connectivity networks.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CONCLUSIONS %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+In conclusion, I have shown that Surprise, a recently proposed fitness function for graph partitioning, behaves like a resolution-limit-free function.
+I have applied Surprise maximization to study the modular structures of two different brain networks.
+Surprise maximization resulted in partitions comprising communities of widely distributed sizes, consistent with the idea that small and large modules coexist in brain networks.
+Moreover, the finer partition afforded by Surprise made it possible to appreciate differences in the modular structures of diverse brain networks that were undetected by resolution limited methods like Newman's Modularity.
+Finally, the use of Surprise revealed the deleterious effects of the resolution limit in the classification of nodal roles.
+Altogether, these results indicate that the resolution limit may have substantially affected many of the analyses of brain connectivity networks reported in the literature, and call for a revisitation of some of the conclusions and models that have relied on Modularity maximization or similarly resolution-limited algorithms.
+Surprise appears as a promising alternative method that appeals to the intuition that tightly-knit clusters of nodes represent legitimate structural
+or functional modules independently of their size.

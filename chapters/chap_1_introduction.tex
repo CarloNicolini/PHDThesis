@@ -1,32 +1,13 @@
-% \noindent\begin{figure}[htb]
-% \centering
-% \begin{minipage}[t]{0.48\textwidth}
-% \includegraphics[width=1\textwidth]{images/konigsberg.jpg}
-% \end{minipage}\begin{minipage}[b]{0.48\textwidth}
-% \centering
-% \begin{tikzpicture}
-%     \tikzset{LabelStyle/.style= {draw}}
-%     \GraphInit[vstyle=Normal]
-%     \node[VertexStyle](A){a};
-%     \node[VertexStyle,right=of A](B){b};
-%     \node[VertexStyle,right=of B](C){c};
-%     \node[VertexStyle,above= 1.2cm of B](D){d};
-%     \draw[EdgeStyle](B) to node[LabelStyle]{} (D);
-%     \tikzset{EdgeStyle/.append style = {bend left}}
-%     \draw[EdgeStyle](A) to node[LabelStyle]{} (B);
-%     \draw[EdgeStyle](B) to node[LabelStyle]{} (A);
-%     \draw[EdgeStyle](B) to node[LabelStyle]{} (C);
-%     \draw[EdgeStyle](C) to node[LabelStyle]{} (B);
-%     \draw[EdgeStyle](A) to node[LabelStyle]{} (D);
-%     \draw[EdgeStyle](D) to node[LabelStyle]{} (C);
-% \end{tikzpicture}
-% \end{minipage}
-% \caption*{\textsf{The city of K{\"o}nigsberg in an old postcard with its graph-theoretical representation, where the bridges are the edges of the graph and the city parts are represented by nodes.
-% This city inspired Euler to start graph theory.}}
-% \end{figure}
-
-%%%%%%%%% INTRO GENERALE COMPLEX NETWORKS
-%\section{Complex networks science and the brain}\label{sec:complexnetworksciencebrain}
+%This introductory chapter presents the framework of complex network science as applied to brain functional connectivity and analyzes the implications of the resolution limit in real-world networks.
+% The brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
+% The neurons interact over the organic substrate that they themselves define, and shape an extremely intricate pattern of electrical and metabolic activities, giving rise to the outstanding set of abilities and possibilities typical of most evolved organisms.
+% Nonetheless, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate.
+% Instead, what science is increasingly recognizing is that, for the description of most systems in nature, it is necessary to remain within a certain level of complexity and to contemplate the multiple interactions of simple subsystems taken as a whole.
+% It is known, indeed that many systems, despite radically different at their microscopic level, share many remarkable organizational properties, when analyzed in their entirety.
+% A window over the formidable and irreducible complexity of the brain can thus be opened by specific theoretical tools able to account for the brain multi-scale organization, its hierarchical structure, and its modular composition.
+% The study of brain connectivity has already made possible many advances in neuroscience, from the identification and structural characterization of the cytoarchitecture to the macro-scale connectivity at the level of nerve fibers.
+% Specifically, the analysis of the architecture of the nervous system is based on the idea that the brain can be thought as a complex system at different spatial and time scales.
+% In this respect, the tools of network theory are the method of election in the analysis of complex systems.
 
 \section{The rise of network neuroscience}
 Starting from 19th century’s neuron doctrine, the brain is described as an incredibly complex system of intercommunicating elements, the neurons, intertwined with other cells that support neuronal activity.
@@ -199,6 +180,8 @@ Using the tools of complex network science, the evaluation of the modular struct
 % \label{fig:prognosis_centrality}
 % \end{figure}
 
+
+
 %%%%%%%%%%%% PARTE COMMUNITY DETECTION %%%%%%%%%%%%%%%%%%%%
 Several methods have been proposed to resolve the community structure of complex networks~\cite{fortunato2010,lancichinetti2009,fortunato2016}.
 Many of these methods involve the definition of a fitness function that assigns positive or negative scores to edges connecting nodes within or outside the same community, and heuristics to find the optimal partition of the network that maximizes this fitness function.
@@ -216,21 +199,16 @@ Hence, the resolution limit represents a critical shortcoming for the study of b
 % TROPPO SPECIFICO A QUESTO LIVELLO
 %Moreover, it has been shown that an adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multi-resolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}.
 
-In the present work I have developed an approach that has been valuable in detecting communities in brain networks beyond the resolution limit. The following sections of this introductory chapter guide the reader into the complex networks science, by first giving an overview of the mathematical terminology and methodological concepts.
+In the present work I have developed an approach that has been valuable in detecting communities in brain networks beyond the resolution limit.
+The following sections of this introductory chapter guide the reader into the complex networks science, by first giving an overview of the mathematical terminology and methodological concepts.
 In the second chapter, the experimental evidence of the modular structure of brain connectivity is reviewed, together with the methods to disentangle the mesoscopic structure of complex systems. In particular, sections~\ref{sec:resolutionlimit} and~\ref{sec:degeneracy} consider the problem of the resolution limit and degeneracy of Newman Modularity.
-A new approach dubbed Surprise, that overcomes the limitations imposed by the resolution limit and degeneracy, is described in the chapter~\ref{chap:beyondresolutionlimit}. Throughout chapter~\ref{chap:beyondresolutionlimit}, the problems imposed by the resolution limit and degeneracy are analysed for Surprise and its weighted counterpart, Asymptotical Surprise. The characteristics of the two methods are discussed, together with an efficient algorithm aimed at their optimization.
-The application of Surprise and Asymptotical Surprise to functional connectivity networks constitutes the hearth of chapter~\ref{chap:beyondresolutionlimitfunctionalconnectivity}, whereby the implications of a resolution limit free analysis of the functional modules are explored. Firstly, application of Surprise reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods. An approach for the creation of realistic benchmark resting state networks is then examined. On the ground structure provided by those networks, Asymptotical Surprise is validated and shown to outperform current resolution-limited methods. The finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise is shown to lead to substantial differences in the identification of connector hubs compared to other community detection methods.
-
-%This introductory chapter presents the framework of complex network science as applied to brain functional connectivity and analyzes the implications of the resolution limit in real-world networks.
-% The brain is an extremely complex organ, whose dynamics is driven by the internal activity of its constituents, the neurons, responding adaptively to an ever-changing outside environment.
-% The neurons interact over the organic substrate that they themselves define, and shape an extremely intricate pattern of electrical and metabolic activities, giving rise to the outstanding set of abilities and possibilities typical of most evolved organisms.
-% Nonetheless, the notion that brain function can be reduced to the single operations of its constituents is as flawed as its complementary idea that cognition can be understood without making reference to its biological substrate.
-% Instead, what science is increasingly recognizing is that, for the description of most systems in nature, it is necessary to remain within a certain level of complexity and to contemplate the multiple interactions of simple subsystems taken as a whole.
-% It is known, indeed that many systems, despite radically different at their microscopic level, share many remarkable organizational properties, when analyzed in their entirety.
-% A window over the formidable and irreducible complexity of the brain can thus be opened by specific theoretical tools able to account for the brain multi-scale organization, its hierarchical structure, and its modular composition.
-% The study of brain connectivity has already made possible many advances in neuroscience, from the identification and structural characterization of the cytoarchitecture to the macro-scale connectivity at the level of nerve fibers.
-% Specifically, the analysis of the architecture of the nervous system is based on the idea that the brain can be thought as a complex system at different spatial and time scales.
-% In this respect, the tools of network theory are the method of election in the analysis of complex systems.
+A new approach dubbed Surprise, that overcomes the limitations imposed by the resolution limit and degeneracy, is described in the chapter~\ref{chap:beyondresolutionlimitbinarynetworks}.
+Throughout chapters, the problems imposed by the resolution limit and degeneracy are analysed for Surprise and its weighted counterpart, Asymptotical Surprise. The characteristics of the two methods are discussed, together with an efficient algorithm aimed at their optimization.
+The application of Surprise and Asymptotical Surprise to functional connectivity networks constitutes the hearth of chapters~\ref{chap:beyondresolutionlimitbinarynetworks} and \ref{chap:beyondresolutionlimitweightednetworks}, whereby the implications of a resolution limit free analysis of the functional modules are explored.
+Firstly, application of Surprise reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
+An approach for the creation of realistic benchmark resting state networks is then examined.
+On the ground structure provided by those networks, Asymptotical Surprise is validated and shown to outperform current resolution-limited methods.
+The finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise is shown to lead to substantial differences in the identification of connector hubs compared to other community detection methods.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% ELEMENTS OF GRAPH THEORY %%%%%%%%%%%%%%%%%%%%

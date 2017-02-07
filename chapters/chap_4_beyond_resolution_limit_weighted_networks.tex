@@ -56,14 +56,16 @@ Given its information-theoretic formulation, Asymptotical Surprise cleary featur
 
 Yet, numerical evalaution of Asymptotical Surprise is much faster than binary Surprise, furthermore it approximates very well Surprise already for networks with more than 50 nodes, as shown in Figure~\ref{fig:asymptotical_surprise_comparison}.
 
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=1\textwidth]{images/asymptotical_surprise_comparison.pdf}
 \caption{Approximation of binary Surprise with a binomial formulation and the Asymptotical formulation based on the Kullback-Leibler divergence. In the inset, the approximation ratio of binomial and Asymptotical Surprise to hypergeometric Surprise tends to 1 for graphs larger than 50 nodes. Adapted from~\cite{traag2015}.}
 \label{fig:asymptotical_surprise_comparison}
 \end{figure}
 
-%%%%%%%% PACO %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% PACO %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Maximization of Asymptotical Surprise: PACO}
 Finding the optimal partition of a graph is an NP-hard problem~\cite{fortunato2010} and practical implementations of community detection rely on heuristic approaches that enable finding nearly-optimal solutions in a reasonable computation time.
 
@@ -99,7 +101,7 @@ In the embedded manifold, two partitions are close if they are similar and the z
 Whereas a large plateau of solutions with similar values of maximum Modularity is observed as in Figure~\ref{fig:degeneracylandscape}A, consistent with~\cite{good2009}, Asymptotical Surprise displays a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracy_asymptotical_surprise}.
 
 Having assessed the non-degenerate landscape of solutions for Asymptotical Surprise encouraged and justified me to select the optimal partition as the one with the highest value of Asymptotical Surprise, thus avoiding the need of consensus-based approaches for the identification of the best candidate solution.\todo{frase strana sistemare.}
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/filtered_asymp_surp_ring_cliques_5_24_200.png}
 \caption{Degeneracy landscape of Asymptotical Surprise on a ring of clique model with 24 cliques of 5 nodes.}
@@ -119,7 +121,7 @@ The running time for this computation is in the order of $O(nd^2)$ where $n$ is 
 On a desktop workstation with a 2.5 GHz CPU, PACO runs in some tenths of seconds on a single repetition for a graph of around 600 nodes with a density close to 10\%, typical of brain networks.
 A small benchmark of PACO running times on a desktop workstation is shown in Figure~\ref{fig:paco_benchmark}, where we found optimal Surprise partitions of a LFR network with the parameters described in the text but increasing number of nodes.
 
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=0.5\textwidth]{images/paco_benchmark.pdf}
 \caption{Performance of PACO on a LFR network with parameters}
@@ -134,7 +136,7 @@ In order to get a better idea of how fast the PACO method converges to a maximum
 From these graphs, it appears that 2000 runs may be sufficient to reach stable community detection for the experimental data-set.
 A near-optimum value is reached earlier for the LFR network, but it should be noted that I have taken an instance of the synthetic network with no-noise added.
 
-\noindent\begin{figure}[htb!]
+\noindent\begin{figure}[!htb]
 \centering
 \includegraphics[width=0.45\textwidth]{images/paco_variability_nreps_lfr.png}\includegraphics[width=0.45\textwidth]{images/paco_variability_nreps_bullmore.png}
 \caption{Maximum value of Asymptotical Surprise with respect to number of repetitions on a LFR networks (left panel) and on a resting state network as in~\cite{crossley2013a}.}
@@ -155,7 +157,7 @@ I set $\mu_t=\mu_w$, as setting $\mu_w$ greater than $\mu_t$ would introduce inc
 I analyzed the performance of Newman's Modularity, Infomap and PACO on LFR networks where I varied the topological and weights mixing coefficients.
 In Figure~\ref{fig:avgmutmuw} the performance of the three methods is comparable in terms of NMI, with a faster decay of NMI for InfoMap and Newman compared to PACO for large $\mu_t$.
 
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=0.65\textwidth]{images/avg_nmi_allmethods_lfr_errorbars.pdf}
 \caption{NMI of the retrieved vs planted partition of an LFR network as a function of $\mu_t=\mu_w$ for the three community detection methods.}
@@ -165,7 +167,7 @@ In Figure~\ref{fig:avgmutmuw} the performance of the three methods is comparable
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% SYNTHETIC BENCHMARK NETWORKS %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Synthetic benchmark networks}
+\section{Synthetic benchmark networks}
 One important finding in~\cite{nicolini2016} is that brain networks are organized in modules with heterogeneous size distributions.
 I implemented this property in our two types of benchmark networks.
 For the first test, I generated a ring of cliques with $300$ nodes, and sizes of the cliques sampled from a power-law with exponent $\tau_c=2$, minimum and maximum clique size respectively $\min_c=5$, $\max_c=50$.
@@ -202,12 +204,11 @@ Additionally, we used two different coefficients of similarity between partition
 To this end, we quantified the confusion matrix $\mathbf{C}$ between the detected and planted modules. Each element $C_{ij}$ is the number of nodes in the planted community $i$ that appear in the detected community $j$.
 For each planted community we scored as true positives (TP) the nodes correctly identified as belonging to the ground-truth community, and as false positives (FP) the nodes wrongly assigned to a community; similarly false negatives (FN) were nodes wrongly classified in different communities and true negatives (TN) the nodes correctly classified as out of the community.
 Sensitivity, defined as $TP/(TP+FN)$, decreases with increasing number of False Negatives. Specificity instead is defined as $TN/(TN+FP)$ and decreases when many nodes are wrongly assigned in the same community.
-Additionally, we computed Accuracy and Matthew Correlation Coefficient (see Supplementary Materials for definitions)\todo{mettere definizioni matthew correlation coefficient}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%  PACO BENCHMARK ON SYNTHETIC NETWORKS %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{PACO benchmark on synthetic networks}
+\section{PACO benchmark on synthetic networks}
 I compared the quality of the partitions of the synthetic benchmark networks obtained by Asymptotical Surprise with those of Infomap~\cite{rosvall2008} and Newman's Modularity~\cite{newman2006,blondel2008}. Figure~\ref{fig:nmisensitivityspecificityringclique} shows Normalized Mutual Information, Sensitivity and Specificity of the three methods applied to the ring of cliques for different sample sizes and SNRs; no-noise condition is represented as ``Inf''.
 This model network was constructed to test the ability of the three methods to retrieve heterogeneous community structures under various noise conditions.
 
@@ -218,14 +219,14 @@ For this network, Infomap performed substantially better in terms of NMI against
 
 Asymptotical Surprise showed highest NMI and Sensitivity across conditions, consistent with its resolution-limit-free behavior. It proved superior in terms of NMI and Sensitivity in the low SNR regimes, and in the presence of relatively large intersubject variability as mimicked by the generation of different instances of the ring of cliques.
 Specificity of Asymptotical Surprise was not inferior to the other methods under all conditions, thus ruling out increased vulnerability to False Positives, at least in this particular model network.
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \includegraphics[width=1\textwidth]{images/pacopaperfigure1.pdf}
 \caption{The two benchmark networks used in this study, laid out. (A) is a power-law ring of cliques, where cliques present different sizes sampled from a power-law distribution;
 (B) is the layout of an LFR network with parameters $N=600$, $\left< k \right>=12$, $\max_k=50$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.
 The layout of (B) was generated with the graph-tool library~\cite{peixoto_graph_tool_2014}.}
 \label{fig:lfrringclique}
 \end{figure}
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \includegraphics[width=\textwidth]{images/pacopaperfigure4.pdf}
 \caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to a power-law ring of clique network. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
 \label{fig:nmisensitivityspecificityringclique}
@@ -233,7 +234,7 @@ The layout of (B) was generated with the graph-tool library~\cite{peixoto_graph_
 Comparable results were obtained for the LFR network (Figure~\ref{fig:nmisensitivityspecificitylfr}), a model graph that replicates the distribution of nodal degree observed in many real-world networks, including those representing brain functional connectivity.
 All three methods showed similar values of NMI for high SNR and a large number of subjects, with a plateau reaching maximum Sensitivity with a group sample bigger than $20$ and SNR above $30$.
 Sensitivity was only slightly worse for Modularity, but it should be noted that for the LFR network the size distribution of the planted modules was narrower than for the ring of cliques (Figure~\ref{fig:lfrringclique}), thus making the resolution limit less evident.
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \includegraphics[width=\textwidth]{images/pacopaperfigure5.pdf}
 \caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to Lancichinetti-Fortunato-Radicchi (LFR) networks. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
 \label{fig:nmisensitivityspecificitylfr}
@@ -253,13 +254,13 @@ As shown in Figure~\ref{fig:accmcc_cliques}, Accuracy of Newman's Modularity is 
 In terms of MCC, Figure~\ref{fig:accmcc_cliques} shows that Asymptotical Surprise behaves comparably or better than Infomap.
 Newman's modularity is the least performer, due to its resolution limit, and never reaches maximum MCC. Interestingly, Asymptotical Surprise slightly outperforms Infomap in terms of MCC in the single subject case in the no-noise condition.
 The comparison of the three methos is similar in the case of the LFR benchmark, as shown in Figure~\ref{fig:accmcclfr}.
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=\textwidth]{images/figure3_supplementary.pdf}
 \caption{Accuracy and Matthew correlation coefficient on the modified ring of clique benchmark.}
 \label{fig:accmcc_cliques}
 \end{figure}
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=\textwidth]{images/figure4_supplementary.pdf}
 \caption{Accuracy and Matthew correlation coefficient on the LFR benchmark.}
@@ -271,13 +272,13 @@ Altogether, the picture that emerges from the analysis of Accuracy and MCC is en
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% ASYMPTOTICAL SURPRISE ON RESTING STATE DATASET %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Asymptotical Surprise on resting state dataset}
+\section{Asymptotical Surprise on resting state dataset}
 Figure~\ref{fig:partitioncomparison} shows a comparison between the modular structure of the resting state fMRI dataset obtained with Newman's Modularity, Infomap and Asymptotical Surprise.
 For each method, I had $10,000$ independent runs and picked the partition with the best value of the respective fitness functions ($Q=0.4967$, $\mathcal{L}=8.5173$, $S_a=5925.3$, for Modularity, Infomap and Asymptotical Surprise, respectively).
 The three methods showed significantly different partitions (relative NMIs in Table 1), with a number of detected communities of 10, 19 and 47 for Modularity, Infomap and Asymptotical Surprise, respectively.
 Interestingly, Modularity detected a relatively uniform size distribution, consistent with the intrinsic scale built into the fitness function.
 Infomap showed a wider distribution of module sizes, with number of nodes ranging between 156 and 3, while Surprise showed the largest spread, and included communities as small as single nodes (singletons).
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \includegraphics[width=\textwidth]{images/pacopaperfigure6.pdf}
 \caption{Adjacency matrix of the resting state functional connectivity network. The node indices have been reordered by module membership in each graph, and the red lines highlight the community structures obtained by A) Louvain-Newman's Modularity ($Q=0.4967$); B) Infomap ($L=8.5173$); C) Asymptotical Surprise ($S_a=5925.28$).}
 \label{fig:partitioncomparison}
@@ -294,31 +295,29 @@ Deeper structures emerge as separate modules in Figure~\ref{fig:cervellini4x4}H,
 The hippocampus and the parahippocampal gyrus were identified as separate communities (O and P).
 Additional, smaller substructures are shown in the third and fourth row of Figure~\ref{fig:cervellini4x4}, including the Supplementary Motor Area (Figure~\ref{fig:cervellini4x4}J) and the orbital (Figure~\ref{fig:cervellini4x4}M) and orbitofrontal (Figure~\ref{fig:cervellini4x4}I) modules, containing nodes from Brodmann area 47.
 
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \includegraphics[width=\textwidth]{images/pacopaperfigure7.pdf}
 \caption{Sixteen largest modules found by Asymptotical Surprise Maximization in the resting state network overlaid on an MRI brain template. The modules are ranked by decreasing size, and named after corresponding functional networks previously identified by multivariate analysis of resting state fMRI data, or by the comprised anatomical districts.}
 \label{fig:cervellini4x4}
 \end{figure}
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.75\textwidth]{images/figure_cervellini_Louvain_Q_0_49674.png}
+\includegraphics[width=1\textwidth]{images/figure_cervellini_Louvain_Q_0_49674.png}
 \caption{First largest 8 modules of the optimal partition as found by Newman's Modularity, with a value of the Modularity $Q=0.4967$. Module 9 is not shown as it consists of a single node.}
 \label{fig:newmancervellini}
 \end{figure}
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.75\textwidth]{images/figure_cervellini_infomap_L_8_5173.png}
+\includegraphics[width=1\textwidth]{images/figure_cervellini_infomap_L_8_5173.png}
 \caption{First largest 16 modules of the optimal partition as found by Infomap, with a value of the description length $L=8.5173$.}
 \label{fig:infomapcervellini}
 \end{figure}
 
-
-Partitions of the functional connectivity network obtained by Newman's Modularity and Infomap are reported in the Supplementary Materials Section (Figures~\ref{fig:newmancervellini} and~\ref{fig:infomapcervellini}).
 Newman's Modularity retrieved four large, relatively uniform communities, corresponding to the Default Mode Network, the central network, occipital and frontoparietal networks.
 This is in keeping with previous studies using Modularity optimization by spectral decomposition~\cite{crossley2013a}, and consistent with the strong resolution limit that affects this method.
 Additionally, a few smaller modules were found by Louvain optimization of Newman's Modularity, corresponding to the basal ganglia, the hippocampal/parahippocampal formation and two asymmetrically distributed subcortical clusters.
 
-Infomap identified 19 communities of various sizes, also shown in the Supplementary Materials Section, Figure~\ref{fig:infomapcervellini}\todo{mettere immagini supplementary~\ref{fig:infomapcervellini}}.
+Infomap identified 19 communities of various sizes, also shown in Figures~\ref{fig:infomapcervellini} and \ref{fig:infomapcervellini}.
 The largest modules showed a close correspondence with those identified by Asymptotical Surprise, albeit with some notable differences.
 By way of example, the largest component includes the motor-sensory and auditory modules, identified as separate communities by Asymptotical Surprise.
 The Default Mode Network retrieved by Infomap includes parts of the temporal cortices that are not normally associated with the DMN.
@@ -337,20 +336,21 @@ However, substantial differences are observed for other hub regions. The partiti
 Community detection by InfoMap results in the identification of hubs that are partially consistent with either of the two other methods, in keeping with the idea that its resolution limit is less severe than for Newman's Modularity.
 Altogether, these findings indicate that node role classification is method-dependent, and may be affected by the resolution limit.
 
-\begin{figure}[htb!]
+\begin{figure}[!htb]
 \includegraphics[width=\textwidth]{images/pacopaperfigure8.pdf}
 \caption{Anatomical distributions of the participation coefficient and within-module degree z-score for the resting state functional connectivity network partitioned by the three community detection methods.}
 \label{fig:hubclassification}
 \end{figure}
-
-
-\begin{figure}[htb!]
-\includegraphics[width=\textwidth]{images/pacopaperfigure9.pdf}
+\begin{figure}[!htb]
+\includegraphics[width=0.6\textwidth]{images/pacopaperfigure9.pdf}
 \caption{Nodes presenting simultaneously large values of the participation coefficient and within-module degree (larger than 0.6 and 1.5, respectively) for the three community detection methods. These nodes are thought to represent the connector hubs responsible for the integration of the networks's modules.
 }
 \label{fig:hubclassification_threshold}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% VALIDATION OF ASYMPTOTICAL SURPRISE IN MODEL NETWORKS %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Validation of Asymptotical Surprise in model networks}
 The performance of Asymptotical Surprise optimization by PACO was assessed in model graphs with a built-in community structure, and compared with two established community detection methods. We have chosen two synthetic benchmark networks, the ring of cliques and the LFR network.
 
