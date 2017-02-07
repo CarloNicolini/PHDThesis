@@ -490,7 +490,7 @@ Although useful to address the degeneracy issue, this approach still suffers fro
 % Such badly-adapted configuration model does not give more importance to pairs of strongly correlated time series but rather to pairs of time series whose direct correlation $C_{ij}$ is larger than the common signal $X_{tot}$.
 % The null model proposed by MacMahon and Garlaschelli redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed and only terms that retain true correlations are maintained.
 
-\subsection{Modularity optimization: the Louvain method}\label{sec:louvain_method}
+\section{Modularity optimization: the Louvain method}\label{sec:louvain_method}
 Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy stochastic agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
 
 This algorithm has become extremely popular in recent years because it is fast, allowing to analyze huge networks with billions of edges~\cite{lancichinetti2009}.

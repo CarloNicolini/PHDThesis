@@ -1,309 +1,47 @@
-In the last chapter we have introduced the framework of network science used to study the brain networks. We showed that the modular organization of brain networks has been widely investigated using graph theoretical approaches and demonstrated that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
-We explored the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
-
-To this end, we will show that Surprise\index{Surprise}, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
-Surprise maximization in brain co-activation and functional connectivity resting state networks reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
-Moreover, Surprise leads to a more accurate identification of the network's connector hubs, the elements that integrate the brain modules into a cohesive structure. 
-In this chapter we will introduce Surprise from its theoretical foundations and discuss its properties in details. Finally, an explicitly made algorithm for Surprise optimization in binary graphs is presented, with a comparison of its performance on benchmark networks.
-
-\section{Probabilistic approach to clustering in binary networks}\label{sec:probability_clustering}
-As previously described, no spin-glass based additive quality function, including Newman's Modularity, is by any means measuring the statistical significance of the deviation between the fraction of edges falling within modules and the null model.
-In other terms, no spin-glass based quality function is telling us the level of statistical confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
-
-To address this question, one should instead compute probabilities, as they are the natural way to measure statistical significance.
-Specifically, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam. Surprise can be thought as a quality function that moves away from the framework of additive functions based on spin-glass models, as described in the previous chapter and tries to address these questions quantitatively.
-Precisely, the problem is the following: given a subgraph, what is the probability of observing another subgraph with a larger number of internal edges drawn from a random graph with a given density?
-This question is answered by the urn model in classical probability theory. The reason is clear if one imagines that each pair of nodes is a marble, which is one color if the nodes are connected by a link and the other color if they are not.
-A number of marbles is drawn from an urn without replacement and the probability of observing a given number of marbles of one specific color is calculated by means of the hypergeometric law.
-When applied to clustering, the problem corresponds to the calculation of the probability to observe a fixed number of internal edges in a randomly drawn set of nodes defining a community.
-For example, suppose that one draws a subgraph with $n_c$ nodes, $p_c$ pairs of nodes and $m_c$ edges from a graph with $n$ nodes, $p$ pairs of nodes and $m$ edges (see Section for the notation~\ref{sec:clustering}).
-As indicated by the urn model, the probability to observe exactly $m_c$ internal edges is given by:
-\begin{equation}\label{eq:subgraph_probability}
-\Pr[i=m_c] = \frac{\binom{m}{i}\binom{p-m}{p_c-i} }{\binom{p}{p_c}} = \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
-\end{equation}
-where the last equality is because of the Vandermonde identity~\cite{feller1968}.
-The probability in Eq.~\ref{eq:subgraph_probability} is simply understood in terms of urn model as there are $\binom{p_c}{i}$ ways of choosing exactly $i$ black marbles from a population of $p_c$ black marbles, $\binom{p-p_c}{m-i}$ ways of choosing $(m-i)$ white marbles from a population of $(p-p_c)$ white marbles and a total possible number of combinations of $m$ marbles taken from a population of $p$ of them. Figure~\ref{fig:subgraphconditionalprobability} shows an example where the probability of randomly picking the subgraph $\mathcal{G}$ from the graph $G$ is computed by means of the urn model.
-\input{include/misc/subgraphconditionalprobability.tex}
-As the probability of observing $i$ or more internal edges, is given by the sum of the probabilities of observing exactly $i$,$i+1$,$i+2$ etc. internal edges, summing on $i$ yields the probability of getting \emph{at least} $m_c$ white marbles:
-\begin{equation}\label{eq:subgraph_probability_marginalized}
-\Pr[ m_c \geq i ] = \sum\limits_{i=m_c}^{m} \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
-\end{equation}
-
-In this last equation we are considering the probability of randomly drawing a subgraph with $m_c$ or more internal edges over the set of all random subgraphs with $n$ nodes and exactly $m$ edges as in the $G_{nm}$ model described in section~\ref{sec:models_random_graph}. Indeed, the denominator $\binom{p}{m}$ in Equation~\ref{eq:subgraph_probability_marginalized} represent the possible number of graphs with $p$ pairs of nodes and $m$ edges. 
-
-\section{Surprise}
-The intuition of Eq.~\ref{eq:subgraph_probability_marginalized} gets very close to the definition of Surprise given by Aldecoa and Marin~\cite{aldecoa2011}, giving to Surprise a clearer theoretical motivation that to the best of our knowledge, did not appear in any other work. Hence, if we consider as the random subgraph that is drawn from the $G_{n,m}$ set, one with at least $m_\zeta=\sum_c m_c$ internal edges and $p_\zeta=\sum_c p_c$ pairs of edges, then such subgraph represents a whole clustering. In this case, the definition given in Eq.~\ref{eq:subgraph_probability_marginalized} and the definition given in~\cite{aldecoa2011} are perfectly equivalent. Indeed, for a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, exactly as in~\ref{eq:subgraph_probability_marginalized}.
-Here and in the rest of the work, we dub \emph{Surprise} the following probability:
-\begin{equation}\label{eq:surprise}
-S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}}
-\end{equation}
-
-Surprise computes the probability to (surprisingly) observe at least as many internal edges as within the proposed partition in a uniform random graph.
-As mentioned, model in Eq.~\ref{eq:surprise}  corresponds to an urn model without reinsertion, where $S$ is the probability of extracting at least $m_\zeta$ white balls out of $m$ trials from an urn containing $p_\zeta$ white balls and $p-p_\zeta$ black balls.
-Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions with respect to $S$ are those with the highest number of intracluster edges and the smallest number of intracluster pairs. 
-
-Differently from Modularity, $S(\zeta)=1$ both for the partition where every node is in a separated community ($|C|=n$,$p_\zeta=0$,$m_\zeta=0$) and for the partition that entails all nodes into a single group ($|C|=1$,$p_\zeta=p$,$m_\zeta=m$) as is evident from its formulation in terms of urn model. Indeed, as Newman's Modularity is zero when $C=1$, it is different than zero in the case $C=n$. In this sense Surprise is a more meaningful quality function as both the extremal partitions are uninteresting, yielding zero Surprise.
-
-It should be noted that due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is totally equivalent with respect to optimum solutions, where higher values correspond to better clustering.
-Different authors~\cite{arnauVMarsS2005,fleck2014} refer to $S$ as Surprise, whereas others~\cite{aldecoa2011,aldecoa2013} use $\hat{S}$. Hereafter we stick to the notation of~\cite{fleck2014} where Surprise is indicated as $S$ defined in Eq.~\ref{eq:surprise} and indicate $\hat{S}$ where needed.
-
-
-\subsection{General properties}
-As noted by~\cite{fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ is depending only on the number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely $S:=S(m_\zeta,p_\zeta)$.
-In estabilishing the domain of validity of $(m,p,m_\zeta,p_\zeta)$ the urn model is of help. A valid clustering $\zeta$ of mutually disjoint communities automatically satisfies intuitive but important requirements:
-\begin{obs}
-It's impossible to draw more white balls than the white balls contained in the urn, therefore $p_\zeta \geq m_\zeta$.
-\end{obs}
-\begin{obs}
-It's impossible to have more white balls than total number of drawn balls, therefore $m\geq m_\zeta$.
-\end{obs}
-\begin{obs}
-It's impossible to draw more black balls than the black balls contained in the urn, therefore $p-p_\zeta \geq m-m_\zeta$.
-\end{obs}
-All valid clusterings are enclosed inside the domain $\mathcal{L}$ defined as from these last three observation:
-\begin{equation}
-\mathcal{L} := \{ ( m_\zeta,p_\zeta) \; | m_\zeta > 0 \land p_\zeta \geq m_\zeta \land m \geq m_\zeta \land p-m > p_\zeta - m_\zeta \}
-\end{equation}
-The urn models gives other three important properties, indicating that Surprise is a convex function inside the domain of validity of its variables. Specifically as shown in~\cite{fleck2014} three inequalities apply for Surprise and for the urn model in general.
-\begin{props}\label{prop:prop1}
-\label{list:surprise_properties} It's less probable to draw at least $m_\zeta+1$ than $m_\zeta$ white balls if the urn contains the same number of $p_\zeta$ white balls, therefore $S(m_\zeta+1,p_\zeta) < S(m_\zeta,p_\zeta)$.
-\end{props}
-\begin{props}\label{prop:prop2}
-It's less probable to draw at least $m_\zeta$ white balls if the urn has one white balls less, therefore $S(m_\zeta,p_\zeta-1) < S(m_\zeta,p_\zeta)$.
-\end{props}
-\begin{props}\label{prop:prop3}
-It's less probable to draw at least $m_\zeta+1$ white balls if the urn has $p_\zeta+1$ white balls, than drawing at least $m_\zeta$ white balls if the urn has $p_\zeta$ white balls, therefore $S(m_\zeta+1,p_\zeta+1) < S(m_\zeta,p_\zeta)$.
-\end{props}
-The scheme in Figure~\ref{fig:surprisebehaviour} explicits the order relation between the elements of the three aforementioned inequalities.
-\begin{figure}[htb]
-\centering
-\begin{tikzpicture}
-    \node[] (S00) at (0,0) {$S(m_\zeta,p_\zeta)$};
-    \node[] (S10) at (4,0) {$S(m_\zeta+1,p_\zeta)$};
-    \node[] (S01)  at (0,-2) {$S(m_\zeta,p_\zeta+1)$};
-    \node[] (S11)  at (4,-2) {$S(m_\zeta+1,p_\zeta+1)$};
-    \draw[->,thick,>=latex] (S00) -- node[anchor=south] {\tiny{is greater than}} (S10);
-    \draw[->,thick,>=latex] (S01) -- node[anchor=south] {\tiny{is greater than}} (S11);
-    \draw[->,thick,>=latex] (S11) -- node[anchor=west,xshift=5,yshift=-25,rotate=90] {\tiny{is greater than}} (S10);
-    \draw[->, thick,>=latex] (S00) -- node[anchor=south,rotate=-28] {\tiny{is greater than}} (S11);
-    \draw[->,thick,>=latex] (S01) -- node[anchor=west,xshift=-6,yshift=-25,rotate=90] {\tiny{is greater than}} (S00);
-\end{tikzpicture}
-\caption{Behaviour of the landscape of Surprise $S$.}
-\label{fig:surprisebehaviour}
-\end{figure}
-
-A fourth inequality $S(m_\zeta,p_\zeta+1)>S(m_\zeta+1,p_\zeta)$ is implicit by looking at the behaviour of $S(\zeta)$ for a given graph. 
-%\subsection{Pareto optimality}
-The scheme in Figure~\ref{fig:surprisebehaviour} allows to rank the values of Surprise in relation to changes in $m_\zeta$ and $p_\zeta$. It's easy  verify that $S$ satisfies the following strict order relation:
-\begin{equation}\label{eq:surpriseorderrelation}
-S(m_\zeta+1,p_\zeta)<S(m_\zeta+1,p_\zeta+1)<S(m_\zeta,p_\zeta)<S(m_\zeta,p_\zeta+1).
-\end{equation}
-This property leads us to the observation that Surprise $S$ is a monotonically decreasing function (increasing $\hat{S}$) of $m_\zeta$ and monotonically increasing function (decreasing $\hat{S}$) of $p_\zeta$ in the convex interval $\mathcal{L}$.
-Moreover, from Figure~\ref{fig:surprisebehaviour} follows that optimal solutions with respect to $S$ are Pareto-optimal with respect to maximizing $m_\zeta$ and minimizing $p_\zeta$.
-In other words, a partition that is optimum with respect to Surprise is such that no further increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has higher $\hat{S}$.
-The Pareto optimality of optimum Surprise partitions, implies that a perturbation of $\delta m_\zeta, \delta p_\zeta$ leads to a change in Surprise such that it monotonically decreases if and only if $\delta m_\zeta > \delta p_\zeta$, precisely:
-\begin{equation}\label{eq:resolution_limit_condition}
-S(m_\zeta + \delta_{m_\zeta}, p_\zeta + \delta_{p_\zeta}) < S(m_\zeta,p_\zeta) \iff \delta_{m_\zeta} \geq \delta_{p_\zeta}.
-\end{equation}
-
-%% \begin{figure}[htb!]
-%% \centering
-%% \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
-%% \def \S {1};
-%% \def \W {11};
-%% \def \H {7};
-%% \node[anchor=south west, inner sep=0mm] at (0,0) { \includegraphics[width=\W cm]{images/plot_surprise_pareto.pdf}};
-%% \node[anchor=south] at (\W /2,\H +0.25) {$\hat{S}=-\log_{10}(S(m_\zeta,p_\zeta$, $m=10$,$p=15$))};
-%% %\draw[help lines,xstep=1.0,ystep=1.0] (0,0) grid (\W,\H);
-%% \foreach \x in {1,...,\W } {\node [anchor=north] at (\x-0.5,0) {$\x$}; }
-%% \node[anchor=north] at (\W/2,-0.5){$p_\zeta$};
-%% \foreach \y in {1,...,\H} {\node [anchor=east] at (0 ,\y-0.5) {$\y$}; }
-%% \node[anchor=east] at (-0.5,\H/2){$m_\zeta$};
-%% %\node[rectangle,fill=black!10,draw=black,rounded corners=0.1cm] at (\W+1.5,\H-0.5) {$m_{\zeta},p_\zeta \not \subset \mathcal{L}$};
-%% \end{tikzpicture}
-%% \caption{Pareto optimality of Surprise (here $\hat{S}$ is represented) on a trivial graph with $n=6$ nodes and $m=7$ edges. No increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has higher $\hat{S}$. Here Surprise is optimal for $m_\zeta=6,p_\zeta=6$.}
-%% \label{fig:pareto_optimality_surprise}
-%% \end{figure}
-%% \todo[inline]{CONTROLLARE FIGURA PROBABILMENTE SBAGLIATA PERCHE MZETA>M!!!}
-
-The result in Eq.\ref{eq:resolution_limit_condition} is of great help in designing optimization algorithms as every move that increase the intracluster edges more than intracluster pairs is good, while moves that increase intracluster pairs more than intracluster edges must be ignored, therefore sparing time for the computation of Surprise. Additionally, Eq.~\ref{eq:resolution_limit_condition} is useful when analyzing the onset of the resolution limit for different models.
-In the next sections we will show to what extent Surprise is affected by the resolution limit for Surprise, to show with convincing theoretical arguments that $S$ is nearly resolution-limit-free in Traag's sense~\cite{traag2015}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Statistical test interpretation}\label{sec:surprisefishertest}
-Surprise considers the problem of community detection as the one of making the intracluster density as further as possible from the global density in statistical terms. In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis $H_0$ that the intracluster density is the same as the graph density.
-It turns indeed out that this problem has an equivalent description in statistics, where one seeks to maximize the \emph{odds-ratio} of the $2 \times 2$ contingency table defined in Table~\ref{tab:contingency_table}.
-
-The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can therefore be used regardless of the sample characteristics. A simpler $\chi^2$ statistic can be used when the elements of the contingency table are large enough, although only an approximation of the \emph{p}-value can be obtained.
-In this case it's possible to tackle the problem of computation of $S$ by means of odds-ratio. Precisely, the \emph{normalized log odds-ratio} is computed as 
-\begin{equation}
-\log(\textrm{OR}) = \log\left( \frac{m_\zeta(p-m-p_\zeta+m_\zeta)}{(m-m_\zeta)(p_\zeta-m_\zeta)} \right )
-\end{equation}
-and in the asymptotic case, Surprise is equal to the probability:
-\begin{equation}\label{eq:prob_or_se}
-\Pr\left(z < -\frac{|\log\textrm{OR})|}{SE} \right)
-\end{equation}
-where $z$ is a random variable with standard normal distribution $z \approx \mathcal{N}(0,1)$.
-Although not interesting in the case of binary graphs, equation~\ref{eq:prob_or_se} is telling us that in developing a version of Surprise that will keep into account weighted graphs, we should in some way rely on its asymptotic distribution.
-
-\begin{table}[htb!]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
- & Drawn & Not drawn & \textbf{Total}\\
-\hline
-Intracluster & $m_\zeta$ & $p_\zeta-m_\zeta$ & $p_\zeta$\\
-\hline
-Intercluster & $m-m_\zeta$ & $p-m-p_\zeta+m_\zeta$ & $p-p_\zeta$ \\
-\hline
-\textbf{Total} & $m$ & $p-m$ & $p$ \\
-\hline
-\end{tabular}
-\caption{Contingency table for the urn model.}
-\label{tab:contingency_table}
-\end{table}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Resolution limit and Surprise}
-Unfortunately, the resolution limit appears to be an intrinsic feature of many quality functions, and there appears to be a ``narrow scope to resolution-limit-free methods''~\cite{traag2015}.  
-Surprise has been shown to outperform other network partitioning methods in the detection of small features within large graphs, but the extent to which it suffered from the resolution limit was unknown~\cite{aldecoa2011,aldecoa2013}, until our work~\cite{nicolini2016}.
-
-As pointed out by Aldecoa~\cite{aldecoa2011}, the author who originally introduced Surprise, while Modularity-based methods define a community as a region with an unexpectedly high density of links with respect to the global characteristics of the network, Surprise weights the number of actual intracluster edges against the maximum number of links given the nodes in the clusters.
-Hence, Surprise is able to discriminate local subnetworks whose internal density is close to that of a clique independently of their size.
-In the following, we assess the extent to which the resolution limit may affect Surprise.
-
-In order to assess to what extent Surprise is affected by the resolution limit, we directly compared Newman's Modularity and Surprise in the example of Fortunato and Barthelemy as illustrated in the previous chapter in Figure~\ref{fig:figure_1_barthelemy}. Already for $m_{12} = 1$, i.e. when the two cliques $G_1$ and $G_2$ were connected by only one edge, $Q^N$ showed sign inversion for $m_0 \approx 200$, meaning that it was beneficial for Modularity to merge two cliques.
-In this same example though, Surprise instead never merges cliques, as made evident in Figure~\ref{fig:barthelemy_surprise}.
-
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=1.0\textwidth]{images/barthelemy_surprise.pdf}
-\caption{Difference in $\hat{S}$ between the partition where the two cliques are separated (red) and the partition where the two cliques are merged (blue), as in the benchmark network of Fortunato and Barthelemy. As the quantity $\Delta \hat{S}$ is always positive, Surprise is never going to merge cliques, independently from other global parameters. Adapted from Nicolini and Bifone~\cite{nicolini2016}.}
-\label{fig:barthelemy_surprise}
-\end{figure}
-
-Figure~\ref{fig:barthelemy_surprise} shows that Surprise does not suffer from the resolution limit at least in this specific case.
-Indeed, $\Delta \hat{S}$ was always positive and grew monotonically with increasing $m_0$. 
-Hence, the two cliques $G_1$ and $G_2$ were always resolved by Surprise as separate communities independently of the network size, and also in the presence of some ``fuzziness'', i.e. when $m_{12}>1$ and the two cliques were connected by more than one edge.
-In order to assess whether this behavior reflects a general property of Surprise, or is incidental to this particular example, we have also studied a generalization of Fortunato and Barthelemy's model.
-
-A consequence of the definition of a resolution limit free in Traag's sense, is that such method will never depend on the size of the network to merge cliques in a graph comprising $r$ cliques of $n_r$ nodes connected in a ring structure as in Figure~\ref{fig:traag_ring_of_cliques} (often called the ``ring of cliques'' model).
-This observation prompted us to explore the behavior of $\hat{S}$ in the ring of cliques model graph, as an extension of Fortunato and Barthelemy's model.
-Interestingly, given its two-variables formulation, Surprise optimization can be seen as a multiobjective optimization problem where one seeks to minimize the intracluster pairs while maximizing the number of intracluster edges.
-With increasing graph size, the computational problem of calculating $\hat{S}$ for every possible partition becomes rapidly intractable (maximization of $S$ is NP hard)~\cite{fleck2014}.
-However, as explained before and pointed out by Fleck et al.~\cite{fleck2014}, the Surprise optimal clustering must be Pareto optimal with respect to minimizing $p_\zeta$ and maximizing $m_\zeta$, i.e. any further improvement in one of the two variables must occur at the expense of the other.
-
-In this sense, the problem of Surprise optimization is shown to be equivalent to a linear program~\cite{fleck2014}, where one seeks to minimize $p_\zeta$ while keeping $m_\zeta$ equal to a constant $h$ from $1$ to $m$, choosing then among the resulting $m$ clusterings, the one that maximizes $\hat{S}$.
-Hence, to delineate the Pareto frontier in the $(m_\zeta,p_\zeta)$ space, we need to solve $m$ integer linear programs (ILP) in the form:
-\begin{align}\label{eq:surprise_ilp}
-\textrm{minimize} \sum_{\{i,j\} \in \binom{V}{2}} \mathcal{X}_{ij} \nonumber \\
-\textrm{s.t.} \quad \mathcal{X}_{ij} \in \{0,1 \} \nonumber \\
-\quad \mathcal{X}_{ik} + \mathcal{X}_{ki} - \mathcal{X}_{ij} \leq 1 \nonumber \\
-\sum_{\{i,j\} \in E} \mathcal{X}_{ij}=h \nonumber
-\end{align}
-where $\mathcal{X}_{ij}$, equivalent to $\delta(\sigma_i, \sigma_j)$, are a set of $\binom{n}{2}$ binary variables corresponding to vertex pairs, with the interpretation that $\mathcal{X}_{ij}=1$ if vertex $i$ and vertex $j$ are in the same community. The alternative objective function $\sum_{ij}\mathcal{X}_{ij}$ measures the number of intracluster pairs $p_\zeta$, while the number of intracluster edges $m_\zeta=\sum_{ij \in E} \mathcal{X}_{ij}$ was set equal to a fixed $h \in [0,m]$. The remaining constraints are necessary in order to ensure transitivity, i.e. if nodes $i$ and $j$ are in the same community, nodes $i$ and $k$ are in the same community, then nodes $j$ and $k$ share the same community too. 
-Figure~\ref{fig:ring_cliques_pareto} shows the Pareto frontier for a ring of cliques where we independently varied the number of cliques $r$ and the number of nodes $n$ in every clique\footnote{Linear programs were solved using the Python interfaces of Gurobi 5.7.3 on Linux (Gurobi Optimizer Version 5.7, Gurobi Optimization, Inc., Houston, Texas, United States).}.
-As $\hat{S}$ reaches its minimum (zero) both in the case where all nodes are separated communities ($p_\zeta=0$) or when a single community entails all nodes ($p_\zeta=p$), Figure~\ref{fig:ring_cliques_surprise} shows monotonically increasing Surprise along the frontier with increasing $p_\zeta$ up to the Surprise optimum, indicated by black circles in the Pareto front of Figure~\ref{fig:ring_cliques_pareto}, whereas the corresponding partition identified each clique as a separate community.
-Importantly, in the range of parameters we have investigated, Surprise optimization never merged cliques in the ring of cliques, independently of the size of the graph, and behaved as a Traag's resolution-limit free method.
-
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=0.8\textwidth]{images/ring_cliques_pareto.pdf}
-\caption{Pareto front for a ring of cliques graph. Optimal solutions with respect to Surprise are indicated as small black dots. Adapted from Nicolini and Bifone~\cite{nicolini2016}.}
-\label{fig:ring_cliques_pareto}
-\end{figure}
-
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=0.8\textwidth]{images/ring_cliques_surprise.pdf}
-\caption{Surprise $\hat{S}$ for a ring of cliques graph at different levels of $p_\zeta$ for corresponding solutions at fixed $m_\zeta$. The peak of $\hat{S} $is always reached at $p_\zeta$ when the modules entail single cliques separately. Adapted from Nicolini and Bifone~\cite{nicolini2016}.}
-\label{fig:ring_cliques_surprise}
-\end{figure}
-
-While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
-Nonetheless, the size of the graphs we have explored numerically is quite typical of brain-connectivity networks and we feel encouraged to apply Surprise maximization to the study of the community structure of the brain.
-
-\section{Degeneracy of Surprise}\label{sec:degeneracy_surprise}
-Curiously, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in Section~\ref{sec:degeneracy}.
-This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
-We repeated the procedure indicated in section~\ref{sec:degeneracy}, where we embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. As previously introduced, the global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[height=0.4\textwidth]{images/degeneracy_surprise_n_5_c_24.png}\hfill
-\includegraphics[height=0.4\textwidth]{images/degeneracy_surprise_n6_c30.png}
-\caption{Degeneracy of Surprise landscape in a small (left) and large (right) ring of cliques graph. No plateaus exist, indicating the uniqueness of the global maximum that emerges from the other local optima.}
-\label{fig:degeneracy_surprise}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\section{Maximization of Surprise: FAGSO}\label{sec:max_surprise_fagso}
-
-Community detection is a NP-hard problem, and heuristics have to be developed for the optimization of quality functions for relatively large networks. In their original paper, Aldecoa et al.~\cite{aldecoa2011} applied metaheuristics, involving the evaluation of Surprise for partitions resulting from seven different community detection methods, each of those maximizing different quality functions.
-Here, we describe direct maximization of Surprise by exploiting FAGSO~\cite{jiang2014}, an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree~\cite{leiserson2001}.
-The detailed pseudocode of this algorithm is reported in Algorithm~\ref{alg:fagso} and illustrated step by step on an example network in Figure~\ref{fig:fagso_working}.
-
-The first step of FAGSO consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints nodes.
-An union-find data structure is used to hold the community structure throughout the computation.
-At the beginning, each community consists only of one vertex.
-Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community.
-This step is repeated for all edges and the final community structure is returned in the disjoint-set.
-FAGSO finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
-
-The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Octave} is freely available at \url{https://github.com/carlonicolini/fagso}.
-
-\begin{Algorithm}[htb!]
-\input{include/misc/fagso.tex}
-\caption{Pseudocode of FAGSO, with description of the implementation of union-find data structure.}
-\label{alg:fagso}
-\end{Algorithm}
-
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=0.8\textwidth]{images/fagso.pdf}
-\caption{FAGSO algorithm steps illustrated. Firstly, Jaccard indices are computed. In box A., every node is associated to a separate community and FAGSO evaluates whether to merge nodes $d$ and $f$ in the same community as the edge they form has the highest Jaccard index. Since this merge results in an increased value of Surprise, $d$ and $f$ are merged in box B. then FAGSO proceeds to evaluate the merge of nodes $a$ and $b$ as their Jaccard index is the second greatest. FAGSO merges the two nodes in a second community and proceeds updating the Surprise value and analyzing the subsequent merges in boxes D to F, until no moves are available and FAGSO terminates with the community structure in box G.}
-\label{fig:fagso_working}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-\section{From binary to weighted networks: Asymptotical Surprise}
-As described and illustrated in the previous chapter, a fundamental limitation of Surprise lies in its definition in terms of discrete probability and binomial coefficients that make it applicable only to binary networks, i.e. graphs with edge values $1$ or $0$.
-This represents a substantial drawback, for it requires binarization of brain connectivity networks, thus discarding potentially important information contained in the edge weight distribution.
+Brain networks are intrinsically weighted with weights reflecting a continuous distribution of connectivity strengths between different regions.
+A fundamental limitation of Surprise lies in its definition in terms of discrete probability and binomial coefficients that make it applicable only to binary networks, i.e. graphs with edge values $1$ or $0$.
+For this reason Surprise requires binarization of brain connectivity networks, a process that may discard potentially important information contained in the edge weights distribution. 
 Moreover, different binarization procedures may lead to different network representations for the same connectivity dataset.
-Therefore, an extension of Surprise to weighted networks would be highly desirable, and would provide a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
+This represents a substantial drawback of the binary Surprise approach.
 
-As introduced in the previous sections, Surprise~\cite{aldecoa2011,aldecoa2013} is a quality measure of the partition of a binary network that has its roots in probability theory.
-For a given partition $\zeta$, Surprise represents the probability that a graph drawn uniformly at random from the set of all graphs with $n$ nodes, $p=\binom{n}{2}$ pairs and $m$ edges has at least as many intra-cluster edges as $G$.
-Intuitively the lower the probability the better the partition.
-For binary networks, Surprise can be computed within the discrete probability theory of urn models as shown in Equation~\ref{eq:surprise}.
+Hence, an extension of Surprise to weighted networks would be highly desirable, and would provide a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
+The results obtained from binary Surprise optimization on real functional connectivity networks, encouraged me to extend the Surprise optimization approach to weighted networks.
 
-In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution. We introduce  $q=m_\zeta/m$ and $\left<q \right>=p_\zeta/p$ as the observed and expected fraction of intracluster edges. By only taking into account the dominant term of the sum in Eq.~\ref{eq:surprise} (the one with $i=m_\zeta$), after some manipulations we get an approximate expression for the logarithmic Surprise\footnote{If not specified, starting from here we use natural base logarithms.}:
+Capitalizing on recent developments in the field of statistical physics of complex networks~\cite{traag2015}, here I show that Surprise can be extended to weighted networks. This recently introduced approach dubbed Asymptotical Surprise, provides a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
+Furthermore, I'll present a new algorithm for the optimization of Asymptotical Surprise in the study of the modular structure of weighted networks.
+
+% Since there is no ground-truth structure for brain functional connectivity networks, I have assessed the performance of this novel approach on synthetic networks with a planted modular structure, and compared it to some of the leading graph partitioning methods, namely Louvain method for Newman's Modularity (see section~\ref{sec:louvain_method}) and Infomap.
+Importantly, I will demonstrate this new approach in networks derived from synthetic data that mimic different structures, levels of noise and variability, such as those observed in functional connectivity experimental data.
+Indeed, improved resolution afforded by Asymptotical Surprise may imply increased vulnerability to spurious modules resulting from noisy correlations.
+It is therefore important to assess the benefits of increased resolution against the limitations arising from intrinsic data variability. 
+
+Finally, I'll apply Asymptotical Surprise to weighted functional connectivity networks from resting state fMRI data, revealing a heterogeneous, multiscale community structure.
+I'll show that the finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise leads to substantial differences in the identification of connector hubs compared to other community detection methods.
+
+\section{Asymptotical Surprise}
+In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution. Hereafter I'll stick to the derivation obtained by Traag~\cite{traag2015}.
+One can introduce $q=m_\zeta/m$ and $\left<q \right>=p_\zeta/p$ as the observed and expected fraction of intracluster edges. By only taking into account the dominant term of the sum in Eq.~\ref{eq:surprise} (the one with $i=m_\zeta$), after some manipulations one gets an approximate expression for the logarithmic Surprise\footnote{If not specified, starting from here we use natural base logarithms.}:
 \begin{equation}\label{eq:surprise_dominant}
 \log(S) \approx \log \left( \frac{\binom{\left<q\right> p}{m_\zeta} \binom{(1-\left<q\right>)p}{m(1-q)}}{\binom{p}{m}} \right)
 \end{equation}
-which corresponds to the probability of observing exactly $m_\zeta$ internal links, given the clustering $\zeta$. As the denominator in Eq.\ref{eq:surprise_dominant} is independent of the partition, we ignore it, and thanks to the Stirling approximation of the binomial coefficients, which reads 
+which corresponds to the probability of observing exactly $m_\zeta$ internal links, given the clustering $\zeta$.
+As the denominator in Eq.\ref{eq:surprise_dominant} is independent of the partition, it can be discarded, and, thanks to the Stirling approximation of the binomial coefficients, which reads 
 \begin{equation}
 \log \binom{n}{k} \approx k \log \left( \frac{n}{k} \right)
 \end{equation}
-we can write the dominant term~\ref{eq:surprise_dominant} as:
+one can write the dominant term~\ref{eq:surprise_dominant} as:
 \begin{equation}
 \log(S) = - \log \left(\frac{m}{p}\right)^{-m} \left[ \left(\frac{\left< q\right>}{q}\right)^q \left(\frac{1-\left< q\right>}{1-q}\right)^{1-q} \right]^{m}
 \end{equation}
-The term $(m/p)^{-m}$ is independent of the partition so we can discard it. Hence, the asymptotic expansion of Surprise reads:
+The term $(m/p)^{-m}$ is independent of the partition so it can be discarded.
+Hence, the asymptotic expansion of Surprise reads:
 \begin{equation}
 \log(S) = -m \left[ q \log \frac{\left<q\right>}{q} + (1-q)\log \frac{1-\left<q\right>}{1-q} \right]
 \end{equation}
-Interestingly, this last equation corresponds to the binary Kullback-Leibler divergence $m D_{KL}(q \| \left< q \right>)$, which is interpretable as the distance between the two probability distributions $q$ and $\left<q\right>$, or more precisely, as the information lost (in nats since we are using natural base logarithms) when we encode the distribution $q$ with the distribution $\left< q\right>$. 
-Thus, in the limit of large networks, Surprise $\hat{S}$ can be approximated by a binomial distribution. This observation led to definition of Asymptotical Surprise $\mathcal{S}_a$~\cite{traag2015}:
+Interestingly, this last equation corresponds to the binary Kullback-Leibler divergence $m D_{KL}(q \| \left< q \right>)$, which is interpretable as the distance between the two probability distributions $q$ and $\left<q\right>$.
+More precisely, as the information lost (in nats since we are using natural base logarithms) when one encodes the distribution $q$ with the distribution $\left< q\right>$.
+Thus, in the limit of large networks, Surprise $\hat{S}$ can be approximated by a binomial distribution.
+This observation led to definition of Asymptotical Surprise $\mathcal{S}_a$~\cite{traag2015}:
 \begin{equation}\label{eq:asymptoticalsurprise}
 \mathcal{S}_a = m D_{\textrm{KL}}\left( q \| \left< q \right> \right)
 \end{equation}
@@ -312,7 +50,7 @@ where the binary Kullback-Leibler divergence~\cite{kullback1951} is $$D_{\textrm
 In the framework of information theory~\cite{cover2006}, Asymptotical Surprise represents the Kullback-Leibler divergence between the observed and expected fraction of intra-cluster edges; it encodes the information lost when the prior distribution $\left <q \right >$ is used to approximate the posterior distribution $q$. Kullback-Leibler divergence is a quasi-distance on probability distributions as it is always non-negative, non-symmetric and zero only when $q=\left< q \right>$, exactly like binary Surprise.
 
 Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks~\cite{traag2015}. As a side effect of its definition in terms of information-theoretic quantity, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density now consider edge weights.
-This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, seamlessly permitting to avoid the need of binarization procedures prior to the community detection, as shown in~\cite{nicolini2017}.
+This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, thus avoiding the need of binarization procedures prior to the community detection, as shown in~\cite{nicolini2017}.
 
 Given its information-theoretic formulation, Asymptotical Surprise cleary features \emph{convexity}, a property that is more difficult to assess for binary Surprise. Optimization of convex functions is typically simpler due to some regularities featured by such functions and the availability of practical algorithms. Furthermore a convex function warranties a landscape with a global optimum and no degeneracy, a property that is extremely important for community detection.
 
@@ -325,41 +63,61 @@ Yet, numerical evalaution of Asymptotical Surprise is much faster than binary Su
 \label{fig:asymptotical_surprise_comparison}
 \end{figure}
 
-\subsubsection{Degeneracy of Asymptotical Surprise}\label{sec:degeneracy_asymptotical_surprise}
-Degeneracy of nearly-optimal solutions, whereby similar values of the fitness function around its maximum correspond to substantially different partitions, has been observed for Newman's Modularity~\cite{good2009}. A consensus approach has been suggested in~\cite{lancichinetti2012} as a means to mitigate the degeneracy problem, yielding a stable ``average'' solution over a large set of partitions. In order to ascertain whether Surprise and Asymptotical Surprise suffer from a similar shortcoming we have performed degeneracy analysis for these fitness functions following~\cite{good2009}.
-In short, we sampled partitions from a benchmark network consisting in 24 cliques of five nodes, connected by a single link to form a ring-like structure.
-We sampled the configuration space of partitions through a Montecarlo procedure and annotated its corresponding values of quality function for each partition.
-We then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
-In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function. Whereas a large plateau of solutions with similar values of maximum Modularity is observed (Figure~\ref{fig:degeneracylandscape}A), consistent with~\cite{good2009}, Asymptotical Surprise and Surprise display a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracylandscape}B and \ref{fig:degeneracylandscape}C.
-\todo{fixare questa parte, ripetizioni di frasi in giro. commenti immagine non consistenti.}
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=1.0\textwidth]{images/filtered_asymp_surp_ring_cliques_5_24_200.png}
-\caption{Degeneracy landscape of Asymptotical Surprise on a ring of clique model.}
-\label{fig:degeneracy_asymptotical_surprise}
-\end{figure}
-
+%%%%%%%% PACO %%%%%%%%%
 \section{Maximization of Asymptotical Surprise: PACO}
 Finding the optimal partition of a graph is an NP-hard problem~\cite{fortunato2010} and practical implementations of community detection rely on heuristic approaches that enable finding nearly-optimal solutions in a reasonable computation time.
 
-Here we introduce a powerful and general method for the optimization of Asymptotical Surprise dubbed PACO (PArtitioning Cost Optimization). PACO is a non-deterministic agglomerative algorithm based on FAGSO (described in chapter~\ref{sec:max_surprise_fagso}) and, like the Louvain method, has an element of randomness that enables a more efficient exploration of the partition landscape.
+Here I introduce a powerful and general method for the optimization of Asymptotical Surprise dubbed PACO (PArtitioning Cost Optimization).
+PACO is a non-deterministic agglomerative algorithm based on FAGSO (described in chapter~\ref{sec:max_surprise_fagso}) and, like the Louvain method, has an element of randomness that enables a more efficient exploration of the partition landscape.
 
-The operating principle of PACO is based on the triadic closure property, i.e. the fact that in real-world networks nodes with many common neighbors are more likely to be neighbors. This transitive neighborhood property underlies the formation of communities of nodes~\cite{bianconi2014,eustace2015}. In principle, any measure of structural similarity between nodes could guide a community detection heuristic toward the optimal partition. Specifically, PACO uses the Jaccard index~\cite{jaccard1901}, a measure of the fraction of overlap between the neighbors in common between nodes, as the guiding principle for the agglomeration of similar nodes in the same community.
+The operating principle of PACO is based on the triadic closure property, i.e. the fact that in real-world networks nodes with many common neighbors are more likely to be neighbors.
+This transitive neighborhood property underlies the formation of communities of nodes~\cite{bianconi2014,eustace2015}.
+In principle, any measure of structural similarity between nodes could guide a community detection heuristic toward the optimal partition.
+Specifically, PACO uses the Jaccard index~\cite{jaccard1901}, a measure of the fraction of overlap between the neighbors in common between nodes, as the guiding principle for the agglomeration of similar nodes in the same community.
 
 In the first phase of PACO, the Jaccard metric is evaluated for every edge. More formally, for an edge $e=(u,v)$ the Jaccard index is computed as $J(e)=\frac{|\Gamma(u) \cap \Gamma(v)|}{|\Gamma(u) \cup \Gamma(v)|}$ where $\Gamma(u)$ and $\Gamma(v)$ are the neighboring nodes of $u$ and $v$ respectively.
 
-The agglomerative process starts with an initial partition where every vertex represents a community on its own. This partition has $n$ communities and no intra-cluster edges.
-The edges of the graph are then ranked in decreasing order by their Jaccard index and iteratively, for every edge in the sorted list, endpoint nodes are merged only if they belong to different communities. In this case one of the two endpoints, selected by chance, is assigned to the other's endpoint community and the increment of Surprise is computed: if it is positive, the partition is updated together with the new value of Surprise (or Asymptotical Surprise), otherwise the algorithm proceeds to the next edge.  
+The agglomerative process starts with an initial partition where every vertex represents a community on its own.
+This partition has $n$ communities and no intra-cluster edges.
+The edges of the graph are then ranked in decreasing order by their Jaccard index and iteratively, for every edge in the sorted list, endpoint nodes are merged only if they belong to different communities.
+In this case one of the two endpoints, selected by chance, is assigned to the other's endpoint community and the increment of Surprise is computed: if it is positive, the partition is updated together with the new value of Surprise (or Asymptotical Surprise), otherwise the algorithm proceeds to the next edge. 
 
 Figure~\ref{algo:paco} describes the details of the PACO algorithm for Surprise and Asymptotical Surprise Optimization.
 The function \textsc{Paco} takes as input a graph G and returns the nodes community membership vector C. Line 1 initializes the value of Surprise to 0. Line 2 assign to each node in the graph its community. Line 3 creates a list of edges E' sorted in decreasing order by their Jaccard coefficient. Line 4 iterates on every edge e=(u,v) and at line 6 checks if the endpoints they share the same community. Line 8 copies the membership vector to a temporary vector C'. Lines 9-13 choose randomly at chance if to put node u in the community of v or viceversa. Line 14 computes the new value of Surprise S' from the just updated community membership C. The function \textsc{ComputeSurprise} returns the value of Surprise for graph G and partition C. Lines 15 to 18 checks if the new value of Surprise S' is greater than the previously stored value S and update Surprise and the membership vector, otherwise continue to the next edge. Line 19 returns the final community membership assignment.
 
 \input{include/misc/paco.tex}
 
+%%%%%%%%% DEGENERACY %%%%%%%%%%
+\subsection{Degeneracy of Asymptotical Surprise}\label{sec:degeneracy_asymptotical_surprise}
+Degeneracy of nearly-optimal solutions, whereby similar values of the fitness function around its maximum correspond to substantially different partitions, has been observed for Newman's Modularity~\cite{good2009}.
+A consensus approach has been suggested in~\cite{lancichinetti2012} as a means to mitigate the degeneracy problem, yielding a stable ``average'' solution over a large set of partitions.
+In order to ascertain whether Asymptotical Surprise suffers from a similar shortcoming I have performed degeneracy analysis by following~\cite{good2009}.
+In short, I sampled partitions from a benchmark network consisting in 24 cliques of five nodes, connected by a single link to form a connected ring-like structure.
+I then sampled the configuration space of partitions during iterative steps of PACO optimization starting from many different random partitions and annotating the corresponding values of Asymptotical Surprise for each temporary partition.
+I embedded the similarity matrix between all sampled partitions into a three-dimensional space maintaining similarity relations between partition with a Curvilinear Components Analysis (CCA)~\cite{good2009}.
+In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function.
+Whereas a large plateau of solutions with similar values of maximum Modularity is observed as in Figure~\ref{fig:degeneracylandscape}A, consistent with~\cite{good2009}, Asymptotical Surprise displays a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracy_asymptotical_surprise}.
+
+Having assessed the non-degenerate landscape of solutions for Asymptotical Surprise encouraged and justified me to select the optimal partition as the one with the highest value of Asymptotical Surprise, thus avoiding the need of consensus-based approaches for the identification of the best candidate solution.\todo{frase strana sistemare.}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{images/filtered_asymp_surp_ring_cliques_5_24_200.png}
+\caption{Degeneracy landscape of Asymptotical Surprise on a ring of clique model with 24 cliques of 5 nodes.}
+\label{fig:degeneracy_asymptotical_surprise}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% RUNNING TIME ANALYSIS OF PACO %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Running time analysis of PACO}
-We applied PACO on a full-resolution voxelwise connectivity matrix with 51,653 nodes and almost 2 million edges. PACO took 14 minutes for a single repetition on a server with Intel Xeon E5-2643@ 3.40 Ghz CPU and 256 GB ram.
-We estimated that 2000 repetitions of PACO would take approximately 2.5 weeks on this server. We also tried to run PACO on a standard office PC with 16 GB memory and an Intel Core i7: it took almost 40 minutes. It’s important to notice that the running time of PACO is mainly determined by the computation of Jaccard indexes in the initial step.
-The running time for this computation is in the order of $O(nd^2)$ where $n$ is the number of nodes and $d$ is the average degree of nodes. On a desktop workstation with a 2.5 GHz CPU, PACO runs in some tenths of seconds on a single repetition for a graph of around 600 nodes with a density close to 10\%, typical of brain networks. A small benchmark of PACO running times on a desktop workstation is shown in Figure~\ref{fig:paco_benchmark}, where we found optimal Surprise partitions of a LFR network with the parameters described in the text but increasing number of nodes.
+I applied PACO on a full-resolution voxelwise connectivity matrix with 51,653 nodes and almost 2 million edges.
+PACO took 14 minutes for a single repetition on a server with Intel Xeon E5-2643@ 3.40 Ghz CPU and 256 GB ram.
+I estimated that 2000 repetitions of PACO would take approximately 2.5 weeks on this server.
+I've also tried to run PACO on a standard office PC with 16 GB memory and an Intel Core i7: it took almost 40 minutes.
+It's important to notice that the running time of PACO is mainly determined by the computation of Jaccard indexes in the initial step.
+The running time for this computation is in the order of $O(nd^2)$ where $n$ is the number of nodes and $d$ is the average degree of nodes.
+On a desktop workstation with a 2.5 GHz CPU, PACO runs in some tenths of seconds on a single repetition for a graph of around 600 nodes with a density close to 10\%, typical of brain networks.
+A small benchmark of PACO running times on a desktop workstation is shown in Figure~\ref{fig:paco_benchmark}, where we found optimal Surprise partitions of a LFR network with the parameters described in the text but increasing number of nodes.
 
 \begin{figure}[htb!]
 \centering
@@ -368,9 +126,13 @@ The running time for this computation is in the order of $O(nd^2)$ where $n$ is 
 \label{fig:paco_benchmark}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% PACO REPRODUCIBILITY %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Reproducibility of PACO optimal solutions}
-In order to get a better idea of how fast the PACO method converges to a maximum, we have plotted the optimal value of Asymptotical Surprise over the 10000 runs for one instance of the LFR network, and for the resting state data-set presented in the Manuscript (Figures~\ref{fig:paco_variability}).
-From these graphs, it appears that 2000 runs may be sufficient to reach stable community detection for the experimental data-set. A near-optimum value is reached earlier for the LFR network, but it should be noted that we have taken an instance of the synthetic network with no-noise added.
+In order to get a better idea of how fast the PACO method converges to a maximum, I have plotted in Figure~\ref{fig:paco_variability} the optimal value of Asymptotical Surprise over the 10000 runs for one instance of the LFR network, and for the resting state data-set presented in the section~\ref{sec:restingstatedataset}.
+From these graphs, it appears that 2000 runs may be sufficient to reach stable community detection for the experimental data-set.
+A near-optimum value is reached earlier for the LFR network, but it should be noted that I have taken an instance of the synthetic network with no-noise added.
 
 \noindent\begin{figure}[htb!]
 \centering
@@ -379,13 +141,18 @@ From these graphs, it appears that 2000 runs may be sufficient to reach stable c
 \label{fig:paco_variability}
 \end{figure}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% BENCHMARKING PACO %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Benchmarking PACO}
 Among the two most important parameters in the LFR benchmark are the topological and weights mixing coefficients. 
-The topological mixing coefficient $\mu_t$ is the average ratio of intra-cluster neighbors divided by the number of inter-cluster neighbors, as defined in~\cite{lancichinetti2008}. The weights mixing coefficient is defined as the average ratio of node intra-cluster strength and inter-cluster strength, as defined in~\cite{lancichinetti2009a}.
-We explored the effects of these parameters on the ability of PACO to retrieve the planted structure in the network.
-We set $\mu_t=\mu_w$, as setting $\mu_w$ greater than $\mu_t$ would introduce inconsistency in the relative number and weight of the edges, with intermodule edges carrying the largest weights.
+The topological mixing coefficient $\mu_t$ is the average ratio of intra-cluster neighbors divided by the number of inter-cluster neighbors, as defined in~\cite{lancichinetti2008}.
+The weights mixing coefficient is defined as the average ratio of node intra-cluster strength and inter-cluster strength, as defined in~\cite{lancichinetti2009a}.
+I explored the effects of these parameters on the ability of PACO to retrieve the planted structure in the network.
+I set $\mu_t=\mu_w$, as setting $\mu_w$ greater than $\mu_t$ would introduce inconsistency in the relative number and weight of the edges, with intermodule edges carrying the largest weights.
 
-We analyzed the performance of Newman's Modularity, Infomap and PACO on LFR networks where we varied the topological and weights mixing coefficients.
+I analyzed the performance of Newman's Modularity, Infomap and PACO on LFR networks where I varied the topological and weights mixing coefficients.
 In Figure~\ref{fig:avgmutmuw} the performance of the three methods is comparable in terms of NMI, with a faster decay of NMI for InfoMap and Newman compared to PACO for large $\mu_t$.
 
 \begin{figure}[htb!]
@@ -395,14 +162,260 @@ In Figure~\ref{fig:avgmutmuw} the performance of the three methods is comparable
 \label{fig:avgmutmuw}
 \end{figure}
 
-\section{Comparison of PACO and FAGSO}
-FAGSO is an agglomerative optimization algorithm that builds on a variation of the Kruskal algorithm for minimum spanning tree and is described in~\cite{nicolini2016}. The first step of this method consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints vertices. An union-find data structure is used to hold the community structure throughout the computation. At the beginning, each community consists only of one vertex. Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community. This step is repeated for all edges and the final community structure is returned in the disjoint-set. This method finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% SYNTHETIC BENCHMARK NETWORKS %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Synthetic benchmark networks}
+One important finding in~\cite{nicolini2016} is that brain networks are organized in modules with heterogeneous size distributions.
+I implemented this property in our two types of benchmark networks.
+For the first test, I generated a ring of cliques with $300$ nodes, and sizes of the cliques sampled from a power-law with exponent $\tau_c=2$, minimum and maximum clique size respectively $\min_c=5$, $\max_c=50$.
+For each subject of the sample, I synthesized $150$ time-points for each node using the \texttt{neuRosim R} package~\cite{neurosim2011}.
+I set the baseline value of all the time series to $100$~\cite{welvaert2013}.
 
-PACO and FAGSO are based on the same idea of greedy agglomeration of edges that leads to increment in Surprise, but the implementation of the agglomeration step is different.
-In the box A of Figure~\ref{fig:pacofagso} both the algorithms are considering whether to merge nodes from edge $d-g$ into the same community or not.
-FAGSO consider the operation of merging nodes $d,g$ in the same community by joining red and blue communities together in one larger module and proceeds if this leads to higher Surprise.
-PACO instead works at node level, considering whether to randomly move node $g$ in the red community (Box C) or node $d$ in the blue community (Box D). PACO chooses between the two options the one that leads to the highest increment in Surprise.
-This detail allows PACO to explore more finely the landscape of optimization as it has more run to run variability. Additionally the internal implementation of PACO is faster as it stores the community structure as an array of integers representing the node affiliations, while FAGSO was storing the community structure as a set of nodes for every community.
+Finally, I correlated the original synthetic time series $\mathbf{X}$ by multiplication with the matrix $\mathbf{L}$, obtained the correlated time series $\mathbf{Y}$ and added Rician noise~\cite{Gudbjartsson1995} to $\mathbf{Y}$ independently for each area.
+The simulated data $\mathbf{Y}$ did not include slow drift components, simulated physiological noise, nor spatial noise.
+The average SNR is defined as $\textsc{SNR}=\bar{S}/\sigma_N$ where $\bar{S}$ is the average magnitude of the signal and $\sigma_N$ is the standard deviation of the noise~\cite{kruger2011}.
 
-\input{include/misc/pacofagso.tex}
+In order to be more exhaustive and extend the validity of results, I repeated the same procedure on weighted LFR networks with $N=600$ nodes, sampling nodes degree from a power-law with exponent $\tau_d=2$, average degree $\left<k\right>=12$ and maximum degree $\max_k=50$.
+I set the topological and weights mixing coefficients, i.e. the average fraction of intra-cluster and inter-cluster degree and strengths, to $\mu_t=0.1$ and $\mu_w=0.1$, respectively.
+Planted community sizes ranged from $5$ to $50$ nodes and were sampled from a power law with exponent $\tau_c=1$.
 
+Group-level correlation matrices were computed by Fisher-transforming and averaging individual instances of the above matrices.
+Sparsification was obtained by removing edges with weights below the most stringent threshold that maintained the network connectedness, a procedure known as percolation analysis~\cite{gallos2012,bardella2016a,alexander-bloch2010}.
+This approach measures the size of the largest connected component of the network upon iterative removal of the weakest edges and enables data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
+
+The community structure of the resulting weighted sparsified matrices was detected by Asymptotical Surprise optimized with PACO and compared against two widely used methods, Infomap~\cite{rosvall2008} and Newman's Modularity~\cite{blondel2008,newman2006}, that are affected by the resolution limit, albeit to different extents.
+In Newman's Modularity, the size of the smallest detectable cluster is of the order of the square root of the number of edges in the entire network~\cite{fortunato2007}, while Infomap has a limit that depends on the overall number of inter-cluster edges~\cite{kawamoto2015}.
+Here I used the Louvain implementation available in the Brain Connectivity toolbox~\cite{rubinov2010} and the Infomap implementation available in the \texttt{igraph-0.7.1} package~\cite{igraph2006}.
+
+For all methods, including PACO, I launched $10,000$ independent runs, and picked the membership corresponding to the partition with the best value of the fitness function, the maximum for Modularity and Asymptotical Surprise, the minimum for Infomap.
+As discussed in the previous chapter, sections~\ref{sec:degeneracy},~\ref{sec:degeneracy_surprise},~\ref{sec:degeneracy_asymptotical_surprise}, degeneracy of nearly-optimal solutions does not appear to severely affect Surprise or Asymptotical Surprise, and a consensus approach is not deemed necessary for these functions.
+This analysis supports the choice of selecting the solution with the highest value of the fitness function.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% MEASURES OF PARTITION QUALITY %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Measures of partition quality}
+For each method, we analyzed the level of agreement of the detected community structure against the planted one in terms of Normalized Mutual Information (NMI)~\cite{danon2005}.
+Additionally, we used two different coefficients of similarity between partitions: Sensitivity and Specificity. 
+
+To this end, we quantified the confusion matrix $\mathbf{C}$ between the detected and planted modules. Each element $C_{ij}$ is the number of nodes in the planted community $i$ that appear in the detected community $j$.
+For each planted community we scored as true positives (TP) the nodes correctly identified as belonging to the ground-truth community, and as false positives (FP) the nodes wrongly assigned to a community; similarly false negatives (FN) were nodes wrongly classified in different communities and true negatives (TN) the nodes correctly classified as out of the community.
+Sensitivity, defined as $TP/(TP+FN)$, decreases with increasing number of False Negatives. Specificity instead is defined as $TN/(TN+FP)$ and decreases when many nodes are wrongly assigned in the same community.
+Additionally, we computed Accuracy and Matthew Correlation Coefficient (see Supplementary Materials for definitions)\todo{mettere definizioni matthew correlation coefficient}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%  PACO BENCHMARK ON SYNTHETIC NETWORKS %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{PACO benchmark on synthetic networks}
+I compared the quality of the partitions of the synthetic benchmark networks obtained by Asymptotical Surprise with those of Infomap~\cite{rosvall2008} and Newman's Modularity~\cite{newman2006,blondel2008}. Figure~\ref{fig:nmisensitivityspecificityringclique} shows Normalized Mutual Information, Sensitivity and Specificity of the three methods applied to the ring of cliques for different sample sizes and SNRs; no-noise condition is represented as ``Inf''.
+This model network was constructed to test the ability of the three methods to retrieve heterogeneous community structures under various noise conditions.
+
+As expected, all methods showed better performance with increasing SNR and number of subjects, as noise and intersubject variability introduce spurious edges that hinder the ability to retrieve the planted structure.
+Partitions obtained with Newman's modularity showed the lowest NMI with respect to the planted partition under all conditions.
+Sensitivity of Newman's modularity did not exceed $0.75$ even for high SNRs and a large number of subjects, a consequence of its stronger resolution limit.
+For this network, Infomap performed substantially better in terms of NMI against the planted partition, with a Sensitivity that was superior to that of Modularity across the spectrum of conditions.
+
+Asymptotical Surprise showed highest NMI and Sensitivity across conditions, consistent with its resolution-limit-free behavior. It proved superior in terms of NMI and Sensitivity in the low SNR regimes, and in the presence of relatively large intersubject variability as mimicked by the generation of different instances of the ring of cliques.
+Specificity of Asymptotical Surprise was not inferior to the other methods under all conditions, thus ruling out increased vulnerability to False Positives, at least in this particular model network.
+\begin{figure}[htb!]
+\includegraphics[width=1\textwidth]{images/pacopaperfigure1.pdf}
+\caption{The two benchmark networks used in this study, laid out. (A) is a power-law ring of cliques, where cliques present different sizes sampled from a power-law distribution;
+(B) is the layout of an LFR network with parameters $N=600$, $\left< k \right>=12$, $\max_k=50$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.
+The layout of (B) was generated with the graph-tool library~\cite{peixoto_graph_tool_2014}.}
+\label{fig:lfrringclique}
+\end{figure}
+\begin{figure}[htb!]
+\includegraphics[width=\textwidth]{images/pacopaperfigure4.pdf}
+\caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to a power-law ring of clique network. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
+\label{fig:nmisensitivityspecificityringclique}
+\end{figure}
+Comparable results were obtained for the LFR network (Figure~\ref{fig:nmisensitivityspecificitylfr}), a model graph that replicates the distribution of nodal degree observed in many real-world networks, including those representing brain functional connectivity.
+All three methods showed similar values of NMI for high SNR and a large number of subjects, with a plateau reaching maximum Sensitivity with a group sample bigger than $20$ and SNR above $30$.
+Sensitivity was only slightly worse for Modularity, but it should be noted that for the LFR network the size distribution of the planted modules was narrower than for the ring of cliques (Figure~\ref{fig:lfrringclique}), thus making the resolution limit less evident.
+\begin{figure}[htb!]
+\includegraphics[width=\textwidth]{images/pacopaperfigure5.pdf}
+\caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to Lancichinetti-Fortunato-Radicchi (LFR) networks. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
+\label{fig:nmisensitivityspecificitylfr}
+\end{figure}
+In the lower SNR regime, Asymptotical Surprise presented the best performance in terms of NMI and Sensitivity, with a slower decay for decreasing SNR. 
+Specificity was almost equivalent across the three methods, with a quick convergence to the maximum value of 1 for high SNR and good performance (around $0.97$) for low SNR.
+Asymptotical Surprise presented a faster decay with decreasing SNR.
+However, it should be noticed that the scale of Specificity has a very narrow range ($0.97$-$1.00$), and the differences between the three methods were relatively small.
+
+Consensus analysis applied to Newman's Modularity to assess the potential effects of the degeneracy of nearly optimal solutions did not show substantial differences in the comparison with the other methods.
+Notably, Infomap showed a large variability in Accuracy for lower SNRs and number of subjects.
+Under closer examination, however, it appeared that the increased variance for Infomap was due to occasional runs in which the algorithm only retrieved one or two large modules.
+This is a known problem with Infomap and other algorithms based on random walks that depends on the need to parametrize the teleportation step in order to make the dynamics ergodic~\cite{lambiotte2012}.
+
+For the sake of completeness, we also computed Accuracy and Matthew Correlation Coefficient for the same model networks.
+As shown in Figure~\ref{fig:accmcc_cliques}, Accuracy of Newman's Modularity is lower for small SNRs and number of subjects and in any case it does not reach 100\% of true positives classification even in the no-noise condition. Infomap accuracy is high for SNR greater than 20, largely independent on the number of subjects. The large variance of Infomap for low SNRs is due to the merging of all nodes in a single large community in a few runs, as discussed in the main text. Asymptotical Surprise, behaves well in terms of Accuracy and has the least variability across all methods, plateauing at 100\% for SNRs greater than 20 and more than 40 subjects.
+In terms of MCC, Figure~\ref{fig:accmcc_cliques} shows that Asymptotical Surprise behaves comparably or better than Infomap.
+Newman's modularity is the least performer, due to its resolution limit, and never reaches maximum MCC. Interestingly, Asymptotical Surprise slightly outperforms Infomap in terms of MCC in the single subject case in the no-noise condition.
+The comparison of the three methos is similar in the case of the LFR benchmark, as shown in Figure~\ref{fig:accmcclfr}.
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\textwidth]{images/figure3_supplementary.pdf}
+\caption{Accuracy and Matthew correlation coefficient on the modified ring of clique benchmark.}
+\label{fig:accmcc_cliques}
+\end{figure}
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=\textwidth]{images/figure4_supplementary.pdf}
+\caption{Accuracy and Matthew correlation coefficient on the LFR benchmark.}
+\label{fig:accmcclfr}
+\end{figure}
+
+Altogether, the picture that emerges from the analysis of Accuracy and MCC is entirely consistent with the results shown in this section.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% ASYMPTOTICAL SURPRISE ON RESTING STATE DATASET %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Asymptotical Surprise on resting state dataset}
+Figure~\ref{fig:partitioncomparison} shows a comparison between the modular structure of the resting state fMRI dataset obtained with Newman's Modularity, Infomap and Asymptotical Surprise.
+For each method, I had $10,000$ independent runs and picked the partition with the best value of the respective fitness functions ($Q=0.4967$, $\mathcal{L}=8.5173$, $S_a=5925.3$, for Modularity, Infomap and Asymptotical Surprise, respectively).
+The three methods showed significantly different partitions (relative NMIs in Table 1), with a number of detected communities of 10, 19 and 47 for Modularity, Infomap and Asymptotical Surprise, respectively.
+Interestingly, Modularity detected a relatively uniform size distribution, consistent with the intrinsic scale built into the fitness function.
+Infomap showed a wider distribution of module sizes, with number of nodes ranging between 156 and 3, while Surprise showed the largest spread, and included communities as small as single nodes (singletons).
+\begin{figure}[htb!]
+\includegraphics[width=\textwidth]{images/pacopaperfigure6.pdf}
+\caption{Adjacency matrix of the resting state functional connectivity network. The node indices have been reordered by module membership in each graph, and the red lines highlight the community structures obtained by A) Louvain-Newman's Modularity ($Q=0.4967$); B) Infomap ($L=8.5173$); C) Asymptotical Surprise ($S_a=5925.28$).}
+\label{fig:partitioncomparison}
+\end{figure}
+
+Figure~\ref{fig:cervellini4x4} shows the 16 largest modules detected by Asymptotical Surprise, ranked by number of nodes comprised in each community. 
+The first and largest module (Figure~\ref{fig:cervellini4x4}A) includes the pre- and post-central gyri, part of the supramarginal gyrus and supplementary motor area.
+The second community (Figure~\ref{fig:cervellini4x4}B) consists largely of nodes belonging to the occipital lobe: the visual areas and the surrounding calcarine sulcus, the lingual and fusiform gyrus.
+The third module (Figure~\ref{fig:cervellini4x4}C) reflects the Default Mode Network, spanning the temporo-parietal cortex, the medial prefrontal cortex and the posterior cingulate/precuneus.
+The nodes involved in the executive frontal functions form the fourth largest community.
+Interestingly, nodes in the communities D, E, G are the major players that take part in the so-called fronto parietal attentional network~\cite{markett2014}.
+The auditory network, comprising temporal areas, was detected as a distinct community (Figure~\ref{fig:cervellini4x4}F).
+Deeper structures emerge as separate modules in Figure~\ref{fig:cervellini4x4}H, with subcortical areas including the basal ganglia, i.e. putamen, globum pallidum, caudate nucleus and the whole thalamus.
+The hippocampus and the parahippocampal gyrus were identified as separate communities (O and P).
+Additional, smaller substructures are shown in the third and fourth row of Figure~\ref{fig:cervellini4x4}, including the Supplementary Motor Area (Figure~\ref{fig:cervellini4x4}J) and the orbital (Figure~\ref{fig:cervellini4x4}M) and orbitofrontal (Figure~\ref{fig:cervellini4x4}I) modules, containing nodes from Brodmann area 47.
+
+\begin{figure}[htb!]
+\includegraphics[width=\textwidth]{images/pacopaperfigure7.pdf}
+\caption{Sixteen largest modules found by Asymptotical Surprise Maximization in the resting state network overlaid on an MRI brain template. The modules are ranked by decreasing size, and named after corresponding functional networks previously identified by multivariate analysis of resting state fMRI data, or by the comprised anatomical districts.}
+\label{fig:cervellini4x4}
+\end{figure}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.75\textwidth]{images/figure_cervellini_Louvain_Q_0_49674.png}
+\caption{First largest 8 modules of the optimal partition as found by Newman's Modularity, with a value of the Modularity $Q=0.4967$. Module 9 is not shown as it consists of a single node.}
+\label{fig:newmancervellini}
+\end{figure}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.75\textwidth]{images/figure_cervellini_infomap_L_8_5173.png}
+\caption{First largest 16 modules of the optimal partition as found by Infomap, with a value of the description length $L=8.5173$.}
+\label{fig:infomapcervellini}
+\end{figure}
+
+
+Partitions of the functional connectivity network obtained by Newman's Modularity and Infomap are reported in the Supplementary Materials Section (Figures~\ref{fig:newmancervellini} and~\ref{fig:infomapcervellini}).
+Newman's Modularity retrieved four large, relatively uniform communities, corresponding to the Default Mode Network, the central network, occipital and frontoparietal networks.
+This is in keeping with previous studies using Modularity optimization by spectral decomposition~\cite{crossley2013a}, and consistent with the strong resolution limit that affects this method.
+Additionally, a few smaller modules were found by Louvain optimization of Newman's Modularity, corresponding to the basal ganglia, the hippocampal/parahippocampal formation and two asymmetrically distributed subcortical clusters.
+
+Infomap identified 19 communities of various sizes, also shown in the Supplementary Materials Section, Figure~\ref{fig:infomapcervellini}\todo{mettere immagini supplementary~\ref{fig:infomapcervellini}}.
+The largest modules showed a close correspondence with those identified by Asymptotical Surprise, albeit with some notable differences.
+By way of example, the largest component includes the motor-sensory and auditory modules, identified as separate communities by Asymptotical Surprise.
+The Default Mode Network retrieved by Infomap includes parts of the temporal cortices that are not normally associated with the DMN.
+Similarly, hippocampus and the parahippocampal modules were merged by Infomap, and resolved as individual modules by Asymptotical Surprise.
+Other modules, including the visual, associative and executive networks (C, E and F in Figure~\ref{fig:infomapcervellini}, respectively) were qualitatively very similar to those identified by Asymptotical Surprise.
+
+Altogether, the picture that emerges is consistent with the idea that the resolution limit is more severe in Newman's Modularity than in Infomap, and that Asymptotical Surprise presents the best resolving power among the three methods in a real-world network with finite SNR and variability as the resting state functional connectivity network used for this study.
+
+\subsection{Hub classification}
+Maps of the anatomical distribution of the participation coefficient and within module degree show substantial differences between the three community detection methods (Figure~\ref{fig:hubclassification}), resulting in discrepancies in the identification of the connector hubs for the same functional connectivity network.
+
+Figure~\ref{fig:hubclassification_threshold} shows the nodes with simultaneously high values of participation coefficient and within module degree (connector hubs, according to the Guimera and Amaral's classification).
+All three methods pinpoint connector hubs in the superior, superior medial and middle frontal areas, as well as in the supplementary motor area.
+However, substantial differences are observed for other hub regions. The partition of Asymptotical Surprise localizes connector hubs in the Temporal Middle and Frontal Middle gyri, as well as in the Rectus, Middle Cingulate Cortex, Lingual gyrus and in the Precuneus.
+
+Community detection by InfoMap results in the identification of hubs that are partially consistent with either of the two other methods, in keeping with the idea that its resolution limit is less severe than for Newman's Modularity.
+Altogether, these findings indicate that node role classification is method-dependent, and may be affected by the resolution limit.
+
+\begin{figure}[htb!]
+\includegraphics[width=\textwidth]{images/pacopaperfigure8.pdf}
+\caption{Anatomical distributions of the participation coefficient and within-module degree z-score for the resting state functional connectivity network partitioned by the three community detection methods.}
+\label{fig:hubclassification}
+\end{figure}
+
+
+\begin{figure}[htb!]
+\includegraphics[width=\textwidth]{images/pacopaperfigure9.pdf}
+\caption{Nodes presenting simultaneously large values of the participation coefficient and within-module degree (larger than 0.6 and 1.5, respectively) for the three community detection methods. These nodes are thought to represent the connector hubs responsible for the integration of the networks's modules.
+}
+\label{fig:hubclassification_threshold}
+\end{figure}
+
+\subsection{Validation of Asymptotical Surprise in model networks}
+The performance of Asymptotical Surprise optimization by PACO was assessed in model graphs with a built-in community structure, and compared with two established community detection methods. We have chosen two synthetic benchmark networks, the ring of cliques and the LFR network.
+
+The ring of cliques presents a clear-cut modular structure by construct, with modules corresponding to complete subgraphs of variable sizes sampled from a power-law distribution. 
+This toy network proved useful to assess the effects of the resolution limit in the presence of a wide distribution of cluster sizes. The effects of this limit were particularly apparent for Newman's Modularity (Figure~\ref{fig:nmisensitivityspecificityringclique}), that showed poor Sensitivity even for noiseless rings of cliques, plateauing at a value of $0.75$.
+This is consistent with the findings of~\cite{fortunato2007}, that showed that for Modularity the resolution limit is set by the square root of the total number of edges in the graph.
+For Infomap, this limit is less severe and is determined by the number of inter-cluster edges~\cite{kawamoto2015}. Accordingly, the effects of the resolution limit were not apparent in this model network, where modules are sparingly connected by single edges.
+Asymptotical Surprise presented the best performance, consistent with the idea that this cost function is quasi-resolution limit free~\cite{traag2015}.
+
+However, real brain networks are characterized by heterogeneous distributions of node degree, with fat tails and power-law decays~\cite{bullmore2009}. Such heterogeneity is critical, as it determines some of the remarkable features of brain connectivity networks, including resilience to random failure and rich-clubness~\cite{vandenheuvel2011,vandenheuvel2013a}. To provide a more realistic benchmark, we used the Lancichinetti-Fortunato-Radicchi algorithm~\cite{lancichinetti2008}, that makes it possible to generate networks with realistic and tunable power law degree distribution and community sizes.
+
+For LFR networks, the difference in performance in the low-noise regime was more nuanced for the three methods compared in this study, possibly a result of a fuzzier community structure of the LFR network compared to the ring of cliques, and of the narrower distribution of cluster sizes. However, the picture appears different when noise and intersubject variability were injected into the network structure.
+
+Noise and other sources of variability in the data can significantly affect the structure of the resulting network representation.
+Noisy fMRI time-courses, for example, may introduce spurious correlations in brain functional connectivity networks.
+This problem may be particularly relevant for methods endowed with high resolution, like Asymptotical Surprise, that may be more vulnerable to False Positives generated by the mis-assignment of peripheral nodes, particularly in small clusters. Hence, the resolving power of community detection methods should be gauged against Specificity, which may be affected by noise in the distribution of edges that define the network's structure.
+However, to the best of our knowledge, this aspect has never been considered in the existing literature assessing the performance of community detection algorithms as applied to the study of brain connectivity.
+
+To this end, we have devised methods to inject noise, with amplitude and spectral distribution that mimic those of experimental noise, into networks with a well defined planted structure. Moreover, we have generated different instances for each network, corresponding to different subjects in a group, to account for intersubject variability that occurs in typical neuroimaging studies. 
+
+Unsurprisingly, for all methods and networks, detection of the planted structure improved with decreasing levels of noise, and with increasing number of subjects in the study.
+However, Asymptotical Surprise appeared to provide a superior performance in terms of NMI and Sensitivity to the planted structure for lower SNRs in both types of networks, while its Specificity was in line with that of resolution-limited methods like Newman's and Infomap (Figures \ref{fig:nmisensitivityspecificityringclique},\ref{fig:nmisensitivityspecificitylfr}).
+This rules out the idea that the higher sensitivity to small clusters of Asymptotical Surprise may be detrimental in noisy networks, making it more vulnerable to small, spurious modules.
+
+\subsection{Asymptotical Surprise optimization on resting state networks}
+Application of Asymptotical Surprise maximization to a group-level, resting state functional connectivity network from the brains of $27$ healthy subjects revealed a heterogeneous distribution of modules, with large and small modules coexisting in the optimal partition.
+This is in keeping with previous findings with binary Surprise~\cite{nicolini2016}.
+These modules closely reflect functional networks reported in many studies using Independent Component Analysis or other multivariate methods, including the sensorimotor, visual, default mode, executive, and attentional networks.
+Moreover, anatomically defined subcortical structures, like the hippocampus and parahippocampal formations emerged as independent moduli.
+
+While this is entirely consistent with our understanding of the neurofunctional and anatomical organization of the human brain, the accuracy of Asymptotical Surprise in identifying these networks is notable.
+Indeed, Surprise, like other graph-based community detection methods, divides networks into disjoint clusters of nodes on the basis of topological criteria.
+While a correspondence between topological modularity and functional networks identified by, e.g. Independent Component Analysis, may be expected, it is not a given, for they are defined on different principles. Indeed, multivariate methods like ICA separate components on the basis of the statistical independence of the time-courses, and do not convey information regarding the mutual relationship between modules nor about their topological organization.
+
+Previous studies applying resolution-limited methods like Newman's Modularity to the same dataset hereby analyzed~\cite{crossley2013a} found a few, large modules encompassing large-scale networks, but failed to identify finer, neurofunctionally plausible substructures like those shown in the present study. Infomap, on the other hand, proved sensitive to heterogeneously distributed clusters, thus implying that this method does not have an intrinsic scale, like Modularity and variations thereof based on the introduction of a resolution parameter. 
+However, Asymptotical Surprise appears to provide superior performance in identifying small subnetworks, particularly in the presence of noise, thus suggesting that this method may represent a new standard for community detection in brain networks. It should also be noted that no symmetry constraint was imposed, and the symmetrical bilateral distribution of nodes in the retrieved modules arises entirely from Asymptotical Surprise optimization. 
+
+Hierarchical clustering methods have been extensively applied to investigate the structure of brain connectivity networks, showing smaller and smaller clusters as the modules are iteratively subdivided~\cite{meunier2010}. Maximization of Asymptotical Surprise reflects the optimal cut through the dendrogram representing connectivity at these different levels of subdivision, and provides information on the optimal partition of the network. Hence, the heterogeneous distribution of cluster sizes retrieved by Asymptotical Surprise suggests that multiple scales of structure exist at the same level of the dendrogram.
+
+Finally, abnormal functional connectivity has been observed in a number of neurological and psychiatric diseases, but the coarse resolution of methods like Newman's Modularity~\cite{fornito2015} may have not detected differences in the modular organization of networks in patients compared to healthy controls. The improved resolution and sensitivity to multiscale structure afforded by Asymptotical Surprise may provide a powerful means to assess the brain functional architecture in disease states, thus contributing a potential imaging-based marker and a key to interpret the functional effects of aberrant connectivity.
+\subsection{Hub classification}
+The presence of heterogeneously distributed modules in functional connectivity networks may have important consequences for our understanding of the brain functional organization. By way of example, it has been shown that highly connected nodes, or hubs, are critically important in brain connectivity networks, and may play different roles depending on their position and connectivity distribution within and between modules~\cite{bullmore2009}. Hubs that primarily connect to nodes within the same community are dubbed “provincial hubs”, and are thought to be responsible for the definition and stability of the modules. Conversely, hubs that connect different modules are referred to as “connector hubs” and ensure integration of the activity of the network. The classification of hubs strongly depends on the modular structure that is considered, and inaccurate partitioning due to the resolution limit can lead to the wrong interpretation of their role in the interplay between segregation and integration of brain function~\cite{bullmore2009}. The present study suggests that this may have been the case in previous studies, in which resolution limited methods characterized by an intrinsic scale have been used, and provides a solution that may enable more accurate classification of hubs and nodes.
+
+The connector hubs identified by our three methods (Asymptotical Surprise, InfoMap and Newman) present some substantial differences, consistent with the idea that hub classification depends on community structure. These differences are particularly interesting in the light of the important role that connector hubs are thought to play in integrating information flow through the brain, and their putative role in brain disease \cite{crossley2014,stam2014}. By way of example, the Precuneus and the Cingulate Cortex are highlighted by Asymptotical Surprise, but not by Newman's Modularity, as connector hubs. These are two key elements of the Default Mode Network that have been consistently identified as vulnerable regions in neurological diseases~\cite{vandenheuvel2013a,buckner2009}. 
+Community detection by resolution limited free methods should enable more accurate classification of hub nodes, and improve our understanding of their role in brain disease. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% LIMITATIONS OF ASYMPTOTICAL SURPRISE %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Limitations of Asymptotical Surprise}
+Some caution should be taken in the interpretation of the graphs in Figures \ref{fig:nmisensitivityspecificityringclique} and \ref{fig:nmisensitivityspecificitylfr}.
+Indeed, the SNRs of the synthetic networks we have generated reflect noise with features, like a Rician distribution, that mimic some, but not all aspects of the variability of experimental data.
+By way of example, the brain parcellation scheme applied to define the nodes, and the heterogeneity of voxels within these parcels, may play a role that is difficult to model in toy networks~\cite{fornito2010}.
+Hence, the simulated Sensitivity and Specificity as a function of SNR and number of subjects should not be taken as absolute values to be used in the power and sample size estimation in real experimental designs.
+Nevertheless, these simulations provide useful information on the dependence of these parameters on noise levels, and a rigorous means to assess the relative merits of different community detection methods.
+
+Finally, we should note that the maximum value of Asymptotical Surprise calculated with PACO is an index of quality of the entire partition, and not of individual modules.
+Hence, individual modules may not all have the same strength of internal cohesiveness relative to their connection with other modules.
+We have found hints of this phenomenon in the comparison of nearly-optimal partitions obtained in the $10,000$ runs of PACO that we have performed to find the optimal community structure for this network.
+The overall community structure appeared to be robust, with most modules persistently emerging in every nearly-optimal partition, but in some cases we observed pairs of modules splitting or merging in otherwise similar solutions. Most notably, this was observed for the thalamus that in some instances was merged with the basal cluster and in others, featured as a separate module.
+This phenomenon may be less critical for methods like Newman's Modularity that have an intrinsic scale and retrieve uniformly distributed modules.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%% CONCLUSIONS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+We have extended the use of Surprise, a resolution-limit-free fitness function for the study of the modular structure of complex networks, to weighted brain functional connectivity networks. Specifically, we have developed a novel method, dubbed PACO, for the optimization of Asymptotical Surprise, a weighted counterpart of Surprise in the limit of large networks. We have applied PACO optimization of Asymptotical Surprise in synthetic networks to evaluate the relative merits of this novel approach against Newman's Modularity and Infomap, two of the leading methods used for community detection in brain connectivity networks. Specifically, we have implemented a process to inject noise into networks endowed with a ground-truth modular structure to assess the trade-off between improved resolution afforded by Asymptotical Surprise and potential sensitivity to spurious correlations introduced by variability in the data. Asymptotical Surprise optimization proved superior to existing methods in terms of Sensitivity and accuracy in detection of the planted structure as measured by Normalized Mutual Information, while showing comparable Specificity. We have also applied our approach to the partitioning of functional connectivity networks from resting state fMRI experiments. Direct comparison with other methods clearly demonstrated improved capability to identify neurofunctionally plausible and anatomically well-defined substructures otherwise concealed by the resolution limit. Asymptotical Surprise revealed a complex modular structure of resting state connectivity, with communities of widely different sizes reflecting distributed functional networks alongside with small, anatomically or functionally defined modules. This evidence corroborates the idea that the resolution limit may have negatively affected current models of the brain modular organization and the identification of the hubs responsible for integration of functional modules. 
+The application of methods like Asymptotical Surprise provides a novel, powerful approach to study the modular structure of brain connectivity beyond this limit.
