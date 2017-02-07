@@ -1,0 +1,27 @@
+% \section{Alternative approaches to Modularity}
+% If the problems of Modularity are evident, researchers tried to mitigate them with alternative meta-approaches. The issue of degeneracy indeed, implicitly maintains that in the absence of a clearly optimal partition, many partitions should be used instead. Yet, the problem of the resolution limit that arises from an inadequate choice of the configuration model as the null hypothesis, can be tackled by a proper choice of the null model that keeps into account the sources of random noise directly from the time series which the correlation matrix is originated from. Here we briefly discuss these two potential solutions to the problems we have just introduced.
+
+% \subsection{The bias of the null model for Modularity}
+% The null model of Modularity is not only is at the basis of the issues of resolution limit and degeneracy, but can be shown to be highly inadequate when used in brain networks based on estimates of Pearson correlation of BOLD time series.
+% As shown by MacMahon and Garlaschelli~\cite{macmahon2015}, indeed the configuration model introduces a systematic bias as it is not consistent with the definition of Pearson correlation.
+% Ideally, the modular structure in a full correlation matrix (a correlation matrix with all nonzero entries) should reflect a balance between positively and negatively correlated units. Correlation communities should be internally positively correlated while externally negatively correlated, but this does not happen when naively applying Modularity to correlation-based networks.
+% Such inadequacy results from a systematic bias that the configuration model introduces, here shortly explained.
+
+% Given $n$ time series $\mathbf{X}=\{ X_1, \ldots, X_n\}$ from the parcellation atlas, the Pearson correlation matrix is computed as
+% \begin{equation}
+% C_{ij} = \frac{\textrm{Cov}(X_i,X_j)}{\sqrt{\textrm{Var}(X_i)\textrm{Var}(X_j) }}.
+% \end{equation}
+% A naive application of Newman's Modularity to such correlation matrix results in:
+% \begin{equation}
+% Q^N= \frac{1}{C_{\textrm{norm}}} \sum \limits_{ij} \left[ C_{ij} - \langle C_{ij} \rangle \right] \delta(\sigma_i,\sigma_j) = \left[ C_{ij} - \frac{k_i k_j}{C_{\textrm{norm}}} \right] \delta(\sigma_i,\sigma_j)
+% \end{equation}
+% where $k_i=\sum_{j=1}^n C_{ij}$. Unfortunately though, this last term is biased because expanding the terms $k_i$ one obtains:
+% \begin{equation}
+% k_i =\sum_{j=1}^n C_{ij}= \sum_{j=1}^n \textrm{Cov}(X_i,X_j) = \sum_{j=1}^n \textrm{Cov}(X_i,X_{tot})
+% \end{equation}
+% where $X_{tot}=\sum_{j=1}^n x_j$ has zero mean but non unit variance, and the configuration model naively applied to correlation matrices becomes:
+% \begin{equation}
+% \frac{k_i k_j}{2m} = \textrm{Corr}(X_i,X_{tot})\textrm{Corr}(X_j,X_{tot})
+% \end{equation}
+% Such badly-adapted configuration model does not give more importance to pairs of strongly correlated time series but rather to pairs of time series whose direct correlation $C_{ij}$ is larger than the common signal $X_{tot}$.
+% The null model proposed by MacMahon and Garlaschelli redefines the null model of Modularity to take into consideration such desired property. Thanks to the \emph{random matrix theory} the bulk of signal due to the global mode, a large-scale oscillation that positively correlates all areas, is removed and only terms that retain true correlations are maintained.
