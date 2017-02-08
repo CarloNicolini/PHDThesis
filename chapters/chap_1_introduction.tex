@@ -443,7 +443,7 @@ The nervous system is obviously shaped by this balance as the need of fast infor
 Typical examples are the very localized functional area of visual processing V1 or the primary motor cortices. At larger scale the cortex works in concert, connecting all the segregated areas in a larger, widely distributed complex network.
 It is indeed more and more recognized that complex behaviours arise thanks to the dynamical interplay of the integrated and segregated actions of different regions of the brain~\cite{tononi1994,tononi1998,deco2015}.
 
-Presence of communities within FC networks and hubs supports this integration- segregation concept.
+Presence of communities within FC networks and hubs supports the concepts of integration and segregation.
 Recently, experiments in which computational dynamical processes are simulated over the topology of whole-brain networks have shed light on the role of communities in shaping the cortical activity~\cite{deco2015}.
 Importantly, it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs and rich clubs are deputed to convey that information over the whole brain.
 
@@ -657,32 +657,32 @@ The modularity of the LFR network is controlled primarily by the topological mix
 In the case $\mu_t$ is exactly zero, the network consists of isolated components and the stochastic block matrix is completely assortative or block-diagonal.
 Conversely, for $\mu_t=1$, the block matrix is null on the diagonal and completely disassortative, exhibiting no links inside communities and only links between them.
 The LFR model has a number of other parameters that control all the network parameters with great precision~\cite{lancichinetti2008,lancichinetti2009a} as described in Figure~\ref{tab:lfrparams}.
-\begin{figure}[htb!]\centering
-\begin{footnotesize}
-\noindent\begin{minipage}[b!]{0.5\textwidth}
-\begin{tabular}{l p{1\textwidth}}
-%\hline
-$\tau_d \geq 1$ & Power-law exponent of nodes degrees.\\
-$\tau_c \geq 1$ & Power-law exponent of community size.\\
-$\beta \geq 1$  &Exponential parameter for strengths distribution.\\
-$C \in [0,1]$ & Desidered average clustering coefficient.\\
-$\min_c$ & Minimum number of nodes in each community.\\
-$\max_c$  & Maximum number of nodes in each community.\\
-$\mu_t \in [0,1]$ & Topological mixing coefficient.\\
-$\mu_w \in [0,1]$ & Weights mixing coefficient.\\
-$\langle k\rangle $ &Desidered average degree.\\
-%\hline
-\end{tabular}
-\end{minipage}\hfill
-\begin{minipage}[b!]{0.35\textwidth}\flushright
-\includegraphics[width=1\textwidth]{images/LFRexample.pdf}
-\end{minipage}
-\end{footnotesize}
-\caption{LFR parameters and a single instance with $n=600$, $\langle k \rangle =12$, $\tau_d=2$, $\tau_c=1$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.}
-\label{tab:lfrparams}
-\end{figure}
 The LFR model is of great importance as it served as a benchmark test for community detection algorithms and as a model of heterogeneity of modules size when studying the performance of community detection methods. The original c++ code to generate LFR weighted networks is available at the Santo Fortunato's homepage~\url{https://sites.google.com/site/santofortunato/package3.tar.gz}.
 Bindings for \texttt{Matlab,Octave} and \texttt{Python} the Fortunato's code are freely available at~\url{https://github.com/carlonicolini/lfrwmx}.
+
+\begin{figure}[htb!]\centering
+	\begin{footnotesize}
+		\begin{minipage}[b!]{0.5\textwidth}
+			\begin{tabular}{l p{0.98\textwidth}}
+			$\tau_d \geq 1$ & Power-law exponent of nodes degrees.\\
+			$\tau_c \geq 1$ & Power-law exponent of community size.\\
+			$\beta \geq 1$  &Exponential parameter for strengths distribution.\\
+			$C \in [0,1]$ & Desidered average clustering coefficient.\\
+			$\min_c$ & Minimum number of nodes in each community.\\
+			$\max_c$  & Maximum number of nodes in each community.\\
+			$\mu_t \in [0,1]$ & Topological mixing coefficient.\\
+			$\mu_w \in [0,1]$ & Weights mixing coefficient.\\
+			$\langle k\rangle $ &Desidered average degree.\\
+			\end{tabular}
+		\end{minipage}\hfill
+		\begin{minipage}[b!]{0.35\textwidth}\flushright
+			\includegraphics[width=1\textwidth]{images/LFRexample.pdf}
+		\end{minipage}
+	\end{footnotesize}
+	\caption{LFR parameters and a single instance with $n=600$, $\langle k \rangle =12$, $\tau_d=2$, $\tau_c=1$, $\mu_t=0.1$, $\mu_w=0.1$, $\min_c=5$, $\max_c=50$.}
+	\label{tab:lfrparams}
+\end{figure}
+
 
 % \subsection{Power law ring of cliques}
 % The modified ring of clique network as indicated in the main text is composed by a ring structure of cliques whose sizes are randomly sampled from a power-law distribution with exponent $\tau_c=1$.

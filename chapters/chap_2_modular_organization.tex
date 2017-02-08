@@ -23,8 +23,6 @@ Thirdly, the spatial and metabolic constraints of neuronal wiring are factors th
 Here, wiring cost must not only be intended as the physical volume of axons and synapses but also be considered in terms of energetic demand for signal transmission, additional processing cost for noise correction over long distance signalling and sustenance of the necessary neuroglia that supports neuronal activities~\cite{bullmore2012}. In terms of wiring cost reduction, modular networks emerge naturally when minimizing the average path length and the total number of links, while maximizing robustness against perturbations in node activity.
 By way of example, in the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behaviour is encoded as fitness function~\cite{bongard2011}.
 
-\bigbreak
-
 Application of resting state fMRI has allowed the identification of various modules in human functional connectivity.
 These spatially distinct modes that demonstrate synchronous BOLD fluctuations, consist in strongly correlated, anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}.
 Various methods exist for analyzing resting-state data, including seed-based approaches~\cite{biswal1995,raichle2001}, independent component analysis~\cite{beckmann2005,damoiseaux2006} and graph-based methods~\cite{stam2007,bullmore2009}. They have generally shown that the human brain is functionally organized in a number of interconnected regions with boundaries that reflect specific aspects of cognitive and behavioural aspects~\cite{tomasi2012,alnaes2015,crossley2013a}.
@@ -77,83 +75,9 @@ Hence, the resolution limit may represent a critical shortcoming for the study o
 In the following sections I'm going to illustrate the current graph-theoretical approaches for community detection in networks and to discuss the theory of community detection, highlighting the practical problems of Modularity maximization.
 
 
-
-		% A number of other resting-state networks has been identified
-
-		%  Studies have hypothesized that there are
-		% 2 large opposing systems in the brain, one including the DMN and
-		% the other composed of attentional or task-based systems, such as
-		% somatosensory, visual, or attention RSNs. Terms used to refer to
-		% these systems include “task-positive” and “task-negative”4,12,13
-		% and “intrinsic” and “extrinsic.”14,15
-		% Several other RSNs have been identified. The somatosensory
-		% network, studied first by Biswal et al,1 includes primary and
-		% higher order motor and sensory areas (Fig 1B). The visual network
-		% is highly consistent across various studies and spans much of
-		% the occipital cortex (Fig 1C).2-6An auditory network consisting of
-
-
-		% Another popular approach is ICA,2,10 a mathematical technique
-		% that maximizes statistical independence among its components.
-		% For RS-fMRI data, ICA can be used to spatially identify distinct
-		% RSNs. Compared with seed-based methods, ICA has the advantage
-		% of requiring few a priori assumptions but does compel the
-		% user to manually select the important components and distinguish
-		% noise from physiologic signals. Some studies have aimed to
-		% automate this process and use ICA as a method for identifying
-		% noise within the BOLD signal.33-36 Despite the differences in the 2
-		% approaches, Rosazza et al37 showed that the results of seed-based
-		% analysis and ICA are significantly similar in a group of healthy
-		% subjects.
-		% Graph methods provide a distinct alternative to seed-based
-		% analyses and ICA.4,38-44 This approach views RSNs as a collection
-		% of nodes connected by edges. With RS-fMRI data, ROIs can be
-		% represented as nodes, and correlation between the ROIs, as the
-		% connectivity of the edges. Connectional characteristics of the
-		% graph can then be computed.44 Examples of measures of interest
-		% include the average path length, a measure of global connectedness,
-		% which is the average length of the shortest connection between
-		% all pairs of nodes.44 Another measure of interest is the clustering
-		% coefficient, which is related to the connectedness of
-		% neighboring nodes and reflects the presence of smaller subgraphs.44
-		% Using these techniques, several studies have demonstrated
-		% that the brain exhibits a small world topology. Small world
-		% topology, which was first described in social networks, allows each
-		% node to have a relatively low number of connections while still
-		% being connected to all other nodes with a short distance. This is
-		% achieved through the existence of hubs, which are critical nodes
-		% with large numbers of connections, that allow high levels of local
-		% connectivity.39,45 Small world networks have high clustering coefficients
-		% implying high levels of local connections (ie, cliques or
-		% groups) and an overall short distance between any 2 nodes, or a
-		% small average path length.40-42
-
-
-%%%%%%%%%
-
-% % Unfortunately, until recently most of the studies in animal models were based on anatomical connectivity measured by means of post-mortem inspections.
-% % While in the past, histological staining was the most adopted methodology to inspect the wiring of white matter in the animal brain, the last few decades have seen the rising of fluorescence based tract-tracing, that evolved to a level where single axons can be traced with unprecedented precision~\cite{oh2014}.
-% % Not only methods to investigate the structural connectivity have greatly evolved, but also new cellular resolution recording systems, like light-sheet microscopy~\cite{ahrens2013}, real time in-vivo two-photon cortical imaging~\cite{dombeck2010,leinweber2014} and spike time series recordings on multielectrode arrays~\cite{shimono2015}.
-% % All these techniques take part in the quest to shed light on the relation between functional networks and their underlying anatomical substrate.
-
-% After the discovery of low frequency fluctuations of the BOLD signal of the brain at rest~\cite{biswal1995}, 
-% In humans, non-invasive studies of the brain community structure largely reflect the analytical methodologies adopted in animals.
-% In both contexts, functional connectivity is suggested to describe the relationship between neuronal activity patterns of anatomically separated regions that reflect the level of information exchange between them.
-% The decomposition of the endogenous fluctuations of the BOLD signal at rest by means of independent components analysis (ICA), showed a repertoire of \emph{spatial modes}, clusters of brain regions whose neural activity oscillates synchronously. These patterns of spontaneous coupled oscillations are strongly correlated between anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}. Additionally, these patterns of functional connections that derive from a modular architecture of the brain, are themselves modular. A submodule (or subnetwork), often called community in graph theory, comprises synchronously active voxels. The enduring and stable synchrony within those voxels is thought to reflect local integration processes
-
-
-
-% The evidence of modules in functional brain networks has been explained as the possible basis of a large variety of processes. By way of example, certain functional processes, like color vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{dehaene1998,baddeley2003}.
-% Interestingly modules of functional brain networks are non-static as recent studies found that they tend to become less and less modular with aging~\cite{meunier2009a,song2014}. 
-% In all respects, the experimental evidence of the modular organization is a powerful and robust marker against which to measure the health of the brain. 
-% Thus, modularity is not only a biologically plausible feature but it is probably necessary to maintain the rich repertoire of cognitive tasks that our brain engages in every day of our life.
-
-% Despite the biological evidence of modularity in brain networks, the number of modules returned by clustering methods is often chosen in advance, based on the experience of the researcher, even if some complex approaches are available~\cite{still2004}. 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% COMMUNITY DETECTION IN NETWORKS %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Community detection in networks}
 \label{sec:communitydetectioninnetworks}
 The process of grouping nodes in a graph to establish their common behavioral properties is a popular technique that goes under the name of \emph{community detection}.
@@ -225,6 +149,9 @@ Modularity takes values in the range $[-0.5,1]$, then a good partition should ha
 In the next sections we will challenge this idea and show that this observation has led to false statements, as a general phenomenon, dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models.
 Specifically, in the case of Newman's Modularity, the resolution limit hampers its ability to detect modules smaller than a scale determined by the size of the graph.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% THE CONFIGURATION MODEL %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The configuration model}\label{sec:configuration_model}
 A central property of the configuration model is the probability $P_{ij}$ of the occurrence of an edge between two specified vertices $i$ and $j$.
 In absence of correlations, as prescribed by the random reshuffling imposed by the configuration model, the probability that a stub emerging from vertex $i$ is connected by an edge to any of the stubs of vertex $j$ is $k_j/(2m-1)$ as there are $2m-1$ stubs in total.
@@ -339,6 +266,9 @@ An even more striking example of how the resolution limit affects Modularity is 
 If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs.
 Yet, extending the number of cliques, Modularity may merge cliques into groups of three, fours etc.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% RESOLUTION PARAMETER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Resolution parameter}\label{sec:resolution_parameter}
 Different authors proposed solutions that try to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
 
@@ -400,9 +330,9 @@ It's also very important to stress that comparing the Modularity value $Q^N$ acr
 As shown by a number of studies~\cite{good2009,kehagias2013,radicchi2010}, even in graphs which do have a natural community structure, high modularity values can be achieved by partitions which do not respect this natural structure.
 Hence, the Modularity value is only a numerical indication of the current status of optimization of the detected community structure on a specific graph and should never be confronted across different networks.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% DEGENERACY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Degeneracy}\label{sec:degeneracy}
 The differences in Modularity between optimal and suboptimal partitions can be very small, as observed in Figure~\ref{fig:figure_1_barthelemy}B, where $\Delta Q$ between the two partitions with split or merged cliques, remains close to zero for a large range of $m_0$ especially at $m_{12}=1$.
 Indeed, even in the case where it would not be beneficial for Modularity to merge two modules, i.e $\Delta Q <0$, this difference can be made arbitrarily close to zero.

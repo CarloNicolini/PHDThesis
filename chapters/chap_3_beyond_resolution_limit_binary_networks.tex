@@ -237,13 +237,13 @@ Importantly, in the range of parameters I have investigated, Surprise optimizati
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/ring_cliques_pareto.pdf}
+\includegraphics[width=0.75\textwidth]{images/ring_cliques_pareto.pdf}
 \caption{Pareto front for a ring of cliques graph. Optimal solutions with respect to Surprise are indicated as small black dots. Adapted from Nicolini and Bifone~\cite{nicolini2016}.}
 \label{fig:ring_cliques_pareto}
 \end{figure}
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/ring_cliques_surprise.pdf}
+\includegraphics[width=0.75\textwidth]{images/ring_cliques_surprise.pdf}
 \caption{Surprise $\hat{S}$ for a ring of cliques graph at different levels of $p_\zeta$ for corresponding solutions at fixed $m_\zeta$. The peak of $\hat{S} $is always reached at $p_\zeta$ when the modules entail single cliques separately. Adapted from Nicolini and Bifone~\cite{nicolini2016}.}
 \label{fig:ring_cliques_surprise}
 \end{figure}
@@ -289,7 +289,7 @@ The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Oct
 \end{Algorithm}
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/fagso.pdf}
+\includegraphics[width=0.75\textwidth]{images/fagso.pdf}
 \caption{FAGSO algorithm steps illustrated. Firstly, Jaccard indices are computed. In box A., every node is associated to a separate community and FAGSO evaluates whether to merge nodes $d$ and $f$ in the same community as the edge they form has the highest Jaccard index. Since this merge results in an increased value of Surprise, $d$ and $f$ are merged in box B. then FAGSO proceeds to evaluate the merges of nodes $a$ and $b$ as their Jaccard index is the second greatest. FAGSO merges the two nodes in a second community and proceeds updating the Surprise value and analyzing the subsequent merges in boxes D to F, until no moves are available and FAGSO terminates with the community structure in box G.}
 \label{fig:fagso_working}
 \end{figure}

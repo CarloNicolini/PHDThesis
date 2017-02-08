@@ -60,7 +60,7 @@ Yet, numerical evaluation of Asymptotical Surprise is much faster than binary Su
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.8\textwidth]{images/asymptotical_surprise_comparison.pdf}
+\includegraphics[width=0.75\textwidth]{images/asymptotical_surprise_comparison.pdf}
 \caption{Approximation of binary Surprise with a binomial formulation and the Asymptotical formulation based on the Kullback-Leibler divergence. In the inset, the approximation ratio of binomial and Asymptotical Surprise to hypergeometric Surprise tends to 1 for graphs larger than 50 nodes. Adapted from~\cite{traag2015}.}
 \label{fig:asymptotical_surprise_comparison}
 \end{figure}
@@ -212,7 +212,7 @@ This analysis supports the choice of selecting the solution with the highest val
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{PACO benchmark on synthetic networks}
 I compared the quality of the partitions of the synthetic benchmark networks obtained by Asymptotical Surprise with those of Infomap~\cite{rosvall2008} and Newman's Modularity~\cite{newman2006,blondel2008}.
-Figure~\ref{fig:nmisensitivityspecificityringclique} shows Normalized Mutual Information, Sensitivity and Specificity of the three methods applied to the ring of cliques for different sample sizes and SNRs; no-noise condition is represented as ``Inf''.
+Figure~\ref{fig:nmisensitivityspecificity}A shows Normalized Mutual Information, Sensitivity and Specificity of the three methods applied to the ring of cliques for different sample sizes and SNRs; no-noise condition is represented as ``Inf''.
 This model network was constructed to test the ability of the three methods to retrieve heterogeneous community structures under various noise conditions.
 
 As expected, all methods showed better performance with increasing SNR and number of subjects, as noise and intersubject variability introduce spurious edges that hinder the ability to retrieve the planted structure.
@@ -224,7 +224,7 @@ Asymptotical Surprise showed highest NMI and Sensitivity across conditions, cons
 It proved superior in terms of NMI and Sensitivity in the low SNR regimes, and in the presence of relatively large intersubject variability as mimicked by the generation of different instances of the ring of cliques.
 Specificity of Asymptotical Surprise was not inferior to the other methods under all conditions, thus ruling out increased vulnerability to False Positives, at least in this particular model network.
 
-Comparable results were obtained for the LFR network (Figure~\ref{fig:nmisensitivityspecificitylfr}), a model graph that replicates the distribution of nodal degree observed in many real-world networks, including those representing brain functional connectivity.
+Comparable results were obtained for the LFR network (Figure~\ref{fig:nmisensitivityspecificity}B), a model graph that replicates the distribution of nodal degree observed in many real-world networks, including those representing brain functional connectivity.
 All three methods showed similar values of NMI for high SNR and a large number of subjects, with a plateau reaching maximum Sensitivity with a group sample bigger than $20$ and SNR above $30$.
 Sensitivity was only slightly worse for Modularity, but it should be noted that for the LFR network the size distribution of the planted modules was narrower than for the ring of cliques, thus making the resolution limit less evident.
 
@@ -239,42 +239,69 @@ Under closer examination, however, it appeared that the increased variance for I
 This is a known problem with Infomap and other algorithms based on random walks that depends on the need to parametrize the teleportation step in order to make the dynamics ergodic~\cite{lambiotte2012}.
 
 For the sake of completeness, I also computed Accuracy and Matthew Correlation Coefficient for the same model networks.
-As shown in Figure~\ref{fig:accmcc_cliques}, Accuracy of Newman's Modularity is lower for small SNRs and number of subjects and in any case it does not reach 100\% of true positives classification even in the no-noise condition. Infomap accuracy is high for SNR greater than 20, largely independent on the number of subjects. The large variance of Infomap for low SNRs is due to the merging of all nodes in a single large community in a few runs, as discussed in the main text. Asymptotical Surprise, behaves well in terms of Accuracy and has the least variability across all methods, plateauing at 100\% for SNRs greater than 20 and more than 40 subjects.
-In terms of MCC, Figure~\ref{fig:accmcc_cliques} shows that Asymptotical Surprise behaves comparably or better than Infomap.
+As shown in Figure~\ref{fig:accmcc}A, Accuracy of Newman's Modularity is lower for small SNRs and number of subjects and in any case it does not reach 100\% of true positives classification even in the no-noise condition. Infomap accuracy is high for SNR greater than 20, largely independent on the number of subjects. The large variance of Infomap for low SNRs is due to the merging of all nodes in a single large community in a few runs, as discussed in the main text. Asymptotical Surprise, behaves well in terms of Accuracy and has the least variability across all methods, plateauing at 100\% for SNRs greater than 20 and more than 40 subjects.
+In terms of MCC, Figure~\ref{fig:accmcc}A shows that Asymptotical Surprise behaves comparably or better than Infomap.
 Newman's modularity is the least performer, due to its resolution limit, and never reaches maximum MCC.
 Interestingly, Asymptotical Surprise slightly outperforms Infomap in terms of MCC in the single subject case in the no-noise condition.
-The comparison of the three methods is similar in the case of the LFR benchmark, as shown in Figure~\ref{fig:accmcclfr}.
+The comparison of the three methods is similar in the case of the LFR benchmark, as shown in Figure~\ref{fig:accmcc}B.
 Altogether, the picture that emerges from the analysis of Accuracy and MCC is entirely consistent with the results shown in this section.
+
+% \begin{figure}[!htb]
+% \centering
+% \includegraphics[width=0.75\textwidth]{images/pacopaperfigure4.pdf}
+% \caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to a power-law ring of clique network. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
+% \label{fig:nmisensitivityspecificityringclique}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% \centering
+% \includegraphics[width=0.75\textwidth]{images/pacopaperfigure5.pdf}
+% \caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to Lancichinetti-Fortunato-Radicchi (LFR) networks. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
+% \label{fig:nmisensitivityspecificitylfr}
+% \end{figure}
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.8\textwidth]{images/pacopaperfigure4.pdf}
-\caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to a power-law ring of clique network. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
-\label{fig:nmisensitivityspecificityringclique}
+    \begin{tabular}{l}
+        \textbf{\textsf{A}}  \\
+        \includegraphics[width=0.85\textwidth]{images/pacopaperfigure4.pdf} \\
+		\textbf{\textsf{B}}  \\
+        \includegraphics[width=0.85\textwidth]{images/pacopaperfigure5.pdf}
+    \end{tabular}
+    \caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to a power-law ring of clique network \textbf{(A)} and to Lancichinetti-Fortunato-Radicchi network \textbf{(B)}. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
+    \label{fig:nmisensitivityspecificity}
 \end{figure}
+
+
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.8\textwidth]{images/pacopaperfigure5.pdf}
-\caption{NMI, Sensitivity and Specificity of the three community detection algorithms applied to Lancichinetti-Fortunato-Radicchi (LFR) networks. SNR indicates Signal to Noise Ratio, and Inf the situation with a network structure unperturbed by noise. Number of Subjects indicates the different number of instances used to generate the group level network.}
-\label{fig:nmisensitivityspecificitylfr}
+    \begin{tabular}{l}
+    \textbf{\textsf{A}}  \\
+    \includegraphics[width=1\textwidth]{images/figure3_supplementary.pdf} \\
+    \textbf{\textsf{B}}  \\
+    \includegraphics[width=1\textwidth]{images/figure4_supplementary.pdf}
+    \end{tabular}
+    \caption{\textbf{(A)} Accuracy and Matthew correlation coefficient on the modified ring of clique benchmark. \textbf{(B)} Accuracy and Matthew correlation coefficient on the LFR benchmark.}
+    \label{fig:accmcc}
 \end{figure}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.8\textwidth]{images/figure3_supplementary.pdf}
-\caption{Accuracy and Matthew correlation coefficient on the modified ring of clique benchmark.}
-\label{fig:accmcc_cliques}
-\end{figure}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.8\textwidth]{images/figure4_supplementary.pdf}
-\caption{Accuracy and Matthew correlation coefficient on the LFR benchmark.}
-\label{fig:accmcclfr}
-\end{figure}
+
+% \begin{figure}[!htb]
+% \centering
+% \includegraphics[width=0.75\textwidth]{images/figure3_supplementary.pdf}
+% \caption{Accuracy and Matthew correlation coefficient on the modified ring of clique benchmark.}
+% \label{fig:accmcc_cliques}
+% \end{figure}
+% \begin{figure}[!htb]
+% \centering
+% \includegraphics[width=0.75\textwidth]{images/figure4_supplementary.pdf}
+% \caption{Accuracy and Matthew correlation coefficient on the LFR benchmark.}
+% \label{fig:accmcclfr}
+% \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% ASYMPTOTICAL SURPRISE ON RESTING STATE DATASET %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Asymptotical Surprise application to resting state dataset}
+\section{Asymptotical Surprise on resting state dataset}
 Figure~\ref{fig:partitioncomparison} shows a comparison between the modular structure of the resting state fMRI dataset obtained with Newman's Modularity, Infomap and Asymptotical Surprise.
 For each method, I had $10,000$ independent runs and picked the partition with the best value of the respective fitness functions ($Q=0.4967$, $\mathcal{L}=8.5173$, $S_a=5925.3$, for Modularity, Infomap and Asymptotical Surprise, respectively).
 The three methods showed significantly different partitions (relative NMIs in Table 1), with a number of detected communities of 10, 19 and 47 for Modularity, Infomap and Asymptotical Surprise, respectively.
@@ -300,19 +327,19 @@ Additional, smaller substructures are shown in the third and fourth row of Figur
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.8\textwidth]{images/pacopaperfigure7.pdf}
+\includegraphics[width=0.75\textwidth]{images/pacopaperfigure7.pdf}
 \caption{Sixteen largest modules found by Asymptotical Surprise Maximization in the resting state network overlaid on an MRI brain template. The modules are ranked by decreasing size, and named after corresponding functional networks previously identified by multivariate analysis of resting state fMRI data, or by the comprised anatomical districts.}
 \label{fig:cervellini4x4}
 \end{figure}
-\begin{figure}[htb]
+\begin{figure}[!htb]
 \centering
-\includegraphics[width=0.8\textwidth]{images/figure_cervellini_Louvain_Q_0_49674.png}
+\includegraphics[width=0.75\textwidth]{images/figure_cervellini_Louvain_Q_0_49674.png}
 \caption{First largest 8 modules of the optimal partition as found by Newman's Modularity, with a value of the Modularity $Q=0.4967$. Module 9 is not shown as it consists of a single node.}
 \label{fig:newmancervellini}
 \end{figure}
-\begin{figure}[htb]
+\begin{figure}[!htb]
 \centering
-\includegraphics[width=1\textwidth]{images/figure_cervellini_infomap_L_8_5173.png}
+\includegraphics[width=0.75\textwidth]{images/figure_cervellini_infomap_L_8_5173.png}
 \caption{First largest 16 modules of the optimal partition as found by Infomap, with a value of the description length $L=8.5173$.}
 \label{fig:infomapcervellini}
 \end{figure}
@@ -321,7 +348,7 @@ Newman's Modularity retrieved four large, relatively uniform communities, corres
 This is in keeping with previous studies using Modularity optimization by spectral decomposition~\cite{crossley2013a}, and consistent with the strong resolution limit that affects this method.
 Additionally, a few smaller modules were found by Louvain optimization of Newman's Modularity, corresponding to the basal ganglia, the hippocampal/parahippocampal formation and two asymmetrically distributed subcortical clusters.
 
-Infomap identified 19 communities of various sizes, also shown in Figures~\ref{fig:infomapcervellini}.
+Infomap identified 19 communities of various sizes, also shown in Figure~\ref{fig:infomapcervellini}.
 The largest modules showed a close correspondence with those identified by Asymptotical Surprise, albeit with some notable differences.
 By way of example, the largest component includes the motor-sensory and auditory modules, identified as separate communities by Asymptotical Surprise.
 The Default Mode Network retrieved by Infomap includes parts of the temporal cortices that are not normally associated with the DMN.
@@ -364,7 +391,7 @@ Altogether, these findings indicate that node role classification is method-depe
 The performance of Asymptotical Surprise optimization by PACO was assessed in model graphs with a built-in community structure, and compared with two established community detection methods. I have chosen two synthetic benchmark networks, the ring of cliques and the LFR network.
 
 The ring of cliques presents a clear-cut modular structure by construct, with modules corresponding to complete subgraphs of variable sizes sampled from a power-law distribution. 
-This toy network proved useful to assess the effects of the resolution limit in the presence of a wide distribution of cluster sizes. The effects of this limit were particularly apparent for Newman's Modularity (Figure~\ref{fig:nmisensitivityspecificityringclique}), that showed poor Sensitivity even for noiseless rings of cliques, plateauing at a value of $0.75$.
+This toy network proved useful to assess the effects of the resolution limit in the presence of a wide distribution of cluster sizes. The effects of this limit were particularly apparent for Newman's Modularity (Figure~\ref{fig:nmisensitivityspecificity}A), that showed poor Sensitivity even for noiseless rings of cliques, plateauing at a value of $0.75$.
 This is consistent with the findings of~\cite{fortunato2007}, that showed that for Modularity the resolution limit is set by the square root of the total number of edges in the graph.
 For Infomap, this limit is less severe and is determined by the number of inter-cluster edges~\cite{kawamoto2015}. Accordingly, the effects of the resolution limit were not apparent in this model network, where modules are sparingly connected by single edges.
 Asymptotical Surprise presented the best performance, consistent with the idea that this cost function is quasi-resolution limit free~\cite{traag2015}.
@@ -381,7 +408,7 @@ However, to the best of our knowledge, this aspect has never been considered in 
 To this end, I have devised methods to inject noise, with amplitude and spectral distribution that mimic those of experimental noise, into networks with a well defined planted structure. Moreover, I have generated different instances for each network, corresponding to different subjects in a group, to account for intersubject variability that occurs in typical neuroimaging studies. 
 
 Unsurprisingly, for all methods and networks, detection of the planted structure improved with decreasing levels of noise, and with increasing number of subjects in the study.
-However, Asymptotical Surprise appeared to provide a superior performance in terms of NMI and Sensitivity to the planted structure for lower SNRs in both types of networks, while its Specificity was in line with that of resolution-limited methods like Newman's and Infomap (Figures~\ref{fig:nmisensitivityspecificityringclique},~\ref{fig:nmisensitivityspecificitylfr}).
+However, Asymptotical Surprise appeared to provide a superior performance in terms of NMI and Sensitivity to the planted structure for lower SNRs in both types of networks, while its Specificity was in line with that of resolution-limited methods like Newman's and Infomap (Figures~\ref{fig:nmisensitivityspecificity}A,~\ref{fig:nmisensitivityspecificity}B).
 This rules out the idea that the higher sensitivity to small clusters of Asymptotical Surprise may be detrimental in noisy networks, making it more vulnerable to small, spurious modules.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -413,7 +440,7 @@ Community detection by resolution limited free methods should enable more accura
 %%%%%%% LIMITATIONS OF ASYMPTOTICAL SURPRISE %%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Limitations of Asymptotical Surprise}
-Some caution should be taken in the interpretation of the graphs in Figures \ref{fig:nmisensitivityspecificityringclique} and \ref{fig:nmisensitivityspecificitylfr}.
+Some caution should be taken in the interpretation of the graphs in Figures \ref{fig:nmisensitivityspecificity}A,B.
 Indeed, the SNRs of the synthetic networks I have generated reflect noise with features, like a Rician distribution, that mimic some, but not all aspects of the variability of experimental data.
 By way of example, the brain parcellation scheme applied to define the nodes, and the heterogeneity of voxels within these parcels, may play a role that is difficult to model in toy networks~\cite{fornito2010}.
 Hence, the simulated Sensitivity and Specificity as a function of SNR and number of subjects should not be taken as absolute values to be used in the power and sample size estimation in real experimental designs.
