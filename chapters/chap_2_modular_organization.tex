@@ -350,9 +350,9 @@ In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring
 Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
 
 To make this argument more intuitive, I extrapolated a visually interpretable form of the complex landscape of partitions' Modularity for a ring of cliques network. I sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated the corresponding values of Modularity for every partition as in~\cite{good2009}.
-I then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition following a Curvilinear Components Analysis (CCA).
-In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function.
-A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity lay in the same neighborhood.
+I then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition by means of Curvilinear Components Analysis (CCA).
+In the embedded manifold, two partitions are close if they are similar, and the z-axis encodes the quality function.
+A highly degenerate plateau can be observed in Figure~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity lay in the same neighborhood.
 
 \begin{figure}[htb!]
 \centering
@@ -361,8 +361,7 @@ A highly degenerate plateau can be observed in~\ref{fig:degeneracylandscape} whe
 \label{fig:degeneracylandscape}
 \end{figure}
 
-\textcolor{red}{Any quality function suffering from degeneracy of solutions should display an embedded landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, while in the case of the existence of a distinct global optimum, a sharper peak should be exhibited.
-We'll see that recasting the problem of community detection in terms of probability theory, will help in the definition of a quality function showing convex behaviour and uniqueness of the optimum solution.}\todo{CHECK REPHRASE}
+Like for Modularity, any other quality function afflicted from the degeneracy problem, displays a landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, whereas in the case of non-degenerate quality functions, a sharp and distinct peak exists in the embedded landscape.\todo{HO FIXATO QUESTA FRASE VEDERE SE VA BENE}
 
 Several approaches have been proposed to mitigate the problems that are apparent in Modularity. These include the use of multiple near-optimal solutions to avoid the pitfalls of degeneracy. Moreover a proper choice of the null model may help overcome the fundamental resolution limit.
 
