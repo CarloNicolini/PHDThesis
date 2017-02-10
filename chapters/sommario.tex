@@ -1,54 +1,63 @@
-Fin dal loro inizio, le neuroscienze hanno investigato il cervello a diverse scale, partendo dalla neurobiologia molecolare alla neuroanatomia.
-A tal fine si è capito che per ottenere una comprensione profonda del funzionamento del cervello, è necessario un approccio multiscala in cui gli elementi costitutivi vengano valutati nelle loro interazioni a diversi livelli.
+%\begin{otherlanguage}{italian}
 
-Fra i metodi di indagine neurologica più interessanti, la risonanza magnetica funzionale (fMRI) ha dimostrato che è possibile misurare in tempo reale ed in tutte le aree del cervello anche quelle più profonde, i cambiamenti nel flusso ematico locale legato all'aumento del metabolismo neuronale, una disciplina nota come neuroimaging funzionale.
-L'uso di questa tecnica ha permesso di approfondire la nostra conoscenza dei meccanismi del cervello.
-A questo scopo, diverse metodiche di analisi dei dati prodotti dalla fMRI sono state applicate.
+Fin dal loro inizio, le neuroscienze hanno investigato il cervello a diverse scale, partendo dalla neurobiologia molecolare alla neuroanatomia.
+A tal fine si è compreso che per ottenere una comprensione profonda del funzionamento del cervello, è necessario un approccio multiscala in cui gli elementi costitutivi vengano valutati nelle loro interazioni a diversi livelli.
+
+Fra i metodi di indagine neuroscientifica più interessanti, la risonanza magnetica funzionale (fMRI) ha dimostrato che è possibile misurare in tempo reale i cambiamenti nel flusso ematico locale legato all'aumento del metabolismo neuronale.
+Questa disciplina ha preso il nome di neuroimaging funzionale in quanto permette di quantificare le attività cerebrali in relazione alle loro funzioni neurofisiologiche e cognitive.
 In particolare, attraverso misure della cosiddetta connettività funzionale è possibile quantificare la correlazione temporale di eventi neurofisiologici in aree neurali spazialmente remote, esprimendo la loro interdipendenza come deviazione statistica rispetto all'attività di regioni distribuite sull'intera corteccia.
 
-Diversi approcci di analisi multivariata sono applicabili allo studio dei dati ottenuti tramite fMRI, tuttavia uno degli approcci più che si è dimostrato più fruttuoso è quello della teoria delle reti complesse, di cui la teoria dei grafi è il fondamento teorico.
-Seguendo tale approccio, il cervello viene considerato come un grafo i cui nodi sono rappresentati dalle singole regioni cerebrali, le quali possono coprire un singolo voxel o arrivare a rappresentare una regione anatomicamente definita.
-Le connessioni fra i nodi invece sono rappresentate in misura proporzionale al livello di interazione fra di essi.
-%Esistono una varietà di approcci per trasformare un dataset di connettività funzionale, ma in generale tutte condividono quest'idea.
+Diversi approcci di analisi multivariata sono applicabili allo studio dei dati ottenuti tramite fMRI, come l'analisi delle componenti indipendenti (ICA) o metodi seed-based.
+Ad oggi però, la teoria delle reti complesse, un approccio multidisciplinare di cui la teoria dei grafi è il fondamento teorico, ha offerto gli strumenti più avanzati per indagare la complessità del cervello a diverse scale.
+Secondo questo approccio, il cervello viene considerato come un grafo i cui nodi rappresentano singole regioni cerebrali, le quali possono ricoprire un singolo voxel o arrivare a rappresentare una regione anatomicamente definita.
+Gli archi del grafo invece esprimono numericamente il livello di interazione fra regioni.
 
-Partendo da tali premesse, la moderna teoria delle reti complesse ha dimostrato che dal punto di vista funzionale, la corteccia cerebrale umana sana 
-è organizzata secondo un principio di architettura ad invarianza di scala, caratterizzata da una combinazione di dense connessioni locali e connessioni a lungo raggio critiche per favorire un corretto scambio di informazione. Questa struttura è supportata poi da un insieme di nodi molto connessi che agiscono da hub favorendo processi di integrazione dell'informazione processata a livello locale.
-è interessante inoltre notare che strutturalmente le reti cerebrali, sottoposte alle forze della selezione naturale devono ottimizzare l'efficienza di scambio di informazione ed al contempo minimizzare la quantità di connessioni necessarie per supportare le proprie attività.
+Partendo da tali premesse, la moderna teoria delle reti complesse ha dimostrato che dal punto di vista funzionale, la corteccia cerebrale umana sana è organizzata secondo un principio di architettura ad invarianza di scala, caratterizzata da una combinazione di dense interazioni locali ed interazioni a lungo raggio, critiche al fine di un corretto meccanismo di scambio dell'informazione.
+Funzionalmente, tale struttura si poggia su un insieme di nodi molto connessi che agiscono da ``hubs'' favorendo processi di integrazione dell'informazione elaborata a livello locale.
+%Infatti dal punto di vista strutturale le reti cerebrali, essendo sottoposte ai criteri della selezione naturale, hanno dovuto ottimizzare la propria efficienza di scambio di informazione mantenendo un volume spaziale finito.
 
-Contemporaneamente, queste reti mostrano sia a livello strutturale che funzionale una struttura modulare ed organizzata gerarchicamente che ne incrementa la robustezza a perturbazioni esterne, quali insulti fisici, patologie o alterazioni durante sviluppo neurale e che si pensa essere alla base della ricchezza del repertorio di attività cognitive e comportamentali.
+Contemporaneamente, le reti cerebrali mostrano, sia a livello strutturale che funzionale, una struttura modulare organizzata gerarchicamente che ne incrementa la robustezza a perturbazioni esterne, quali insulti fisici, patologie o alterazioni durante il neurosviluppo.
+L'architettura modulare di queste reti funzionali, spiega la capacità del cervello di elaborare una grande quantità di input paralleli provenienti in ogni momento dai vari organi di senso, in quanto ognuno di questi moduli è altamente efficiente nel suo compito e le connessioni fra moduli consentono un efficace scambio dell'informazione.
+
 I moduli, o comunità, nelle reti di connettività funzionale, rappresentano sottogruppi di nodi che sono strettamente connessi fra di loro più di quanto non lo siano rispetto a nodi esterni.
 In altri termini i moduli si possono intendere come aree per cui la dipendenza statistica della loro attività temporale è più elevata che rispetto ad altre regioni.
-L'architettura modulare di queste reti funzionali, spiega la capacità del cervello di elaborare una grande quantità di input paralleli provenienti in ogni momento dai vari organi di senso, in quanto ognuno di questi moduli è altamente efficiente nel suo compito e le connessioni fra moduli consentono un efficace scambio dell'informazione. 
 
 Diversi sistemi complessi in natura esibiscono un'architettura modulare di questo tipo e la teoria delle reti complesse fornisce potenti strumenti per la loro indagine, ispirati per la maggior parte alla fisica dei sistemi disordinati.
 A questo scopo, la specialità della teoria delle reti che si occupa di identificare i moduli costitutivi dei sistemi complessi, è nota in letteratura con il nome di ``community detection''.
 
-Non tutti gli algoritmi di community detection proposti negli anni sono però capaci di districare e rendere evidente la struttura modulare delle reti funzionali, evidenziando la presenza di moduli e sottomoduli a diverse scale.
+Non tutti gli algoritmi di community detection proposti negli anni sono però capaci di risolvere la struttura modulare delle reti funzionali, mettendo in luce la presenza di moduli e sottomoduli a diverse scale.
 Uno dei principali problemi che limitano la capacità di individuazione delle cosiddette comunità, è infatti il cosiddetto ``resolution limit''.
-Questo problema piuttosto generale e passato inosservato nella letteratura neuroscientifica, condiziona la capacità dei metodi di community detection di individuare moduli le cui dimensioni siano minori di una scala determinata dalla dimensione totale della rete in esame.
-Precisamente, l'applicazione del metodo di community detection più ampiamente utilizzato e noto come modularità di Newman fornisce una visione ristretta sulle comunità corticali, dimostrando che quasi indipendentemente da ogni altro parametro, la corteccia umana mostrerebbe una divisione in un numero variabile da quattro a sei moduli funzionali, a seconda degli studi.
+Questo problema piuttosto generale e passato inosservato nella letteratura neuroscientifica, condiziona la capacità dei metodi di community detection di individuare moduli le cui dimensioni siano minori di una scala determinata dalla dimensione complessiva della rete.
+Precisamente, i metodi di community detection più ampiamente utilizzati sono basati sulla funzione Modularity introdotta originalmente da Mark Newman.
+L'ottimizzazione di questa funzione, vincolata dal limite di risoluzione, fornisce una visione ristretta sulle comunità corticali, mostrando che quasi indipendentemente da ogni altro parametro, la corteccia umana sarebbe suddivisa funzionalmente in un numero variabile da quattro a sei moduli, a seconda degli studi.
 Questo effetto artefattuale ha non solo inficiato il potere risolutivo dei metodi di community detection ma ha anche diminuito la capacità di effettuare discriminazioni di piccole differenze che possono portare ad utili diagnosi riguardanti alterazioni della connettività.
 
 In questo lavoro mi sono occupato esplicitamente di analizzare, tramite la teoria delle reti complesse, gli effetti del limite di risoluzione sullo studio della modularità delle reti di connettività funzionale e di fornire una soluzione che permetta una descrizione multiscala dei moduli di queste reti.
 
 Nel primo capitolo il lettore viene introdotto alla teoria delle reti complesse, attraverso un'introduzione ai metodi di neuroimaging ed all'applicazione della teoria dei grafi all'analisi dei dataset fMRI.
-Successivamente il secondo capitolo ho trattato nel dettaglio le caratteristiche del problema del limite di risoluzione, sia in relazione all'aspetto teorico che a quello pratico sulle reti di connettività funzionale.
+Successivamente nel secondo capitolo ho trattato nel dettaglio le caratteristiche del problema del limite di risoluzione, sia in relazione al suo aspetto teorico che a quello pratico sulle reti di connettività funzionale.
 
 Nel terzo capitolo ho investigato gli effetti del resolution limit negli studi di neuroimaging, trovando che una varietà di studi dove la teoria delle reti è stata applicata a dataset di connettività funzionale, mostra i chiari effetti di tale problema.
-Per questo motivo ho introdotto un nuovo metodo basato sull'ottimizzazione numerica della funzione costo nota come Surprise, centrale per questo lavoro, studiandone le proprietà teoriche in dettaglio e trovando che essa non soffre del limite di risoluzione.
+Per questo motivo ho sfruttato un nuovo metodo basato sull'ottimizzazione numerica della funzione costo nota come Surprise, centrale per questo lavoro, studiandone le proprietà teoriche in dettaglio e trovando che essa non soffre del limite di risoluzione.
 I risultati ottenuti dalla massimizzazione di Surprise su dati reali, hanno mostrato che dal punto di vista funzionale le reti di connettività funzionale esibiscono una struttura modulare caratterizzata da moduli di dimensione eterogenea, differentemente da quanto osservato utilizzato approcci a risoluzione limitata.
-Alla luce della diversa e più fine partizione in comunità perciò ho rivalutato il ruolo dei singoli nodi all'interno della rete, facendo emergere l'indicazione che alcune aree precedentemente inosservate (in particolare il precuneuo) svolgono un ruolo fondamentale nell'integrazione e scambio dell'informazione a livello corticale.
+Alla luce della diversa e più fine partizione in comunità perciò ho rivalutato il ruolo dei singoli nodi all'interno della rete, facendo emergere l'indicazione che alcune aree, in particolare il precuneuo, svolgono un ruolo fondamentale nell'integrazione dell'informazione fra moduli. Quest'ipotesi risulta consistente con il ruolo del precuneo come area integrativa di un ampio spettro di funzioni, dalle abilità visuo-spaziali al recupero di memorie episodiche.
 
 In un secondo studio, contenuto nel capitolo quarto, ho esteso a reti pesate la tecnica prima sviluppata.
 Ho prima testato la validità del nuovo approccio detto Asymptotical Surprise su reti sintetiche dove ho simulato gli effetti dei fattori di disturbo in fMRI, variando il rapporto segnale rumore ed il numero di partecipanti in un esperimento virtuale.
-Successivamente ho dimostrato che similarmente a Surprise anche Asymptotical Surprise permette sia di individuare moduli di diversa scala su reti di connettività funzionale umana che di rivalutare il ruolo dei singoli nodi all'interno della struttura modulare in esame.
+Successivamente ho dimostrato che similarmente a Surprise, anche l'ottimizzazione di Asymptotical Surprise permette sia di individuare moduli di diversa scala su reti di connettività funzionale umana che di rivalutare il ruolo dei singoli nodi all'interno della struttura modulare in esame.
 
-Come ultima applicazione, ho voluto dimostrare con uno studio preliminare come la disponibilità di un metodo di community detection a maggiore risoluzione abbia permesso per la prima volta di discriminare alterazioni delle struttura modulare della connettività funzionale di pazienti schizofrenici rispetto a soggetti di controllo.
+Come ultima applicazione, ho voluto dimostrare con uno studio preliminare, come la disponibilità di un metodo di community detection a maggiore risoluzione permetta di discriminare alterazioni delle struttura modulare della connettività funzionale di pazienti schizofrenici rispetto a soggetti di controllo. Nello specifico, ho notato come le corteccie primarie (percettiva e motoria) mostrino una disgregazione in sotto-moduli indipendenti.
+Quest'osservazione risulterebbe in accordo con una teoria della schizofrenia bottom-up che vede questa devastante malattia come un disordine cognitivo originato da un deficit negli stadi iniziali dell'elaborazione sensoriale.
 
 In definitiva, il limite di risoluzione sembra avere mascherato in maniera artefattuale la meravigliosa complessità delle reti di connettività funzionale e lo studio qui presentato è uno dei primi che ha cercato di svelare le cause di questa apparente cecità.
 
 \section*{Pubblicazioni}
-Il lavoro di questa tesi è stato pubblicato su rivista e presentato a conferenze internazionali. Il mio contributo originale è la prima dimostrazione che la Surprise 
-Most of the work presented in this thesis has been submitted or published in journals and conferences. My original contribution~\cite{nicolini2016} is the first demonstration that Surprise is a suitable quality function for community detection on brain functional connectivity.
-The paper also shows numerically that Surprise is resolution-limit free in the range of network size of interest in brain functional connectivity.
-The second published contribution~\cite{nicolini2017} is the application of an extension of community detection based on Surprise, to weighted networks, together with an analysis that indicates that the resolution limit played an important role as it was hiding from view many important functional structures.
+
+\begin{itemize}
+	\item Nicolini C., Bifone A., ``Modular structure of brain functional networks: breaking the resolution limit by Surprise'', Scientific Reports, 6, 19250 (2016).
+	\item Nicolini C., Bordier C., Bifone A. ``Community detection in weighted brain connectivity networks beyond the resolution limit''. Neuroimage, 146, 28-39 (2017).
+	\item Bordier C., Nicolini C., Bifone A. ``Graph analysis and modularity of brain functional connectivity networks: searching for the weakest link''. Frontiers in Physics (2017), submitted.
+	\item Bordier C., Nicolini C., Bifone A. ``Disrupted modular organization of primary sensory areas in schizophrenics''. (in preparation).
+\end{itemize}
+
+%\end{otherlanguage}

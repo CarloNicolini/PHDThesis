@@ -66,7 +66,7 @@ When cognitively at rest, the brain engages in a characteristic pattern of dynam
 Interestingly, this background activity dubbed \emph{resting-state connectivity}, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands.
 During a typical resting state fMRI (rs-fMRI) session, volunteers are left in the MRI scanner, instructed to relax and not to think anything in particular.
 Animals instead like mice or rats are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates~\cite{jonckers2015}.
-In humans, the fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anaesthesia~\cite{martuzzi2010}.
+In humans, the fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
 The structure of temporal correlations of the BOLD signals defines a network over spatially remote, intersecting brain regions.
 Interestingly, these networks are altered in neuropsychiatric diseases like autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}.
 The extent of these alterations may be an hallmark for possible diagnoses of brain disease~\cite{stam2014,fornito2015}.
@@ -106,7 +106,7 @@ Adapted from~\cite{bullmore2009}.}
 The rise of the network neuroscience in the last decade has been driven by the evidence that almost independently from how the networks links are defined, brain networks share some common features at many spatial and temporal scales.
 
 For example, they exhibit the \emph{small-world} property~\cite{watts1998,sporns2002,sporns2004a}, whereby most nodes in a graph can be reached from any other node in just a few hops.
-Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance may be related to how efficiently our brain integrates information between multiple brain regions.
+Small-worldness in brain networks~\cite{vndenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance may be related to how efficiently our brain integrates information between multiple brain regions.
 
 Other measures have been correlated with phenotypical and structural characteristics.
 \emph{Rich-clubs} are subsets of highly connected nodes who are also highly connected to each other, forming a communication backbone.
@@ -193,7 +193,7 @@ This general behaviour, not unique to Newman's approach, is pervasive in communi
 % COMMENTATO DA ANGELO The problems and drawbacks resulting from the resolution limit passed largely unnoticed in the neuroscience literature of the last years as most scientists used Newman's Modularity.
 % COMMENTATO DA ANGELO This barrier has its roots in the theoretical foundations of community detection and practically implies that the detection of brain modules smaller than a scale determined by the size of the total network is very difficult, or in the worst case, even impossible.
 As a consequence, even unambiguously defined modules, like almost complete sub-graphs or even cliques\footnote{Graphs where all nodes to connect to all nodes}, may be unduly merged into larger communities when they are too small compared to the size of the network.
-This limit hampers the ability to detect small-scale structures of functionally correlated brain areas and to notice alterations in connectivity between subjects or groups of subjects. Hence, it may have prevented detection of alterations in the modular structure of brain connectivity in patients affected by various neuropsychiatric disorders
+This limit hampers the ability to detect small-scale structures of functionally correlated brain areas and to notice alterations in connectivity between subjects or groups of subjects. Hence, it mayy have prevented detection of alterations in the modular structure of brain connectivity in patients affected by various neuropsychiatric disorders
 % Such limit is therefore of impediment to an implementation of a clinical-level biomarker of brain disease.
 Hence, the resolution limit represents a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 % TROPPO SPECIFICO A QUESTO LIVELLO
@@ -432,9 +432,7 @@ Finding strong communities is more difficult than finding weak communities and m
 Nonetheless these two last definitions are almost universally accepted and give a precise idea of the meaning of community.
 Additionally, the weak criterion of community is the basis of the planted-partition model~\cite{condon2000} and its later modifications~\cite{lancichinetti2008} that we'll encounter in the next sections.
 
-\textcolor{red}{The \emph{global definitions} are based on an interpretation of the network as a whole, of which communities are an essential part that cannot be taken away without destroying its connectivity.}\todo{FIX}
-
-Most of the global criteria of communities encompass global properties of the graph that are used by an algorithm to deliver a modular decomposition.
+Most of the global definitions of communities encompass properties of the graph that are used by an algorithm to deliver a modular decomposition.
 In this sense the global definitions are always indirect, often based on \emph{null models} or stationary properties of dynamical processes such as random walkers~\cite{pons2006,rosvall2008}.
 
 Multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,salvador2005,schwarz2007} such as ICA or other multivariate methods.
@@ -516,7 +514,7 @@ Intuitively then it is possible to assign a probability score to each instance o
 In the $G(n,m)$, each instance is equiprobable.
 
 Strictly speaking, a random graph model is better defined as an ensemble of networks, therefore as a probability distribution $\mathcal{P}(\Omega)$ over the space of all graphs $G$.
-The Gilbert random graph model is associated with a probability distribution sharply peaked in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges, and zero otherwise.
+TThe Gilbert random graph model is associated with a probability distribution sharply peaked in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges, and zero otherwise.
 Although some properties of the $G(n,m)$ models are easy to compute, like the mean number of edges (trivial), others are more complicated because of the hard constraint imposed on edge number.
 
 A way more useful random graph model is instead due to Erd\H{o}s and Rényi~\cite{erdos1959}.
@@ -584,11 +582,11 @@ To keep into account the features of empirical networks, other models of network
 For example, in the Watts-Strogatz model a graph with groups of densely connected nodes is generated as follows:
 \begin{enumerate}
 \item Construct a ring with $n$ nodes and connect each node to the $l$ nearest nodes ($l/2$ nodes on each side of the ring).
-\item Choose a node $i$ and the edge $e$ that connects $i$ to its nearest neighbor in a clockwise manner.
+\item Choose a node $i$ and the edge $e$ that connects $i$ to its nearest neighbour in a clockwise manner.
 \item With probability $p_r$ replace the edge $e$ by the edge that connects $i$ to a node taken at random according to a uniform distribution over the entire ring.
 \item Repeat the steps 2 and 3 for each node in clockwise manner.
-\item Choose a node $i$ and the edge $e$ that connects $i$ to its second neighbor in a clockwise sense and repeat the steps 2-4.
-\item Repeat the process considering the third nearest neighbor and so on until each edge of the original lattice has been considered.
+\item Choose a node $i$ and the edge $e$ that connects $i$ to its second neighbour in a clockwise sense and repeat the steps 2-4.
+\item Repeat the process considering the third nearest neighbour and so on until each edge of the original lattice has been considered.
 \end{enumerate}
 
 The resulting graph shows the property of having short average path length, although the degree distribution is not power-law.
@@ -698,7 +696,7 @@ Bindings for \texttt{Matlab,Octave} and \texttt{Python} the Fortunato's code are
 Among the synthetic generative models for complex networks, no model tries to embed the typical circumstances that take place when measuring human brain resting state activity with fMRI.
 To this end, here I introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested~\cite{nicolini2017}.
 
-The general idea is that, starting from an adjacency matrix with a given modular structure, we can generate time-courses for each of the nodes whose pairwise correlations reproduce the edge structure of the original matrix. Noise can be added to the time-courses, and the resulting correlation matrix will provide a noisy representation of the original one. This procedure can be repeated multiple times to produce different datasets that represent different "subjects" in the study.
+The general idea is that, starting from an adjacency matrix with a given modular structure, we can generate time-courses for each of the nodes whose pairwise correlations reproduce the edge structure of the original matrix. Noise can be added to the time-courses, and the resulting correlation matrix will provide a noisy representation of the original one. This procedure can be repeated multiple times to produce different datasets that represent different subjects in the study.
 
 In practical terms, given an undirected weighted graph  $\mathbf{C} \in \mathbb{R}^{n\times n}$ whose community structure is known a-priori, its nearest positive definite matrix~\cite{Higham1988} is obtained with its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$.
 Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, one can then generate correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$ \footnote{Since the covariance matrix of a zero-mean, unit-variance random variable $X$ is given by $\mathbb{E}(XX^T)$, it's easy to verify that $\mathbb{E}(YY^T)=\mathbb{E}(LX)(LX)^T=\mathbb{E}(LX)X^T L^T=L\mathbb{E}(XX^T)L^T=L^T\mathbf{I}L=C$}.
@@ -799,7 +797,7 @@ The Matthew Correlation Coefficient  takes into account true and false positives
 In weighted networks, sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable.
 Indeed, weak links may contain significant structural information~\cite{thomas2011}, and procedures to identify the optimal trade-off are the subject of active investigations~\cite{zahoranszky-kohalmi2016a}.
 After sparsification, the network can be binarized, by setting all edge weights to unity.
-Whether this procedure may help obtaining a better view on the underlying structure of networks, it represents an hot debate in the literature~\cite{rubinov2010,thomas2011}.
+Whether this procedure may help obtaining a better view on the underlying structure of networks, is an hot debate in the literature~\cite{rubinov2010,thomas2011}.
 
 Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
 No well-accepted method to choose the best threshold has been adopted pragmatically in the brain networks literature and different scholars motivated their choice by different needs~\cite{gallos2012,lee2011,scheinost2012}.
@@ -807,25 +805,27 @@ No well-accepted method to choose the best threshold has been adopted pragmatica
 Percolation analysis, a method originally grounded in statistical physics, was suggested by Gallos~\cite{gallos2012} to identify the optimal sparsification threshold for community detection in brain connectivity networks.
 Percolation is a model to describe phase transitions of connected subgraphs in random networks~\cite{callaway2000,goerdt2001}.
 In the ER random graph, the size of the largest connected component shows a sharp transition at some threshold value~\cite{callaway2000}.
-Contrarily, brain networks exhibits multiple percolation thresholds, revealing a hierarchy of clusters.
-The jumps corresponding to percolation transitions are indicative of a non trivial correlations that constitute well defined modules of brain activity.
+Contrarily, brain networks exhibit multiple percolation thresholds, revealing a hierarchy of clusters as shown in Figure~\ref{fig:percolation_analysis_intro}.
+The jumps corresponding to percolation transitions are indicative of non trivial correlations that constitute well defined modules of brain activity.
 Hence, the multiple percolation thresholds are representative of a set of weak ties that guarantee appropriate communication (in terms of information transfer) between functionally specialized modules.
 Following these observations, the definition of the optimal threshold is the one just above the fragmentation of the largest connected component.
-This choice maximizes the information extracted by subsequent application of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies.
+This choice maximizes the information extracted by subsequent applications of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies.
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1\linewidth]{images/percolation_analysis_side_by_side.pdf}
+\caption{Percolation analysis for two brain networks available from the BrainConnectivityToolbox~\cite{rubinov2010}, available at~\url{https://sites.google.com/site/bctnet/}. (A) is a coactivation network, (B) a resting state network, both with 638 nodes and 18625 edges. The number of nodes in the giant component has a step-wise behaviour with respect to the threshold.}
+\label{fig:percolation_analysis_intro}
+\end{figure}
 
 The most common choice when comparing networks from different groups, is to adopt a fixed threshold that keeps the same number of edges in the two groups.
 This does not take into account the particularities of the analyzed group and datasets.
 It is indeed important to stress that the distribution of the weights as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror these information.
-To this end, it has been demonstrated, especially in patient group such as in schizophrenia, that the brain presents weaker connectivity than in health control persons~\cite{alexander-bloch2010}.
+To this end, it has been demonstrated, especially in patients groups such as in schizophrenia, that the brain presents weaker functional connectivity than in healthy control persons~\cite{alexander-bloch2010}.
+
 For this reason, percolation analysis should enable data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
 
-\begin{figure}[htb!]
-\centering
-\includegraphics[width=0.7\linewidth]{images/figure_8_percolation_analysis_compressed.pdf}
-\caption{Percolation analysis for two brain networks obtained from  coactivation matrix (A) and resting state matrix (B).}
-\label{fig:percolation_analysis}
-\end{figure}
-\todo{mettere un altra immagine.}
+
+
 
 % The Matlab function that I used to determine the level of threshold is available on \texttt{CommunityAlg} Matlab toolbox at \url{github.com/carlonicolini/communityalg}.
 % Functional connectivity networks are typically obtained as similarity matrices of physiological time signals over different brain areas.

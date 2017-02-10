@@ -8,18 +8,18 @@ In this work I pioneered the use of Surprise and Asymptotical Surprise, two appr
 The methodological advantage of the approach proposed in this thesis is two-fold.
 Firstly, the resolution limit free method for community detection offered a richer view on the modular structure of brain networks.
 Indeed, direct comparison with other methods clearly demonstrated improved capability to identify neurofunctionally plausible and anatomically well-defined substructures otherwise concealed by the resolution limit.
-The more heterogeneously distributed partitions obtained by Surprise maximization resulted in non-trivial changes of the roles of single nodes.
+Moreover, the more heterogeneously distributed partitions obtained by Surprise maximization resulted in non-trivial changes of the roles of single nodes.
 
 As a second point, the validation of a method to maximize Asymptotical Surprise and its application on synthetic networks endowed with a ground-truth community structure, provided a comparative term for benchmark of other community detection methods.
-In particular, what turned out to be very precious is the possibility to artificially simulate the effects of noise on time-courses of BOLD signals, to see its detrimental effects on the performance of community detection.
+In particular, I described a procedure to artificially simulate the effects of noise on time-courses of BOLD signals, in order to see its detrimental effects on the performance of community detection.
 Altogether the picture that emerged is that Asymptotical Surprise has proved superior to existing methods in terms of Sensitivity and accuracy in detection of the planted structure as measured by Normalized Mutual Information, while showing comparable Specificity.
 
 As a last test of the validity of this newly developed approach for community detection beyond the resolution limit, Asymptotical Surprise optimization revealed a functional fragmentation and reorganization of the primary sensory areas in schizophrenic patients.
 Although preliminary, this study is in keeping with bottom-up theories of schizophrenia, hypothesizing that alterations in early sensory processing may be at the hearth of the cognitive and behavioural dysfunctions that characterize this tremendous disease.
 
-As a future direction of this work I envisage to implement a multilevel method for the optimization of Asymptotical Surprise that may be of help in dealing with extremely large graphs as those coming from voxelwise approaches to functional connectivity.
-Graphs in the order of fifty thousand nodes and several million edges must be understood as the next natural step in this ``big data'' challenge that is pushing the frontiers of efficient algorithms design. While PACO has been already tested on graphs so large, its performances are still poor, requiring days to weeks for a single run.
-On the other hand, a more profound theoretical argumentation of the behaviour of Surprise/Asymptotical Surprise on networks non-trivial architecture could shed light on more efficient implementations.
+As a future direction of this work I plan to implement a multilevel method for the optimization of Asymptotical Surprise that may be of help in dealing with extremely large graphs as those coming from voxelwise approaches to functional connectivity.
+Graphs in the order of fifty thousand nodes and several million edges are the next natural step in this ``big data'' challenge that is pushing the frontiers of efficient algorithms design.
+While PACO has been already tested on graphs with millions of edge, its performance is still poor, requiring a week for a single run.
+On the other hand, a deeper theoretical analysis of the behaviour of Surprise/Asymptotical Surprise on networks non-trivial architecture could shed light on more efficient implementations.
 
-Regarding neuroscience instead, as the last chapter of this work confirmed, I see a lot of space for the utilization of my new methods in the realm of the analysis of neuroimaging data for the investigation of neuropsychiatric alterations, where the resolution limit had prominent role as a limiting factor.
-As observed in schizophrenia patients, the greater resolution afforded by the methods presented in this work.
+As the last chapter of this work confirmed, I see a lot of space for the utilization of my new methods in the realm of the analysis of neuroimaging data for the investigation of neuropsychiatric alterations. As observed in schizophrenia patients, the greater resolution afforded by the methods presented in this work, may help forming new diagnostic criteria for these devastating diseases.

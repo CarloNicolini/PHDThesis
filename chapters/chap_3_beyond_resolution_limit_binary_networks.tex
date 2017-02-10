@@ -13,11 +13,11 @@ Moreover, Surprise leads to a more accurate identification of the network's conn
 %%%%%%%%%%%%%% PROBABILISTIC APPROACH TO CLUSTERING IN BINARY NETWORKS %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Probabilistic approach to clustering in binary networks}\label{sec:probability_clustering}
-The spin-glass based additive quality functions described in the previous chapter, including Newman's Modularity, measure the deviation between the fraction of edges falling within modules and the null model. In any case though, they assess the statistical significance of this deviation.
+The spin-glass based additive quality functions described in the previous chapter, including Newman's Modularity, measure the deviation between the fraction of edges falling within modules and the null model. None of these though, assess the statistical significance of this deviation.
 In other terms, no spin-glass based quality function is telling us the level of statistical confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
 
 To address this question, one should instead compute probabilities, as they are the natural way to measure statistical significance.
-Specifically, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the community in exam.
+Specifically, given a node induced subgraph (a community), one is interested in computing the probability to find another subgraph having more internal edges than the observed one: the lesser the value, the more significant is the considered subgraph.
 
 More precisely, the problem can be expressed as in the following: given a subgraph, what is the probability of observing another subgraph with a larger number of internal edges drawn from a random graph with a given density?
 This question can be answered by the urn model in classical probability theory. The reason is clear if one imagines that each pair of nodes is a marble, which is one color if the nodes are connected by a link and the other color if they are not.
@@ -29,14 +29,14 @@ As indicated by the urn model, the probability to observe exactly $m_c$ internal
 \Pr[i=m_c] = \frac{\binom{m}{i}\binom{p-m}{p_c-i} }{\binom{p}{p_c}} = \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
 \end{equation}
 where the last equality is because of the Vandermonde identity~\cite{feller1968}.
-The probability in Eq.~\ref{eq:subgraph_probability} is simply understood in terms of urn model as there are $\binom{p_c}{i}$ ways of choosing exactly $i$ black marbles from a population of $p_c$ black marbles, $\binom{p-p_c}{m-i}$ ways of choosing $(m-i)$ white marbles from a population of $(p-p_c)$ white marbles and a total possible number of combinations of $m$ marbles taken from a population of $p$ of them. Figure~\ref{fig:subgraphconditionalprobability} shows an example where the probability of randomly picking the subgraph $\mathcal{G}$ from the graph $G$ is computed by means of the urn model.
+The probability in Eq.~\ref{eq:subgraph_probability} is simply understood in terms of urn model as there are $\binom{p_c}{i}$ ways of choosing exactly $i$ black marbles from a population of $p_c$ black marbles, $\binom{p-p_c}{m-i}$ ways of choosing $(m-i)$ white marbles from a population of $(p-p_c)$ white marbles, and $\binom{p}{m}$ total possible number of combinations of $m$ marbles taken from a population of $p$ of them. Figure~\ref{fig:subgraphconditionalprobability} shows an example where the probability of randomly picking the subgraph $\mathcal{G}$ from the graph $G$ is computed by means of the urn model.
 \input{include/misc/subgraphconditionalprobability.tex}
 As the probability of observing $i$ or more internal edges, is given by the sum of the probabilities of observing exactly $i$,$i+1$,$i+2$ etc. internal edges, summing on $i$ yields the probability of getting \emph{at least} $m_c$ white marbles:
 \begin{equation}\label{eq:subgraph_probability_marginalized}
-\Pr[ m_c \geq i ] = \sum\limits_{i=m_c}^{m} \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}
+\Pr[ m_c \geq i ] = \sum\limits_{i=m_c}^{m} \frac{\binom{p_c}{i} \binom{p-p_c}{m-i}}{\binom{p}{m}}.
 \end{equation}
 
-In this last equation we are considering the probability of randomly drawing a subgraph with $m_c$ or more internal edges over the set of all random subgraphs with $n$ nodes and exactly $m$ edges as in the $G_{nm}$ model described in section~\ref{sec:models_random_graph}. Indeed, the denominator $\binom{p}{m}$ in Equation~\ref{eq:subgraph_probability_marginalized} represent the possible number of graphs with $p$ pairs of nodes and $m$ edges. 
+In this last equation we are considering the probability of randomly drawing a subgraph with $m_c$ or more internal edges over the set of all random subgraphs with $n$ nodes ($p$ pairs of nodes) and exactly $m$ edges as in the $G_{nm}$ model described in section~\ref{sec:models_random_graph}. Indeed, the denominator $\binom{p}{m}$ in Equation~\ref{eq:subgraph_probability_marginalized} represents the possible number of graphs with $p$ pairs of nodes and $m$ edges. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% SURPRISE %%%%%%%%%%%%%%%%%%
@@ -49,20 +49,21 @@ In this case, the definition given in Eq.~\ref{eq:subgraph_probability_marginali
 Indeed, for a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, exactly as in~\ref{eq:subgraph_probability_marginalized}.
 Here and in the rest of the work, the quality function \emph{Surprise} is therefore expressed by the following definition:
 \begin{equation}\label{eq:surprise}
-S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}}
+S(\zeta) := \sum_{i = m_\zeta}^m \dfrac{\binom{p_\zeta}{i} \binom{p-p_\zeta}{m-i} }{\binom{p}{m}}.
 \end{equation}
 
 Surprise computes the probability to (surprisingly) observe at least as many internal edges as within the proposed partition in a uniform random graph.
 As mentioned, model in Eq.~\ref{eq:surprise} corresponds to an urn model without reinsertion, where $S$ is the probability of extracting at least $m_\zeta$ white balls out of $m$ trials from an urn containing $p_\zeta$ white balls and $p-p_\zeta$ black balls.
 Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions with respect to $S$ are those with the highest number of intracluster edges and the smallest number of intracluster pairs. 
 
-Differently from Modularity, $S(\zeta)=1$ both for the partition where every node is in a separated community ($|\zeta|=n$,$p_\zeta=0$,$m_\zeta=0$) and for the partition that entails all nodes into a single group ($|\zeta|=1$,$p_\zeta=p$,$m_\zeta=m$) as is evident from its formulation in terms of urn model.
-Indeed, as Newman's Modularity is zero when $|\zeta|=1$, and different from zero in the case $|\zeta|=n$.
-In terms of Surprise both the extreme partitions are instead equally uninformative and assigned to $S=1$ (or equivalently $\hat{S}=0$).
-Indeed, for the case of a single community comprising all nodes, the probability of observing a number of intracluster edges greater or equal than the number of edges is one. On the other hand, if the partitioning has zero intracluster edges as for the case of $n$ separate communities, the probability to observe more than zero intracluster edges is still one.
+Differently from Modularity, $S(\zeta)$ equals one both for the partition where every node is in a separated community ($|\zeta|=n$) and for the partition that entails all nodes into a single community ($|\zeta|=1$), as is evident from its formulation in terms of urn model.
+Contrarily, Newman's Modularity is zero when $|\zeta|=1$, but different from zero in the case $|\zeta|=n$.
+In terms of Surprise these two extreme partitions are thus equally uninformative.
+This can be understood as for a single community comprising all nodes, the probability of observing a number of intracluster edges greater or equal than the number of edges is one. On the other hand, if the partitioning has zero intracluster edges (the case of $n$ separate communities), the probability to observe more than zero intracluster edges still equals one.
 
-It should be noted that, due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is totally equivalent with respect to optimum solutions, where higher values correspond to better clustering.
-Different authors~\cite{arnauVMarsS2005,fleck2014} refer to $S$ as Surprise, whereas others~\cite{aldecoa2011,aldecoa2013} use $\hat{S}$. Hereafter I stick to the notation of~\cite{fleck2014} where Surprise is indicated as $S$ defined in Eq.~\ref{eq:surprise} and indicate $\hat{S}$ where needed.
+It should be noted that, due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is totally equivalent with respect to optimum solutions, whereas higher values correspond to better clustering.
+Different authors~\cite{arnauVMarsS2005,fleck2014} refer to $S$ as Surprise, whereas others~\cite{aldecoa2011,aldecoa2013} use $\hat{S}$.
+Hereafter I stick to the notation of~\cite{fleck2014} where Surprise is indicated as $S$ defined in Eq.~\ref{eq:surprise} and indicate $\hat{S}$ where needed.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% STATISTICAL TEST INTERPRETATION %%%%%%%%%%%%%%%%
@@ -70,7 +71,7 @@ Different authors~\cite{arnauVMarsS2005,fleck2014} refer to $S$ as Surprise, whe
 \subsection{Statistical test interpretation}
 \label{sec:surprisefishertest}
 Surprise considers the problem of community detection as the one of making the intracluster density as further as possible from the global density in statistical terms.
-In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis $H_0$ that the intracluster density is the same as the graph density.
+In this sense, it's worth noting that $S$ is \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis that the intracluster density is greater than the graph density.
 It turns indeed out that this problem has an equivalent description in statistics, where one seeks to maximize the \emph{odds-ratio} of the $2 \times 2$ contingency table defined in Table~\ref{tab:contingency_table}.
 
 The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can therefore be used regardless of the sample characteristics.
@@ -80,7 +81,7 @@ Precisely, the \emph{normalized log odds-ratio} is computed as:
 \begin{equation}
 \log(\textrm{OR}) = \log\left( \frac{m_\zeta(p-m-p_\zeta+m_\zeta)}{(m-m_\zeta)(p_\zeta-m_\zeta)} \right ),
 \end{equation}
-and in the asymptotic case, Surprise is equal to the probability:
+and asymptotically Surprise is equal to the probability:
 \begin{equation}\label{eq:prob_or_se}
 \Pr\left(z < -\frac{|\log\textrm{OR})|}{SE} \right)
 \end{equation}
@@ -162,7 +163,7 @@ S(m_\zeta+1,p_\zeta)<S(m_\zeta+1,p_\zeta+1)<S(m_\zeta,p_\zeta)<S(m_\zeta,p_\zeta
 \end{equation}
 This property led me to the observation that Surprise $S$ is a monotonically decreasing function (increasing $\hat{S}$) of $m_\zeta$ and monotonically increasing function (decreasing $\hat{S}$) of $p_\zeta$ in the convex interval $\mathcal{L}$.
 Moreover, from Figure~\ref{fig:surprisebehaviour} follows that optimal solutions with respect to $S$ are Pareto-optimal with respect to maximizing $m_\zeta$ and minimizing $p_\zeta$.
-In other words, a partition that is optimum with respect to Surprise is such that no further increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has higher $\hat{S}$.
+In other words, a partition that is optimum with respect to Surprise is such that no further increment in $m_\zeta$ leads to a decrement in $p_\zeta$ that has lower $S$ (higher $\hat{S}$).
 The Pareto optimality of optimum Surprise partitions, implies that a perturbation of $\delta m_\zeta, \delta p_\zeta$ leads to a change in Surprise such that it monotonically decreases if and only if $\delta m_\zeta > \delta p_\zeta$, precisely:
 \begin{equation}\label{eq:resolution_limit_condition}
 S(m_\zeta + \delta_{m_\zeta}, p_\zeta + \delta_{p_\zeta}) < S(m_\zeta,p_\zeta) \iff \delta_{m_\zeta} \geq \delta_{p_\zeta}.
@@ -188,7 +189,8 @@ S(m_\zeta + \delta_{m_\zeta}, p_\zeta + \delta_{p_\zeta}) < S(m_\zeta,p_\zeta) \
 %% \end{figure}
 %% \todo[inline]{CONTROLLARE FIGURA PROBABILMENTE SBAGLIATA PERCHE MZETA>M!!!}
 
-The result in Eq.\ref{eq:resolution_limit_condition} is of great help in designing optimization algorithms as every move that increase the intracluster edges more than intracluster pairs is good, while moves that increase intracluster pairs more than intracluster edges must be ignored, therefore sparing time for the computation of Surprise. Additionally, Eq.~\ref{eq:resolution_limit_condition} is useful when analyzing the onset of the resolution limit for different models.
+The result in Eq.\ref{eq:resolution_limit_condition} is of great help in designing optimization algorithms as every move that increases the number of intracluster edges more than intracluster pairs is good, while moves that increase intracluster pairs more than intracluster edges must be ignored, therefore sparing time for the computation of Surprise.
+Additionally, Eq.~\ref{eq:resolution_limit_condition} is useful when analyzing the onset of the resolution limit for different models.
 In the next sections I will show to what extent Surprise is affected by the resolution limit for Surprise, to show with convincing theoretical arguments that $S$ is nearly resolution-limit-free in Traag's sense~\cite{traag2015}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -255,14 +257,15 @@ Nonetheless, the size of the graphs explored numerically is quite typical of bra
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Degeneracy of Surprise}\label{sec:degeneracy_surprise}
 Interestingly, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in Section~\ref{sec:degeneracy}.
-This observation led us to investigate to what extent Surprise is affected by the degeneracy problem.
-We repeated the procedure indicated in section~\ref{sec:degeneracy}, where I embedded the complex landscape of partitions in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not. The global optimum is a sharply distinct partition, sitting on top of the embedded manifold, as illustrated in Figure~\ref{fig:degeneracy_surprise}.
-\todo{mettere conclusioni degeneracy}
+This observation led me to investigate to what extent Surprise is affected by the degeneracy problem (previously described in section~\ref{sec:degeneracy}).
+I repeated the procedure indicated in section~\ref{sec:degeneracy}, embeddeding the complex landscape of partitions of a ring of cliques graph in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not.
+As evident from Figure~\ref{fig:degeneracy_surprise} instead, the global optimum sit on a sharply distinct point, at the highest value of Surprise.
+This observation makes evident that the Surprise does not show the problematic degeneracy of optimal solutions, but instead has a global optimum that is very different from other suboptimal partitions, at least in these ring of cliques example.
 \begin{figure}[ht]
 \centering
 \includegraphics[height=0.4\textwidth]{images/degeneracy_surprise_n_5_c_24.png}\hfill
 \includegraphics[height=0.4\textwidth]{images/degeneracy_surprise_n6_c30.png}
-\caption{Degeneracy of Surprise landscape in a small (left) and large (right) ring of cliques graph. No plateaus exist, indicating the uniqueness of the global maximum that emerges from the other local optima.}
+\caption{Degeneracy of Surprise landscape in a small (left, 24 cliques with 5 nodes) and large (right, 30 cliques with 6 nodes) ring of cliques graph. No plateaus exist, indicating the uniqueness of the global maximum that emerges from the other local optima.}
 \label{fig:degeneracy_surprise}
 \end{figure}
 
@@ -299,7 +302,7 @@ The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Oct
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Surprise optimization on functional connectivity networks}
 \label{sec:surprise_optimization_fc_networks}
-We assessed the performance of Surprise maximization by means of FAGSO in the detection of the community structure of two benchmark brain networks. All coordinate data and functional metadata were taken from the BrainMap database~\cite{fox2002,laird2005}, processed by Crossley et al.~\cite{crossley2013a} and made available to the scientific community as reference networks through the public Brain Connectivity Toolbox~\cite{rubinov2010}. I used BrainNetViewer as a tool for the visualization of the communities on brain templates~\cite{xia2013}.
+I assessed the performance of Surprise maximization by means of FAGSO in the detection of the community structure of two benchmark brain networks. All coordinate data and functional metadata were taken from the BrainMap database~\cite{fox2002,laird2005}, processed by Crossley et al.~\cite{crossley2013a} and made available to the scientific community as reference networks through the public Brain Connectivity Toolbox~\cite{rubinov2010}. I used BrainNetViewer as a tool for the visualization of the communities on brain templates~\cite{xia2013}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% HUMAN RESTING STATE DATASET %%%%%%%%%%%%%%%%%%%%%%%
@@ -318,12 +321,12 @@ The resting state network was built using the same set of 638 regions and thresh
 Both networks have been previously studied using Modularity-based algorithms and node-classification methods~\cite{crossley2013a}.
 
 Due to its definition in terms of binomial coefficients, Surprise can be computed for integer values of its parameters.
-We have therefore binarized the two adjacency matrices retaining an equal number of edges for both networks.
+I have therefore binarized the two adjacency matrices retaining an equal number of edges for both networks.
 While the binarization process discards information contained in the edge weights, a judicious choice of threshold can ensure robust decomposition of the network~\cite{meunier2010,he2009}.
-We have checked this statement by percolation analysis, a natural and non-arbitrary method to derive binary graphs from continuous adjacency matrices (see section~\ref{sec:percolation_analysis}).
+I have checked this statement by percolation analysis, a natural and non-arbitrary method to derive binary graphs from continuous adjacency matrices (see section~\ref{sec:percolation_analysis}).
 Specifically, I have studied the size of the largest connected component of the coactivation and resting state networks removing iteratively the smallest weight edges.
 
-This analysis, shown in Figure~\ref{fig:figure_8_percolation_analysis}, revealed the presence of percolation-like transitions, whereby the largest component of the network drops in jumps with increasing binarization threshold. For the coactivation and the resting state networks I found that the thresholds adopted by~\cite{crossley2013a} of 0.015576 and 0.600, respectively, are above the first jump in the size of the largest connected components and maintain network connectedness while ensuring that the networks are sufficiently sparse and possess the same number of edges. Hence, I adopted these thresholds for network's binarization. Analysis of the structures of networks obtained by a range of thresholds around these values showed stable solutions, with Normalized Mutual Information close between partitions close to 1, and a stable number of communities (Figures~\ref{fig:figure_9_rs_threshold_study} and \ref{fig:figure_10_rs_threshold_study}).
+This analysis, shown in Figure~\ref{fig:figure_8_percolation_analysis}, revealed the presence of percolation-like transitions, whereby the largest component of the network drops in jumps with increasing binarization threshold. For the coactivation and the resting state networks I found that the thresholds adopted by~\cite{crossley2013a} of 0.015576 and 0.600, respectively, are above the first jump in the size of the largest connected components and maintain network connectedness while ensuring that the networks are sufficiently sparse and possess the same number of edges. Hence, I adopted these thresholds for network's binarization. Analysis of the structures of networks obtained by a range of thresholds around these values showed stable solutions, with Normalized Mutual Information between partitions close to 1, and a stable number of communities (Figures~\ref{fig:figure_9_rs_threshold_study} and \ref{fig:figure_10_rs_threshold_study}).
 
 \begin{figure}[htb!]
 \centering
@@ -335,7 +338,7 @@ This analysis, shown in Figure~\ref{fig:figure_8_percolation_analysis}, revealed
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=0.7\linewidth]{images/resting_state_study_threshold.pdf}
-\caption{Different Resting State networks were generated varying the binarization threshold in a range that changed the number of edges up to the 15th quantile of the edge weight distribution. This corresponds to threshold ranges of 0.015-0.03 for the co-activation network, and 0.60-0.62 for the resting state network. The resulting networks were partitioned by Surprise maximization. The value of Surprise, the Normalized Mutual Information between the resulting optimal partitions, the number of edges and the number of communities are reported in panel A, B, C and D, respectively.}
+\caption{Different resting state networks were generated varying the binarization threshold in a range that changed the number of edges up to the 15th quantile of the edge weight distribution. This corresponds to threshold ranges of 0.015-0.03 for the co-activation network, and 0.60-0.62 for the resting state network. The resulting networks were partitioned by Surprise maximization. The value of Surprise, the Normalized Mutual Information between the resulting optimal partitions, the number of edges and the number of communities are reported in panel A, B, C and D, respectively.}
 \label{fig:figure_9_rs_threshold_study}
 \end{figure}
 
@@ -347,10 +350,11 @@ This analysis, shown in Figure~\ref{fig:figure_8_percolation_analysis}, revealed
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%% COMMUNITY DETECTION RESULTS BY FAGSO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% COMMUNITY DETECTION RESULTS BY FAGSO %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Community detection results by FAGSO}
-Figure \ref{fig:figure_3_communities_rs_coact_mod_surp} shows a direct comparison of the partitions obtained by Modularity and by Surprise maximization for the coactivation and resting state networks. The four panels display the adjacency matrices of the two networks, with their vertices rearranged by their module membership.
+Figure \ref{fig:figure_3_communities_rs_coact_mod_surp} shows a direct comparison of the partitions obtained by Modularity and by Surprise maximization for the coactivation and resting state networks.
+The four panels display the adjacency matrices of the two networks, with their vertices rearranged by their module membership.
 
 \begin{figure}[htb!]
 \centering
@@ -469,12 +473,12 @@ A potential limitation of Surprise is related to its definition in terms of disc
 The superior resolution afforded by Surprise may make it more vulnerable than other methods to noise and experimental errors. Indeed, occasional misassignment of nodes due to noise-induced changes in edge distribution are likely to affect small modules, comprising only a few nodes, more than large ones. Hence, experimental uncertainty also limits resolution, and a resolution-limit-free method would not necessarily improve the quality of the partition in a scenario dominated by noise. 
 
 To ascertain whether this is the case for the co-activation and resting state networks investigated here, I have simulated the effects of experimental errors by injecting noise into the distributions of weights prior to the binarization procedure, thus introducing variability in the connectivity structure of the resulting binary networks.
-We set levels of noise sufficient to perturb up to 10\% of the edges of the final binary network. Using this procedure, for each level of noise I generated ten different graphs, and applied the Surprise Maximization algorithm to each of them. 
+I set levels of noise sufficient to perturb up to 10\% of the edges of the final binary network. Using this procedure, for each level of noise I generated ten different graphs, and applied the Surprise Maximization algorithm to each of them. 
 
 The ten different graphs were generated by adding noise to the off-diagonal elements of the adjacency matrix prior to the binarization procedure. The amplitude of noise was chosen to randomly perturb 10\% of the edges after binarization. Surprise maximization was applied to the resulting graphs. In the left panel of Figure~\ref{fig:figure_9_nmi}, I reported the Normalized Mutual Information (NMI) between the optimal partitions of each of the ten perturbed networks and that of the original resting state network.
 The number of communities retrieved by FAGSO in each of the perturbed networks is reported in the right panel of Figure~\ref{fig:figure_9_nmi}. The graphs show that the partitions of the ``noisy'' graphs are consistent and similar to those of the unperturbed network, with NMI scores close to 1 and almost constant numbers of communities.
 These results demonstrate that Surprise maximization can retrieve the network's community structure even in the presence of substantial noise in the data.
-We found that the partitions of these graphs were highly consistent with those of the original networks (Figure~\ref{fig:figure_9_nmi}).
+I found that the partitions of these graphs were highly consistent with those of the original networks (Figure~\ref{fig:figure_9_nmi}).
 
 \begin{figure}[ht]
 \centering

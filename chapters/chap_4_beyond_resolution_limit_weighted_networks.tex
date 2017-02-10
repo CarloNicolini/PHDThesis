@@ -5,20 +5,17 @@ For this reason Surprise requires binarization of brain connectivity networks, a
 Moreover, different binarization procedures may lead to different network representations for the same connectivity dataset.
 This represents a substantial drawback of the binary Surprise approach.
 
-Hence, an extension of Surprise to weighted networks would be highly desirable, and would provide a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
-The results obtained from binary Surprise optimization on real functional connectivity networks, encouraged me to extend the Surprise optimization approach to weighted networks.
-
-Capitalizing on recent developments in the field of statistical physics of complex networks~\cite{traag2015}, here I show that binary Surprise can be extended to weighted networks.
+The results obtained from binary Surprise optimization on real functional connectivity networks, encouraged me to extend the Surprise optimization approach to weighted networks. 
+Capitalizing on recent developments in the field of statistical physics of complex networks, here I show that binary Surprise can be extended to weighted networks.
 This recently introduced approach dubbed Asymptotical Surprise, provides a new and important tool to study the modular organization of brain connectivity beyond the resolution limit.
-Furthermore, I'll present a new algorithm for the optimization of Asymptotical Surprise in the study of the modular structure of weighted networks.
+Furthermore, I'll present a new algorithm for the direct optimization of Asymptotical Surprise that is based on the previously described FAGSO method.
 
 Improved resolution afforded by Asymptotical Surprise may imply increased vulnerability to spurious modules resulting from noisy correlations.
 It is therefore important to assess the benefits of increased resolution against the limitations arising from intrinsic data variability.
+To this end, I will demonstrate this new approach in networks derived from synthetic datasets that mimic different structures, levels of noise and variability, like those observed in functional connectivity experimental data.
 
-To this end, I will demonstrate this new approach in networks derived from synthetic dataset that mimic different structures, levels of noise and variability, like those observed in functional connectivity experimental data.
-
-Finally, I'll apply Asymptotical Surprise to weighted functional connectivity networks from resting state fMRI data, revealing a heterogeneous, multiscale community structure.
-At the end I'll show that the finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise leads to substantial differences in the identification of connector hubs compared to other community detection methods.
+Finally, I'll apply Asymptotical Surprise optimization to weighted functional connectivity networks from real-world resting state fMRI data, revealing a heterogeneous, multiscale community structure.
+The finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise optimization leads to substantial differences in the identification of connector hubs compared to other community detection methods.
 
 \section{From Surprise to Asymptotical Surprise}
 In developing a quality function inspired to the principle of Surprise that works for weighted networks, it's convenient to consider the asymptotical expansion of the hypergeometric distribution.
@@ -55,7 +52,7 @@ In the framework of information theory~\cite{cover2006}, Asymptotical Surprise r
 Kullback-Leibler divergence is a quasi-distance on probability distributions as it is always non-negative, non-symmetric and zero only when $q=\left< q \right>$, exactly like binary Surprise.
 
 Asymptotical Surprise has a simpler formulation than binary Surprise as there are no binomial coefficients to evaluate and it has been shown to be resolution-limit-free in the limit of large networks~\cite{traag2015}.
-As a side effect of its definition in terms of an information-theoretic quantity, Asymptotical Surprise transparently allows the extension of Surprise to weighted networks, when the intracluster density now consider edge weights.
+As a side effect of its definition in terms of an information-theoretic quantity, Asymptotical Surprise transparently allows the extension to weighted networks, when the intracluster number of edges is replaced by the sum of intracluster weights.
 This powerful property made Asymptotical Surprise suited for community detection in weighted networks and in particular to brain functional connectivity networks, thus avoiding the need of binarization procedures prior to the community detection, as shown in~\cite{nicolini2017}.
 
 Given its information-theoretic formulation as a KL divergence, Asymptotical Surprise clearly features \emph{convexity}, a property that is more difficult to assess for binary Surprise.
@@ -83,7 +80,7 @@ Here I introduce a powerful and general method for the optimization of Asymptoti
 PACO is a non-deterministic agglomerative algorithm based on FAGSO (described in chapter~\ref{sec:max_surprise_fagso}) and, like the Louvain method, has an element of randomness that enables a more efficient exploration of the partition landscape.
 
 The operating principle of PACO is based on the triadic closure property, i.e.
-the fact that in real-world networks nodes with many common neighbors are more likely to be neighbors.
+the fact that, in real-world networks, nodes with many common neighbors are more likely to be neighbors.
 This transitive neighborhood property underlies the formation of communities of nodes~\cite{bianconi2014,eustace2015}.
 In principle, any measure of structural similarity between nodes could guide a community detection heuristic toward the optimal partition.
 Specifically, PACO uses the Jaccard index~\cite{jaccard1901}, a measure of the fraction of overlap between the neighbors in common between nodes, as the guiding principle for the agglomeration of similar nodes in the same community.
@@ -180,7 +177,7 @@ I sampled the configuration space of partitions during iterative steps of PACO o
 Afterwards, I embedded the similarity matrix between all sampled partitions into a three-dimensional space maintaining similarity relations between partition with a Curvilinear Components Analysis (CCA)~\cite{good2009}.
 In the embedded manifold, two partitions are close if they are similar and the z-axis encodes the quality function.
 Whereas a large plateau of solutions with similar values of maximum Modularity is observed as in Figure~\ref{fig:degeneracylandscape}A, consistent with~\cite{good2009}, Asymptotical Surprise displays a much sharper peak corresponding to the optimal solution, as shown in Figure~\ref{fig:degeneracy_asymptotical_surprise}.
-The existence of a globally maximum partition that is much different from the other suboptimal solutions indicates to avoid the need to resort on consensus-based approaches for the identification of the best candidate solution, as picking the highest Asymptotical Surprise value already yields the correct partition.
+The existence of a globally maximum partition that is much different from the other suboptimal solutions indicates that there is no need to resort on consensus-based approaches for the identification of the best candidate solution, as picking the highest Asymptotical Surprise value already yields the correct partition.
 
 \begin{figure}[!htb]
 \centering
@@ -188,7 +185,7 @@ The existence of a globally maximum partition that is much different from the ot
 \caption{Degeneracy landscape of Asymptotical Surprise on a ring of clique model with 24 cliques of 5 nodes.
 The axes CC1 and CC2 are complicated functions of the original partition space computed to maintain the distance relation between points and their scale is unimportant.
 The height of this surface is the value of Asymptotical Surprise.
-Red points represent individual partitions and their metric distance is proportional to their NMI, the closer the more similar.}
+Red points represent individual partitions and their metric distance is proportional to their NMI, the closer the points, the more similar the partitions.}
 \label{fig:degeneracy_asymptotical_surprise}
 \end{figure}
 
@@ -197,7 +194,7 @@ Red points represent individual partitions and their metric distance is proporti
 %%%%%%%%%% SYNTHETIC BENCHMARK NETWORKS %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Synthetic benchmark networks}
-One important finding in~\cite{nicolini2016} is that brain networks are organized in modules with heterogeneous size distributions.
+One important finding in~\cite{nicolini2016} is that brain networks are organized in modules with a heterogeneous size distributions.
 I implemented this property in our two types of benchmark networks.
 For the first test, I generated a ring of cliques with $300$ nodes, and sizes of the cliques sampled from a power-law with exponent $\tau_c=2$, minimum and maximum clique size respectively $\min_c=5$, $\max_c=50$.
 For each subject of the sample, I synthesized $150$ time-points for each node using the \texttt{neuRosim R} package~\cite{neurosim2011}.
@@ -446,10 +443,10 @@ Asymptotical Surprise presented the best performance, consistent with the idea t
 
 However, real brain networks are characterized by heterogeneous distributions of node degree, with fat tails and power-law decays~\cite{bullmore2009}.
 Such heterogeneity is critical, as it determines some of the remarkable features of brain connectivity networks, including resilience to random failure and rich-clubness~\cite{vandenheuvel2011,vandenheuvel2013a}.
-To provide a more realistic benchmark, I used the Lancichinetti-Fortunato-Radicchi algorithm~\cite{lancichinetti2008}, that makes it possible to generate networks with realistic and tunable power law degree distribution and community sizes.
+To provide a more realistic benchmark, I used the Lancichinetti-Fortunato-Radicchi algorithm~\cite{lancichinetti2008}, that made it possible to generate networks with realistic and tunable power law degree distribution and community sizes.
 
 For LFR networks, the difference in performance in the low-noise regime was more nuanced for the three methods compared in this study, possibly a result of a fuzzier community structure of the LFR network compared to the ring of cliques, and of the narrower distribution of cluster sizes.
-However, the picture appears different when noise and intersubject variability were injected into the network structure.
+However, the picture appeared different when noise and intersubject variability were injected into the network structure.
 
 Noise and other sources of variability in the data can significantly affect the structure of the resulting network representation.
 Noisy fMRI time-courses, for example, may introduce spurious correlations in brain functional connectivity networks.
@@ -459,7 +456,6 @@ However, to the best of our knowledge, this aspect has never been considered in 
 
 To this end, I have devised methods to inject noise, with amplitude and spectral distribution that mimic those of experimental noise, into networks with a well defined planted structure.
 Moreover, I have generated different instances for each network, corresponding to different subjects in a group, to account for intersubject variability that occurs in typical neuroimaging studies.
-
 
 Unsurprisingly, for all methods and networks, detection of the planted structure improved with decreasing levels of noise, and with increasing number of subjects in the study.
 However, Asymptotical Surprise appeared to provide a superior performance in terms of NMI and Sensitivity to the planted structure for lower SNRs in both types of networks, while its Specificity was in line with that of resolution-limited methods like Newman's and Infomap (Figures~\ref{fig:nmisensitivityspecificity}A,~\ref{fig:nmisensitivityspecificity}B).
@@ -530,14 +526,16 @@ This phenomenon may be less critical for methods like Newman's Modularity that h
 %%%%%%%%%%%%%%%%%% CONCLUSIONS %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions}
-We have extended the use of Surprise, a resolution-limit-free fitness function for the study of the modular structure of complex networks, to weighted brain functional connectivity networks.
+I have extended the use of Surprise, a resolution-limit-free fitness function for the study of the modular structure of complex networks, to weighted brain functional connectivity networks.
 Specifically, I have developed a novel method, dubbed PACO, for the optimization of Asymptotical Surprise, a weighted counterpart of Surprise in the limit of large networks.
 I have applied PACO optimization of Asymptotical Surprise in synthetic networks to evaluate the relative merits of this novel approach against Newman's Modularity and Infomap, two of the leading methods used for community detection in brain connectivity networks.
+
 Specifically, I have implemented a process to inject noise into networks endowed with a ground-truth modular structure to assess the trade-off between improved resolution afforded by Asymptotical Surprise and potential sensitivity to spurious correlations introduced by variability in the data.
-Asymptotical Surprise optimization proved superior to existing methods in terms of Sensitivity and accuracy in detection of the planted structure as measured by Normalized Mutual Information, while showing comparable Specificity.
-I have also applied our approach to the partitioning of functional connectivity networks from resting state fMRI experiments.
+Asymptotical Surprise optimization proved superior to existing methods in terms of Sensitivity and accuracy in the detection of the planted structure as measured by Normalized Mutual Information, while showing comparable Specificity.
+
+I have also applied this approach to the partitioning of functional connectivity networks from resting state fMRI experiments.
 Direct comparison with other methods clearly demonstrated improved capability to identify neurofunctionally plausible and anatomically well-defined substructures otherwise concealed by the resolution limit.
 Asymptotical Surprise revealed a complex modular structure of resting state connectivity, with communities of widely different sizes reflecting distributed functional networks alongside with small, anatomically or functionally defined modules.
-This evidence corroborates the idea that the resolution limit may have negatively affected current models of the brain modular organization and the identification of the hubs responsible for integration of functional modules.
 
-The application of methods like Asymptotical Surprise provides a novel, powerful approach to study the modular structure of brain connectivity beyond this limit.
+This evidence corroborates the idea that the resolution limit may have negatively affected current models of the brain modular organization and the identification of the hubs responsible for integration of functional modules.
+For this reason, the application of methods like Asymptotical Surprise provides a novel, powerful approach to study the modular structure of brain connectivity beyond this limit.
