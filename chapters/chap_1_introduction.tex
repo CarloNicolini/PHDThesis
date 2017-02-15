@@ -65,19 +65,13 @@ Furthermore, the temporal evolution of functional networks is variable as it exh
 When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}. In the resting state, a subject is quietly awake and alert but does not engage in or attend to any specific cognitive or behavioral task.
 Interestingly, this background activity dubbed \emph{resting-state connectivity}, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands.
 During a typical resting state fMRI (rs-fMRI) session, volunteers are left in the MRI scanner, instructed to relax and not to think anything in particular.
-Animals instead like mice or rats are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates~\cite{jonckers2015}.
+On the other end, animals like mice or rats, are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates~\cite{jonckers2015}.
 In humans, the fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
-The structure of temporal correlations of the BOLD signals defines a network over spatially remote, intersecting brain regions.
+The structure of temporal correlations of the BOLD signals defines a network over spatially remote brain regions.
 Interestingly, these networks are altered in neuropsychiatric diseases like autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}.
-The extent of these alterations may be an hallmark for possible diagnoses of brain disease~\cite{stam2014,fornito2015}.
+The extent of these alterations may be an marker for possible diagnoses of brain disease~\cite{stam2014,fornito2015}.
 
 Complex network science provides a framework to study the structure of functional connectivity networks and to assess alterations induced by pathological conditions~\cite{bullmore2009,stam2014,crossley2014,fornito2015}.
-%Among the many methods that are available to detect such pathological alterations, one of the most important is the possibility to quantify the modifications of the resting state networks in the abnormal brain using the theoretical framework of complex networks science~\cite{sporns2000,sporns2002,sporns2004,bullmore2009,stam2014}.
-
-%Complex network science offers the best tools to assess the topology and organization of brain connectivity networks, as well as powerful means to establish, in a completely data-driven manner, diagnoses of common neurological diseases offering the possibility to design lines of intervention and prevention.
-%In the framework of complex networks science, the brain is seen as a system whose fundamental units are the brain regions at different scales, interconnected by a number of links, describing the strength of inter-regional coordination.
-
-%%%%%%%%%%%%%%%%%%%% RIPRESO DA INTRODUZIONE
 The methods of network theory date back to the problem of K{\"o}nigsberg bridges, in 1735, when the famous mathematician Leonhard Euler was faced with the problem of finding a path through the city that would cross all the seven bridges just once.
 The knowledge accumulated since then forms the basis of modern graph theory.
 In totally general settings, simple graphs are usually defined as a set of nodes,  connected by a set of links, denoting the strength of the relation between pairs of nodes.
@@ -103,7 +97,7 @@ Adapted from~\cite{bullmore2009}.}
 \label{fig:bullmore2009pipeline}
 \end{figure}
 
-The rise of the network neuroscience in the last decade has been driven by the evidence that almost independently from how the networks links are defined, brain networks share some common features at many spatial and temporal scales.
+The rise of network neuroscience in the last decade has been driven by the evidence that almost independently from how the networks links are defined, brain networks share some common features at several spatial and temporal scales.
 
 For example, they exhibit the \emph{small-world} property~\cite{watts1998,sporns2002,sporns2004a}, whereby most nodes in a graph can be reached from any other node in just a few hops.
 Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance may be related to how efficiently our brain integrates information between multiple brain regions.
@@ -116,7 +110,7 @@ Forms of rich-club organization have been observed in cats, macaque and humans~\
 Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication.
 
 From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{sporns2007,power2013,kandel2013}.
-Contrarily, primary sensory cortices have low topological centrality and degree~\cite{vandenheuvel2011,zamora-lopez2010,harriger2012}.
+Conversely, primary sensory cortices have low topological centrality and degree~\cite{vandenheuvel2011,zamora-lopez2010,harriger2012}.
 Damage to primary sensory areas only affects them locally, while perturbation to the rich-club backbone has diffuse and severe effects on the whole network architecture~\cite{honey2008,ball2014}.
 Abnormal rich-club connectivity is hypothesized to be related to familial vulnerability for schizophrenia~\cite{collin2014impaired} and other diseases as well.
 
@@ -199,16 +193,17 @@ Hence, the resolution limit represents a critical shortcoming for the study of b
 % TROPPO SPECIFICO A QUESTO LIVELLO
 %Moreover, it has been shown that an adjustable resolution parameter may reduce the tendency to merge small clusters, but only at the cost of unduly splitting large clusters~\cite{lancichinetti2011}. Adjustment of the resolution parameter is an attempt to balance these two biases, but multi-resolution methods fail to recover community structures comprising heterogeneous distributions of cluster sizes~\cite{lancichinetti2011}.
 
-In the present work I have developed an approach that has been valuable in detecting communities in brain networks beyond the resolution limit.
-The following sections of this introductory chapter guide the reader into the complex networks science, by first giving an overview of the mathematical terminology and methodological concepts.
+In the present work I have developed an approach that is valuable in detecting communities in brain networks beyond the resolution limit.
+The following sections of this introductory chapter guide the reader into the complex networks science, by giving an overview of the mathematical terminology and methodological concepts.
 In the second chapter, the experimental evidence of the modular structure of brain connectivity is reviewed, together with the methods to disentangle the mesoscopic structure of complex systems. In particular, sections~\ref{sec:resolutionlimit} and~\ref{sec:degeneracy} consider the problem of the resolution limit and degeneracy of Newman Modularity.
-A new approach dubbed Surprise, that overcomes the limitations imposed by the resolution limit and degeneracy, is described in the chapter~\ref{chap:beyondresolutionlimitbinarynetworks}.
+A new approach, dubbed Surprise, that overcomes the limitations imposed by the resolution limit and degeneracy, is described in the chapter~\ref{chap:beyondresolutionlimitbinarynetworks}.
 Throughout chapters, the problems imposed by the resolution limit and degeneracy are analysed for Surprise and its weighted counterpart, Asymptotical Surprise. The characteristics of the two methods are discussed, together with an efficient algorithm aimed at their optimization.
 The application of Surprise and Asymptotical Surprise to functional connectivity networks constitutes the hearth of chapters~\ref{chap:beyondresolutionlimitbinarynetworks} and \ref{chap:beyondresolutionlimitweightednetworks}, whereby the implications of a resolution limit free analysis of the functional modules are explored.
 Firstly, application of Surprise reveals the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
 An approach for the creation of realistic benchmark resting state networks is then examined.
 On the ground structure provided by those networks, Asymptotical Surprise is validated and shown to outperform current resolution-limited methods.
 The finer modular subdivision of resting state functional connectivity networks obtained by Asymptotical Surprise is shown to lead to substantial differences in the identification of connector hubs compared to other community detection methods.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% ELEMENTS OF GRAPH THEORY %%%%%%%%%%%%%%%%%%%%
