@@ -44,7 +44,7 @@
 \usepackage{subcaption}
 \usepackage{rotating}
 \usepackage{hyphenat}
-
+\usepackage{afterpage}
 
 \usepackage[section]{placeins} % to avoid floats going too far
 \newfloat{Algorithm}{tbp}{lop}
@@ -71,3 +71,10 @@
 \let\marginpar\oldmarginpar
 
 \hypersetup{colorlinks = false, hidelinks }
+
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}

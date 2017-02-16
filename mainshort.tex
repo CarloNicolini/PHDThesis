@@ -1,0 +1,37 @@
+\documentclass[11pt,%                        % primary font size
+              a4paper,%                     % A4
+              headinclude,footinclude,%    % header at foot of the page
+]{scrreprt} % KOMA class
+
+\usepackage{textcomp}                       % fix warning with missing font 
+\usepackage{scrhack} % fix warnings when using KOMA with listings package
+\usepackage{mparhack,fixltx2e,relsize} % typographical niceties
+
+\usepackage[eulerchapternumbers,   % chapter numbers font: Euler
+            beramono,%             % fixed-width font: Bera Mono
+            eulermath,%            % math font: AMS Euler
+            pdfspacing,%           % better line filling
+            listings,%             % listings
+            dottedtoc,%            % align TOC page numbers to right
+            floatperchapter,       % float objects numbered by chapter
+            pdfspacing,
+            linedheaders,
+            ]{classicthesis}       % classicthesis style
+\usepackage{arsclassica} % improve classicthesis
+\usepackage[left=4cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+\pdfsuppresswarningpagegroup=1
+\title{Graph analysis of the modular structure in brain functional connectivity networks}
+\author{Carlo Nicolini\\ S.S.D FIS/07\\Dottorato di ricerca in nanoscienze\\e tecnologie avanzate\\Curriculum in Nanomedicina Morfologica Clinica\\29° ciclo\\Università di Verona}
+
+\date{}
+\begin{document}
+%\input{include/frontespizio.tex}
+\maketitle
+
+\chapter*{Abstract}
+\input{chapters/abstract.tex}
+\end{document}
