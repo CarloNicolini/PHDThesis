@@ -1,5 +1,5 @@
 #say "START!"
-clear && latexrun --latex-cmd=pdflatex --latex-args="-synctex=1" -Wall main.tex
+clear && latexrun --latex-cmd=pdflatex --latex-args="-synctex=1"  main.tex
 cp latex.out/main.synctex.gz .
 #latexrun --latex-cmd=pdflatex --latex-args="-synctex=1" latex.out/main-frn.tex
 #latexrun --latex-cmd=pdflatex --latex-args="-synctex=1" main.tex

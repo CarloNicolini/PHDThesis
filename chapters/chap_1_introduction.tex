@@ -712,12 +712,12 @@ As described in~\cite{nicolini2017} I tested this idea on two different models o
 
 %%%%%%%%%%%%% COMPARING COMMUNITY STRUCTURE IN NETWORKS %%%%%%%%%%
 \section{Comparing community structure in networks}
-As the number of community detection methods has increased over the years, a quantitative way to assess their performance is desirable.
-In generative models of networks like the stochastic block model and its variants, the planted partition model and the LFR benchmark, the community structure is determined a-priori.
-Conversely, community structures of real-world networks are often annotated by experts in the field, like for instance the karate club network of Zachary~\cite{zachary1977} and the political blog network~\cite{adamic2005}, as no a-priori structure was imposed to those graphs.
+Over the years a large number of community detection methods appeared and a quantitative way to assess their performance on benchmark networks was needed.
+In most generative models of networks, the community structure is determined a-priori, like for example in the stochastic block model, the planted partition model and the LFR model.
+Conversely, community structures of real-world networks are often annotated by experts in the field: it's the case of the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
 
 A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past~\cite{danon2005,vinh2010}.
-They are used to provide quantitatively a number that tells the extent of similarity between two partitions.
+They are used to quantitatively provide a number that tells to which extent two partitions are similar.
 Typically the result is normalized in the $[0,1]$ range, being close to $1$ for very similar clusterings and close to $0$ when mostly dissimilar.
 %These metrics are adopted especially in the benchmarking of community detection methods when the specific outcome of some algorithm is compared with a ground truth partition, usually, a-priori determined.
 

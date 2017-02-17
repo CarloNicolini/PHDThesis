@@ -8,7 +8,7 @@ In this respect, brain function or cognition can be described as global integrat
 
 Among the many advantages of a modular organization of the brain, three are of greatest importance and strictly intertwined: adaptability, robustness and wiring cost economy.
 Firstly, from an evolutionary perspective, a modular architecture is highly adaptable to an ever changing environment and variable loads of cognitive demands.
-From generation to generation, modules that were already well-fit to the environmental conditions were selected and passed, while others were only slightly rewired through the natural selection mechanisms. This pressure, together with the imperative of a reduced wiring cost have crucial to select an architecture that converged to a construction of tightly connected sub-networks loosely connected to each others~\cite{clune2013}.
+From generation to generation, modules that were already well-fit to the environmental conditions were selected and passed, while others were only slightly rewired through the natural selection mechanisms. This pressure, together with the imperative of a reduced wiring cost have been crucial to select an architecture that converged into tightly connected sub-networks loosely linked to each others~\cite{clune2013}.
 Computational studies have shown that a modular organization emerges spontaneously in complex brain networks, promoting flexibility to an ever-changing outside environment~\cite{kashtan2005,kashtan2007} and maximizing bidirectional information exchange between neural populations~\cite{yamaguti2015}.
 
 A second benefit of modularity is robustness as it facilitates evolvability and robust traits like the multiscale modular architecture are often selected by evolution~\cite{kitano2004,betzel2016}.
@@ -19,7 +19,8 @@ In the case of neural networks it has been shown that a modular organization hel
 Local disruptive modification may only affect one module, whereas the others are preserved from the insult~\cite{stam2014}.
 In case of externally or internally generated fluctuations, a modular architecture prevents functional disruption of the network leading to the possible death of the organism.
 
-Thirdly, the spatial and metabolic constraints of neuronal wiring are factors that deeply shaped the brain architecture~\cite{bullmore2012,stam2012}. Computational and empirical studies converged on the result that a multiscale organization of modules inside modules is the one that satisfies the constraints imposed by minimization of energetic cost and spatial embedding~\cite{pan2007,bullmore2012,doucet2011,betzel2017,kaiser2006}.
+Thirdly, the spatial and metabolic constraints of neuronal wiring are factors that deeply shaped the brain architecture~\cite{bullmore2012,stam2012}. 
+Computational and empirical studies converged on the result that a multiscale organization of modules inside modules is the one that satisfies the constraints imposed by minimization of energetic cost and spatial embedding~\cite{pan2007,bullmore2012,doucet2011,betzel2017,kaiser2006}.
 Here, wiring cost must not only be intended as the physical volume of axons and synapses but also be considered in terms of energetic demand for signal transmission, additional processing cost for noise correction over long distance signalling and sustenance of the necessary neuroglia that supports neuronal activities~\cite{bullmore2012}. In terms of wiring cost reduction, modular networks emerge naturally when minimizing the average path length and the total number of links, while maximizing robustness against perturbations in node activity.
 By way of example, in the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behaviour is encoded as fitness function~\cite{bongard2011}.
 
@@ -31,7 +32,7 @@ This technique is based on the correlation of voxels within selected regions of 
 An accurate thresholding is then needed to identify voxels that are significantly correlated with the region of interest.
 
 Another widely used approach is the decomposition of the endogenous BOLD fluctuations by means of Independent Components Analysis, a technique that aims at maximizing statistical independence between time courses of single voxels and that can identify separate spatial modes~\cite{damoiseaux2006,beckmann2005,calhoun2013}.
-Yet, ICA with its variants still relies on user experience to discern important components from noise~\cite{lee2013} and despite some notable attempts to identify noise~\cite{thomas2002,tohka2008}, like seed-based approaches, does not yield any information on the hierarchy of modes, nor on their relation.
+Yet, ICA with its variants still relies on user experience to discern important components from noise~\cite{lee2013} and despite some notable attempts to identify noise~\cite{thomas2002,tohka2008}, ICA, like seed-based approaches, does not yield any information on the hierarchy of modes, nor on their inter-relations.
 Moreover, largely overlapping results can be obtained by ICA and seed-based approaches~\cite{rosazza2012}.
 
 The evidence of modules in human functional networks is based on their robustness and consistency within a variety of MRI protocols, different analysis methods, and MRI scanners. 
@@ -44,7 +45,8 @@ These modules, roughly highlighted with coloured ellipses in Figure~\ref{fig:van
 \caption{Functional modules of the resting state brain, averaged over different studies and protocols, and visualized roughly on a brain template to indicate their anatomical position. Figure taken from~\cite{vandenheuvel2010}.}
 \label{fig:vandenheuvelnetworks}
 \end{figure}
-The Default Mode Network, or DMN, firstly identified by Raichle~\cite{raichle2001} with positron emission tomography and then confirmed by Greicius et al. using fMRI~\cite{greicius2003} is one of the most consistent networks among a variety of studies. It comprises a group of spatially remote brain regions that show higher levels of correlation when the brain is not involved in any particular cognitive or behavioural task.
+The Default Mode Network, or DMN, firstly identified by Raichle~\cite{raichle2001} with positron emission tomography and then confirmed by Greicius et al using fMRI~\cite{greicius2003}, is one of the most consistent networks among a variety of studies.
+It comprises a group of spatially remote brain regions that show higher levels of correlation when the brain is not involved in any particular cognitive or behavioural task.
 For this reason, it is hypothesized that there are two opposing concurrent large scale modes, one including the DMN, indicated as ``task-negative'' or ``intrinsic'' system, and the other comprising regions involved in attentional and task evoked activities, dubbed ``task-positive'' or ``extrinsic'' system~\cite{power2011,fox2002,golland2008}.
 The Default Mode Network or DMN (Figure~\ref{fig:vandenheuvelnetworks}) is thought to be connected to high-level cognitive functions, given its specific traits of structural links to associative brain regions and that the DMN may support internal mental processing like mind-wandering, abstract thinking and planning of events in the future~\cite{gusnard2001,buckner2008}.
 Additionally, evidence has pointed to disruptions in the DMN with people with Alzheimer's disease~\cite{buckner2008}, autism spectrum disorders~\cite{washington2014} and schizophrenia~\cite{garrity2007}.
@@ -81,7 +83,7 @@ In the following sections I'm going to illustrate the current graph-theoretical 
 \section{Community detection in networks}
 \label{sec:communitydetectioninnetworks}
 The process of grouping nodes in a graph to establish their common behavioral properties is a popular technique that goes under the name of \emph{community detection}.
-Following the initial work by Hilgetag~\cite{hilgetag2000a} dubbed OSA (Optimal Set Analysis), several graph theoretical methods have been deployed to investigate the modular structure of structural and functional brain networks~\cite{meunier2009,meunier2010,power2011,stam2007,stam2014}.
+Following the initial work by Hilgetag~\cite{hilgetag2000a} dubbed OSA (Optimal Set Analysis), several graph theoretical methods have been deployed to investigate the modularity of structural and functional brain networks~\cite{meunier2009,meunier2010,power2011,stam2007,stam2014}.
 Typically, these methods rely on the optimization of a fitness function that measures the quality of a network partition against that of an ensemble of randomized networks with similar statistical properties, called the ``null model''.
 Optimization of the fitness function of choice is often computationally demanding and scales steeply with increasing network size.
 Hence, heuristics are needed to calculate nearly optimal partitions of large networks, like those derived from neuroimaging data, within reasonable computation time~\cite{blondel2008,rosvall2008,raghavan2007}.
@@ -92,7 +94,7 @@ A \emph{quality function} is a function $\mathcal{Q}$ that given a clustering of
 Here and in the following sections, it must be stressed that the concept of quality function and community detection methods are separate as the first is a way to assess the goodness of a partition while the second relies on the definition of a quality function to design efficient algorithms and heuristics to find such good partitions.
 
 One of the most important properties of a quality function is additivity, i.e. its expression as a sum of terms each pertaining to a single community.
-For a generic function of a cluster, or subgraph, $f(\zeta_i)$, an additive quality function specify the goodness of a clustering as the sum of $f$ over the distinct communities as follows:
+For a generic function of a cluster, or subgraph, $f(\zeta_i)$, an additive quality function specifies the goodness of a clustering as the sum of $f$ over the distinct communities as follows:
 \begin{equation}\label{eq:additive_quality}
 \mathcal{Q} = \sum \limits_{\zeta_c \in \zeta} f(\zeta_c).
 \end{equation}
@@ -102,7 +104,7 @@ In the next section, we explore the properties of some of the most important add
 \subsection{Spin glass based quality functions}
 The simplest formulation of a quality function is one that puts emphasis on intracluster edges and penalizes intercluster edges.
 In this terms, local optima of the quality function should correspond to partitions where the communities emerge as dense areas in the network loosely connected among them.
-A framework grounded in statistical mechanics for the definition of suitable quality functions for community detection that meet these requirements has been introduced by Reichardt and Bornholdt (RB)~\cite{reichardt2006}.
+A framework grounded in statistical mechanics for the definition of suitable quality functions for community detection meeting these requirements has been introduced by Reichardt and Bornholdt (RB)~\cite{reichardt2006}.
 
 In the RB model the problem of community detection is cast in terms of finding the \emph{ground state} of a spin glass, a model describing the behavior of large sets of interacting microscopic magnets.
 Actually, the properties of spin glass models are subject of intensive research in the last decades as their applications range from condensed matter and nuclear physics to neural networks. Here we present only their salient application to community detection and refer the reader for the details of the model to more specialized books~\cite{mezard1990}.
@@ -155,7 +157,7 @@ Specifically, in the case of Newman's Modularity, the resolution limit hampers i
 \subsection{The configuration model}\label{sec:configuration_model}
 A central property of the configuration model is the probability $P_{ij}$ of the occurrence of an edge between two specified vertices $i$ and $j$.
 In absence of correlations, as prescribed by the random reshuffling imposed by the configuration model, the probability that a stub emerging from vertex $i$ is connected by an edge to any of the stubs of vertex $j$ is $k_j/(2m-1)$ as there are $2m-1$ stubs in total.
-Therefore the total probability that vertex $i$ and vertex $j$ are connected by an edge is the product of the stub probability times the number of stubs from vertex $i$, namely 
+Therefore the total probability that vertex $i$ and vertex $j$ are connected by an edge is the product of the stub probability times the number of stubs from vertex $i$, namely: 
 \begin{equation}\label{eq:configuration_model_probability}
 P_{ij} = \frac{k_i k_j}{2m-1} \approx \frac{k_i k_j}{2m}.
 \end{equation}
@@ -205,7 +207,7 @@ As the most similar ER graph of a given graph is the one that matches its densit
 Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 \end{equation}
 Under this model, a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
-Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible and loss functions that take into account the relative size of clusters are possible.
+Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible one, and loss functions that may take into account the relative size of clusters are desirable.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -214,7 +216,7 @@ Interestingly, from a machine learning perspective, all spin glass models quanti
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it became the tool of election to inspect the community structure of networks.
 On one side, the wide use of Modularity led many researchers to gain interest in complex networks, with applications in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics}, just to mention a few. On the other hand, it offered a fallacious view on the community detection problem.
-Indeed, although simple in many sense, Modularity optimization was hiding a problem that heavily limits its use in real world networks.
+Indeed, although simple in many senses, Modularity optimization hided a problem that heavily limits its use in real world networks.
 
 In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thorough analysis of Modularity.
 Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the total number of edges. They dubbed this general phenomenon \emph{resolution limit}.
@@ -270,7 +272,7 @@ Yet, extending the number of cliques, Modularity may merge cliques into groups o
 %%%%%%%%%%%%%%%%%%%%%%%%%% RESOLUTION PARAMETER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Resolution parameter}\label{sec:resolution_parameter}
-Different authors proposed solutions that try to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
+Different authors proposed solutions that tried to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
 
 In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
 From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$, resulting in a modified modularity $Q^N(\gamma)$:
@@ -398,12 +400,14 @@ Although useful to address the degeneracy issue, this approach still suffers fro
 Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy stochastic agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
 
 This algorithm has become extremely popular in recent years because it is fast, allowing to analyze huge networks with billions of edges~\cite{lancichinetti2009}.
-Due to its intrinsic stochastic nature, the Louvain method returns different near-optimal partitions every run and must be typically run thousands of times in order to identify the best solution.
+Due to its intrinsic stochastic nature, the Louvain method returns different near-optimal partitions for every run and must be typically run thousands of times in order to identify the best solution.
+
 The optimization method is divided in two phases applied recursively as depicted in Figure~\ref{fig:louvain_method}. The first phase is the optimization phase which looks for a locally optimal partition by considering only individual vertex swaps. As in many other greedy algorithms, the community partition is initialized with a single node per community and as many communities as nodes in the input network. Then, based on the chosen cost function, individual nodes are removed from their current community and swapped to the neighboring community which produces the largest positive gain of the cost function.
+This procedure is repeated iteratively at different levels, until no further movement produces improvements in the quality function.
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=0.6\textwidth]{images/louvain_method.pdf}
+\includegraphics[width=0.5\textwidth]{images/louvain_method.pdf}
 \caption{Optimization and aggregation steps with the Louvain method. Figure taken from~\cite{browet2014}.}
 \label{fig:louvain_method}
 \end{figure}
@@ -412,7 +416,9 @@ The optimization method is divided in two phases applied recursively as depicted
 %%%%%%%%%%%%% SPECTRAL OPTIMIZATION %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Spectral optimization}
-Another (and earlier) method to optimize Modularity is the spectral Modularity by Newman. Given the form of Modularity as in Eq.~\ref{eq:newmanmodularityspinglass}, one calls the modularity matrix the quantity $\mathbf{B}=A_{ij} - k_i k_j/2m$. From it, it's possible to obtain an equivalent linear algebra formulation of Modularity that reads:
+Another (and earlier) method to optimize Modularity is the spectral Modularity by Newman and Girvan~\cite{newman2006}.
+Given the form of Modularity as in Eq.~\ref{eq:newmanmodularityspinglass}, one calls the quantity $\mathbf{B}=A_{ij} - k_i k_j/2m$ \emph{modularity matrix}.
+From it, it's possible to obtain an equivalent linear algebra formulation of Modularity that reads:
 \begin{equation}\label{eq:newman_spectral}
 Q^N = \frac{1}{4m} \mathbf{s}^T \mathbf{B} \mathbf{s}
 \end{equation}
