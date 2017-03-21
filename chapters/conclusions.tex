@@ -1,25 +1,25 @@
 Functional brain connectivity, measured by fMRI, greatly increased our knowledge of the architecture and function of the brain.
 In particular, investigation of the modular organization of brain functional connectivity networks is specifically explored in this thesis by means of a new graph theoretical approach.
 
-In the past, these functional networks have been investigated by means of methods that were hampered by a limit that impeded the detection of modules smaller than a scale determined, in the best case, by the amount of interconnections and, in the worst case, by the overall size of the graph under consideration.
+In the past, these functional networks have been investigated with methods hampered by a limit that impeded the detection of modules smaller than a scale determined, in the best case, by the amount of interconnections and, in the worst case, by the overall size of the graph under consideration.
 
-In this work I pioneered the use of Surprise and Asymptotical Surprise, two approaches for community detection in brain networks that are demonstrably free from these severe limitations.
+In this work, I pioneered the use of Surprise and Asymptotical Surprise, two approaches for community detection in brain networks that are demonstrably free from these severe limitations.
 
 The methodological advantage of the approach proposed in this thesis is two-fold.
 Firstly, the resolution limit-free method for community detection offered a richer view on the modular structure of brain networks.
-Indeed, direct comparison with other methods clearly demonstrated improved capability to identify neurofunctionally plausible and anatomically well-defined substructures otherwise concealed by the resolution limit.
+Indeed, direct comparison with other methods clearly demonstrated an improved capability to identify neurofunctionally plausible and anatomically well-defined substructures otherwise concealed by the resolution limit.
 Moreover, the more heterogeneously distributed partitions obtained by Surprise maximization resulted in non-trivial differences of the roles of single nodes, compared to current models.
 
-As a second point, the validation of a method to maximize Asymptotical Surprise and its application on synthetic networks endowed with a ground-truth community structure, provided a comparative term for benchmark of other community detection methods.
-In particular, I described a procedure to artificially simulate the effects of noise on time-courses of BOLD signals, in order to see its detrimental effects on the performance of community detection.
+As a second point, the validation of a method to maximize Asymptotical Surprise and its application on synthetic networks endowed with a ground-truth community structure provided a comparative term for benchmark of other community detection methods.
+In particular, I described a procedure to artificially simulate the effects of noise on time-courses of BOLD signals, to see its detrimental effects on the performance of community detection.
 Altogether the picture that emerged is that Asymptotical Surprise has proved superior to existing methods in terms of Sensitivity and accuracy in detection of the planted structure as measured by Normalized Mutual Information, while showing comparable Specificity.
 
-As a last test of the validity of this newly developed approach for community detection beyond the resolution limit, Asymptotical Surprise optimization revealed a functional fragmentation and reorganization of the primary sensory areas in schizophrenic patients.
-Although preliminary, this study is in keeping with bottom-up theories of schizophrenia, hypothesizing that alterations in early sensory processing may be at the hearth of the cognitive and behavioural dysfunctions that characterize this tremendous disease.
+As the last test of the validity of this newly developed approach for community detection beyond the resolution limit, Asymptotical Surprise optimization revealed a functional fragmentation and reorganization of the primary sensory areas in schizophrenic patients.
+Although preliminary, this study is in keeping with bottom-up theories of schizophrenia, hypothesizing that alterations in early sensory processing may be at the heart of the cognitive and behavioural dysfunctions that characterize this tremendous disease.
 
-As a future direction of this work I plan to implement a multilevel method for the optimization of Asymptotical Surprise that may be of help in dealing with extremely large graphs as those coming from voxelwise approaches to functional connectivity.
+As a future direction of this work, I plan to implement a multilevel method for the optimization of Asymptotical Surprise that may be of help in dealing with huge graphs as those coming from voxelwise approaches to functional connectivity.
 Graphs in the order of fifty thousand nodes and several million edges are the next natural step in this ``big data'' challenge that is pushing the frontiers of efficient algorithms design.
 While PACO has been already tested on graphs with millions of edges, its performance is still poor, requiring an entire week for a single run.
 On the other hand, a deeper theoretical analysis of the behaviour of Surprise/Asymptotical Surprise on networks non-trivial architecture could shed light on more efficient implementations.
 
-As the last chapter of this work confirmed, I see a lot of space for the utilization of my new methods in the realm of the analysis of neuroimaging data for the investigation of neuropsychiatric alterations. As observed in schizophrenia patients, the greater resolution afforded by the methods presented in this work, may provide novel markers for diagnosis and prognosis of neuropsychiatric disorders.
+As the last chapter of this work confirmed, I see much space for the utilization of my new methods in the realm of the analysis of neuroimaging data for the investigation of neuropsychiatric alterations. As observed in schizophrenia patients, the greater resolution afforded by the methods presented in this work may provide novel markers for diagnosis and prognosis of neuropsychiatric disorders.

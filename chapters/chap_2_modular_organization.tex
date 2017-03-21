@@ -17,15 +17,15 @@ In addition, swapping and rewiring maladaptive modules is less demanding that re
 A general problem in the acquisition of new skills is the phenomenon of catastrophic forgetting, by which newly acquired skills come at the expense of others~\cite{french1999}.
 In the case of neural networks it has been shown that a modular organization helps to avoid catastrophic forgetting of newly learned skills, whereby new skills are learned by slightly rewiring existing modules, rather than changing the overall organization~\cite{ellefsen2015}.
 Local disruptive modification may only affect one module, whereas the others are preserved from the insult~\cite{stam2014}.
-In case of externally or internally generated fluctuations, a modular architecture prevents functional disruption of the network leading to the possible death of the organism.
+In the case of externally or internally generated fluctuations, a modular architecture prevents functional disruption of the network leading to the possible death of the organism.
 
 Thirdly, the spatial and metabolic constraints of neuronal wiring are factors that deeply shaped the brain architecture~\cite{bullmore2012,stam2012}. 
 Computational and empirical studies converged on the result that a multiscale organization of modules inside modules is the one that satisfies the constraints imposed by minimization of energetic cost and spatial embedding~\cite{pan2007,bullmore2012,doucet2011,betzel2017,kaiser2006}.
-Here, wiring cost must not only be intended as the physical volume of axons and synapses but also be considered in terms of energetic demand for signal transmission, additional processing cost for noise correction over long distance signalling and sustenance of the necessary neuroglia that supports neuronal activities~\cite{bullmore2012}. In terms of wiring cost reduction, modular networks emerge naturally when minimizing the average path length and the total number of links, while maximizing robustness against perturbations in node activity.
+Here, wiring cost must not only be intended as the physical volume of axons and synapses but also be considered in terms of energetic demand for signal transmission, additional processing cost for noise correction over long distance signalling and sustenance of the necessary neuroglia that supports neuronal activities~\cite{bullmore2012}. Regarding wiring cost reduction, modular networks emerge naturally when minimizing the average path length and the total number of links, while maximizing robustness against perturbations in node activity.
 By way of example, in the field of robotics, spontaneous structural modularity of neural networks controllers emerge from evolutionary optimization when successful robot behaviour is encoded as fitness function~\cite{bongard2011}.
 
 Application of resting state fMRI has allowed the identification of various modules in human functional connectivity.
-These spatially distinct modes that demonstrate synchronous BOLD fluctuations, consist in strongly correlated, anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}.
+These spatially distinct modes that demonstrate synchronous BOLD fluctuations consist in strongly correlated, anatomically separated, possibly remote regions of the brain~\cite{biswal1995,raichle2001,fox2005,biswal2012}.
 Various methods exist for analyzing resting-state data, including seed-based approaches~\cite{biswal1995,raichle2001}, independent component analysis~\cite{beckmann2005,damoiseaux2006} and graph-based methods~\cite{stam2007,bullmore2009}. They have generally shown that the human brain is functionally organized in a number of interconnected regions with boundaries that reflect specific aspects of cognitive and behavioural aspects~\cite{tomasi2012,alnaes2015,crossley2013a}.
 The first analysis method ever used was the seed-based approach~\cite{biswal1995}, which has been applied in numerous studies~\cite{raichle2001}.
 This technique is based on the correlation of voxels within selected regions of interest (ROIs), with the average BOLD signal from all other voxels in the brain.
@@ -47,24 +47,24 @@ These modules, roughly highlighted with coloured ellipses in Figure~\ref{fig:van
 \end{figure}
 The Default Mode Network, or DMN, firstly identified by Raichle~\cite{raichle2001} with positron emission tomography and then confirmed by Greicius et al using fMRI~\cite{greicius2003}, is one of the most consistent networks among a variety of studies.
 It comprises a group of spatially remote brain regions that show higher levels of correlation when the brain is not involved in any particular cognitive or behavioural task.
-For this reason, it is hypothesized that there are two opposing concurrent large scale modes, one including the DMN, indicated as ``task-negative'' or ``intrinsic'' system, and the other comprising regions involved in attentional and task evoked activities, dubbed ``task-positive'' or ``extrinsic'' system~\cite{power2011,fox2002,golland2008}.
+For this reason, it is hypothesized that there are two opposing concurrent large-scale modes, one including the DMN, indicated as ``task-negative'' or ``intrinsic'' system, and the other comprising regions involved in attentional and task-evoked activities, dubbed ``task-positive'' or ``extrinsic'' system~\cite{power2011,fox2002,golland2008}.
 The Default Mode Network or DMN (Figure~\ref{fig:vandenheuvelnetworks}) is thought to be connected to high-level cognitive functions, given its specific traits of structural links to associative brain regions and that the DMN may support internal mental processing like mind-wandering, abstract thinking and planning of events in the future~\cite{gusnard2001,buckner2008}.
 Additionally, evidence has pointed to disruptions in the DMN with people with Alzheimer's disease~\cite{buckner2008}, autism spectrum disorders~\cite{washington2014} and schizophrenia~\cite{garrity2007}.
 
 Apart from the DMN and networks for the primary sensory areas, other networks have different roles, many of which are partly speculative.
-Subcortical communities have also been identified with rs-fMRI: an appropriate ICA seeding, makes possible to observe functional modules located at the thalamus and hippocampus~\cite{lee2012}.
+Subcortical communities have also been identified with rs-fMRI: an appropriate ICA seeding makes possible to observe functional modules located at the thalamus and hippocampus~\cite{lee2012}.
 Modules in functional brain networks have been explained as the possible basis of a large variety of neural processes.
 By way of example, certain functional processes, like colour vision, have been described as anatomically localized~\cite{zeki1998}, while others, like working memory, have been proposed to involve more globally integrated processing systems~\cite{dehaene1998,baddeley2003}.
 Interestingly modules of functional brain networks are non-static as recent studies found that they tend to become less and less modular with ageing~\cite{meunier2009a,song2014}.
 In all respects, the experimental indication of the modular organization is a powerful and robust marker against which to measure the health of the brain. 
 Thus, modularity is not only a biologically plausible feature but it is very likely necessary to maintain the rich repertoire of cognitive tasks that our brain engages in every day of our life.
 
-Modeling of resting state networks by means of graph-theory provides a compelling alternative to seed-based and ICA approaches.
-Within this framework ROI are nodes of a network, connected by edges of weight proportional to the strength of correlation between ROIs.
+Modeling of resting state networks using graph-theory provides a compelling alternative to seed-based and ICA approaches.
+Within this framework, ROI are nodes of a network, connected by edges of weight proportional to the strength of correlation between ROIs.
 Graph-theory offers a wide amount of measures to characterize functional connectivity networks and in particular a wealth of methods to identify communities, subsets of nodes which are more strongly correlated between each other, than with external nodes~\cite{bullmore2009,stam2014,sporns2016}.
 
 Interestingly, the size distribution of the functional modules has never been analyzed in details, especially when graph-theoretical methods were applied.
-This is the case of one of the most fortunate and widely adopted method to identify modules in functional networks, Newman's Modularity~\cite{newman2006}.
+This is the case of one of the most fortunate and widely adopted methods to identify modules in functional networks, Newman's Modularity~\cite{newman2006}.
 Despite its popularity and merits, Newman's approach presents some important limitations.
 Already at an early stage, Modularity-based methods were shown to suffer from a resolution limit, as they fail to identify modules that are smaller than a scale that depends on the size of the overall network~\cite{fortunato2007}.
 As a consequence, even unambiguously defined modules, like complete sub-graphs or cliques, may be unduly merged into larger communities when they are too small compared to the size of the network.
@@ -74,7 +74,7 @@ Fixes have been proposed to circumvent the resolution limit, including the intro
 However, real-world networks are characterized by the coexistence of clusters of very different sizes, and no single parameter can adapt to the variety of network topologies observed in nature.
 Hence, the resolution limit may represent a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 
-In the following sections I'm going to illustrate the current graph-theoretical approaches for community detection in networks and to discuss the theory of community detection, highlighting the practical problems of Modularity maximization.
+In the following sections, I'm going to illustrate the current graph-theoretical approaches for community detection in networks and to discuss the theory of community detection, highlighting the practical problems of Modularity maximization.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -122,7 +122,7 @@ Rearranging Eq.\ref{eq:hamiltonianspinglass} and collecting the terms independen
 \end{equation}
 where the two parameters $\alpha_{ij}=a_{ij}+b_{ij}+c_{ij}+d_{ij}$ and $\beta_{ij}=b_{ij}+d_{ij}$ depend on the \emph{null model}, i.e. the probability that an edge exists between $i$ and $j$ after random edge rewiring. Hence, a null model provides a mean to compare a specific set of features of a graph, with its randomized version that should specifically lack those features.
 
-% It's possible to express any additive quality function in the form of Eq.~\ref{eq:rbspinglass} as an additive quality function by setting $\alpha_{ij}=1$, $H_0=0$ , as the sum is only over intracluster edges.
+% It is possible to express any additive quality function in the form of Eq.~\ref{eq:rbspinglass} as an additive quality function by setting $\alpha_{ij}=1$, $H_0=0$ , as the sum is only over intracluster edges.
 Setting $\alpha_{ij}=1$, $H_0=0$ and moving the summation indexes over the communities rather than over the pairs of nodes, one can express the resulting Hamiltonian, as an additive quality function expressed here as $\mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma)$, that reads:
 \begin{equation}\label{eq:rbspinglass2}
 \mathcal{H}^{\textrm{RB}}_{\textrm{reduced}}(\sigma) = -\sum_{(i,j) \in V^2} \left[ A_{ij} - \beta_{ij} \right] \delta(\sigma_i,\sigma_j) = - \sum \limits_{c}^C \left[ m_c - \left< m_c \right> \right].
@@ -132,7 +132,7 @@ Among the additive quality functions that show up in the form of~\ref{eq:rbsping
 
 \subsection{Newman-Girvan Modularity}\label{sec:newman_modularity}
 Newman-Girvan Modularity (or simply Modularity)~\cite{newman2006}, denoted here and for the rest of the work by $Q^N$, is based on the idea that a network obtained by randomly reshuffling the original graph edges while keeping the same degrees sequence, should not display any community structure. 
-An important consequence of such randomization is that any stub in this null model, dubbed ``configuration model'' is equally likely to be connected to any other~\cite{newman2010book}. Thus, in absence of correlations, the probability that two nodes are connected is expressed by:
+An important consequence of such randomization is that any stub in this null model, dubbed ``configuration model'' is equally likely to be connected to any other~\cite{newman2010book}. Thus, in the absence of correlations, the probability that two nodes are connected is expressed by:
 \begin{equation}\label{eq:configuration_model}
 P_{ij} = \frac{k_i k_j}{2m},
 \end{equation}
@@ -148,7 +148,7 @@ whereby optimal partitions have high values of $Q^N$. As shown in Eq.~\ref{eq:rb
 Q^N = \sum_{c}^{|C|} \left[ \frac{m_c}{m} - \left( \frac{K_{\textrm{int}}(\mathcal{G}_c)}{2m} \right)^2 \right].
 \end{equation}
 Modularity takes values in the range $[-0.5,1]$, then a good partition should have $Q^N$ values close to unity, identifying groups with much more internal connections than expected at random. In contrast, a bad partition with $Q^N$ close to zero should identify groups with no more internal connections than we expect at random.
-In the next sections we will challenge this idea and show that this observation has led to false statements, as a general phenomenon, dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models.
+In the next sections, we will challenge this idea and show that this observation has led to false statements, as a general phenomenon, dubbed \emph{resolution limit}, heavily affects any quality function based on comparison with global null models.
 Specifically, in the case of Newman's Modularity, the resolution limit hampers its ability to detect modules smaller than a scale determined by the size of the graph.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -184,7 +184,7 @@ Under these hypotheses the expected number of edges between two vertices in the 
 \label{fig:configuration_model_stubs}
 \end{figure}
 An approach that allows to get the right configuration model depending on the class of graph under exam, relies on the computational simulation of the correct rewiring probability by means of Markov Chain Monte Carlo algorithms, as proposed in~\cite{fosdick2016}.
-In the remaining paragraphs, although flawed, we'll use the classic configuration model from Eq.~\ref{eq:configuration_model_probability} to be adherent to most of the brain networks literature, justified also by the vanishing effects of self-loops in large sparse networks. Nonetheless, we will illustrate many of the problems that the noncritical use of Modularity with this null model has introduced.
+In the remaining paragraphs, although flawed, we will use the classic configuration model from Eq.~\ref{eq:configuration_model_probability} to be adherent to most of the brain networks literature, justified also by the vanishing effects of self-loops in large sparse networks. Nonetheless, we will illustrate many of the problems that the noncritical use of Modularity with this null model has introduced.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% OTHER NULL MODELS FOR MODULARITY  %%%%%%%%%%%%%%%%
@@ -207,7 +207,7 @@ As the most similar ER graph of a given graph is the one that matches its densit
 Q^{ER} = \sum \limits_c^C \left[\frac{m_c}{m}  - \rho \binom{n_c}{2} \right].
 \end{equation}
 Under this model, a group of nodes forms a community if its internal density is greater than the graph density $\rho$, on average.
-Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges by means of a linear loss function. Among all the loss function, the linear is not the only possible one, and loss functions that may take into account the relative size of clusters are desirable.
+Interestingly, from a machine learning perspective, all spin glass models quantify the discrepancy between observed and expected intramodular fraction of edges using a linear loss function. Among all the loss function, the linear is not the only possible one, and loss functions that may take into account the relative size of clusters are desirable.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -215,8 +215,8 @@ Interestingly, from a machine learning perspective, all spin glass models quanti
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Resolution limit}\label{sec:resolutionlimit}
 Modularity attracted a lot of attention over the years as it became the tool of election to inspect the community structure of networks.
-On one side, the wide use of Modularity led many researchers to gain interest in complex networks, with applications in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics}, just to mention a few. On the other hand, it offered a fallacious view on the community detection problem.
-Indeed, although simple in many senses, Modularity optimization hided a problem that heavily limits its use in real world networks.
+On one side, the vast use of Modularity led many researchers to gain interest in complex networks, with applications in sociology~\cite{li2008tag}, bioinformatics~\cite{saracc2012topology} and ICT~\cite{java2007we,leskovec2007dynamics}, just to mention a few. On the other hand, it offered a fallacious view on the community detection problem.
+Indeed, although simple in many senses, Modularity optimization hid a problem that heavily limits its use in real world networks.
 
 In 2007, a seminal article by Fortunato and Barthelemy~\cite{fortunato2007} did a thorough analysis of Modularity.
 Their work showed the inability of Modularity to correctly identify communities that are smaller than a certain scale, determined by the square root of the total number of edges. They dubbed this general phenomenon \emph{resolution limit}.
@@ -244,7 +244,7 @@ More specifically, if the two modules have the same size and one sets $a_1=a_2=b
 \begin{equation}
 m_c < \sqrt{\frac{m}{2}}.
 \end{equation}
-To make this example more concrete we studied numerically a toy network where the three subgraphs take a precise form.
+To make this example more concrete, we studied numerically a toy network where the three subgraphs take a precise form.
 For the sake of illustration, we have defined $G_1$ and $G_2$ as two identical cliques of $5$ nodes connected to $G_0$ by a single edge ($m_{01}=m_{02}=1$) and to each other by $m_{12}$ edges.
 The module $G_0$ was defined as a clique of variable size with a number of edges ranging from 45 to 2775. We then computed the numerical difference $\Delta Q$ and plotted it as a function of the number of edges $m_0$ in the $G_0$ clique.
 
@@ -262,7 +262,7 @@ An even more striking example of how the resolution limit affects Modularity is 
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=1\textwidth]{images/traag_ring_of_cliques.pdf}
-\caption{The ring of cliques toy model. The left panel (A) shows the ground truth partition with maximal intracluster density and minimal intercluster density. The right panel (B) shows the maximum Modularity partition, whereby cliques are coalesced in pairs.}
+\caption{The ring of cliques toy model. The left panel (A) shows the ground truth partition with maximal intracluster density and minimal intercluster density. The right panel (B) shows the maximum Modularity partition, whereby cliques have coalesced in pairs.}
 \label{fig:traag_ring_of_cliques}
 \end{figure}
 If the number of cliques is large enough (they are more than $\sqrt{m}$), Modularity optimization leads to a partition where the cliques are combined into groups of two or more. This phenomenon can be observed already when considering a ring of 30 cliques made of 5 nodes, when the optimal Modularity partition combines cliques in pairs.
@@ -274,7 +274,7 @@ Yet, extending the number of cliques, Modularity may merge cliques into groups o
 \subsection{Resolution parameter}\label{sec:resolution_parameter}
 Different authors proposed solutions that tried to circumvent the resolution limit: from the introduction of a tunable parameter that enables analysis of the network at an adjustable resolution level~\cite{reichardt2006,ronhovde2010,yeo2011} to an adequate edge re-weighting to decrease its adverse effects~\cite{berry2011}.
 
-In this sense, the most common tuning to the Modularity quality function is the one that takes in consideration a \emph{resolution parameter}.
+In this sense, the most common tuning to the Modularity quality function is the one that takes into consideration a \emph{resolution parameter}.
 From the definition of $Q^N$ is evident that is possible to tune the size of the detected modules by multiplication of the configuration null model by a constant factor $\gamma_{N} \in [0,1]$, resulting in a modified modularity $Q^N(\gamma)$:
 \begin{equation}
 Q^N(\sigma,\gamma) = \sum_c^C \left[ \frac{m_c}{m} - \gamma_{N} \left( \frac{K_c}{2m}\right)^2 \right].
@@ -328,7 +328,7 @@ Thus, the resolution limit is a critical shortcoming for the study of brain netw
 The limitation on the number of detected modules in brain networks is evident in studies where typically four or five communities of the same size are detected in humans, as in Crossley et al.~\cite{crossley2013a}, Meunier et al.~\cite{meunier2009a,meunier2010}, Fair et al.~\cite{fair2009} or also in mouse models~\cite{schwarz2008}.
 To this end, an optimization method that does not suffer from the resolution limit would be needed.
 
-It's also very important to stress that comparing the Modularity value $Q^N$ across different networks obtained in different studies, with possibly a different number of nodes or different densities, is an erroneous practice.
+It is also very important to stress that comparing the Modularity value $Q^N$ across different networks obtained in different studies, with possibly a different number of nodes or different densities, is an erroneous practice.
 As shown by a number of studies~\cite{good2009,kehagias2013,radicchi2010}, even in graphs which do have a natural community structure, high modularity values can be achieved by partitions which do not respect this natural structure.
 Hence, the Modularity value is only a numerical indication of the current status of optimization of the detected community structure on a specific graph and should never be confronted across different networks.
 
@@ -352,7 +352,7 @@ In the large $r$ limit, the difference in Eq.~\ref{eq:modularity_difference_ring
 Indeed, already for $r=20$ cliques, $\Delta Q \approx 5\times 10^{-3}$, making all the suboptimal partitions where cliques are merged, very close to the optimal solution.
 
 To make this argument more intuitive, I extrapolated a visually interpretable form of the complex landscape of partitions' Modularity for a ring of cliques network. I sampled the configuration space of the partitions of a ring of clique network through a Montecarlo procedure and annotated the corresponding values of Modularity for every partition as in~\cite{good2009}.
-I then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition by means of Curvilinear Components Analysis (CCA).
+I then built a similarity matrix between all sampled partitions and embedded it into a three-dimensional space maintaining similarity relations between partition with the help of Curvilinear Components Analysis (CCA).
 In the embedded manifold, two partitions are close if they are similar, and the z-axis encodes the quality function.
 A highly degenerate plateau can be observed in Figure~\ref{fig:degeneracylandscape} whereby different solutions with high values of Modularity lay in the same neighborhood.
 
@@ -365,10 +365,10 @@ A highly degenerate plateau can be observed in Figure~\ref{fig:degeneracylandsca
 
 Like for Modularity, any other quality function afflicted from the degeneracy problem, displays a landscape with a plateau of optimal partitions, like the one shown in Figure~\ref{fig:degeneracylandscape}, whereas in the case of non-degenerate quality functions, a sharp and distinct peak exists in the embedded landscape.
 
-Several approaches have been proposed to mitigate the problems that are apparent in Modularity. These include the use of multiple near-optimal solutions to avoid the pitfalls of degeneracy. Moreover a proper choice of the null model may help overcome the fundamental resolution limit.
+Several approaches have been proposed to mitigate the problems that are apparent in Modularity. These include the use of multiple near-optimal solutions to avoid the pitfalls of degeneracy. Moreover, a proper choice of the null model may help overcome the fundamental resolution limit.
 
 The issue of degeneracy affects Newman's Modularity $Q^N$ and other quality functions as well.
-In this respect, it's clear that choosing the partition with the highest quality value isn't meaningful and a choice that considers all the good partitions at the plateau may be more desirable. 
+In this respect, it is clear that choosing the partition with the highest quality value is not meaningful and a choice that considers all the good partitions at the plateau may be more desirable. 
 An optimal partition of the network can then be expressed as a \emph{median} of the solutions over the optimal plateau.
 This approach, known as \emph{consensus clustering}, averages local effects of noise during optimization over a large set of solutions.
 Consensus clustering is typically based on a meta-algorithm rather than a proper community detection method.
@@ -400,7 +400,7 @@ Although useful to address the degeneracy issue, this approach still suffers fro
 Optimization of fitness function in the additive form of Eq.~\ref{eq:rbspinglass2} is typically performed using the Louvain method~\cite{blondel2008}, a greedy stochastic agglomerative clustering algorithm that works on hierarchical refinements of the network's partitions. The inspiration for this method of community detection is the optimization of Modularity as the algorithm progresses. In the Louvain method of community detection, first small communities are found by optimizing modularity locally on all nodes, then each small community is grouped into one node and the first step is repeated.
 
 This algorithm has become extremely popular in recent years because it is fast, allowing to analyze huge networks with billions of edges~\cite{lancichinetti2009}.
-Due to its intrinsic stochastic nature, the Louvain method returns different near-optimal partitions for every run and must be typically run thousands of times in order to identify the best solution.
+Due to its intrinsic stochastic nature, the Louvain method returns different near-optimal partitions for every run and must be typically run thousands of times to identify the best solution.
 
 The optimization method is divided in two phases applied recursively as depicted in Figure~\ref{fig:louvain_method}. The first phase is the optimization phase which looks for a locally optimal partition by considering only individual vertex swaps. As in many other greedy algorithms, the community partition is initialized with a single node per community and as many communities as nodes in the input network. Then, based on the chosen cost function, individual nodes are removed from their current community and swapped to the neighboring community which produces the largest positive gain of the cost function.
 This procedure is repeated iteratively at different levels, until no further movement produces improvements in the quality function.
@@ -418,7 +418,7 @@ This procedure is repeated iteratively at different levels, until no further mov
 \subsection{Spectral optimization}
 Another (and earlier) method to optimize Modularity is the spectral Modularity by Newman and Girvan~\cite{newman2006}.
 Given the form of Modularity as in Eq.~\ref{eq:newmanmodularityspinglass}, one calls the quantity $\mathbf{B}=A_{ij} - k_i k_j/2m$ \emph{modularity matrix}.
-From it, it's possible to obtain an equivalent linear algebra formulation of Modularity that reads:
+From it, it is possible to obtain an equivalent linear algebra formulation of Modularity that reads:
 \begin{equation}\label{eq:newman_spectral}
 Q^N = \frac{1}{4m} \mathbf{s}^T \mathbf{B} \mathbf{s}
 \end{equation}
@@ -433,5 +433,5 @@ The group assignment of each node is obtained as the signs of the eigenvector $\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions}
 The modular organization of brain functional connectivity networks has been investigated by a variety of methods and specifically by graph theoretical approaches. The rich repertoire of behavioural and cognitive aspects of everyday life is supported by integration of local processing that is reflected in the functional modules, as identified by a variety of protocols.
-Unfortunately Newman's Modularity, the most widely used graph-based method for community detection in FC networks is flawed as it cannot detect modules that are smaller than a certain scale, making impossible to ascertain important details of architectural structure.
-The two main drawbacks of Modularity have been introduced namely the resolution limit and its extreme degeneracy, together with analyses that specifically address their origin. In the following chapter I will illustrate how to overcome the limitations imposed by Newman's Modularity with an approach that has its roots in probability theory: Surprise.
+Unfortunately, Newman's Modularity, the most widely used graph-based method for community detection in FC networks is flawed as it cannot detect modules that are smaller than a certain scale, making impossible to ascertain important details of the architectural structure.
+The two main drawbacks of Modularity have been introduced namely the resolution limit and its extreme degeneracy, together with analyses that specifically address their origin. In the following chapter, I will illustrate how to overcome the limitations imposed by Newman's Modularity with an approach that has its roots in probability theory: Surprise.

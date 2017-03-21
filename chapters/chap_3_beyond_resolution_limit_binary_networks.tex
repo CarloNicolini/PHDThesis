@@ -1,7 +1,7 @@
 In the last chapter I have introduced the framework of network science used to study brain networks.
 I discussed the modular organization of brain networks and the graph theoretical approaches that enabled its study.
 I have also shown that graph partitioning methods based on the maximization of global fitness functions, like Newman's Modularity, suffer from a fundamental resolution limit as they fail to detect modules that are smaller than a scale determined by the size of the entire graph.
-Furthermore, I explored the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of important details of the brain modular structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
+Furthermore, I explored the effects of this limitation on the study of brain connectivity networks, demonstrating that the resolution limit prevents detection of significant details of the modular brain structure, thus hampering the ability to appreciate differences between networks and to assess the topological roles of nodes.
 
 In this chapter I'll show that Surprise, a recently proposed fitness function based on probability theory, does not suffer from these limitations.
 I'll introduce Surprise from its theoretical foundations and discuss its properties in details.
@@ -13,7 +13,7 @@ Moreover, Surprise leads to a more accurate identification of the network's conn
 %%%%%%%%%%%%%% PROBABILISTIC APPROACH TO CLUSTERING IN BINARY NETWORKS %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Probabilistic approach to clustering in binary networks}\label{sec:probability_clustering}
-The spin-glass based additive quality functions described in the previous chapter, including Newman's Modularity, measure the deviation between the fraction of edges falling within modules and the null model. None of these though, assess the statistical significance of this deviation.
+The spin-glass based additive quality functions described in the previous chapter, including Newman's Modularity, measure the deviation between the fraction of edges falling within modules and the null model. None of these, though, assess the statistical significance of this deviation.
 In other terms, no spin-glass based quality function is telling us the level of statistical confidence at which one should discard the null hypothesis that the observed fraction of edges inside a community is the same as the one expected from a given null model.
 
 To address this question, one should instead compute probabilities, as they are the natural way to measure statistical significance.
@@ -21,7 +21,7 @@ Specifically, given a node induced subgraph (a community), one is interested in 
 
 More precisely, the problem can be expressed as in the following: given a subgraph, what is the probability of observing another subgraph with a larger number of internal edges drawn from a random graph with a given density?
 This question can be answered by the urn model in classical probability theory. The reason is clear if one imagines that each pair of nodes is a marble, which is one color if the nodes are connected by a link and the other color if they are not.
-A number of marbles is drawn from an urn without replacement and the probability of observing a given number of marbles of one specific color is calculated by means of the hypergeometric law.
+A number of marbles is drawn from an urn without replacement, and the probability of observing a given number of marbles of one specific color is calculated using the hypergeometric law.
 When applied to clustering, the problem corresponds to the calculation of the probability to observe a fixed number of internal edges in a randomly drawn set of nodes defining a community.
 For example, suppose that one draws a subgraph with $n_c$ nodes, $p_c$ pairs of nodes and $m_c$ edges from a graph with $n$ nodes, $p$ pairs of nodes and $m$ edges (see Section for the notation~\ref{sec:clustering}).
 As indicated by the urn model, the probability to observe exactly $m_c$ internal edges is given by:
@@ -43,7 +43,7 @@ In this last equation we are considering the probability of randomly drawing a s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Surprise}
 The intuition captured by Eq.~\ref{eq:subgraph_probability_marginalized} is very close to a quality function dubbed \emph{Surprise}, firstly introduced in a seminal paper by Aldecoa and Marin~\cite{aldecoa2011}.
-Yet, to the best of my knowledge, this clearer theoretical motivation did not appear in any other works.
+To the best of my knowledge, this clearer theoretical motivation did not appear in any other works.
 If one considers as the random subgraph that is drawn from the $G_{n,m}$ set, a subgraph with at least $m_\zeta=\sum_c m_c$ internal edges and $p_\zeta=\sum_c p_c$ pairs of edges, then this subgraph represents a whole clustering.
 In this case, the definition given in Eq.~\ref{eq:subgraph_probability_marginalized} and the definition given in~\cite{aldecoa2011} are perfectly corresponding.
 Indeed, for a partition $\zeta$, the probability that a subgraph $\mathcal{G}$ randomly drawn from the set $G_{nm}$ has at least $m_\zeta$ intracluster edges and $p_\zeta$ intracluster pairs is modeled after the inverse cumulative hypergeometric distribution, exactly as in~\ref{eq:subgraph_probability_marginalized}.
@@ -58,7 +58,7 @@ Intuitively, the lower $S(\zeta)$, the better the clustering. Optimal partitions
 
 Differently from Modularity, $S(\zeta)$ equals one both for the partition where every node is in a separated community ($|\zeta|=n$) and for the partition that entails all nodes into a single community ($|\zeta|=1$), as is evident from its formulation in terms of urn model.
 Contrarily, Newman's Modularity is zero when $|\zeta|=1$, but different from zero in the case $|\zeta|=n$.
-In terms of Surprise these two extreme partitions are thus equally uninformative.
+In terms of Surprise, these two extreme partitions are thus equally uninformative.
 This can be understood as for a single community comprising all nodes, the probability of observing a number of intracluster edges greater or equal than the number of edges is one. On the other hand, if the partitioning has zero intracluster edges (the case of $n$ separate communities), the probability to observe more than zero intracluster edges still equals one.
 
 It should be noted that, due to numerical precision problems in the evaluation of large binomial coefficients, $\hat{S}(\zeta) := -\log_{10}S(\zeta)$ is often taken as measure of quality of the partition, which is totally equivalent with respect to optimum solutions, whereas higher values correspond to better clustering.
@@ -71,12 +71,12 @@ Hereafter I stick to the notation of~\cite{fleck2014} where Surprise is indicate
 \subsection{Statistical test interpretation}
 \label{sec:surprisefishertest}
 Surprise considers the problem of community detection as the one of making the intracluster density as further as possible from the global density in statistical terms.
-In this sense, it's worth noting that $S$ is a \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis that the intracluster density is greater than the graph density.
+In this sense, it is worth noting that $S$ is a \emph{p}-value of a one-tailed Fisher exact-test where one is asking how confidently should reject the null hypothesis that the intracluster density is greater than the graph density.
 It turns indeed out that this problem has an equivalent description in statistics, where one seeks to maximize the \emph{odds-ratio} of the $2 \times 2$ contingency table defined in Table~\ref{tab:contingency_table}.
 
-The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can therefore be used regardless of the sample characteristics.
+The Fisher exact test implemented by Surprise is, as its name states, exact as long as the contingency table keeps the row and column totals fixed, and it can be used regardless of the sample characteristics.
 A simpler $\chi^2$ statistic can be used when the elements of the contingency table are large enough, although only an approximation of the \emph{p}-value can be obtained.
-In this case it's possible to tackle the problem of computation of $S$ by means of odds-ratio.
+In this case, it is possible to tackle the problem of computation of $S$ by means of odds-ratio.
 Precisely, the \emph{normalized log odds-ratio} is computed as: 
 \begin{equation}
 \log(\textrm{OR}) = \log\left( \frac{m_\zeta(p-m-p_\zeta+m_\zeta)}{(m-m_\zeta)(p_\zeta-m_\zeta)} \right ),
@@ -115,13 +115,13 @@ Intercluster & $m-m_\zeta$ & $p-m-p_\zeta+m_\zeta$ & $p-p_\zeta$ \\
 As noted by~\cite{fleck2014}, for a given graph, $m$ and $p$ are fixed so $S(\zeta)$ is depending only on the number of intracluster edges $m_\zeta$ and intracluster pairs $p_\zeta$, namely $S:=S(m_\zeta,p_\zeta)$.
 In establishing the domain of validity of $(m,p,m_\zeta,p_\zeta)$ the urn model is of help. A valid clustering $\zeta$ of mutually disjoint communities automatically satisfies intuitive but important requirements:
 \begin{obs}
-It's impossible to draw more white balls than the white balls contained in the urn, therefore $p_\zeta \geq m_\zeta$.
+it is impossible to draw more white balls than the white balls contained in the urn, therefore $p_\zeta \geq m_\zeta$.
 \end{obs}
 \begin{obs}
-It's impossible to have more white balls than total number of drawn balls, therefore $m\geq m_\zeta$.
+it is impossible to have more white balls than total number of drawn balls, therefore $m\geq m_\zeta$.
 \end{obs}
 \begin{obs}
-It's impossible to draw more black balls than the black balls contained in the urn, therefore $p-p_\zeta \geq m-m_\zeta$.
+it is impossible to draw more black balls than the black balls contained in the urn, therefore $p-p_\zeta \geq m-m_\zeta$.
 \end{obs}
 All valid clusterings are enclosed inside the domain $\mathcal{L}$ defined as from these last three observation:
 \begin{equation}
@@ -129,13 +129,13 @@ All valid clusterings are enclosed inside the domain $\mathcal{L}$ defined as fr
 \end{equation}
 The urn models gives other three important properties, indicating that Surprise is a convex function inside the domain of validity of its variables. Specifically as shown in~\cite{fleck2014} three inequalities apply for Surprise and for the urn model in general.
 \begin{props}\label{prop:prop1}
-\label{list:surprise_properties} It's less probable to draw at least $m_\zeta+1$ than $m_\zeta$ white balls if the urn contains the same number of $p_\zeta$ white balls, therefore $S(m_\zeta+1,p_\zeta) < S(m_\zeta,p_\zeta)$.
+\label{list:surprise_properties} it is less probable to draw at least $m_\zeta+1$ than $m_\zeta$ white balls if the urn contains the same number of $p_\zeta$ white balls, therefore $S(m_\zeta+1,p_\zeta) < S(m_\zeta,p_\zeta)$.
 \end{props}
 \begin{props}\label{prop:prop2}
-It's less probable to draw at least $m_\zeta$ white balls if the urn has one white balls less, therefore $S(m_\zeta,p_\zeta-1) < S(m_\zeta,p_\zeta)$.
+it is less probable to draw at least $m_\zeta$ white balls if the urn has one white balls less, therefore $S(m_\zeta,p_\zeta-1) < S(m_\zeta,p_\zeta)$.
 \end{props}
 \begin{props}\label{prop:prop3}
-It's less probable to draw at least $m_\zeta+1$ white balls if the urn has $p_\zeta+1$ white balls, than drawing at least $m_\zeta$ white balls if the urn has $p_\zeta$ white balls, therefore $S(m_\zeta+1,p_\zeta+1) < S(m_\zeta,p_\zeta)$.
+it is less probable to draw at least $m_\zeta+1$ white balls if the urn has $p_\zeta+1$ white balls, than drawing at least $m_\zeta$ white balls if the urn has $p_\zeta$ white balls, therefore $S(m_\zeta+1,p_\zeta+1) < S(m_\zeta,p_\zeta)$.
 \end{props}
 The scheme in Figure~\ref{fig:surprisebehaviour} shows the order relation between the elements of the three aforementioned inequalities.
 \begin{figure}[htb]
@@ -157,7 +157,7 @@ The scheme in Figure~\ref{fig:surprisebehaviour} shows the order relation betwee
 
 A fourth inequality $S(m_\zeta,p_\zeta+1)>S(m_\zeta+1,p_\zeta)$ is implicit by looking at the behaviour of $S(\zeta)$ for a given graph. 
 The scheme in Figure~\ref{fig:surprisebehaviour} allows to rank the values of Surprise in relation to changes in $m_\zeta$ and $p_\zeta$.
-It's to easy verify that $S$ satisfies the following strict order relation:
+it is to easy verify that $S$ satisfies the following strict order relation:
 \begin{equation}\label{eq:surpriseorderrelation}
 S(m_\zeta+1,p_\zeta)<S(m_\zeta+1,p_\zeta+1)<S(m_\zeta,p_\zeta)<S(m_\zeta,p_\zeta+1).
 \end{equation}
@@ -200,10 +200,10 @@ In the next sections I will show to what extent Surprise is affected by the reso
 Unfortunately, the resolution limit is an intrinsic feature of many quality functions, and there appears to be a ``narrow scope to resolution-limit-free methods''~\cite{traag2015}.
 Surprise has been shown to outperform other network partitioning methods in the detection of small features within large graphs, but the extent to which it suffered from the resolution limit was unknown~\cite{aldecoa2011,aldecoa2013}, until our work~\cite{nicolini2016}.
 
-Aldecoa~\cite{aldecoa2011}, pointed out that while Modularity-based methods define a community as a region with an unexpectedly high density of links with respect to the global characteristics of the network, Surprise weights the number of actual intracluster edges against the maximum number of links given the nodes in the clusters.
-Hence, Surprise is able to discriminate local subnetworks whose internal density is close to that of a clique independently of their size.
+Aldecoa~\cite{aldecoa2011} pointed out that while Modularity-based methods define a community as a region with an unexpectedly high density of links with respect to the global characteristics of the network, Surprise weights the number of actual intracluster edges against the maximum number of links given the nodes in the clusters.
+Hence, Surprise can discriminate local subnetworks whose internal density is close to that of a clique independently of their size.
 
-In order to assess the extent to which Surprise is affected by the resolution limit, I directly compared Newman's Modularity and Surprise in the example of Fortunato and Barthelemy illustrated in the previous chapter in Figure~\ref{fig:figure_1_barthelemy}. Already for $m_{12} = 1$, i.e. when the two cliques $G_1$ and $G_2$ were connected by only one edge, $Q^N$ showed sign inversion for $m_0 \approx 200$, meaning that it was beneficial for Modularity to merge two cliques.
+To assess the extent to which Surprise is affected by the resolution limit, I directly compared Newman's Modularity and Surprise in the example of Fortunato and Barthelemy illustrated in the previous chapter in Figure~\ref{fig:figure_1_barthelemy}. Already for $m_{12} = 1$, i.e. when the two cliques $G_1$ and $G_2$ were connected by only one edge, $Q^N$ showed sign inversion for $m_0 \approx 200$, meaning that it was beneficial for Modularity to merge two cliques.
 In this same example, Surprise never merges cliques, as shown in Figure~\ref{fig:barthelemy_surprise}.
 
 \begin{figure}[htb!]
@@ -250,7 +250,7 @@ Importantly, in the range of parameters I have investigated, Surprise optimizati
 \label{fig:ring_cliques_surprise}
 \end{figure}
 While it is likely that this property is quite general and can be extended to every ring of cliques, an analytical demonstration is hampered by the non-additivity of the Surprise function.
-Nonetheless, the size of the graphs explored numerically is quite typical of brain-connectivity networks and I felt encouraged to apply Surprise maximization to the study of the community structure of the brain.
+Nonetheless, the size of the graphs explored numerically is quite typical of brain connectivity networks and I felt encouraged to apply Surprise maximization to the study of the community structure of the brain.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% DEGENERACY OF SURPRISE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -258,7 +258,7 @@ Nonetheless, the size of the graphs explored numerically is quite typical of bra
 \section{Degeneracy of Surprise}\label{sec:degeneracy_surprise}
 Interestingly, the maximum value of Surprise for given $(m_\zeta,p_\zeta)$ is sharply peaked and very different from other partitions, indicating that at least in this case Surprise shows no degeneracy of optimal solutions, as instead shown for Modularity in Section~\ref{sec:degeneracy}.
 This observation led me to investigate to what extent Surprise is affected by the degeneracy problem (previously described in section~\ref{sec:degeneracy}).
-I repeated the procedure indicated in section~\ref{sec:degeneracy}, embeddeding the complex landscape of partitions of a ring of cliques graph in a three dimensional space in order to show whether optimal Surprise solutions group in a large plateau of high Surprise values or not.
+I repeated the procedure indicated in section~\ref{sec:degeneracy}, embedding the complex landscape of partitions of a ring of cliques graph in a three-dimensional space to show whether optimal Surprise solutions group in a broad plateau of high Surprise values or not.
 As evident from Figure~\ref{fig:degeneracy_surprise} instead, the global optimum sits on a sharply distinct point, at the highest value of Surprise.
 This observation makes evident that the Surprise does not show the problematic degeneracy of optimal solutions, but instead has a global optimum that is very different from other suboptimal partitions, at least in these ring of cliques example.
 \begin{figure}[ht]
@@ -280,7 +280,7 @@ The detailed pseudocode of this algorithm is reported in Algorithm~\ref{alg:fags
 
 The first step of FAGSO consists in ranking the edges in the graph in decreasing order by the Jaccard index of the neighbors of their two endpoints nodes.
 An union-find data structure is used to hold the community structure throughout the computation.
-At the beginning, each community consists only of one vertex.
+In the beginning, each community consists only of one vertex.
 Then, starting from the edge with the highest Jaccard index at the top of the list, the endpoints are attributed to the same community by disjoint-set union if this operation leads to a strictly better Surprise and if they do not belong already in the same community.
 This step is repeated for all edges and the final community structure is returned in the disjoint-set.
 FAGSO finds partitions with high Surprise and it is deterministic, unless two edges with the same Jaccard index are found. In this case, ties are broken at random. 
@@ -302,7 +302,7 @@ The implementation of FAGSO in \texttt{C++}, \texttt{Python} and \texttt{GNU Oct
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Surprise optimization on functional connectivity networks}
 \label{sec:surprise_optimization_fc_networks}
-I assessed the performance of Surprise maximization by means of FAGSO in the detection of the community structure of two benchmark brain networks. All coordinate data and functional metadata were taken from the BrainMap database~\cite{fox2002,laird2005}, processed by Crossley et al.~\cite{crossley2013a} and made available to the scientific community as reference networks through the public Brain Connectivity Toolbox~\cite{rubinov2010}. I used BrainNetViewer as a tool for the visualization of the communities on brain templates~\cite{xia2013}.
+I assessed the performance of Surprise maximization through of FAGSO in the detection of the community structure of two benchmark brain networks. All coordinate data and functional metadata were taken from the BrainMap database~\cite{fox2002,laird2005}, processed by Crossley et al.~\cite{crossley2013a} and made available to the scientific community as reference networks through the public Brain Connectivity Toolbox~\cite{rubinov2010}. I used BrainNetViewer as a tool for the visualization of the communities on brain templates~\cite{xia2013}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% HUMAN RESTING STATE DATASET %%%%%%%%%%%%%%%%%%%%%%%
@@ -310,7 +310,7 @@ I assessed the performance of Surprise maximization by means of FAGSO in the det
 \subsection{Human resting state dataset}\label{sec:restingstatedataset}
 The first network represents the coactivation of brain regions as obtained from a meta-analysis of 1641 task-related fMRI or PET studies~\cite{crossley2013a}.
 Meta-analyses have been useful in estimating the frequency with which two brain regions are consistently activated across different tasks and are an indication of the behavior of the brain during activity.
-Jaccard similarity, i.e. the number of studies activating both regions divided by the number of studies activating either one of them, was used as index to evaluate strength of the coactivation of 638 parcellated brain regions. More details on the construction of the network are available in~\cite{crossley2013a}.
+Jaccard similarity, i.e. the number of studies activating both regions divided by the number of studies activating either one of them, was used as an index to evaluate the strength of the coactivation of 638 parcellated brain regions. More details on the construction of the network are available in~\cite{crossley2013a}.
 
 The second network that I considered is a resting state functional connectivity network obtained from correlations between time series of fMRI signals, from a group study of 27 healthy subjects. In short, fMRI data were acquired from 27 healthy volunteers at 3T. Gradient echo-planar imaging data were collected for 5 min with 2s TR and 13 and 31 ms echo-times. Thirty six interleaved 3mm slices with in-plane resolution of $3.5\times 3.5$ mm were acquired. 
 Time series were extracted from 638 brain regions defined by a template~\cite{crossley2013a}, corrected for motion and band-passed (0.01–0.1Hz).
@@ -322,9 +322,9 @@ Both networks have been previously studied using Modularity-based algorithms and
 
 Due to its definition in terms of binomial coefficients, Surprise can be computed for integer values of its parameters.
 I have therefore binarized the two adjacency matrices retaining an equal number of edges for both networks.
-While the binarization process discards information contained in the edge weights, a judicious choice of threshold can ensure robust decomposition of the network~\cite{meunier2010,he2009}.
+While the binarization process discards information contained in the edge weights, a judicious choice of the threshold can ensure robust decomposition of the network~\cite{meunier2010,he2009}.
 I have checked this statement by percolation analysis, a natural and non-arbitrary method to derive binary graphs from continuous adjacency matrices (see section~\ref{sec:percolation_analysis}).
-Specifically, I have studied the size of the largest connected component of the coactivation and resting state networks removing iteratively the smallest weight edges.
+Specifically, I have studied the size of the largest connected component of the coactivation and resting state networks iteratively removing the smallest weight edges.
 
 This analysis, shown in Figure~\ref{fig:figure_8_percolation_analysis}, revealed the presence of percolation-like transitions, whereby the largest component of the network drops in jumps with increasing binarization threshold. For the coactivation and the resting state networks I found that the thresholds adopted by~\cite{crossley2013a} of 0.015576 and 0.600, respectively, are above the first jump in the size of the largest connected components and maintain network connectedness while ensuring that the networks are sufficiently sparse and possess the same number of edges. Hence, I adopted these thresholds for network's binarization. Analysis of the structures of networks obtained by a range of thresholds around these values showed stable solutions, with Normalized Mutual Information between partitions close to 1, and a stable number of communities (Figures~\ref{fig:figure_9_rs_threshold_study} and \ref{fig:figure_10_rs_threshold_study}).
 
@@ -412,7 +412,7 @@ Conversely, under Surprise maximization, the partition of the resting state netw
 By way of example, the cuneus and the lingual and pericalcarine gyri were part of the occipital visual module in the resting state, but not in the coactivation network, where they formed a separate community (first row of Figure \ref{fig:figure_5_communities_comparison}).
 Similarly, the precuneus and medial parts of the postcentral gyrus were identified as an independent community in the coactivation network, while they were part of the broad somatosensory network in the resting state connectivity graph~\cite{rubinov2011} (second row of Figure \ref{fig:figure_5_communities_comparison}).
 Interestingly, the Broca area, indicated as Module 11 in Figure \ref{fig:figure_5_communities_comparison}, was separated from the auditory network in the coactivation network, and identified as a small, but anatomically and functionally distinct, community.
-Conversely, other communities were split in the resting state but not in the coactivation network. The executive and attentional control networks were merged into a large community in the coactivation network, while they were separated under resting state conditions, including a subdivision of the left and right fronto-parietal networks (third row of Figure \ref{fig:figure_5_communities_comparison}).
+Conversely, other communities were split in the resting state but not in the coactivation network. The executive and attentional control networks were merged into a large community in the coactivation network, while they were separated under resting-state conditions, including a subdivision of the left and right fronto-parietal networks (third row of Figure \ref{fig:figure_5_communities_comparison}).
 
 While the resting state and coactivation networks appeared to possess virtually identical modular structures under Newman's analysis, they showed functionally and anatomically relevant differences when analyzed by Surprise maximization, with a Normalized Mutual Information between the partitions of the two networks of 0.5922. Indeed, Modularity tends to assign small communities to larger structures even when they correspond to tightly-knit modules, thus concealing differences in the graphs' modular structures that involve aggregation or disaggregation of smaller clusters. It is conceivable that the detrimental effects arising from the resolution limit may have affected previous studies comparing different populations~\cite{meunier2010}.
 Surprise may offer a sharper tool to detect alterations of brain connectivity induced, for example, by psychiatric or neurological conditions, thus enabling the exploration of novel markers of brain disease.
@@ -431,11 +431,11 @@ Figures \ref{fig:figure_6_ga_rs_coact}A and \ref{fig:figure_6_ga_rs_coact}B show
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.5\linewidth]{images/figure_6_ga_rs_coact.pdf}
-\caption{Classification of representative nodes according to their intra- and intermodule connections for the resting state (A) and coactivation (B) networks. Empty circles and full circles indicate the position of each node in the Guimera' and Amaral’s plot after partition by Modularity or Surprise, respectively. An overall increase in the participation coefficient, a measure of the intermodule connectivity, is observed for the Surprise partition relative to the Modularity partition. To avoid cluttering of the graph, I only reported those nodes with a degree higher than the average within a Standard Deviation, and whose classification is different in the two partitions. The abbreviations of the brain regions corresponding to the nodes are reported in the appendix, Table~\ref{tab:abbreviations}.}
+\caption{Classification of representative nodes according to their intra- and intermodule connections for the resting state (A) and coactivation (B) networks. Empty circles and full circles indicate the position of each node in the Guimera' and Amaral’s plot after partition by Modularity or Surprise, respectively. An overall increase in the participation coefficient, a measure of the intermodular connectivity, is observed for the Surprise partition relative to the Modularity partition. To avoid cluttering of the graph, I only reported those nodes with a degree higher than the average within a Standard Deviation, and whose classification is different in the two partitions. The abbreviations of the brain regions corresponding to the nodes are reported in the appendix, Table~\ref{tab:abbreviations}.}
 \label{fig:figure_6_ga_rs_coact}
 \end{figure}
 
-A finer partition in smaller communities may be expected to determine an overall increase in participation coefficient and decrease in within-community degree. However, the heterogeneous partitions obtained by Surprise maximization resulted in non-trivial changes in the Guimera' and Amaral classification. By way of example, I discuss in greater detail two regions whose roles are very different in the two partitions, to highlight the effects of the resolution limit.
+A finer partition in smaller communities may be expected to determine an overall increase in participation coefficient and a decrease in within-community degree. However, the heterogeneous partitions obtained by Surprise maximization resulted in non-trivial changes in the Guimera' and Amaral classification. By way of example, I discuss in greater detail two regions whose roles are very different in the two partitions, to highlight the effects of the resolution limit.
 
 Nodes that belong in the hippocampal formation show a large within-module coefficient, and appear as provincial hubs (region R5 of Figure \ref{fig:figure_6_ga_rs_coact}) under Modularity optimization. However, their participation coefficient increases 6-fold in the partition by Surprise, which reveals a role as connectors for these nodes, with widespread projections to many other modules across the brain, including the module 3, 6, 8, 5, 2, corresponding to the DMN, the amygdala and parahippocampal formation, the temporal inferior gyrus, the cuneus and lingual gyrus, and the visual cortex, respectively.
 This finding is in agreement with the idea that the hippocampus acts as ``network convergence zone'', as it receives polysensory input from distributed association areas in the neocortex~\cite{misic2014}.
@@ -452,7 +452,7 @@ Interestingly, the right shift in the Guimera-Amaral plot is less pronounced for
 Similar rightward shifts for nodes and hubs were observed in the resting state network, and reported in Figure \ref{fig:figure_6_ga_rs_coact}.
 However, increases in participation coefficients are by no means the only differences in the classification of nodes obtained by Surprise maximization. A prominent example is the precuneus (PC) (Figure \ref{fig:figure_6_ga_rs_coact}B, blue dots) that shows a high participation coefficient in both partitions by Modularity and Surprise, but a much higher within-module degree under Surprise maximization.
 
-Indeed, the nodes comprised in the precuneus intrinsically possess high inter-cluster connectivity, but are distributed among the four modules found by Modularity. In the partition by Surprise they are grouped together, and this precuneal module as a whole plays a connector's role integrating different communities (Figure \ref{fig:figure_8_ga_rs_precuneus}), a hypothesis that is consistent with the precuneus supporting a wide spectrum of highly integrated tasks, from visuo-spatial imagery to episodic memory retrieval and self-processing operations~\cite{cavanna2006}.
+Indeed, the nodes comprised in the precuneus intrinsically possess high inter-cluster connectivity, but are distributed among the four modules found by Modularity. In the partition by Surprise they are grouped together, and this precuneal module as a whole plays a connector's role integrating different communities (Figure \ref{fig:figure_8_ga_rs_precuneus}), a hypothesis that is consistent with the precuneus supporting a wide spectrum of highly integrated tasks, from visuospatial imagery to episodic memory retrieval and self-processing operations~\cite{cavanna2006}.
 
 In summary, partition by Surprise maximization results in very different distributions of participation coefficients and within-module degree compared to Modularity. These differences are not uniform across nodes, and arise from the limited ability of Modularity to identify small modules. Finer partition by Surprise reveals very different roles for some key brain areas, and suggests that a systematic reanalysis of the topological roles of brain nodes and hubs may be in order.
 
@@ -504,5 +504,4 @@ Surprise maximization resulted in partitions comprising communities of widely di
 Moreover, the finer partition afforded by Surprise made it possible to appreciate differences in the modular structures of diverse brain networks that were undetected by resolution limited methods like Newman's Modularity.
 Finally, the use of Surprise revealed the deleterious effects of the resolution limit in the classification of nodal roles.
 Altogether, these results indicate that the resolution limit may have substantially affected many of the analyses of brain connectivity networks reported in the literature, and call for a revisitation of some of the conclusions and models that have relied on Modularity maximization or similarly resolution-limited algorithms.
-Surprise appears as a promising alternative method that appeals to the intuition that tightly-knit clusters of nodes represent legitimate structural
-or functional modules independently of their size.
+Surprise appears as a promising alternative method that appeals to the intuition that tightly-knit clusters of nodes represent legitimate structural or functional modules independently of their size.

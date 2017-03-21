@@ -28,7 +28,7 @@ The typical size of the smallest identified functional unit, the cortical column
 Yet, a large-scale understanding of the incredibly complicated network of all the neurons in the human brain, the \emph{human connectome}, remains a challenging target to be reached in the future~\cite{amunts2016}.
 This scientific, technological and cultural challenge is named after the term \emph{connectomics}, a word coined at the beginning of this decade by Giulio Tononi and Olaf Sporns~\cite{sporns2005}.
 Its most ambitious aim is to map all the connections in the brain at different scales of resolution, deep down to the synaptic level.
-Whether this will help answer some of the deepest questions about the human brain, it is not entirely known and still a topic of hot debate in the scientific community.
+Whether this will help answer some of the most profound questions about the human brain, it is not entirely known and still a topic of hot debate in the scientific community.
 
 The science of brain connectivity takes advantage of well-consolidated technologies for looking at the brain at work.
 These non-invasive methods of analysis of brain functions include neuroimaging techniques like magnetic resonance imaging (MRI), electroencephalography (EEG) and transcranial magnetic stimulation (TMS).
@@ -43,7 +43,7 @@ Unfortunately, these dynamics are and remain partially unpredictable, despite ma
 
 The discovery of the BOLD effect in the 90's by Ogawa~\cite{ogawa1990}, led to functional MRI, a method to spatially map activity in the whole brain.
 Considered over the large scale, the BOLD response is descriptive of the temporal metabolic demands of large groups of cortical and subcortical structures, a quantity strictly related to the electrical activity of neurons~\cite{logothetis2001}.
-Indeed an active exchange of information between neural populations is thought to be at the hearth of the BOLD fMRI signal~\cite{logothetis2001}.
+Indeed an active exchange of information between neural populations is thought to be at the heart of the BOLD fMRI signal~\cite{logothetis2001}.
 The local increase of metabolic demand for oxygenated blood to fuel the neuronal activity increments the vascular flow and favors the consumption of oxygen from neurons.
 This metabolic cascade results in the change of the magnetic properties of hemoglobin that transitions from oxygenated to deoxygenated state, yielding local magnetic susceptibility variations measured by MRI.
 Possible confounds of the fMRI signal, such as the influence of the cardiac and respiratory rhythms on the BOLD oscillations have been ruled out by a number of studies~\cite{cordes2000,cordes2001,logothetis2001,shmuel2002}.
@@ -57,19 +57,19 @@ Activation maps have been estimated for almost every kind of cognitive task and 
 % and yields precious information about the brain not only on its surface but also in other deeper regions, otherwise difficult to reach.
 In contrast to structural connectivity, functional connectivity results from estimates of statistical dependencies between neuronal or regional time courses.
 Functional networks may vary over time, unlike structural networks which are stable over long time scales.
-For instance, electrical patterns of cortical activity may rearrange over time-scales of milliseconds, in contrast to structural ones, involved in processes like nervous system development, learning and aging.
+For instance, electrical patterns of cortical activity may rearrange over time-scales of milliseconds, in contrast to structural ones, involved in processes like nervous system development, learning, and aging.
 Furthermore, the temporal evolution of functional networks is variable as it exhibits spontaneous changes during rest and characteristic modulations for different task conditions~\cite{honey2007,hutchison2013}.
-%Importantly, functional connectivity does not express any causal effects between brain regions, as it's only informative of their statistical dependence.
+%Importantly, functional connectivity does not express any causal effects between brain regions, as it is only informative of their statistical dependence.
 %Together with the lesion studies accumulated over two centuries, they greatly increased the awareness of many aspects of brain organization.
 
 When cognitively at rest, the brain engages in a characteristic pattern of dynamic neural activity and most brain regions show spontaneous oscillations in the BOLD signal~\cite{biswal1995,raichle2001,gusnard2001}. In the resting state, a subject is quietly awake and alert but does not engage in or attend to any specific cognitive or behavioral task.
-Interestingly, this background activity dubbed \emph{resting-state connectivity}, is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands.
+Interestingly, this background activity dubbed \emph{resting-state connectivity} is not extinguished but only attenuated during tasks~\cite{fransson2006}, making evident its importance in response to changes in the external demands.
 During a typical resting state fMRI (rs-fMRI) session, volunteers are left in the MRI scanner, instructed to relax and not to think anything in particular.
 On the other end, animals like mice or rats, are lightly sedated and the BOLD signal is measured for longer time intervals, yielding more stable estimates~\cite{jonckers2015}.
 In humans, the fluctuations of resting-state connectivity typically exhibit the highest correlation at low temporal frequencies (<0.1 Hz) and can be observed during alertness~\cite{fox2006}, sleep~\cite{horovitz2009}, light sedation~\cite{greicius2008} and general anesthesia~\cite{martuzzi2010}.
 The structure of temporal correlations of the BOLD signals defines a network over spatially remote brain regions.
 Interestingly, these networks are altered in neuropsychiatric diseases like autism~\cite{rudie2013} and schizophrenia~\cite{vandenheuvel2014}.
-The extent of these alterations may be an marker for possible diagnoses of brain disease~\cite{stam2014,fornito2015}.
+The extent of these alterations may be a marker for possible diagnoses of brain disease~\cite{stam2014,fornito2015}.
 
 Complex network science provides a framework to study the structure of functional connectivity networks and to assess alterations induced by pathological conditions~\cite{bullmore2009,stam2014,crossley2014,fornito2015}.
 The methods of network theory date back to the problem of K{\"o}nigsberg bridges, in 1735, when the famous mathematician Leonhard Euler was faced with the problem of finding a path through the city that would cross all the seven bridges just once.
@@ -77,7 +77,7 @@ The knowledge accumulated since then forms the basis of modern graph theory.
 In totally general settings, simple graphs are usually defined as a set of nodes,  connected by a set of links, denoting the strength of the relation between pairs of nodes.
 Graphs can be used to represent any type of relation between interacting elements and the idea that graph-theory can be applied to brain networks has been pioneered starting from the middle nineties defining a new specialization of systems biology, dubbed \emph{network neuroscience}.
 
-The network neuroscience relies upon the treatment of the brain as a graph, whose nodes are indicative of particular brain regions connected by links representing  the strength of their mutual interactions.
+The network neuroscience relies upon the treatment of the brain as a graph, whose nodes are indicative of particular brain regions connected by links representing the strength of their mutual interactions.
 The classical general pipeline for the definition of a brain graph is given in Figure~\ref{fig:bullmore2009pipeline}.
 In this framework, the modelling of the brain in terms of graphs starts from the definition of its nodes~\cite{stanley2013}.
 These can be defined as anatomically or functionally defined regions~\cite{vandenheuvel2010}.
@@ -97,7 +97,7 @@ Adapted from~\cite{bullmore2009}.}
 \label{fig:bullmore2009pipeline}
 \end{figure}
 
-The rise of network neuroscience in the last decade has been driven by the evidence that almost independently from how the networks links are defined, brain networks share some common features at several spatial and temporal scales.
+The rise of network neuroscience in the last decade has been driven by the evidence that almost independently from how the network links are defined, brain networks share some common features at several spatial and temporal scales.
 
 For example, they exhibit the \emph{small-world} property~\cite{watts1998,sporns2002,sporns2004a}, whereby most nodes in a graph can be reached from any other node in just a few hops.
 Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to positively correlate with higher IQ in humans~\cite{vandenheuvel2009}, suggesting that human intellectual performance may be related to how efficiently our brain integrates information between multiple brain regions.
@@ -105,8 +105,8 @@ Small-worldness in brain networks~\cite{vandenheuvel2008} has been found to posi
 Other measures have been correlated with phenotypical and structural characteristics.
 \emph{Rich-clubs} are subsets of highly connected nodes who are also highly connected to each other, forming a communication backbone.
 It has been hypothesized, that rich clubs might be valuable in supporting high-level and more cognitively advanced forms of information processing~\cite{collin2014}.
-Moreover, it's thought that the presence of a rich club increases the diversity of the functional repertoire over and above the effects produced by scale-freeness alone~\cite{senden2014}, a property of a network of being self-similar at different scales.
-Forms of rich-club organization have been observed in cats, macaque and humans~\cite{vandenheuvel2011,harriger2012,dereus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex.
+Moreover, it is thought that the presence of a rich club increases the diversity of the functional repertoire over and above the effects produced by scale-freeness alone~\cite{senden2014}, a property of a network of being self-similar at different scales.
+Forms of rich-club organization have been observed in cats, macaque, and humans~\cite{vandenheuvel2011,harriger2012,dereus2013a,collin2014}, comprising portions of prefrontal, parietal, temporal and insular cortex.
 Rich club nodes and edges participate in a large number of short paths across the network, contributing disproportionately to global communication.
 
 From the functional point of view, central hubs of rich clubs are concentrated in heteromodal association cortices, areas that receive input from multiple unimodal sensory association areas and/or other heteromodal cortices~\cite{sporns2007,power2013,kandel2013}.
@@ -128,19 +128,19 @@ These groups are therefore dubbed as \emph{communities}.
 
 The organization into communities is one of the most studied properties of networks and a large amount of literature has grown on the topic, as reviewed in~\cite{fortunato2010}.
 The problem of detecting the communities, \emph{community detection} or \emph{graph-partitioning} in the computer-science jargon, is of high theoretical and practical importance.
-From the theoretic point of view, communities are representative of the generative probabilistic model underlying the formation of links~\cite{karrer2011} and tell much about the statistical properties of networks.
+From the theoretical point of view, communities are representative of the generative probabilistic model underlying the formation of links~\cite{karrer2011} and tell much about the statistical properties of networks.
 On the other side, practical applications of community detection are fundamental not only in neuroscience but also in sociology, computer science, biology and many other fields.
 Modules derive from a decomposition of the network into subcomponents that are internally strongly coupled but externally only weakly coupled.
 The property of a system of being modular or \emph{nearly-decomposable}, as already noted by Nobel prize laureate Herbert Simon~\cite{simon1991,simon1995}, helps any system to resist external perturbations by separating different functions into topologically distinct part of the system.
 Near decomposability is in many respects a hallmark of complexity in natural systems~\cite{simon1991}.
 
 Strong experimental evidence shows that the nervous system in animals and humans, from the neuronal level up to macroscopic scale, displays an organization that favours the exchange of information over a communication backbone supported by well-connected areas, the connector hubs of the network~\cite{dereus2013a}, responsible in turn for sending information to local processors, identified as the communities or modules~\cite{vandenheuvel2013a}.
-Functional brain networks of humans and other animals, consist of connected subnetworks (or modules) associated with cognitive functions, of vital importance for the daily life and the interaction in the environment.
+Functional brain networks of humans and other animals consist of connected subnetworks (or modules) associated with cognitive functions, of vital importance for the daily life and the interaction with the environment.
 The modular organization is exhibited hierarchically at different scales, with modules inside modules.
 Within this architecture that confers robustness and adaptability to the network~\cite{meunier2010}, information flows from lower level sensory cortices to higher multimodal and associative cortices~\cite{mumford1992}, thus being refined and filtered in its content at multiple stages of elaboration.
 The specialized stages of neural information processing are the regions of \emph{functional segregation}, a common feature at multiple scales in the brain, from the neuronal networks to macroscopic anatomically defined regions.
 From the functional point of view, segregation is meant as the statistical dependence of processing elements within the same region~\cite{tononi1994}.
-\emph{Functional integration} instead is defined as significant deviation from independence of large subsystems, and is typically realized through synchronization processes that increase the statistical dependence between functional modules, a mechanism required to access widely distributed resources, needed for a coherent behaviour~\cite{tononi1998}.
+\emph{Functional integration} instead is defined as a significant deviation from independence of large subsystems, and is typically realized through synchronization processes that increase the statistical dependence between functional modules, a mechanism required to access widely distributed resources, needed for a coherent behaviour~\cite{tononi1998}.
 A delicate balance between functional integration and segregation is realized at the edge of metastability as cortical areas are neither fully synchronized nor full desynchronized~\cite{friston1997}.
 
 
@@ -187,7 +187,7 @@ This general behaviour, not unique to Newman's approach, is pervasive in communi
 % COMMENTATO DA ANGELO The problems and drawbacks resulting from the resolution limit passed largely unnoticed in the neuroscience literature of the last years as most scientists used Newman's Modularity.
 % COMMENTATO DA ANGELO This barrier has its roots in the theoretical foundations of community detection and practically implies that the detection of brain modules smaller than a scale determined by the size of the total network is very difficult, or in the worst case, even impossible.
 As a consequence, even unambiguously defined modules, like almost complete sub-graphs or even cliques\footnote{Graphs where all nodes to connect to all nodes}, may be unduly merged into larger communities when they are too small compared to the size of the network.
-This limit hampers the ability to detect small-scale structures of functionally correlated brain areas and to notice alterations in connectivity between subjects or groups of subjects. Hence, it mayy have prevented detection of alterations in the modular structure of brain connectivity in patients affected by various neuropsychiatric disorders
+This limit hampers the ability to detect small-scale structures of functionally correlated brain areas and to notice alterations in connectivity between subjects or groups of subjects. Hence, it may have prevented detection of alterations in the modular structure of brain connectivity in patients affected by various neuropsychiatric disorders
 % Such limit is therefore of impediment to an implementation of a clinical-level biomarker of brain disease.
 Hence, the resolution limit represents a critical shortcoming for the study of brain networks and is likely to have affected many of the studies reported in the literature.
 % TROPPO SPECIFICO A QUESTO LIVELLO
@@ -198,14 +198,14 @@ The following sections of this introductory chapter guide the reader into the co
 In the second chapter, the experimental evidence of the modular structure of brain connectivity is reviewed, together with the methods to disentangle the mesoscopic structure of complex systems. In particular, sections~\ref{sec:resolutionlimit} and~\ref{sec:degeneracy} consider the problem of the resolution limit and degeneracy of Newman Modularity.
 A new approach, dubbed Surprise, that overcomes the limitations imposed by the resolution limit and degeneracy, is described in the chapter~\ref{chap:beyondresolutionlimitbinarynetworks}.
 Throughout chapters, the problems imposed by the resolution limit and degeneracy are analysed for Surprise and its weighted counterpart, Asymptotical Surprise. The characteristics of the two methods are discussed, together with an efficient algorithm aimed at their optimization.
-The application of Surprise and Asymptotical Surprise to functional connectivity networks constitutes the hearth of chapters~\ref{chap:beyondresolutionlimitbinarynetworks} and \ref{chap:beyondresolutionlimitweightednetworks}, whereby the implications of a resolution limit free analysis of the functional modules are explored.
+The application of Surprise and Asymptotical Surprise to functional connectivity networks constitutes the heart of chapters~\ref{chap:beyondresolutionlimitbinarynetworks} and \ref{chap:beyondresolutionlimitweightednetworks}, whereby the implications of a resolution limit free analysis of the functional modules are explored.
 Throughout the third and fourth chapter, an approach for the creation of benchmark networks is then proposed, whereby both Surprise and Asymptotical Surprise are validated and shown to outperform current resolution-limited methods.
 
 The lack of resolution limit of Surprise motivated an application on real-world resting state networks that revealed the presence of a rich structure of heterogeneously distributed modules, and differences in networks' partitions that are undetectable by resolution-limited methods.
 Furthermore, after validation in the synthetic networks with simulated noise as from fMRI studies, Asymptotical Surprise optimization is applied to real world functional connectivity networks and is shown to lead to substantial differences in the identification of connector hubs compared to other community detection methods.
 
 Finally, in the last chapter of this thesis I discuss the advantages of using Asymptotical Surprise optimization to detect the reorganization of the modular structure in the diseased brain.
-In particular I found that the higher specificity provided by a resolution-limit-free method highlights a modular fragmentation of the primary sensory areas in schizophrenic patients with respect to healthy controls.
+In particular, I found that the higher specificity provided by a resolution-limit-free method highlights a modular fragmentation of the primary sensory areas in schizophrenic patients with respect to healthy controls.
 This is a preliminary finding although in keeping with recently posited theories about the aetiology of schizophrenia, that hypothesize an alteration in early sensory processing as the main cause of the cognitive and behavioural deficits often observed in this disease.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -253,7 +253,7 @@ If the direction of the links is important, the graph is called \emph{directed},
 \noindent\textbullet \,The adjacency matrix $\mathbf{A}=\{A_{ij}\} \in \{0,1\}^{n \times n}$ of a binary undirected graph is a square $n\times n$ symmetric matrix with elements $A_{ij}=1$ if an edge exists between vertex $i$ and $j$ and $0$ otherwise.
 
 \noindent\textbullet \,An \emph{edge-weighted graph} (also called weighted graph) $G=(V,E,\omega)$ is a graph that has a set of weights $\omega$ on the links (Figure~\ref{fig:simple_weighted_graph}).
-Although not true in general, we consider only weighted undirected graphs with symmetrical real adjacency matrix, meaning that if an edge exists between node $i$ and $j$ the weight from $i$ to $j$ is the same as the weight from $j$ to $i$: $\omega_{ij}=\omega_{ji}$.
+Although not true in general, we consider only weighted undirected graphs with a symmetrical real adjacency matrix, meaning that if an edge exists between node $i$ and $j$ the weight from $i$ to $j$ is the same as the weight from $j$ to $i$: $\omega_{ij}=\omega_{ji}$.
 The weighted adjacency matrix,  indicated as $\mathbf{W}=\{ \omega_{ij} \} \in \mathbb{R}^{n\times n}$ is a real, square $n \times n$ symmetric matrix.
 
 \noindent\textbullet \,The \emph{density} of a simple graph $\rho$ is defined as the ratio of the actual number of edges over all possible edges:
@@ -405,7 +405,7 @@ For convenience of notation we will denote without loss of generality $K_{\textr
 
 \subsection{Communities}\label{sec:communities}
 The word \emph{community} applied to complex networks originated in sociology as people tend naturally to form groups: family, friends, acquaintances.
-Social communities then can be thought as subgroups of people connected to each other more strongly than with other external people.
+Social communities can then be thought as subgroups of people connected to each other more strongly than with other external people.
 
 The problem of quantitatively defining a community, although intuitive at first sight, is multifaceted and ambiguous.
 No universally accepted definition of network community exists and some degree of arbitrariness or common sense is required, a feature that is difficult to describe quantitatively.
@@ -413,7 +413,7 @@ Importantly, the identification of communities is possible only for relatively s
 
 In the attempt of making the concept of community quantitative, two classes of definitions can be provided: local and global.
 The \emph{local definitions} involve that a community is viewed as a separate entry or an autonomous module: the community is studied as isolated from the graph as a whole.
-These definitions implies that the corresponding communities are mostly maximal subgraphs, subsets of nodes that cannot be enlarged with the addition of new nodes or edges without altering the property upon which they are defined.
+These definitions imply that the corresponding communities are mostly maximal subgraphs, subsets of nodes that cannot be enlarged with the addition of new nodes or edges without altering the property upon which they are defined.
 The most important local criterion for communities definition are the \emph{complete-mutuality}, the \emph{reachability}, the comparison of vertex degree and \emph{internal-external cohesion}~\cite{wasserman1994,alba1973}.
 Complete mutuality means that the identified community is a clique where every node is mutually connected with all the others, while reachability implies that there exist a path between every pair of nodes in the community.
 The internal- external cohesion principle is equivalently represented by the Radicchi's definitions of \emph{strong communities}~\cite{radicchi2004}: for a community $\mathcal{G}$ to be defined in \emph{strong} sense, every node in the community must exhibit a larger internal degree than external degree. This concept is quantified by the following definition:
@@ -436,14 +436,14 @@ In this sense the global definitions are always indirect, often based on \emph{n
 Multiple different sub-networks in brain FC networks have been observed consistently with a variety of analysis techniques~\cite{fox2005,deluca2006,salvador2005,schwarz2007} such as ICA or other multivariate methods.
 This empirical evidence, shown not only in humans but also in higher vertebrates as the cat~\cite{scannell1995} and macaque~\cite{felleman1991}, suggests that to some extent the high-level functional organization is based on the balance of two competing principles of segregation and integration.
 The nervous system is obviously shaped by this balance as the need of fast information processing is satisfied by small-scale neuronal circuits, typically at the first stages of sensory input processing.
-Typical examples are the very localized functional area of visual processing V1 or the primary motor cortices. At larger scale the cortex works in concert, connecting all the segregated areas in a larger, widely distributed complex network.
+Typical examples are the very localized functional area of visual processing V1 or the primary motor cortices. At a larger scale the cortex works in concert, connecting all the segregated areas in a widely distributed complex network.
 It is indeed more and more recognized that complex behaviours arise thanks to the dynamical interplay of the integrated and segregated actions of different regions of the brain~\cite{tononi1994,tononi1998,deco2015}.
 
-Presence of communities within FC networks and hubs supports the concepts of integration and segregation.
+The presence of communities within FC networks and hubs supports the concepts of integration and segregation.
 Recently, experiments in which computational dynamical processes are simulated over the topology of whole-brain networks have shed light on the role of communities in shaping the cortical activity~\cite{deco2015}.
 Importantly, it was found that the network communities consist in the areas that are devoted to the segregated information processing, while the hubs and rich clubs are deputed to convey that information over the whole brain.
 
-Assessing the role of nodes within a community is an important task that depends on the community assignment. To this end one can  cartographic classification of nodal roles that describes if a node connects two communities or is buried inside its own community in of help.
+Assessing the role of nodes within a community is an important task that depends on the community assignment. To this end one can design a cartographic classification of nodal roles that describes if a node connects two communities or is buried inside its own community in of help.
 
 \subsection{Cartographic classification of nodes}
 Every node in a network is characterized by its role in relation to other nodes.
@@ -462,8 +462,8 @@ z_i = \frac{k_i - \langle  k_{c_i} \rangle }{\sigma_{k_{c_i}}},
 where $\langle  k_{c_i} \rangle $ is the average degree of nodes in the same module $c$ of node $i$ and $\sigma_{k_{c_i}}$ is the standard deviation of degrees of nodes in module $c$.
 
 Hubs classification is critical for the interpretation of the roles played by the highly connected nodes within the network structure.
-The Guimera and Amaral~\cite{guimera2005} classification scheme places participation coefficient and within-module degree z-score of every node on a two dimensional plane.
-Different regions of the two dimensional plane are divided empirically into seven regions as shown in Figure~\ref{fig:gagraph}.
+The Guimera and Amaral~\cite{guimera2005} classification scheme places participation coefficient and within-module degree z-score of every node on a two-dimensional plane.
+Different regions of the two-dimensional plane are divided empirically into seven regions as shown in Figure~\ref{fig:gagraph}.
 Depending on the specific cut-off values of participation coefficient and intra-modular connectivity, the nodes are defined as ultra-peripheral (region R1), peripheral (region R2), connector non-hubs (region R3), kinless non-hubs (region R4), provincial hubs (region R5), connector hubs (region R6) and kinless hubs (region R7).
 Naturally, connector hubs are of great importance for communication between modules (Figure~\ref{fig:brain_network_communities}).
 Indeed, connector hubs are those with high values of participation coefficient and high values of within-module degree z-score.
@@ -512,7 +512,7 @@ Intuitively then it is possible to assign a probability score to each instance o
 In the $G(n,m)$, each instance is equiprobable.
 
 Strictly speaking, a random graph model is better defined as an ensemble of networks, therefore as a probability distribution $\mathcal{P}(\Omega)$ over the space of all graphs $G$.
-TThe Gilbert random graph model is associated with a probability distribution sharply peaked in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges, and zero otherwise.
+The Gilbert random graph model is associated with a probability distribution sharply peaked in $\mathcal{P}(G)=1/\Omega$ for graphs with $n$ nodes and exactly $m$ edges and zero otherwise.
 Although some properties of the $G(n,m)$ models are easy to compute, like the mean number of edges (trivial), others are more complicated because of the hard constraint imposed on edge number.
 
 A way more useful random graph model is instead due to Erd\H{o}s and Rényi~\cite{erdos1959}.
@@ -541,7 +541,7 @@ a binomial distribution that can be approximated to a Poisson distribution for l
 \end{equation}
 \bigbreak
 In generalizing the concepts of random networks models, one can define every simple graph on $n$ nodes as the output of a random process where each edge $(i,j) $ is sampled with a probability $\Pr(i,j)_{ \boldsymbol \theta}$ with $\boldsymbol \theta$ a vector of hyperparameters.
-In the simplest case of the ER graph, this generative model is an uniform probability distribution with $\boldsymbol \theta=p_{\textrm{er}}$ as every pair of nodes is linked by an edge with constant probability.
+In the simplest case of the ER graph, this generative model is a uniform probability distribution with $\boldsymbol \theta=p_{\textrm{er}}$ as every pair of nodes is linked by an edge with constant probability.
 
 Importantly, both the ER and Gilbert models should not exhibit any modular structure as every substructure that appears is an effect of random fluctuations due to finite sampling effects. Nonetheless, some algorithms may find communities in ER graphs, due to overfitting~\cite{guimera2004}.
 Additionally, the ER model does not realistically represent empirical networks, even if it is very useful to simplify analytical calculation of network properties.
@@ -571,7 +571,7 @@ Many networks display a degree distribution that follows a \emph{power-law} form
 where $\gamma$ is usually included in the $[2,3]$ interval.
 Power-law distributions, also dubbed \emph{scale-free}, lack a specific scale.
 Indeed, $P(\alpha k)=f(\alpha)P(k)$ for some multiplicative constant $\alpha$  and $f$ a function of $\alpha$.
-Therefore, the functional form of the power-law remain unchanged.
+Therefore, the functional form of the power-law remains unchanged.
 
 Hence, in understanding the limitation of the Erd\H{o}s-Rényi model, researchers developed a multitude of generative models of graphs that tried to better model properties like the heavy-tails saw in power-laws or also the \emph{small-worldness} phenomenon, i.e.
 the observation that most nodes in a network are reachable from every other in a small number of hops.
@@ -582,7 +582,7 @@ For example, in the Watts-Strogatz model a graph with groups of densely connecte
 \item Construct a ring with $n$ nodes and connect each node to the $l$ nearest nodes ($l/2$ nodes on each side of the ring).
 \item Choose a node $i$ and the edge $e$ that connects $i$ to its nearest neighbour in a clockwise manner.
 \item With probability $p_r$ replace the edge $e$ by the edge that connects $i$ to a node taken at random according to a uniform distribution over the entire ring.
-\item Repeat the steps 2 and 3 for each node in clockwise manner.
+\item Repeat the steps 2 and 3 for each node in a clockwise manner.
 \item Choose a node $i$ and the edge $e$ that connects $i$ to its second neighbour in a clockwise sense and repeat the steps 2-4.
 \item Repeat the process considering the third nearest neighbour and so on until each edge of the original lattice has been considered.
 \end{enumerate}
@@ -624,7 +624,7 @@ Adapted from~\cite{peixoto2015}.}
 
 Although largely used, the planted-partition model has several drawbacks.
 Indeed, as a generalization of the ER model, each node has the same expected degree and all communities have the same size.
-While, these properties are of great help when performing analytical calculations, they also make it badly suited for practical applications, as degree homogeneity is seldom realized in real networks.
+While these properties are of great help when performing analytical calculations, they also make it badly suited for practical applications, as degree homogeneity is seldom realized in real networks.
 
 To overcome the unrealistic settings of the planted partition model, the Lancichinetti\hyp{}Fortunato\hyp{}Radicchi (LFR) model, first described in~\cite{lancichinetti2008}, modified the planted partition model to exhibit power-law distribution of both node degrees and community size, with tunable exponents $\tau_d$ and $\tau_c$ respectively, to respect what is observed in real networks.
 As each realization is accompanied by the membership affiliation vector $\boldsymbol \sigma$, the LFR model has been used primarily as a benchmark for evaluating the effectiveness of different community detection methods~\cite{fortunato2010,lancichinetti2009} at different levels of difficulty.
@@ -692,12 +692,12 @@ Bindings for \texttt{Matlab,Octave} and \texttt{Python} the Fortunato's code are
 
 \section{A synthetic model of a resting state network}
 Among the synthetic generative models for complex networks, no model tries to embed the typical circumstances that take place when measuring human brain resting state activity with fMRI.
-To this end, here I introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability, while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested~\cite{nicolini2017}.
+To this end, here I introduce a theoretically sound method for the generation of synthetic FC networks that mimic properties of resting state fMRI networks, including noise and intersubject variability while presenting a pre-determined ground-truth modular structure against which the performance of community detection algorithms can be tested~\cite{nicolini2017}.
 
 The general idea is that, starting from an adjacency matrix with a given modular structure, we can generate time-courses for each of the nodes whose pairwise correlations reproduce the edge structure of the original matrix. Noise can be added to the time-courses, and the resulting correlation matrix will provide a noisy representation of the original one. This procedure can be repeated multiple times to produce different datasets that represent different subjects in the study.
 
 In practical terms, given an undirected weighted graph  $\mathbf{C} \in \mathbb{R}^{n\times n}$ whose community structure is known a-priori, its nearest positive definite matrix~\cite{Higham1988} is obtained with its Cholesky decomposition, i.e. an upper triangular matrix $\mathbf{L}\in \mathbb{R}^{n\times n}$ such that $\mathbf{L}\mathbf{L}^T=\mathbf{C}$.
-Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, one can then generate correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$ \footnote{Since the covariance matrix of a zero-mean, unit-variance random variable $X$ is given by $\mathbb{E}(XX^T)$, it's easy to verify that $\mathbb{E}(YY^T)=\mathbb{E}(LX)(LX)^T=\mathbb{E}(LX)X^T L^T=L\mathbb{E}(XX^T)L^T=L^T\mathbf{I}L=C$}.
+Starting from uncorrelated variables $\mathbf{X} \in \mathbb{R}^{n \times l}$, one can then generate correlated random variables $\mathbf{Y}=\mathbf{L} \mathbf{X}$ such that $\mathbb{E}(\mathbf{Y}\mathbf{Y}^T)=\mathbf{C}$ \footnote{Since the covariance matrix of a zero-mean, unit-variance random variable $X$ is given by $\mathbb{E}(XX^T)$, it is easy to verify that $\mathbb{E}(YY^T)=\mathbb{E}(LX)(LX)^T=\mathbb{E}(LX)X^T L^T=L\mathbb{E}(XX^T)L^T=L^T\mathbf{I}L=C$}.
 Different levels of noise can then be injected into $\mathbf{Y}$ prior to the computation of the correlation matrix.
 Schematic of this procedure is shown in Figure~\ref{fig:flowchart}.
 As described in~\cite{nicolini2017} I tested this idea on two different models of planted partition: a variant of the ring of cliques~\cite{fortunato2007} and the Lancichinetti-Fortunato-Radicchi (LFR) network~\cite{lancichinetti2008}, whose degree distribution and modular structure can be tuned to replicate topological features of real-world networks, including scale freeness~\cite{hagmann2008} and the presence of densely interconnected cores~\cite{vandenheuvel2011}.
@@ -714,7 +714,7 @@ As described in~\cite{nicolini2017} I tested this idea on two different models o
 \section{Comparing community structure in networks}
 Over the years a large number of community detection methods appeared and a quantitative way to assess their performance on benchmark networks was needed.
 In most generative models of networks, the community structure is determined a-priori, like for example in the stochastic block model, the planted partition model and the LFR model.
-Conversely, community structures of real-world networks are often annotated by experts in the field: it's the case of the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
+Conversely, community structures of real-world networks are often annotated by experts in the field: it is the case of the karate club network of Zachary~\cite{zachary1977} or the political blog network~\cite{adamic2005}.
 
 A large number of functions for comparing similarities and differences between partitions of a network have been proposed in the past~\cite{danon2005,vinh2010}.
 They are used to quantitatively provide a number that tells to which extent two partitions are similar.
@@ -784,7 +784,7 @@ Accuracy (Acc) and Matthew Correlation Coefficient (MCC) are defined on the basi
 \end{align*}
 where TP, TN, FP, FN are the number of true positives, true negatives, false positives and false negatives identified in the detected partition with respect to the planted partition.
 Accuracy takes into account the proportion of correctly classified samples and can present relatively high values even in the case of poorly performing detection methods when the classes have very different size.
-The Matthew Correlation Coefficient  takes into account true and false positives and negatives. It's a balanced coefficient, to use especially when classes are very imbalanced.
+The Matthew Correlation Coefficient takes into account true and false positives and negatives. It is a balanced coefficient, to use especially when classes are very imbalanced.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -795,16 +795,16 @@ The Matthew Correlation Coefficient  takes into account true and false positives
 In weighted networks, sparsification procedures are often applied to remove the weakest edges, which are the most affected by experimental noise, and to reduce the density of the graph, thus making it theoretically and computationally more tractable.
 Indeed, weak links may contain significant structural information~\cite{thomas2011}, and procedures to identify the optimal trade-off are the subject of active investigations~\cite{zahoranszky-kohalmi2016a}.
 After sparsification, the network can be binarized, by setting all edge weights to unity.
-Whether this procedure may help obtaining a better view on the underlying structure of networks, is an hot debate in the literature~\cite{rubinov2010,thomas2011}.
+Whether this procedure may help to obtain a better view of the underlying structure of networks, is a hot debate in the literature~\cite{rubinov2010,thomas2011}.
 
-Ideally the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
+Ideally, the obtained network should retain structural relations and ignore spurious links, but how is it possible to determine a proper value of threshold?
 No well-accepted method to choose the best threshold has been adopted pragmatically in the brain networks literature and different scholars motivated their choice by different needs~\cite{gallos2012,lee2011,scheinost2012}.
 
 Percolation analysis, a method originally grounded in statistical physics, was suggested by Gallos~\cite{gallos2012} to identify the optimal sparsification threshold for community detection in brain connectivity networks.
 Percolation is a model to describe phase transitions of connected subgraphs in random networks~\cite{callaway2000,goerdt2001}.
 In the ER random graph, the size of the largest connected component shows a sharp transition at some threshold value~\cite{callaway2000}.
 Contrarily, brain networks exhibit multiple percolation thresholds, revealing a hierarchy of clusters as shown in Figure~\ref{fig:percolation_analysis_intro}.
-The jumps corresponding to percolation transitions are indicative of non trivial correlations that constitute well defined modules of brain activity.
+The jumps corresponding to percolation transitions are indicative of non-trivial correlations that constitute well-defined modules of brain activity.
 Hence, the multiple percolation thresholds are representative of a set of weak ties that guarantee appropriate communication (in terms of information transfer) between functionally specialized modules.
 Following these observations, the definition of the optimal threshold is the one just above the fragmentation of the largest connected component.
 This choice maximizes the information extracted by subsequent applications of community detection algorithms, and has been applied and validated in human~\cite{gallos2012} and animal~\cite{bardella2016a} studies.
@@ -815,9 +815,9 @@ This choice maximizes the information extracted by subsequent applications of co
 \label{fig:percolation_analysis_intro}
 \end{figure}
 
-The most common choice when comparing networks from different groups, is to adopt a fixed threshold that keeps the same number of edges in the two groups.
+The most common choice when comparing networks from different groups is to adopt a fixed threshold that keeps the same number of edges in the two groups.
 This does not take into account the particularities of the analyzed group and datasets.
-It is indeed important to stress that the distribution of the weights as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror these information.
+It is indeed important to stress that the distribution of the weights as well as the density or connectivity of the population are not exploited when using fixed thresholds and the final result does not mirror this information.
 To this end, it has been demonstrated, especially in patients groups such as in schizophrenia, that the brain presents weaker functional connectivity than in healthy control persons~\cite{alexander-bloch2010}.
 
 For this reason, percolation analysis should enable data-driven determination of the optimal sparsification threshold that preserves network structure and connectedness while removing potentially spurious correlations.
